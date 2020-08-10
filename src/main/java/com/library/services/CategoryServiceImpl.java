@@ -3,15 +3,20 @@ package com.library.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.library.entities.Category;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.CategoryRepository;
 
+@Service
+@Transactional
 public class CategoryServiceImpl implements CategoryService{
 	
 	@Autowired
@@ -67,22 +72,34 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public Category findByCode(String code) {
-		return categoryRepository.findByReference(code);
+		return categoryRepository.findByCode(code);
+	}
+	
+	@Override
+	public List<Category> ListCategoryByCode(String code) {
+		return categoryRepository.ListCategoryByCode(code);
 	}
 
 	@Override
 	public Category findByDesignation(String designation) {
-		return categoryRepository.findByCategory(designation);
+		return categoryRepository.findByDesignation(designation);
+	}
+	
+	@Override
+	public List<Category> ListCategoryByDesignation(String designation) {
+		return categoryRepository.ListCategoryByDesignation(designation);
 	}
 
 	@Override
 	public Page<Category> findAllCategoryByPage(Pageable page) {
-		return categoryRepository.findCategory(page);
+		return categoryRepository.findCategoryByPageable(page);
 	}
 
 	@Override
 	public Page<Category> findCategoryByKeyWord(String mc, Pageable pageable) {
 		return categoryRepository.findCategoryByKeyWord(mc, pageable);
 	}
+
+	
 
 }

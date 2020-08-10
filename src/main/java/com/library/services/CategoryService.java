@@ -16,10 +16,15 @@ public interface CategoryService {
 	public Optional<Category> findCategoryById(Long catId);
 	public Category updateCategory(Long catId, Category category);
 	public ResponseEntity<Object> deleteCategory(Long catId);
+	
 	public Category findByCode(String code);
 	public Category findByDesignation(String designation);
-	Page<Category> findAllCategoryByPage(Pageable page);
-	Page<Category> findCategoryByKeyWord(String mc, Pageable pageable);
+	
+	public List<Category> ListCategoryByCode(String designation);
+	public List<Category> ListCategoryByDesignation(String designation);
+	
+	public Page<Category> findAllCategoryByPage(Pageable page);
+	public Page<Category> findCategoryByKeyWord(String mc, Pageable pageable);
 	
 	
 

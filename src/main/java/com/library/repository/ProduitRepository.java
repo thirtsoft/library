@@ -14,23 +14,26 @@ import com.library.entities.Produit;
 @Repository
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
 	
-	@Query("select p from Produit p where p.designation like :des")
-	public Produit findByDesignation(@Param("des") String designation);
-	
-	@Query("select p from Produit p where p.categorie.id =:id")
-	Page<Produit> getProduitByCateoryId(@Param("id") Long catId, Pageable pageable);
-	
-	@Query("select p from Produit p where p.categorie.id =:cat")
-	public List<Produit> getProductByCateoryId(@Param("cat") Long catId);
-		
-	@Query("select p from Produit p where p.designation like :des") 
-	public List<Produit> searchProductByDesignation(@Param("des") String designation);
-	
-	@Query("select p from Produit p")
-	public Page<Produit> findAllProduitsByPageable(Pageable pageable);
-	  
-	@Query("select p from Produit p where p.designation like :mc")
-	public Page<Produit> findProduitByKeyWord(@Param("mc") String mc, Pageable pageable);
+	/*
+	 * @Query("select p from Produit p where p.designation like :des") public
+	 * Produit findByDesignation(@Param("des") String designation);
+	 * 
+	 * @Query("select p from Produit p where p.categorie.id =:id") Page<Produit>
+	 * getProduitByCateoryId(@Param("id") Long catId, Pageable pageable);
+	 * 
+	 * @Query("select p from Produit p where p.categorie.id =:cat") public
+	 * List<Produit> getProductByCateoryId(@Param("cat") Long catId);
+	 * 
+	 * @Query("select p from Produit p where p.designation like :des") public
+	 * List<Produit> searchProductByDesignation(@Param("des") String designation);
+	 * 
+	 * @Query("select p from Produit p") public Page<Produit>
+	 * findAllProduitsByPageable(Pageable pageable);
+	 * 
+	 * @Query("select p from Produit p where p.designation like :mc") public
+	 * Page<Produit> findProduitByKeyWord(@Param("mc") String mc, Pageable
+	 * pageable);
+	 */
 	  
 	
 	
