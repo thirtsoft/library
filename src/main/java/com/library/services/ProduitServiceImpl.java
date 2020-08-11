@@ -2,6 +2,7 @@ package com.library.services;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -410,7 +412,13 @@ public class ProduitServiceImpl implements ProduitService {
 		}
 		
 	}
-	
 
+	@Override
+	public ResponseEntity<List<Produit>> importExcelFile(MultipartFile files) {
+		
+        return null;
+   
+	}
+	
 	
 }

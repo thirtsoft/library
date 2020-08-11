@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.library.entities.Produit;
 
@@ -40,5 +41,6 @@ public interface ProduitService {
 	
 	boolean createExcel(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 	
+	public ResponseEntity<List<Produit>> importExcelFile(MultipartFile files);
 
 }
