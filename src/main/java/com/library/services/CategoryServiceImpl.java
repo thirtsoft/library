@@ -88,16 +88,19 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public List<Category> ListCategoryByDesignation(String designation) {
 		return categoryRepository.ListCategoryByDesignation(designation);
+
 	}
 
 	@Override
 	public Page<Category> findAllCategoryByPage(Pageable page) {
+
 		return categoryRepository.findCategoryByPageable(page);
 	}
 
 	@Override
 	public Page<Category> findCategoryByKeyWord(String mc, Pageable pageable) {
 		return categoryRepository.findCategoryByKeyWord(mc, pageable);
+		
 	}
 
 	

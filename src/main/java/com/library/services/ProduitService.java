@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import com.library.entities.Produit;
 
 public interface ProduitService {
-	public List<Produit> findAllProduits();
+	
 	public Optional<Produit> findProduitById(Long prodId);
 	public Produit saveProduit(Long catId, Produit produit);
 	public Produit saveProduit(Produit produit);
@@ -24,15 +24,14 @@ public interface ProduitService {
 	public Produit findByDesignation(String designation);
 	public Produit findByPrixAchat(Double prixAchat);
 	
+	public List<Produit> findAllProduits();
+	public List<Produit> findListProduitByDesignation(String designation);
+	public List<Produit> findProductByCateoryId(@Param("cat") Long catId);
 	
-	public List<Produit> searchProductByDesignation(String designation);
+	public Page<Produit> findAllProduitsByPageable(Pageable page);
+	public Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);
 	
-
-	Page<Produit> findAllProduitsByPageable(Pageable page);
-	public List<Produit> getProductByCateoryId(@Param("cat") Long catId);
-	Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);
-	
-	Page<Produit> findProduitByKeyWord(String mc, Pageable pageable);
+	public Page<Produit> findProduitByKeyWord(String mc, Pageable pageable);
 	
 
 
