@@ -3,9 +3,12 @@ package com.library.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 
 import com.library.entities.Produit;
@@ -26,13 +29,15 @@ public interface ProduitService {
 	
 	public List<Produit> findAllProduits();
 	public List<Produit> findListProduitByDesignation(String designation);
-	public List<Produit> findProductByCateoryId(@Param("cat") Long catId);
+	public List<Produit> findProductByCateoryId(Long catId);
 	
 	public Page<Produit> findAllProduitsByPageable(Pageable page);
 	public Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);
 	
 	public Page<Produit> findProduitByKeyWord(String mc, Pageable pageable);
 	
-
+	boolean createPdf(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+	
+	
 
 }

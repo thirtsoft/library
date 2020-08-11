@@ -1,9 +1,14 @@
 package com.library.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Optional;
 
-import javax.websocket.server.PathParam;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +35,9 @@ public class ProduitController {
 	
 	@Autowired
 	private ProduitService produitService;
+	
+	@Autowired
+	private ServletContext context;
 	
 	@GetMapping("/produits")
 	public List<Produit> getAllProduits() {
@@ -97,8 +105,8 @@ public class ProduitController {
 		return produitService.saveProduit(produit);
 	}
 	
-	@PutMapping("/produits/{id}")
-	public Produit updateProduit(@PathVariable(value="id") Long prodId, @RequestBody Produit produit) {
+	@PutMapping("/produits/{prodId}")
+	public Produit updateProduit(@PathVariable Long prodId, @RequestBody Produit produit) {
 		produit.setId(prodId);
 		return produitService.saveProduit(produit);	
 	}
@@ -106,6 +114,45 @@ public class ProduitController {
 	@DeleteMapping("/produits/{id}")
 	public ResponseEntity<Object> deleteProduct(@PathVariable(value="id") Long prodId) {
 		return produitService.deleteProduit(prodId);
+	}
+	
+	@GetMapping(value = "/createPdf")
+	public void createPdf(HttpServletRequest request, HttpServletResponse response) {
+		List<Produit> produitList = produitService.findAllProduits();
+		boolean isFlag = produitService.createPdf(produitList, context, request, response);
+		
+		if (isFlag) {
+			String fullPath = request.getServletContext().getRealPath("/resources/reports/"+"articles"+".pdf");
+			filedownload(fullPath, response, "articles.pdf");
+		}
+		
+		
+	}
+	
+	private void filedownload(String fullPath, HttpServletResponse response, String fileName) {
+		File file = new File(fullPath);
+		final int BUFFER_SIZE = 4096;
+		if (file.exists()) {
+			try {
+				FileInputStream inputStream = new FileInputStream(file);
+				String mimeType = context.getMimeType(fullPath);
+				response.setContentType(mimeType);
+				response.setHeader("content-disposition", "attachment; filename="+fileName);
+				OutputStream outputStream = response.getOutputStream();
+				byte[] buffer = new byte[BUFFER_SIZE];
+				int byteRead = -1;
+				while ((byteRead = inputStream.read(buffer))!= -1) {
+					outputStream.write(buffer, 0, byteRead); 
+				}
+				inputStream.close();
+				outputStream.close();
+				file.delete();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 }

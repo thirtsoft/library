@@ -1,10 +1,15 @@
 package com.library.services;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.library.entities.Category;
 import com.library.entities.Produit;
 import com.library.exceptions.ResourceNotFoundException;
@@ -150,6 +165,177 @@ public class ProduitServiceImpl implements ProduitService {
 		
 		return ResponseEntity.ok().build();
 	}
+
+	@Override
+	public boolean createPdf(List<Produit> produits, ServletContext context, 
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		Document document = new Document(PageSize.A4,15, 15, 45, 30);
+		try {
+			String filePath = context.getRealPath("/resources/reports");
+			File file = new File(filePath);
+			boolean exist = new File(filePath).exists();
+			if (!exist) {
+				new File(filePath).mkdirs();
+			}
+			
+			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file+"/"+"articles"+".pdf"));
+			document.open();
+			
+			Font mainFont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
+			
+			Paragraph paragraph = new Paragraph("LISTE DES ARTICLES", mainFont);
+			paragraph.setAlignment(Element.ALIGN_CENTER);
+			paragraph.setIndentationLeft(50);
+			paragraph.setIndentationRight(50);
+			paragraph.setSpacingAfter(10);
+			document.add(paragraph);
+			
+			PdfPTable table = new PdfPTable(3);
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(10f);
+			table.setSpacingAfter(10);
+			
+			Font tableHeader = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
+			Font tableBody = FontFactory.getFont("Arial", 9, BaseColor.BLACK);
+			
+			PdfPCell reference = new PdfPCell(new Paragraph("Reference", tableHeader));
+			reference.setBorderColor(BaseColor.BLACK);
+			reference.setPaddingLeft(10);
+			reference.setHorizontalAlignment(Element.ALIGN_CENTER);
+			reference.setVerticalAlignment(Element.ALIGN_CENTER);
+			reference.setBackgroundColor(BaseColor.GRAY);
+			reference.setExtraParagraphSpace(5f);
+			table.addCell(reference);
+			
+			PdfPCell designation = new PdfPCell(new Paragraph("Designation", tableHeader));
+			designation.setBorderColor(BaseColor.BLACK);
+			designation.setPaddingLeft(10);
+			designation.setHorizontalAlignment(Element.ALIGN_CENTER);
+			designation.setVerticalAlignment(Element.ALIGN_CENTER);
+			designation.setBackgroundColor(BaseColor.GRAY);
+			designation.setExtraParagraphSpace(5f);
+			table.addCell(designation);
+			
+			PdfPCell categorie = new PdfPCell(new Paragraph("Categorie", tableHeader));
+			categorie.setBorderColor(BaseColor.BLACK);
+			categorie.setPaddingLeft(10);
+			categorie.setHorizontalAlignment(Element.ALIGN_CENTER);
+			categorie.setVerticalAlignment(Element.ALIGN_CENTER);
+			categorie.setBackgroundColor(BaseColor.GRAY);
+			categorie.setExtraParagraphSpace(5f);
+			table.addCell(categorie);
+			
+			/*
+			 * PdfPCell prixAchat = new PdfPCell(new Paragraph("P.Achat", tableHeader));
+			 * prixAchat.setBorderColor(BaseColor.BLACK); prixAchat.setPaddingLeft(10);
+			 * prixAchat.setHorizontalAlignment(Element.ALIGN_CENTER);
+			 * prixAchat.setVerticalAlignment(Element.ALIGN_CENTER);
+			 * prixAchat.setBackgroundColor(BaseColor.GRAY);
+			 * prixAchat.setExtraParagraphSpace(5f); table.addCell(prixAchat);
+			 * 
+			 * PdfPCell prixVente = new PdfPCell(new Paragraph("P.Unitaire", tableHeader));
+			 * prixVente.setBorderColor(BaseColor.BLACK); prixVente.setPaddingLeft(10);
+			 * prixVente.setHorizontalAlignment(Element.ALIGN_CENTER);
+			 * prixVente.setVerticalAlignment(Element.ALIGN_CENTER);
+			 * prixVente.setBackgroundColor(BaseColor.GRAY);
+			 * prixVente.setExtraParagraphSpace(5f); table.addCell(prixVente);
+			 * 
+			 * PdfPCell stockInitial = new PdfPCell(new Paragraph("Stock", tableHeader));
+			 * stockInitial.setBorderColor(BaseColor.BLACK);
+			 * stockInitial.setPaddingLeft(10);
+			 * stockInitial.setHorizontalAlignment(Element.ALIGN_CENTER);
+			 * stockInitial.setVerticalAlignment(Element.ALIGN_CENTER);
+			 * stockInitial.setBackgroundColor(BaseColor.GRAY);
+			 * stockInitial.setExtraParagraphSpace(5f); table.addCell(stockInitial);
+			 * 
+			 * PdfPCell add_date = new PdfPCell(new Paragraph("Date Ajout", tableHeader));
+			 * add_date.setBorderColor(BaseColor.BLACK); add_date.setPaddingLeft(10);
+			 * add_date.setHorizontalAlignment(Element.ALIGN_CENTER);
+			 * add_date.setVerticalAlignment(Element.ALIGN_CENTER);
+			 * add_date.setBackgroundColor(BaseColor.GRAY);
+			 * add_date.setExtraParagraphSpace(5f); table.addCell(add_date);
+			 */
+			
+			for (Produit prod: produits) {
+				PdfPCell referenceValue = new PdfPCell(new Paragraph(prod.getReference(), tableBody));
+				referenceValue.setBorderColor(BaseColor.BLACK);
+				referenceValue.setPaddingLeft(10);
+				referenceValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				referenceValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				referenceValue.setBackgroundColor(BaseColor.WHITE);
+				referenceValue.setExtraParagraphSpace(5f);
+				table.addCell(referenceValue);
+				
+				PdfPCell designationValue = new PdfPCell(new Paragraph(prod.getDesignation(), tableBody));
+				designationValue.setBorderColor(BaseColor.BLACK);
+				designationValue.setPaddingLeft(10);
+				designationValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				designationValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				designationValue.setBackgroundColor(BaseColor.WHITE);
+				designationValue.setExtraParagraphSpace(5f);
+				table.addCell(designationValue);
+				
+				PdfPCell categorieValue = new PdfPCell(new Paragraph(prod.getCategorie().getDesignation(), tableBody));
+				categorieValue.setBorderColor(BaseColor.BLACK);
+				categorieValue.setPaddingLeft(10);
+				categorieValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				categorieValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				categorieValue.setBackgroundColor(BaseColor.WHITE);
+				categorieValue.setExtraParagraphSpace(5f);
+				table.addCell(categorieValue);
+				
+				/*
+				 * PdfPCell prixAchatValue = new PdfPCell(new Paragraph(prod.getPrixAchat(),
+				 * tableBody)); prixAchatValue.setBorderColor(BaseColor.BLACK);
+				 * prixAchatValue.setPaddingLeft(10);
+				 * prixAchatValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				 * prixAchatValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				 * prixAchatValue.setBackgroundColor(BaseColor.WHITE);
+				 * prixAchatValue.setExtraParagraphSpace(5f); table.addCell(prixAchatValue);
+				 */
+				
+				/*
+				 * PdfPCell prixVenteValue = new PdfPCell(new Paragraph((prod.getPrixVente()),
+				 * tableBody)); prixVenteValue.setBorderColor(BaseColor.BLACK);
+				 * prixVenteValue.setPaddingLeft(10);
+				 * prixVenteValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				 * prixVenteValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				 * prixVenteValue.setBackgroundColor(BaseColor.WHITE);
+				 * prixVenteValue.setExtraParagraphSpace(5f); table.addCell(prixVenteValue);
+				 * 
+				 * PdfPCell stockInitialValue = new PdfPCell(new
+				 * Paragraph(prod.getStockInitial(), tableBody));
+				 * stockInitialValue.setBorderColor(BaseColor.BLACK);
+				 * stockInitialValue.setPaddingLeft(10);
+				 * stockInitialValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				 * stockInitialValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				 * stockInitialValue.setBackgroundColor(BaseColor.WHITE);
+				 * stockInitialValue.setExtraParagraphSpace(5f);
+				 * table.addCell(stockInitialValue);
+				 * 
+				 * PdfPCell addDateValue = new PdfPCell(new Paragraph(prod.getAdd_date(),
+				 * tableBody)); addDateValue.setBorderColor(BaseColor.BLACK);
+				 * addDateValue.setPaddingLeft(10);
+				 * addDateValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				 * addDateValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				 * addDateValue.setBackgroundColor(BaseColor.WHITE);
+				 * addDateValue.setExtraParagraphSpace(5f); table.addCell(addDateValue);
+				 */
+				
+			}
+			
+			document.add(table);
+			document.close();
+			writer.close();
+			return true;
+			
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
 
 	
 }

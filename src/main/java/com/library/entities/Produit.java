@@ -3,7 +3,9 @@ package com.library.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +43,8 @@ public class Produit implements Serializable {
 	private String photo;
 	private Date add_date;
 	@ManyToOne
-	@JoinColumn(name="cat_id", nullable=false)
+	//@JoinColumn(name="cat_id", insertable = false, updatable = false)
+	@JoinColumn(name="cat_id", nullable = false)
 	private Category categorie;
 
 }

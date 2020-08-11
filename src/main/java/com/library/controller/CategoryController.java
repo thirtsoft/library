@@ -2,8 +2,6 @@ package com.library.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -78,7 +76,6 @@ public class CategoryController {
 		return categoryService.findAllCategoryByPage(PageRequest.of(page, size));
 	}
 	
-	@SuppressWarnings("deprecation")
 	@GetMapping(value = "/searchListCategoryByPageableParMotCle")
 	public Page<Category> findCategoryByKeyWord(@RequestParam(name="mc", defaultValue="") String mc, 
 			@RequestParam(name = "page") int page,
