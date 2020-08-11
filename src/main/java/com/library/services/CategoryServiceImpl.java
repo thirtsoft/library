@@ -67,22 +67,26 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public Category findByCode(String code) {
-		return categoryRepository.findByReference(code);
+		//return categoryRepository.findByReference(code);
+		return null;
 	}
 
 	@Override
 	public Category findByDesignation(String designation) {
-		return categoryRepository.findByCategory(designation);
+		//return categoryRepository.findByCategory(designation);
+		return null;
 	}
 
 	@Override
 	public Page<Category> findAllCategoryByPage(Pageable page) {
-		return categoryRepository.findCategory(page);
+		//return categoryRepository.findCategory(page);
+		return null;
 	}
 
 	@Override
 	public Page<Category> findCategoryByKeyWord(String mc, Pageable pageable) {
-		return categoryRepository.findCategoryByKeyWord(mc, pageable);
+		//return categoryRepository.findCategoryByKeyWord(mc, pageable);
+		return null;
 	}
 
 }

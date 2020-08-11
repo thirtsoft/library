@@ -14,17 +14,24 @@ import com.library.entities.Produit;
 @Repository
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
 	
+	@Query("select p from Produit p where p.reference like :ref")
+	public Produit findByReference(@Param("ref") String reference);
+	
 	@Query("select p from Produit p where p.designation like :des")
 	public Produit findByDesignation(@Param("des") String designation);
 	
+	@Query("select p from Produit p where p.prixAchat like :price")
+	public Produit findByPrixAchat(@Param("price") Double prixAchat);
+	
+	
 	@Query("select p from Produit p where p.categorie.id =:id")
-	Page<Produit> getProduitByCateoryId(@Param("id") Long catId, Pageable pageable);
+	public Page<Produit> findProduitByCateoryId(@Param("id") Long catId, Pageable pageable);
 	
 	@Query("select p from Produit p where p.categorie.id =:cat")
-	public List<Produit> getProductByCateoryId(@Param("cat") Long catId);
+	public List<Produit> findProductByCateoryId(@Param("cat") Long catId);
 		
 	@Query("select p from Produit p where p.designation like :des") 
-	public List<Produit> searchProductByDesignation(@Param("des") String designation);
+	public List<Produit> findListProduitByDesignation(@Param("des") String designation);
 	
 	@Query("select p from Produit p")
 	public Page<Produit> findAllProduitsByPageable(Pageable pageable);
