@@ -38,6 +38,7 @@ public interface ProduitService {
 	
 	boolean createPdf(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 	
+	boolean createExcel(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 	
 
 }

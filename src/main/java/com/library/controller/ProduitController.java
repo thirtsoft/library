@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.library.entities.Produit;
 import com.library.services.ProduitService;
 
+
 @RestController
 @CrossOrigin
 @RequestMapping("/alAmine")
@@ -124,6 +125,19 @@ public class ProduitController {
 		if (isFlag) {
 			String fullPath = request.getServletContext().getRealPath("/resources/reports/"+"articles"+".pdf");
 			filedownload(fullPath, response, "articles.pdf");
+		}
+		
+		
+	}
+	
+	@GetMapping(value = "/createExcel")
+	public void createExcel(HttpServletRequest request, HttpServletResponse response) {
+		List<Produit> produitList = produitService.findAllProduits();
+		boolean isFlag = produitService.createExcel(produitList, context, request, response);
+		
+		if (isFlag) {
+			String fullPath = request.getServletContext().getRealPath("/resources/reports/"+"articles"+".xls");
+			filedownload(fullPath, response, "articles.xls");
 		}
 		
 		

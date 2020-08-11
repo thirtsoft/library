@@ -12,6 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +39,7 @@ import com.library.entities.Produit;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.CategoryRepository;
 import com.library.repository.ProduitRepository;
+
 
 @Service
 @Transactional
@@ -328,6 +335,74 @@ public class ProduitServiceImpl implements ProduitService {
 			document.add(table);
 			document.close();
 			writer.close();
+			return true;
+			
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
+	
+	public boolean createExcel(List<Produit> produitList, ServletContext context, HttpServletRequest request,
+			HttpServletResponse response) {
+		String filePath = context.getRealPath("/resources/reports");
+		File file = new File(filePath);
+		boolean exists = new File(filePath).exists();
+		if (!exists) {
+			new File(filePath).mkdirs();
+		}
+		try {
+			FileOutputStream outputStream = new FileOutputStream(file+"/"+"articles"+".xls");
+			HSSFWorkbook workbook = new HSSFWorkbook();
+			HSSFSheet workSheet = workbook.createSheet("Articles");
+			workSheet.setDefaultColumnWidth(30);
+			
+			HSSFCellStyle headerCellStyle = workbook.createCellStyle();
+			//headerCellStyle.setFillForegroundColor(HSSFColor.BLUE.index);
+			//headerCellStyle.setFillPattern();
+			
+			HSSFRow headerRow = workSheet.createRow(0);
+			
+			HSSFCell reference = headerRow.createCell(0);
+			reference.setCellValue("Reference");
+			reference.setCellStyle(headerCellStyle);
+			
+			HSSFCell designation = headerRow.createCell(1);
+			designation.setCellValue("Designation");
+			designation.setCellStyle(headerCellStyle);
+			
+			HSSFCell categorie = headerRow.createCell(2);
+			categorie.setCellValue("Categorie");
+			categorie.setCellStyle(headerCellStyle);
+			
+			int i = 1;
+			for (Produit prod: produitList) {
+				HSSFRow bodyRow = workSheet.createRow(i);
+				
+				HSSFCellStyle bodyCellStyle = workbook.createCellStyle();
+				//bodyCellStyle.setFillBackgroundColor(HSSFColor.);
+				
+				HSSFCell referenceValue = bodyRow.createCell(0);
+				referenceValue.setCellValue(prod.getReference());
+				referenceValue.setCellStyle(bodyCellStyle);
+				
+				HSSFCell designationValue = bodyRow.createCell(1);
+				designationValue.setCellValue(prod.getDesignation());
+				designationValue.setCellStyle(bodyCellStyle);
+				
+				HSSFCell categorieValue = bodyRow.createCell(2);
+				categorieValue.setCellValue(prod.getCategorie().getDesignation());
+				categorieValue.setCellStyle(bodyCellStyle);
+				
+				i++;
+				
+			}
+			
+			workbook.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			
 			return true;
 			
 		} catch (Exception e) {
