@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -27,5 +29,17 @@ public class LigneCmdClient implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "Num_Commande", nullable = false)
+	private CommandeClient commande;
+	
+	@ManyToOne
+	@JoinColumn(name = "Ref_Produit", nullable = false)
+	private Produit produit;
+	
+	private int quantite;
+	
+	private double prix;
 }
 
