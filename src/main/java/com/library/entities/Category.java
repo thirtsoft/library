@@ -29,5 +29,7 @@ public class Category implements Serializable {
 	private Long id;
 	private String code;
 	private String designation;
-
+	
+	
+	
 }
