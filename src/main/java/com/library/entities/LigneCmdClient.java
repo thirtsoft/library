@@ -31,11 +31,11 @@ public class LigneCmdClient implements Serializable {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "Num_Commande", nullable = false)
+	//@JoinColumn(name = "Num_Commande", nullable = false)
 	private CommandeClient commande;
-	
+		
 	@ManyToOne
-	@JoinColumn(name = "Ref_Produit", nullable = false)
+	//@JoinColumn(name = "Ref_Produit", nullable = false)
 	private Produit produit;
 	
 	private int quantite;

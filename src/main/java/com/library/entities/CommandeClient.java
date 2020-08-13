@@ -40,12 +40,13 @@ public class CommandeClient implements Serializable {
 	private Date dateCommande;
 	
 	@ManyToOne
-	@JoinColumn(name = "code_client", nullable = false)
+	//@JoinColumn(name = "code_client", nullable = false)
 	private Client client;
 	
-	@OneToMany(mappedBy = "commande")
-	private Collection<LigneCmdClient> ligneCmdClients;
-	
+	/*
+	 * @OneToMany(mappedBy = "commande") private Collection<LigneCmdClient>
+	 * ligneCmdClients;
+	 */
 	private Double totalCommande;
 	
 	private String status;

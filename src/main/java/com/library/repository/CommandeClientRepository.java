@@ -34,7 +34,7 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 	@Query("select p from CommandeClient p where p.client.id =:id")
 	public Page<CommandeClient> findCommandeClientByClientId(@Param("id") Long clientId, Pageable pageable);
 	
-	@Query("select p from CommandeClient p where p.categorie.id =:cl")
+	@Query("select p from CommandeClient p where p.client.id =:cl")
 	public List<CommandeClient> ListCommandeClientByClientId(@Param("cl") Long clientId);
 		
 	@Query("select p from CommandeClient p")

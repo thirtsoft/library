@@ -8,10 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
-import com.library.entities.Category;
 import com.library.entities.Client;
 import com.library.entities.CommandeClient;
-import com.library.entities.Produit;
 
 public interface CommandeClientService {
 

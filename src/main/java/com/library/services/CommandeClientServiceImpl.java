@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.library.entities.Client;
 import com.library.entities.CommandeClient;
@@ -57,9 +56,13 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 	public CommandeClient saveCommandeClient(CommandeClient commande) {
 		CommandeForm orderForm = new CommandeForm();
 		Client client = new Client();
-		client.setId(orderForm.getClient().getId());
+		client.setNom(orderForm.getClient().getNom());
+		client.setPrenom(orderForm.getClient().getPrenom());
+		client.setAdresse(orderForm.getClient().getAdresse());
+		client.setTelephone(orderForm.getClient().getTelephone());
+		client.setEmail(orderForm.getClient().getEmail());
 		
-		//client = clientRepository.saveClient(client);
+		client = clientRepository.save(client);
 		
 		System.out.println(client.getId());
 		

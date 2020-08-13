@@ -58,13 +58,13 @@ public class FournisseurController {
 	}
 	
 	@GetMapping("/searchFournisseurByNom")
-	public Fournisseur getFournisseurByNom(@RequestParam(value = "des") String nom) {
+	public Fournisseur getFournisseurByNom(@RequestParam(value = "name") String nom) {
 		return fournisseurService.findByNom(nom);
 		
 	}
 	
-	@GetMapping("/searchListFournisseurByDesignation")
-	public List<Fournisseur> getAllFournisseurByNom(@RequestParam(value = "des") String nom) {
+	@GetMapping("/searchListFournisseurByNom")
+	public List<Fournisseur> getAllFournisseurByNom(@RequestParam(value = "name") String nom) {
 		
 		return fournisseurService.findListFournisseurByNom("%"+nom+"%");
 		

@@ -14,20 +14,14 @@ import com.library.entities.LigneCmdClient;
 @Repository
 public interface LigneCmdClientRepository extends JpaRepository<LigneCmdClient, Long> {
 	
-	/*
-	 * @Query("select p from LigneCmdClient p where p.quantite like :qte") public
-	 * LigneCmdClient findByQuantite(@Param("qte") String quantite);
-	 
-	@Query("select c from LigneCmdClient c where c.quantite like :qte") 
-	public List<LigneCmdClient> ListLigneCmdClientByQuantite(@Param("qte") String quantite);
-	*/
+	
 	@Query("select p from LigneCmdClient p where p.produit.id =:prod")
 	public List<LigneCmdClient> ListLigneCmdClientByProduitId(@Param("prod") Long prodId);
 	
 	@Query("select p from LigneCmdClient p where p.commande.id =:num")
 	public List<LigneCmdClient> ListLigneCmdClientByCommandeClientId(@Param("num") Long comId);
 	
-	@Query("select p from LigneCmdClient p where p.client.id =:id")
+	@Query("select p from LigneCmdClient p where p.commande.id =:id")
 	public Page<LigneCmdClient> findLigneCmdClientByCommandeClientPageable(@Param("id") Long comId, Pageable pageable);
 	
 	@Query("select p from LigneCmdClient p where p.produit.id =:id")
