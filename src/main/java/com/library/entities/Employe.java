@@ -27,5 +27,12 @@ public class Employe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String nom;
+	private String prenom;
+	private String cni;
+	private String adresse;
+	private String telephone;
+	private String email;
+	
 }
 
