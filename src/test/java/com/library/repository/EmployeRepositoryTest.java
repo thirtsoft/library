@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -26,7 +29,7 @@ public class EmployeRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testCreateEmploye() {
-		Employe employe = new Employe(null, "Diallo", "Amadu", "1989d", "B", "776543219", "ad@gmail.com");
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
 		
 		Employe saveEmploye = employeRepository.save(employe);
 		
@@ -69,15 +72,15 @@ public class EmployeRepositoryTest {
 	@Rollback(false)
 	public void testUpdateEmploye() {
 		String empCni = "Wade2010";
-		String empNom = "Wade";
-		String empPrenom = "Wade";
-		String empEmail = "adama@gmail.com";
+		String empNom = "Thiam";
+		String empPrenom = "Fanta";
+		String empEmail = "masterou@gmail.com";
 		
 		Employe employe = new Employe(null, empNom, empPrenom, 
 				empCni, "DK", "776543219", empEmail);
 
 		
-		employe.setId((long) 4);
+		employe.setId((long) 5);
 		employeRepository.save(employe);
 		
 		Employe employeUpdate = employeRepository.findByNom(empNom);
@@ -91,7 +94,7 @@ public class EmployeRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testDeleteEmploye() {
-		Long id = (long) 7;
+		Long id = (long) 10;
 		
 		boolean isExistBeforeDelete = employeRepository.findById(id).isPresent();
 		
@@ -102,6 +105,60 @@ public class EmployeRepositoryTest {
 		assertTrue(isExistBeforeDelete);
 		
 		assertFalse(notExistAfterDelete);
+	}
+	
+	@Test
+	public void testListEmployes() {
+		List<Employe> employes = employeRepository.findAll();
+		
+		for (Employe employe: employes) {
+			System.out.println(employe);
+		}
+		assertThat(employes).size().isGreaterThan(0);
+	}
+	
+	@Test
+	public void testListFindEmployeByEmail() {
+		String email = "fallou@gmail.com";
+		
+		List<Employe> employes = employeRepository.ListEmployeByEmail("%"+email+"%");
+		List<Employe> employeList = new ArrayList<Employe>();
+		
+		for (Employe employe: employes) {
+			employeList.add(employe);
+		}
+		assertThat(employeList.size()).isBetween(1, 3);
+		//assertThat(clientList.size()).isGreaterThan(0);
+			
+	}
+	
+	@Test
+	public void testListFindEmployeByNom() {
+		String nom = "Wa";
+		
+		List<Employe> employes = employeRepository.ListEmployeByNom("%"+nom+"%");
+		List<Employe> employeList = new ArrayList<Employe>();
+		
+		for (Employe employe: employes) {
+			employeList.add(employe);
+		}
+		assertThat(employeList.size()).isEqualTo(1);
+		
+	}
+	
+	@Test
+	public void testListFindEmployeByPrenom() {
+		String prenom = "t";
+		
+		List<Employe> employes = employeRepository.ListEmployeByPrenom("%"+prenom+"%");
+		List<Employe> employeList = new ArrayList<Employe>();
+		
+		for (Employe employe: employes) {
+			employeList.add(employe);
+		}
+		
+		assertThat(employeList.size()).isGreaterThan(0);
+			
 	}
 	
 
