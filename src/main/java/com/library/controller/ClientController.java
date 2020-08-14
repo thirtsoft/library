@@ -63,7 +63,7 @@ public class ClientController {
 		return clientService.findByPrenom(prenom);
 	}
 	
-	@GetMapping("/searchListClientByDesignation")
+	@GetMapping("/searchListClientByPrenom")
 	public List<Client> getAllClientByPrenom(@RequestParam(value = "pren") String prenom) {
 		
 		return clientService.ListClientByPrneom("%"+prenom+"%");

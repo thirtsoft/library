@@ -28,7 +28,7 @@ public class FournisseurRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testCreateFournisseur() {
-		Fournisseur fournisseur = new Fournisseur(null, "D", "Diallo", "D2020", "DK", "77459043", "D52020", "D@gmail.com");
+		Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "77459043", "D52020", "D@gmail.com");
 		
 		Fournisseur saveFournisseur = fournisseurRepository.save(fournisseur);
 		
@@ -45,7 +45,7 @@ public class FournisseurRepositoryTest {
 	
 	@Test 
 	public void testFindFournisseurByCode() { 
-		String code = "D";
+		String code = "F1";
 		Fournisseur fournisseur = fournisseurRepository.findByCode(code);
 	  
 		assertThat(fournisseur.getCode()).isEqualTo(code); 
@@ -53,7 +53,7 @@ public class FournisseurRepositoryTest {
 	
 	@Test 
 	public void testFindFournisseurByNom() { 
-		String nom = "Diallo";
+		String nom = "F1";
 		Fournisseur fournisseur = fournisseurRepository.findByNom(nom);
 	  
 		assertThat(fournisseur.getNom()).isEqualTo(nom); 
@@ -62,13 +62,13 @@ public class FournisseurRepositoryTest {
 	@Test 
 	@Rollback(false)
 	public void TestUpdateFournisseur() {
-		String fournisseurCode = "F3";
+		String fournisseurCode = "F5";
 		String fournisseurNom = "Diallo";
 		String fournisseurEmail = "diallo@gmail.com";
 		
 		Fournisseur fournisseur = new Fournisseur(null, fournisseurCode, fournisseurNom, "D2020", "DK", "77459043", "D52020", fournisseurEmail);
 		
-		fournisseur.setId((long) 2);
+		fournisseur.setId((long) 3);
 		fournisseurRepository.save(fournisseur);
 		
 		Fournisseur fournisseurUpdate = fournisseurRepository.findByCode(fournisseurCode);
@@ -80,7 +80,7 @@ public class FournisseurRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testDeleteFournisseur() {
-		Long id = (long) 5;
+		Long id = (long) 11;
 		
 		boolean isExistBeforeDelete = fournisseurRepository.findById(id).isPresent();
 		
@@ -105,7 +105,7 @@ public class FournisseurRepositoryTest {
 	
 	@Test
 	public void testListFindFournisseurByCode() {
-		String code = "D";
+		String code = "F1";
 		
 		List<Fournisseur> fournisseurs = fournisseurRepository.ListFournisseurByCode("%"+code+"%");
 		List<Fournisseur> fournisseurList = new ArrayList<Fournisseur>();
