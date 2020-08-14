@@ -128,7 +128,6 @@ public class EmployeRepositoryTest {
 			employeList.add(employe);
 		}
 		assertThat(employeList.size()).isBetween(1, 3);
-		//assertThat(clientList.size()).isGreaterThan(0);
 			
 	}
 	

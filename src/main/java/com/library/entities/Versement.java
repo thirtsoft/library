@@ -32,7 +32,7 @@ public class Versement implements Serializable {
 	private Long id;
 	private String numVersement;
 	private String nature;
-	private String montantVersement;
+	private Double montantVersement;
 	private Date dateVersement;
 	
 	@ManyToOne
