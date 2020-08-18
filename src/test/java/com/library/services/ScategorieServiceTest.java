@@ -24,7 +24,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.library.entities.Category;
+import com.library.entities.Scategorie;
 import com.library.repository.CategoryRepository;
+import com.library.repository.ScategorieRepository;
 
 
 @RunWith(SpringRunner.class)
@@ -32,108 +34,71 @@ import com.library.repository.CategoryRepository;
 public class ScategorieServiceTest {
 	
 	@Autowired
-	private CategoryService categoryService;
+	private ScategorieService scategorieService;
 	
 	@MockBean
-	private CategoryRepository categoryRepository;
+	private ScategorieRepository scategorieRepository;
 	
 	@Test
-	public void testCreateCategory() {
-		Category category = new Category();
-		category.setCode("Mobile");
-		category.setDesignation("Samsung A10s");
+	public void testCreateScategorie() {
 		
-		Mockito.when(categoryRepository.save(category)).thenReturn(category);
+		Category category = new Category(null,"PC","PCMobile");
 		
-		assertThat(categoryService.saveCategory(category)).isEqualTo(category);
-	}
-	
-	@Test
-	public void testFindCategoryById() {
+		Scategorie scategorie = new Scategorie();
+		scategorie.setCode("SCAT");
+		scategorie.setLibelle("SCAT");
 		
-		Category category = new Category();
-		category.setId((long) 1);
-		category.setCode("CCC");
-		category.setDesignation("DESC");
+		Mockito.when(scategorieRepository.save(scategorie)).thenReturn(scategorie);
 		
-		categoryRepository.save(category);
-		
-		boolean isCategory = categoryRepository.findById(category.getId()).isPresent();
-		  
-		boolean isCat = categoryService.findCategoryById(category.getId()).isPresent();
-		
-		//Mockito.when(isCategory).thenReturn(isCategory);
-		//assertTrue(isCategory);
-		//assertTrue(isCat);
-		
-		//assertThat(isCategory).isEqualTo(isCat);
+		assertThat(scategorieService.saveScategorie(scategorie)).isEqualTo(scategorie);
 	}
 	
 	
 	@Test
-	public void testFindCategoryByCode() {
+	public void testFindScategorieByCode() {
 		
-		Category category = new Category(null, "CAT", "CATACAT");
+		Category category = new Category(null,"Bureau", "Chaise Roulante");
 		
-		when(categoryRepository.findByCode(category.getCode())).thenReturn(category);
+		Scategorie scategory = new Scategorie(null, "CAT", "CATACAT", category);
 		
-		Category cat = categoryService.findByCode(category.getCode());
+		when(scategorieRepository.findByCode(scategory.getCode())).thenReturn(scategory);
 		
-		assertNotNull(cat);
-		assertThat(cat.getCode()).isEqualTo(category.getCode());
+		Scategorie scat = scategorieService.findByCode(scategory.getCode());
+		
+		assertNotNull(scat);
+		assertThat(scat.getCode()).isEqualTo(scategory.getCode());
 		
 	}
 	
 	@Test
-	public void testFindCategoryByDesignation() {
+	public void testFindScategorieByLibelle() {
 		
-		Category category = new Category(null, "CAT", "DESIGNATION");
+		Category category = new Category(null,"Bureau", "Chaise Roulante");
 		
-		when(categoryRepository.findByDesignation(category.getDesignation())).thenReturn(category);
+		Scategorie scategory = new Scategorie(null, "CAT", "CATACAT", category);
 		
-		Category cat = categoryService.findByDesignation(category.getDesignation());
+		when(scategorieRepository.findByLibelle(scategory.getLibelle())).thenReturn(scategory);
 		
-		assertNotNull(cat);
-		assertThat(cat.getDesignation()).isEqualTo(category.getDesignation());
+		Scategorie scat = scategorieService.findByLibelle(scategory.getLibelle());
+		
+		assertNotNull(scat);
+		assertThat(scat.getLibelle()).isEqualTo(scategory.getLibelle());
 		
 	}
 	
 	
 	@Test
-	public void testFindAllCategories() {
-		when(categoryRepository.findAll()).thenReturn(Stream
-				.of(new Category(null, "Alcatel", "Alcatel 101"), new Category(null, "Samsung", "Samsung 120")).collect(Collectors.toList()));
-		assertEquals(2, categoryService.findAllCategory().size());
+	public void testFindAllScategories() {
+		Category category = new Category(null,"Bureau", "Chaise Roulante");
+		
+		when(scategorieRepository.findAll()).thenReturn(Stream
+				.of(new Scategorie(null, "CAT", "CATACAT", category), 
+		new Scategorie(null, "Samsung", "Samsung 120", category)).collect(Collectors.toList()));
+		assertEquals(2, scategorieService.findAllScategories().size());
 	}
 	
-	@Test
-	public void testUpdateCategory() {
-		
-		Category category = new Category(null, "cat8", "Informatique");
-		categoryRepository.save(category);
-		
-		Category cat = new Category();
-		
-		cat.setId(category.getId());
-		cat.setCode(category.getCode());
-		
-		categoryRepository.save(cat);
-	
-		Category catUpdate = categoryService.findByCode(cat.getCode());
-		
-		assertThat(catUpdate.getCode()).isEqualTo(category.getCode());
-		
-	}
-	
-	 @Test 
-	 public void testDelete() {    
-		 Category userTodelete = new Category(1L,"Dupont", "password"); 
-		 Mockito.doNothing().when(categoryRepository).deleteById(userTodelete.getId());     
-		 categoryService.deleteCategory(userTodelete.getId());   
-		// verify(categoryRepository).delete(any(Long.class); 
-     } 
 	
 	
-	
+
 
 }
