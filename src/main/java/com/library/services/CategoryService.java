@@ -13,7 +13,7 @@ import com.library.entities.Category;
 public interface CategoryService {
 	public List<Category> findAllCategory();
 	public Category saveCategory(Category category);
-	public Optional<Category> findCategoryById(Long catId);
+	public Optional<Category> findCategoryById(Long i);
 	public Category updateCategory(Long catId, Category category);
 	public ResponseEntity<Object> deleteCategory(Long catId);
 	
