@@ -2,6 +2,7 @@ package com.library.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import java.util.Date;
@@ -16,7 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.library.entities.Category;
 import com.library.entities.Employe;
+import com.library.entities.Produit;
 import com.library.entities.Versement;
 import com.library.repository.EmployeRepository;
 import com.library.repository.VersementRepository;
@@ -47,6 +50,38 @@ public class VersementServiceTest {
 		Mockito.when(versementRepository.save(versement)).thenReturn(versement);
 		
 		assertThat(versementService.saveVersement(versement)).isEqualTo(versement);
+	}
+	
+	@Test
+	public void testFindVersementByNumVersement() {
+		
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
+		
+		Versement versement = new Versement(null, "Vers08", "Casse", 2000000.0, new Date(), employe);
+		
+		when(versementRepository.findByNumVersement(versement.getNumVersement())).thenReturn(versement);
+		
+		Versement vers = versementService.findByNumVersement(versement.getNumVersement());
+		
+		assertNotNull(vers);
+		assertThat(vers.getNumVersement()).isEqualTo(versement.getNumVersement());
+		
+	}
+	
+	@Test
+	public void testFindVersementByNature() {
+		
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
+		
+		Versement versement = new Versement(null, "Vers08", "Casse", 2000000.0, new Date(), employe);
+		
+		when(versementRepository.findByNature(versement.getNature())).thenReturn(versement);
+		
+		Versement vers = versementService.findByNature(versement.getNature());
+		
+		assertNotNull(vers);
+		assertThat(vers.getNature()).isEqualTo(versement.getNature());
+		
 	}
 	
 	
