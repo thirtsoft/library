@@ -3,11 +3,11 @@ package com.library.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
 import com.library.entities.Category;
+import com.library.entities.Scategorie;
 import com.library.repository.CategoryRepository;
 
 @DataJpaTest
@@ -27,82 +28,88 @@ public class ScategorieRepositoryTest {
 	@Autowired
 	private ScategorieRepository scategorieRepository;
 	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	
 	@Test
 	@Rollback(false)
-	public void testCreateCategory() {
-		Category category = new Category(null,"Bureau", "Chaise Roulante");
+	public void testCreateScategorie() {
 		
-		Category saveCategory = categoryRepository.save(category);
+		Long catId = (long) 1;
+		Optional<Category> category = categoryRepository.findById(catId);
 		
-		assertNotNull(saveCategory);
+		Scategorie scategorie = new Scategorie(null,"Bureau", "Chaise Roulante", category.get());
+		
+		Scategorie saveScategorie = scategorieRepository.save(scategorie);
+		
+		assertNotNull(saveScategorie);
 	}
 	
 	@Test 
-	public void testFindCategoryById() { 
-		long catId = 2;
-		boolean isCategory = categoryRepository.findById(catId).isPresent();
+	public void testFindScategorieById() { 
+		long scatId = 2;
+		boolean isScategory = scategorieRepository.findById(scatId).isPresent();
 	  
-		assertTrue(isCategory);
+		assertTrue(isScategory);
 	}
 	
 	@Test 
-	public void testFindCategoryByCode() { 
-		String code = "CAT";
-		Category category = categoryRepository.findByCode(code);
+	public void testFindScategorieByCode() { 
+		String code = "HP";
+		Scategorie scategory = scategorieRepository.findByCode(code);
 	  
-		assertThat(category.getCode()).isEqualTo(code); 
+		assertThat(scategory.getCode()).isEqualTo(code); 
 	}
 	
-	@Test 
-	public void testFindCategoryByCodeNotExist() { 
-		String code = "CAT7";
-		Category category = categoryRepository.findByCode(code);
-	  
-		assertNull(category); 
-	}
-	
+
 	@Test
-	public void testFindCategoryByDesignation() {
-		String designation = "PROD1";
-		Category category = categoryRepository.findByDesignation(designation);
+	public void testFindScategorieByLibelle() {
+		String libelle = "SCAT2";
 		
-		assertThat(category.getDesignation()).isEqualTo(designation);
+		Scategorie scategory = scategorieRepository.findByLibelle(libelle);
+		
+		assertThat(scategory.getLibelle()).isEqualTo(libelle);
 	}
 	
 	@Test 
 	@Rollback(false)
-	public void TestUpdateCategory() {
-		String categoryDesignation = "PAPIER RAM";
-		Category cat = new Category(null, "Bureau", categoryDesignation);
-		cat.setId((long) 16);
-		categoryRepository.save(cat);
+	public void testUpdateScategorie() {
+		Long catId = (long) 1;
+		Optional<Category> category = categoryRepository.findById(catId);
+		Category cat = category.get();
 		
-		Category categoryUpdate = categoryRepository.findByDesignation(categoryDesignation);
+		String scategoryLibelle = "PAPIER RAM";
+		Scategorie scat = new Scategorie(null, "Bureau", scategoryLibelle, cat);
+		scat.setId((long) 2);
+		scategorieRepository.save(scat);
 		
-		assertThat(categoryUpdate.getDesignation()).isEqualTo(categoryDesignation);
+		Scategorie scategoryUpdate = scategorieRepository.findByLibelle(scategoryLibelle);
+		
+		assertThat(scategoryUpdate.getLibelle()).isEqualTo(scategoryLibelle);
 		
 	}
 	
 	@Test
-	public void testListCategories() {
-		List<Category> categories = categoryRepository.findAll();
+	public void testListScategories() {
+		List<Scategorie> scategories = scategorieRepository.findAll();
 		
-		for (Category category: categories) {
-			System.out.println(category);
+		for (Scategorie scategory: scategories) {
+			System.out.println(scategory);
 		}
-		assertThat(categories).size().isGreaterThan(0);
+		assertThat(scategories).size().isGreaterThan(0);
 	}
 	
 	@Test
 	@Rollback(false)
-	public void testDeleteCategory() {
+	public void testDeleteScategorie() {
 		Long id = (long) 7;
 		
-		boolean isExistBeforeDelete = categoryRepository.findById(id).isPresent();
+		boolean isExistBeforeDelete = scategorieRepository.findById(id).isPresent();
 		
-		categoryRepository.deleteById(id);
+		scategorieRepository.deleteById(id);
 		
-		boolean notExistAfterDelete = categoryRepository.findById(id).isPresent();
+		boolean notExistAfterDelete = scategorieRepository.findById(id).isPresent();
 		
 		assertTrue(isExistBeforeDelete);
 		
@@ -110,33 +117,45 @@ public class ScategorieRepositoryTest {
 	}
 	
 	@Test
-	public void testListFindCategoryByCode() {
-		String code = "C";
+	public void testListFindScategorieByCode() {
+		String code = "U";
 		
-		List<Category> categories = categoryRepository.ListCategoryByCode("%"+code+"%");
-		List<Category> categoriesList = new ArrayList<Category>();
+		List<Scategorie> scategories = scategorieRepository.findListScategorieByCode("%"+code+"%");
+		List<Scategorie> scategoriesList = new ArrayList<Scategorie>();
 		
-		for (Category category: categories) {
-			categoriesList.add(category);
+		for (Scategorie scategory: scategories) {
+			scategoriesList.add(scategory);
 		}
-		//assertThat(categoriesList.size()).isEqualTo(3);
-		assertThat(categoriesList.size()).isGreaterThan(0);
+
+		assertThat(scategoriesList.size()).isGreaterThan(0);
 			
 	}
 	
 	@Test
-	public void testListFindCategoryByDesignation() {
-		String designation = "PROD";
+	public void testListFindScategorieByLibelle() {
+		String libelle = "P";
 		
-		List<Category> categories = categoryRepository.ListCategoryByDesignation("%"+designation+"%");
-		List<Category> categoriesList = new ArrayList<Category>();
+		List<Scategorie> scategories = scategorieRepository.findListScategorieByLibelle("%"+libelle+"%");
+		List<Scategorie> scategoriesList = new ArrayList<Scategorie>();
 		
-		for (Category category: categories) {
-			categoriesList.add(category);
+		for (Scategorie scategory: scategories) {
+			scategoriesList.add(scategory);
 		}
-		assertThat(categoriesList.size()).isEqualTo(2);
-		//assertThat(categoriesList.size()).isGreaterThan(0);
+		assertThat(scategoriesList.size()).isEqualTo(2);
 			
+	}
+	
+	@Test 
+	public void testFindListScategorieByCategory() { 
+		Long catId = (long) 1;
+		
+		List<Scategorie> scategories = scategorieRepository.findScategorieByCateoryId(catId);
+		List<Scategorie> scategorieList = new ArrayList<Scategorie>();
+		
+		for (Scategorie scategorie: scategories) {
+			scategorieList.add(scategorie);
+		}
+		assertThat(scategorieList.size()).isEqualTo(2);
 	}
 	
 }
