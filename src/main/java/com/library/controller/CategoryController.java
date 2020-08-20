@@ -23,7 +23,7 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.CategoryService;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping("/alAmine")
 public class CategoryController {
 	

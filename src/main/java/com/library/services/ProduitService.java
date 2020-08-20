@@ -31,6 +31,8 @@ public interface ProduitService {
 	public List<Produit> findAllProduits();
 	public List<Produit> findListProduitByDesignation(String designation);
 	public List<Produit> findProductByCateoryId(Long catId);
+	public List<Produit> findProductByScateoryId(Long scatId);
+	
 	
 	public Page<Produit> findAllProduitsByPageable(Pageable page);
 	public Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);

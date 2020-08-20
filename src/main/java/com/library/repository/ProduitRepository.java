@@ -29,6 +29,11 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 	
 	@Query("select p from Produit p where p.categorie.id =:cat")
 	public List<Produit> findProductByCateoryId(@Param("cat") Long catId);
+	
+
+	@Query("select p from Produit p where p.scategorie.id =:scat")
+	public List<Produit> findProductByScateoryId(@Param("scat") Long scatId);
+		
 		
 	@Query("select p from Produit p where p.designation like :des") 
 	public List<Produit> findListProduitByDesignation(@Param("des") String designation);

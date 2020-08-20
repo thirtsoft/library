@@ -92,6 +92,11 @@ public class ProduitServiceImpl implements ProduitService {
 	}
 	
 	@Override
+	public List<Produit> findProductByScateoryId(Long scatId) {
+		return produitRepository.findProductByScateoryId(scatId);
+	}
+	
+	@Override
 	public Page<Produit> findAllProduitsByPageable(Pageable page) {
 		return produitRepository.findAllProduitsByPageable(page);
 	}

@@ -75,6 +75,11 @@ public class ProduitController {
 		return produitService.findProductByCateoryId(catId);
 	}
 	
+	@GetMapping("/searchListProduitsByScategoryId")
+	public List<Produit> getAllProduitsByScategoryId(@RequestParam("scaId") Long scatId) {
+		return produitService.findProductByScateoryId(scatId);
+	}
+	
 	@GetMapping("/searchListProduitsByCategoryPageable")
 	public Page<Produit> getAllProduitsByPageable(@RequestParam(name = "cat")Long catId,
 			@RequestParam(name = "page") int page,

@@ -36,6 +36,7 @@ public class Produit implements Serializable {
 	private Double prixAchat;
 	private Double prixVente;
 	private Double tva;
+	private int qtestock;
 	private int stockInitial;
 	private boolean promo; 
 	private String photo;
@@ -44,19 +45,11 @@ public class Produit implements Serializable {
 	//@JoinColumn(name="cat_id", insertable = false, updatable = false)
 	@JoinColumn(name="cat_id", nullable = false)
 	private Category categorie;
-	public Produit(String reference, String designation, Double prixAchat, Double prixVente, Double tva,
-			int stockInitial, boolean promo, String photo, Date add_date, Category categorie) {
-		this.reference = reference;
-		this.designation = designation;
-		this.prixAchat = prixAchat;
-		this.prixVente = prixVente;
-		this.tva = tva;
-		this.stockInitial = stockInitial;
-		this.promo = promo;
-		this.photo = photo;
-		this.add_date = add_date;
-		this.categorie = categorie;
-	}
+	
+	@ManyToOne
+	@JoinColumn(name="scat_id", nullable = false)
+	private Scategorie scategorie;
+	
 	
 	
 

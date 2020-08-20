@@ -19,6 +19,7 @@ import org.springframework.test.annotation.Rollback;
 
 import com.library.entities.Category;
 import com.library.entities.Produit;
+import com.library.entities.Scategorie;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -30,13 +31,22 @@ public class ProduitRepositoryTest {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	@Autowired
+	private ScategorieRepository scategoryRepository;
+	
+	
 	
 	@Test
 	@Rollback(false)
 	public void testCreateProduit() {
+		
 		Long catId = (long) 6;
 		Optional<Category> category = categoryRepository.findById(catId);
-		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0, 25000.0, 20.0, 5, true, "photo", new Date(), category.get());
+		
+		Long scatId = (long) 2;
+		Optional<Scategorie> scat = scategoryRepository.findById(scatId);
+		
+		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0,25000.0, 20.0, 20, 10, true, "photo", new Date(), category.get(), scat.get());
 		
 		Produit saveProduit = produitRepository.save(produit);
 		
@@ -99,8 +109,12 @@ public class ProduitRepositoryTest {
 		Optional<Category> category = categoryRepository.findById(catId);
 		Category cat = category.get();
 		
+		Long scatId = (long) 6;
+		Optional<Scategorie> scategory = scategoryRepository.findById(scatId);
+		Scategorie scat = scategory.get();
+		
 		Produit produit = new Produit(null,prodReference, prodDesignation, prodprixAchat, 
-				prodprixVente, prodtva, 15, true, "photoUpdate", new Date(), cat);
+				prodprixVente, prodtva, 300, 15, true, "photoUpdate", new Date(), cat, scat);
 		
 		produit.setId((long) 7);
 		produitRepository.save(produit);
