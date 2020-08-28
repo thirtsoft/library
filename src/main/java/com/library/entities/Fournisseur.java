@@ -28,8 +28,11 @@ public class Fournisseur implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String code;
-	private String nom;
 	private String raisonSociale;
+	private String prenom;
+	private String nom;
+	private String nomBank;
+	private String numeroCompte;
 	private String adresse;
 	private String telephone;
 	private String fax;

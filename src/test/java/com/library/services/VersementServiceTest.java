@@ -55,7 +55,7 @@ public class VersementServiceTest {
 	@Test
 	public void testFindVersementByNumVersement() {
 		
-		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219","776543219", "ad@gmail.com");
 		
 		Versement versement = new Versement(null, "Vers08", "Casse", 2000000.0, new Date(), employe);
 		
@@ -71,7 +71,7 @@ public class VersementServiceTest {
 	@Test
 	public void testFindVersementByNature() {
 		
-		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219","776543219", "ad@gmail.com");
 		
 		Versement versement = new Versement(null, "Vers08", "Casse", 2000000.0, new Date(), employe);
 		
@@ -87,7 +87,7 @@ public class VersementServiceTest {
 	
 	@Test
 	public void testfindAllVersements() {
-		Employe emp = new Employe(null, "Emp", "Emp","Empl","Emp","Emp","Emp"); 
+		Employe emp = new Employe(null, "Emp", "Emp","Empl","Emp","Emp","Emp","Emp"); 
 		when(versementRepository.findAll()).thenReturn(Stream
 				.of(new Versement(null, "VER1", "VER1",30000.0,new Date(), emp), 
 		new Versement(null, "VER2", "VER2",300.0,new Date(), emp)).collect(Collectors.toList()));

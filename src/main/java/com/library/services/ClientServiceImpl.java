@@ -36,23 +36,23 @@ public class ClientServiceImpl implements ClientService{
 	}
 
 	@Override
-	public Client findByNom(String nom) {
-		return clientRepository.findByNom(nom);
+	public Client findByRaisonSocial(String raisonSocial) {
+		return clientRepository.findByRaisonSocial(raisonSocial);
 	}
 
 	@Override
-	public Client findByPrenom(String prenom) {
-		return clientRepository.findByPrenom(prenom);
+	public Client findByChefService(String chefService) {
+		return clientRepository.findByChefService(chefService);
 	}
 
 	@Override
-	public List<Client> ListClientByNom(String nom) {
-		return clientRepository.ListClientByNom(nom);
+	public List<Client> ListClientByRaisonSocial(String raisonSocial) {
+		return clientRepository.ListClientByRaisonSocial(raisonSocial);
 	}
 
 	@Override
-	public List<Client> ListClientByPrneom(String prenom) {
-		return clientRepository.ListClientByPrenom(prenom);
+	public List<Client> ListClientByChefService(String chefService) {
+		return clientRepository.ListClientByChefService(chefService);
 	}
 
 	@Override
@@ -80,8 +80,8 @@ public class ClientServiceImpl implements ClientService{
 			throw new ResourceNotFoundException("Client N° " + id + "not found");
 		}
 		Client clientResult = clt.get();
-		clientResult.setNom(client.getNom());
-		clientResult.setPrenom(client.getPrenom());
+		clientResult.setRaisonSocial(client.getRaisonSocial());
+		clientResult.setChefService(client.getChefService());
 		clientResult.setAdresse(client.getAdresse());
 		clientResult.setTelephone(client.getTelephone());
 		clientResult.setEmail(client.getEmail());

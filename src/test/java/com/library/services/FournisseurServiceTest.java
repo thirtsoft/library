@@ -46,7 +46,7 @@ public class FournisseurServiceTest {
 	@Test
 	public void testFindFournisseurByCode() {
 		
-		Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "77459043", "D52020", "D@gmail.com");
+		Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG","Bank1", "Cmpt1", "Add1","77459043", "D52020", "D@gmail.com");
 		
 		when(fournisseuRepository.findByCode(fournisseur.getCode())).thenReturn(fournisseur);
 		
@@ -60,7 +60,7 @@ public class FournisseurServiceTest {
 	@Test
 	public void testFindFournisseurByNom() {
 		
-		Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "77459043", "D52020", "D@gmail.com");
+		Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG","Bank1", "Cmpt1", "Add1","77459043", "D52020", "D@gmail.com");
 		
 		when(fournisseuRepository.findByNom(fournisseur.getNom())).thenReturn(fournisseur);
 		
@@ -74,9 +74,10 @@ public class FournisseurServiceTest {
 	
 	@Test
 	public void testAllFournisseurs() {
+		
 		when(fournisseuRepository.findAll()).thenReturn(Stream
-				.of(new Fournisseur(null, "F", "F","F","F","F","F","F"), 
-			new Fournisseur(null, "F", "F","F","F","F","F","F")).collect(Collectors.toList()));
+				.of(new Fournisseur(null, "L", "Diop", "D2020", "ZG","Bank1", "Cmpt1", "Add1","77459043", "D52020", "D@gmail.com"), 
+			new Fournisseur(null, "L", "Diop", "D2020", "ZG","Bank1", "Cmpt1", "Add1","77459043", "D52020", "D@gmail.com")).collect(Collectors.toList()));
 		assertEquals(2, fournisseurService.findAllFournisseurs().size());
 	}
 	

@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.library.entities.Category;
 import com.library.entities.Client;
 import com.library.repository.ClientRepository;
 
@@ -34,8 +33,8 @@ public class ClientServiceTest {
 	@Test
 	public void testCreateClient() {
 		Client  client = new Client();
-		client.setNom("CL22");
-		client.setPrenom("PREEEEN");
+		client.setRaisonSocial("CL22");
+		client.setChefService("PREEEEN");
 		client.setAdresse("HHHHH");
 		
 		Mockito.when(clientRepository.save(client)).thenReturn(client);
@@ -44,30 +43,30 @@ public class ClientServiceTest {
 	}
 	
 	@Test
-	public void testFindClientByNom() {
+	public void testFindClientByRaisonSocial() {
 		
 		Client client = new Client(null, "Dieng", "Sidiya", "Mbao", "775643219", "seydou@gmail.com");
 		
-		when(clientRepository.findByNom(client.getNom())).thenReturn(client);
+		when(clientRepository.findByRaisonSocial(client.getRaisonSocial())).thenReturn(client);
 		
-		Client clt = clientService.findByNom(client.getNom());
+		Client clt = clientService.findByRaisonSocial(client.getRaisonSocial());
 		
 		assertNotNull(clt);
-		assertThat(clt.getNom()).isEqualTo(client.getNom());
+		assertThat(clt.getRaisonSocial()).isEqualTo(client.getRaisonSocial());
 		
 	}
 	
 	@Test
-	public void testFindClientByPrenom() {
+	public void testFindClientByChefService() {
 		
 		Client client = new Client(null, "Dieng", "Sidiya", "Mbao", "775643219", "seydou@gmail.com");
 		
-		when(clientRepository.findByPrenom(client.getPrenom())).thenReturn(client);
+		when(clientRepository.findByChefService(client.getChefService())).thenReturn(client);
 		
-		Client clt = clientService.findByPrenom(client.getPrenom());
+		Client clt = clientService.findByChefService(client.getChefService());
 		
 		assertNotNull(clt);
-		assertThat(clt.getPrenom()).isEqualTo(client.getPrenom());
+		assertThat(clt.getChefService()).isEqualTo(client.getChefService());
 		
 	}
 	

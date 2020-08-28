@@ -17,11 +17,11 @@ public interface ClientService {
 	public Client updateClient(Long id, Client client);
 	public ResponseEntity<Object> deleteClient(Long id);
 	
-	public Client findByNom(String nom);
-	public Client findByPrenom(String prenom);
+	public Client findByRaisonSocial(String raisonSocial);
+	public Client findByChefService(String chefService);
 	
-	public List<Client> ListClientByNom(String nom);
-	public List<Client> ListClientByPrneom(String prenom);
+	public List<Client> ListClientByRaisonSocial(String raisonSocial);
+	public List<Client> ListClientByChefService(String chefService);
 	
 	public Page<Client> findAllClientByPage(Pageable page);
 	public Page<Client> findClientByKeyWord(String mc, Pageable pageable);

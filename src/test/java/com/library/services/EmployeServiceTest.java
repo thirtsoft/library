@@ -48,7 +48,7 @@ public class EmployeServiceTest {
 	@Test
 	public void testFindEmployeByNom() {
 		
-		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219","776543219", "ad@gmail.com");
 		
 		when(employeRepository.findByNom(employe.getNom())).thenReturn(employe);
 		
@@ -62,7 +62,7 @@ public class EmployeServiceTest {
 	@Test
 	public void testFindEmployeByCNI() {
 		
-		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219","776543219", "ad@gmail.com");
 		
 		when(employeRepository.findByCni(employe.getCni())).thenReturn(employe);
 		
@@ -77,8 +77,8 @@ public class EmployeServiceTest {
 	@Test
 	public void testAllEmployees() {
 		when(employeRepository.findAll()).thenReturn(Stream
-				.of(new Employe(null, "Emp", "Emp","Empl","Emp","Emp","Emp"), 
-			new Employe(null, "Emp", "Emp","Empl","Emp","Emp","Emp")).collect(Collectors.toList()));
+				.of(new Employe(null, "Emp", "Emp","Empl","Emp","Emp","Emp","Emp"), 
+			new Employe(null, "Emp", "Emp","Empl","Emp","Emp","Emp","Emp")).collect(Collectors.toList()));
 		assertEquals(2, employeService.findAllEmploye().size());
 	}
 	

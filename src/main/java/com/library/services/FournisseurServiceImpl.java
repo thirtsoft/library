@@ -17,7 +17,7 @@ import com.library.repository.FournisseurRepository;
 
 @Service
 @Transactional
-public class FournisseurImpl implements FournisseurService {
+public class FournisseurServiceImpl implements FournisseurService {
 	
 	@Autowired
 	private FournisseurRepository fournisseurRepository;

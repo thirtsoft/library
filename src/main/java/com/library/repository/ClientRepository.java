@@ -14,22 +14,22 @@ import com.library.entities.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 	
-	@Query("select c from Client c where c.nom like :name")
-	public Client findByNom(@Param("name") String nom);
+	@Query("select c from Client c where c.raisonSocial like :raisonSocial")
+	public Client findByRaisonSocial(@Param("raisonSocial") String raisonSocial);
 	
-	@Query("select c from Client c where c.nom like :name") 
-	public List<Client> ListClientByNom(@Param("name") String nom);
+	@Query("select c from Client c where c.raisonSocial like :raisonSocial") 
+	public List<Client> ListClientByRaisonSocial(@Param("raisonSocial") String raisonSocial);
 	
-	@Query("select c from Client c where c.prenom like :pren")
-	public Client findByPrenom(@Param("pren") String prenom);
+	@Query("select c from Client c where c.chefService like :chefService")
+	public Client findByChefService(@Param("chefService") String chefService);
 	
-	@Query("select c from Client c where c.prenom like :pren") 
-	public List<Client> ListClientByPrenom(@Param("pren") String prenom);
+	@Query("select c from Client c where c.chefService like :chefService") 
+	public List<Client> ListClientByChefService(@Param("chefService") String chefService);
 	
 	@Query("select p from Client p")
 	public Page<Client> findClientByPageable(Pageable pageable);
 	  
-	@Query("select p from Client p where p.nom like :x")
+	@Query("select p from Client p where p.raisonSocial like :x")
 	public Page<Client> findClientByKeyWord(@Param("x") String mc, Pageable pageable);
 	
 	

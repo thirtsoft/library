@@ -56,8 +56,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 	public CommandeClient saveCommandeClient(CommandeClient commande) {
 		CommandeForm orderForm = new CommandeForm();
 		Client client = new Client();
-		client.setNom(orderForm.getClient().getNom());
-		client.setPrenom(orderForm.getClient().getPrenom());
+		client.setRaisonSocial(orderForm.getClient().getRaisonSocial());
+		client.setChefService(orderForm.getClient().getChefService());
 		client.setAdresse(orderForm.getClient().getAdresse());
 		client.setTelephone(orderForm.getClient().getTelephone());
 		client.setEmail(orderForm.getClient().getEmail());

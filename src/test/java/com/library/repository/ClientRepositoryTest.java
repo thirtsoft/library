@@ -45,17 +45,17 @@ public class ClientRepositoryTest {
 	}
 	
 	@Test 
-	public void testFindClientByNomNotExist() { 
-		String nom = "Ndiaye";
-		Client client = clientRepository.findByNom(nom);
+	public void testFindClientByRaisonSocialNotExist() { 
+		String raisonSocial = "Ndiaye";
+		Client client = clientRepository.findByRaisonSocial(raisonSocial);
 	  
 		assertNull(client); 
 	}
 	
 	@Test 
-	public void testFindClientByPrenom() { 
-		String prenom = "Saliou";
-		Client client = clientRepository.findByPrenom(prenom);
+	public void testFindClientByChefService() { 
+		String chefService = "Saliou";
+		Client client = clientRepository.findByChefService(chefService);
 	  
 		assertNull(client); 
 	}
@@ -63,22 +63,22 @@ public class ClientRepositoryTest {
 	@Test 
 	@Rollback(false)
 	public void testUpdateClient() {
-		String clientNom = "Wade";
-		String clientPrenom = "Wade";
+		String clientRaisonSocial = "Wade";
+		String clientChefService = "Wade";
 		String clientAdress = "DK";
 		String clientEmail = "adama@gmail.com";
 		
-		Client client = new Client(null, clientNom, clientPrenom, clientAdress, 
+		Client client = new Client(null, clientRaisonSocial, clientChefService, clientAdress, 
 				"775643219", clientEmail);
 		
 		client.setId((long) 11);
 		clientRepository.save(client);
 		
-		Client clientUpdate = clientRepository.findByNom(clientNom);
-		Client clientUpdate1 = clientRepository.findByPrenom(clientPrenom);
+		Client clientUpdate = clientRepository.findByRaisonSocial(clientRaisonSocial);
+		Client clientUpdate1 = clientRepository.findByChefService(clientChefService);
 		
-		assertThat(clientUpdate.getNom()).isEqualTo(clientNom);
-		assertThat(clientUpdate1.getPrenom()).isEqualTo(clientPrenom);
+		assertThat(clientUpdate.getRaisonSocial()).isEqualTo(clientRaisonSocial);
+		assertThat(clientUpdate1.getChefService()).isEqualTo(clientChefService);
 	
 	}
 	
@@ -109,10 +109,10 @@ public class ClientRepositoryTest {
 	}
 	
 	@Test
-	public void testListFindClientByNom() {
-		String nom = "CL";
+	public void testListFindClientByRaisonSocial() {
+		String raisonSocial = "CL";
 		
-		List<Client> clients = clientRepository.ListClientByNom("%"+nom+"%");
+		List<Client> clients = clientRepository.ListClientByRaisonSocial("%"+raisonSocial+"%");
 		List<Client> clientList = new ArrayList<Client>();
 		
 		for (Client client: clients) {
@@ -124,10 +124,10 @@ public class ClientRepositoryTest {
 	}
 	
 	@Test
-	public void testListFindClientByPrenom() {
-		String prenom = "M";
+	public void testListFindClientByChefService() {
+		String chefService = "M";
 		
-		List<Client> clients = clientRepository.ListClientByPrenom("%"+prenom+"%");
+		List<Client> clients = clientRepository.ListClientByChefService("%"+chefService+"%");
 		List<Client> clientList = new ArrayList<Client>();
 		
 		for (Client client: clients) {

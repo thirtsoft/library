@@ -28,7 +28,7 @@ public class FournisseurRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testCreateFournisseur() {
-		Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "77459043", "D52020", "D@gmail.com");
+		Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG","Bank1", "Cmpt1", "Add1","77459043", "D52020", "D@gmail.com");
 		
 		Fournisseur saveFournisseur = fournisseurRepository.save(fournisseur);
 		
@@ -66,7 +66,7 @@ public class FournisseurRepositoryTest {
 		String fournisseurNom = "Diallo";
 		String fournisseurEmail = "diallo@gmail.com";
 		
-		Fournisseur fournisseur = new Fournisseur(null, fournisseurCode, fournisseurNom, "D2020", "DK", "77459043", "D52020", fournisseurEmail);
+		Fournisseur fournisseur = new Fournisseur(null, fournisseurCode, fournisseurNom, "D2020", "DK","Bank1","Cmpt1","Add1", "77459043", "D52020", fournisseurEmail);
 		
 		fournisseur.setId((long) 3);
 		fournisseurRepository.save(fournisseur);

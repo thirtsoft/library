@@ -29,7 +29,7 @@ public class EmployeRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testCreateEmploye() {
-		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219", "ad@gmail.com");
+		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219","776543219", "ad@gmail.com");
 		
 		Employe saveEmploye = employeRepository.save(employe);
 		
@@ -77,7 +77,7 @@ public class EmployeRepositoryTest {
 		String empEmail = "masterou@gmail.com";
 		
 		Employe employe = new Employe(null, empNom, empPrenom, 
-				empCni, "DK", "776543219", empEmail);
+				empCni, "DK", "776543219","776543219", empEmail);
 
 		
 		employe.setId((long) 5);

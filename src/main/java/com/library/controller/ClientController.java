@@ -45,28 +45,28 @@ public class ClientController {
 		
 	}
 	
-	@GetMapping("/searchClientByNom")
-	public Client getClientByNom(@RequestParam(value = "name") String nom) {
-		return clientService.findByNom(nom);
+	@GetMapping("/searchClientByRaisonSocial")
+	public Client getClientByRaisonSocial(@RequestParam(value = "raisonSocial") String raisonSocial) {
+		return clientService.findByRaisonSocial(raisonSocial);
 		
 	}
 	
-	@GetMapping("/searchListClientByNom")
-	public List<Client> getAllCategoryByNom(@RequestParam(value = "name") String nom) {
+	@GetMapping("/searchListClientByRaisonSocial")
+	public List<Client> getListClientByRaisonSocial(@RequestParam(value = "raisonSocial") String raisonSocial) {
 		
-		return clientService.ListClientByNom("%"+nom+"%");
+		return clientService.ListClientByRaisonSocial("%"+raisonSocial+"%");
 		
 	}
 	
-	@GetMapping("/searchClientByPrenom")
-	public Client getClientByPrenom(@RequestParam(value = "pren") String prenom) {
-		return clientService.findByPrenom(prenom);
+	@GetMapping("/searchClientByChefService")
+	public Client getClientByChefService(@RequestParam(value = "chefService") String chefService) {
+		return clientService.findByChefService(chefService);
 	}
 	
-	@GetMapping("/searchListClientByPrenom")
-	public List<Client> getAllClientByPrenom(@RequestParam(value = "pren") String prenom) {
+	@GetMapping("/searchListClientByChefService")
+	public List<Client> getListClientByChefService(@RequestParam(value = "chefService") String chefService) {
 		
-		return clientService.ListClientByPrneom("%"+prenom+"%");
+		return clientService.ListClientByChefService("%"+chefService+"%");
 		
 	}
 	@GetMapping("/searchListClientByPageable")
