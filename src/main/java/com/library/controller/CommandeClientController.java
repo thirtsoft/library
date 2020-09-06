@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library.entities.CommandeClient;
+import com.library.entities.LigneCmdClient;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.repository.CommandeClientRepository;
+import com.library.repository.LigneCmdClientRepository;
 import com.library.services.ClientService;
 import com.library.services.CommandeClientService;
 import com.library.services.LigneCmdClientService;
@@ -37,6 +41,12 @@ public class CommandeClientController {
 	
 	@Autowired
 	private ClientService clientService;
+	
+	@Autowired
+	private CommandeClientRepository commandeClientRepository;
+	
+	@Autowired
+	private LigneCmdClientRepository ligneCmdClientRepository;
 	
 	private Double total = 0.0;
 	
@@ -101,10 +111,56 @@ public class CommandeClientController {
 			@RequestParam(name = "size") int size) {
 		return commandeClientService.findCommandeClientByKeyWord(mc, PageRequest.of(page, size));
 	}
+
+	/**
+	 *
+	 * @param commandeClient
+	 * @return Methode qui marche ce 06/09/2020
+	 */
+	@PostMapping("/comms")
+	public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
+		commandeClientRepository.save(commandeClient);
+		
+		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
+		for (LigneCmdClient lc : lcomms) {
+			lc.setNumero(commandeClient.getNumCommande());
+			ligneCmdClientRepository.save(lc);
+			
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+	}
 	
-	@PostMapping("/commandes") 
+	@PostMapping("/commandes")
+	public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
+	    
+		commandeClientService.createCommande(commandeClient);
+
+//		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
+//		for (LigneCmdClient lc : lcomms) {
+//			lc.setNumero(commandeClient.getNumCommande());
+//			ligneCmdClientService.saveLigneCmdClient(lc);
+//
+//		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/commandesClientes") 
 	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) {
-		return commandeClientService.saveCommandeClient(commandeClient);
+		/*
+		 * commandeClientService.saveCommandeCliente(commandeClient);
+		 * List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients(); for
+		 * (LigneCmdClient lc : lcomms) { lc.setNumero(commandeClient.getNumCommande());
+		 * ligneCmdClientService.saveLigneCmdClient(lc); }
+		 * commandeClient.setNumCommande("Cmd "+15+(int)(Math.random()*100));
+		 * commandeClient.setStatus("valider"); commandeClient.setDateCommande(new
+		 * Date());
+		 */
+	    
+		return commandeClientService.saveCommandeCliente(commandeClient);
 		
 	}
 	

@@ -60,8 +60,8 @@ public class ScategorieController {
 		return scategorieService.findListScategorieByLibelle("%"+libelle+"%");
 	}
 	
-	@GetMapping("/searchListScategoriesByCategoryId")
-	public List<Scategorie> getListScategoriesByCategoryId(@RequestParam("caId") Long catId) {
+	@GetMapping("/searchListScategoriesByCategoryId/{catId}")
+	public List<Scategorie> getListScategoriesByCategoryId(@PathVariable (name="catId") Long catId) {
 		return scategorieService.findScategorieByCateoryId(catId);
 	}
 	
