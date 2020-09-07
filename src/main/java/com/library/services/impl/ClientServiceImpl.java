@@ -1,10 +1,11 @@
-package com.library.services;
+package com.library.services.impl;
 
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.library.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +18,7 @@ import com.library.repository.ClientRepository;
 
 @Service
 @Transactional
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
 	
 	@Autowired
 	private ClientRepository clientRepository;

@@ -42,12 +42,6 @@ public class CommandeClientController {
 	@Autowired
 	private ClientService clientService;
 	
-	@Autowired
-	private CommandeClientRepository commandeClientRepository;
-	
-	@Autowired
-	private LigneCmdClientRepository ligneCmdClientRepository;
-	
 	private Double total = 0.0;
 	
 	@GetMapping("/commandes")
@@ -119,12 +113,12 @@ public class CommandeClientController {
 	 */
 	@PostMapping("/comms")
 	public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
-		commandeClientRepository.save(commandeClient);
+		commandeClientService.createCommande(commandeClient);
 		
 		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
 		for (LigneCmdClient lc : lcomms) {
 			lc.setNumero(commandeClient.getNumCommande());
-			ligneCmdClientRepository.save(lc);
+			ligneCmdClientService.saveLigneCmdClient(lc);
 			
 		}
 		
