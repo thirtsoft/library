@@ -47,7 +47,7 @@ public class CommandeClient implements Serializable {
 	private Date dateCommande;
 	
 	@ManyToOne
-	@JoinColumn(name="client_id", nullable = false)
+	@JoinColumn(name="client_id")
 	private Client client;
 	
 	@OneToMany(mappedBy = "commande") 

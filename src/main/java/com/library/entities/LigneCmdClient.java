@@ -40,6 +40,7 @@ public class LigneCmdClient implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="cmdClient_id")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private CommandeClient commande;
 		
 	@ManyToOne

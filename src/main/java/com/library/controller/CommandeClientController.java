@@ -150,17 +150,8 @@ public class CommandeClientController {
 	
 	@PostMapping("/commandesClientes") 
 	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) {
-		/*
-		 * commandeClientService.saveCommandeCliente(commandeClient);
-		 * List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients(); for
-		 * (LigneCmdClient lc : lcomms) { lc.setNumero(commandeClient.getNumCommande());
-		 * ligneCmdClientService.saveLigneCmdClient(lc); }
-		 * commandeClient.setNumCommande("Cmd "+15+(int)(Math.random()*100));
-		 * commandeClient.setStatus("valider"); commandeClient.setDateCommande(new
-		 * Date());
-		 */
-	    
-		return commandeClientService.saveCommandeCliente(commandeClient);
+
+		return commandeClientService.saveCommandeClient(commandeClient);
 		
 	}
 	

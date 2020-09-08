@@ -101,36 +101,35 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         return commandeClientRepository.save(commandeClient);
     }
 
+    /**
+     *
+     * @param commande
+     * @return methode permettant d'ajouter d'abord une commande
+     *  puis les lignes de commandes correspondantes
+     */
+
     @Override
     public CommandeClient saveCommandeClient(CommandeClient commande) {
 
-        Produit produit = new Produit();
-        produitRepository.save(produit);
-
-        Client client = new Client();
-        clientRepository.save(client);
-
-        commande.setClient(client);
-        commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
-
-        commande = commandeClientRepository.save(commande);
+        commandeClientRepository.save(commande);
 
         List<LigneCmdClient> ligneCmdClients = commande.getLigneCmdClients();
 
         double total = 0;
         for (LigneCmdClient lcmdClt : ligneCmdClients) {
-            lcmdClt.setNumero(commande.getNumCommande());
+            lcmdClt.setCommande(commande);
+            Produit produit = produitService.findProduitById(lcmdClt.getProduit().getId()).get();
             lcmdClt.setProduit(produit);
-            lcmdClt.setQuantite(produit.getQtestock());
-            lcmdClt.setPrix(produit.getPrixVente());
+            lcmdClt.setPrix(lcmdClt.getProduit().getPrixVente());
             ligneCmdClientRepository.save(lcmdClt);
 
-            total = produit.getQtestock() * produit.getPrixVente();
+            total += lcmdClt.getQuantite() * lcmdClt.getProduit().getPrixVente();
 
         }
 
         commande.setTotalCommande(total);
         commande.setStatus("valider");
+        commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
         commande.setDateCommande(new Date());
         return commandeClientRepository.save(commande);
 
