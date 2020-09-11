@@ -64,6 +64,11 @@ public class ScategorieController {
 	public List<Scategorie> getListScategoriesByCategoryId(@PathVariable (name="catId") Long catId) {
 		return scategorieService.findScategorieByCateoryId(catId);
 	}
+
+	@GetMapping("/searchListScategoriesByCategoryId")
+	public List<Scategorie> getListScategoriesByCategory(@RequestParam (name="catId") Long catId) {
+		return scategorieService.findScategorieByCateoryId(catId);
+	}
 	
 	@GetMapping("/searchListScategoriesByCategoryPageable")
 	public Page<Scategorie> getAllScategoriesByPageable(@RequestParam(name = "cat")Long catId,

@@ -7,7 +7,6 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import com.library.services.*;
-import org.apache.commons.math3.stat.descriptive.summary.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -112,28 +111,29 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public CommandeClient saveCommandeClient(CommandeClient commande) {
 
-        commandeClientRepository.save(commande);
+            commandeClientRepository.save(commande);
 
-        List<LigneCmdClient> ligneCmdClients = commande.getLigneCmdClients();
+            List<LigneCmdClient> ligneCmdClients = commande.getLigneCmdClients();
 
-        double total = 0;
-        for (LigneCmdClient lcmdClt : ligneCmdClients) {
-            lcmdClt.setCommande(commande);
-            Produit produit = produitService.findProduitById(lcmdClt.getProduit().getId()).get();
-            lcmdClt.setProduit(produit);
-            lcmdClt.setPrix(lcmdClt.getProduit().getPrixVente());
-            ligneCmdClientRepository.save(lcmdClt);
+            double total = 0;
+            for (LigneCmdClient lcmdClt : ligneCmdClients) {
+                    lcmdClt.setCommande(commande);
+                //    Produit produit = produitService.findProduitById(lcmdClt.getProduit().getId()).get();
+                //    lcmdClt.setProduit(produit);
+                lcmdClt.setPrix(lcmdClt.getProduit().getPrixVente());
+                ligneCmdClientRepository.save(lcmdClt);
 
-            total += lcmdClt.getQuantite() * lcmdClt.getProduit().getPrixVente();
+                total += lcmdClt.getQuantite() * lcmdClt.getProduit().getPrixVente();
 
-        }
+            }
 
-        commande.setTotalCommande(total);
-        commande.setStatus("valider");
-        commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
-        commande.setDateCommande(new Date());
+            commande.setTotalCommande(total);
+            commande.setStatus("valider");
+            commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
+            commande.setDateCommande(new Date());
+
+
         return commandeClientRepository.save(commande);
-
 
     }
 
@@ -210,11 +210,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         return ResponseEntity.ok().build();
     }
 
-    @Override
-    public CommandeClient saveCommandeClient(Long num, Date date, boolean valide, Client clt) {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     @Override
     public int getNombreCommandes(Date d1, Date d2) {

@@ -143,14 +143,14 @@ public class CommandeClientController {
 	}
 	
 	@PostMapping("/commandesClientes") 
-	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) {
+	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) throws Exception  {
 
 		return commandeClientService.saveCommandeClient(commandeClient);
 		
 	}
 	
 	@PutMapping("/commandes/{id}")
-	public ResponseEntity<CommandeClient>  updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) {
+	public ResponseEntity<CommandeClient>  updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) throws Exception {
 		commandeClient.setId(id);
 		return new ResponseEntity<>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.OK);
 		

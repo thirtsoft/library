@@ -20,7 +20,7 @@ public interface CommandeClientService {
 	public CommandeClient updateCommandeClient(Long comId, CommandeClient commande);
 	public ResponseEntity<Object> deleteCommandeClient(Long id);
 	
-	public CommandeClient saveCommandeClient(Long num, Date date, boolean valide, Client clt);
+	//public CommandeClient saveCommandeClient(Long num, Date date, boolean valide, Client clt);
 	
 	public int getNombreCommandes(Date d1, Date d2);
 	
