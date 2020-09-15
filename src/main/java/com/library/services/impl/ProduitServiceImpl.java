@@ -197,7 +197,7 @@ public class ProduitServiceImpl implements ProduitService {
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file+"/"+"articles"+".pdf"));
 			document.open();
 			
-			Font mainFont = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
+			Font mainFont = FontFactory.getFont("Arial", 14, BaseColor.BLACK);
 			
 			Paragraph paragraph = new Paragraph("LISTE DES ARTICLES", mainFont);
 			paragraph.setAlignment(Element.ALIGN_CENTER);
@@ -206,7 +206,7 @@ public class ProduitServiceImpl implements ProduitService {
 			paragraph.setSpacingAfter(10);
 			document.add(paragraph);
 			
-			PdfPTable table = new PdfPTable(3);
+			PdfPTable table = new PdfPTable(4);
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(10f);
 			table.setSpacingAfter(10);
@@ -231,7 +231,17 @@ public class ProduitServiceImpl implements ProduitService {
 			designation.setBackgroundColor(BaseColor.GRAY);
 			designation.setExtraParagraphSpace(5f);
 			table.addCell(designation);
-			
+
+			PdfPCell scategorie = new PdfPCell(new Paragraph("Scategorie", tableHeader));
+			scategorie.setBorderColor(BaseColor.BLACK);
+			scategorie.setPaddingLeft(10);
+			scategorie.setHorizontalAlignment(Element.ALIGN_CENTER);
+			scategorie.setVerticalAlignment(Element.ALIGN_CENTER);
+			scategorie.setBackgroundColor(BaseColor.GRAY);
+			scategorie.setExtraParagraphSpace(5f);
+			table.addCell(scategorie);
+
+
 			PdfPCell categorie = new PdfPCell(new Paragraph("Categorie", tableHeader));
 			categorie.setBorderColor(BaseColor.BLACK);
 			categorie.setPaddingLeft(10);
@@ -291,6 +301,15 @@ public class ProduitServiceImpl implements ProduitService {
 				designationValue.setExtraParagraphSpace(5f);
 				table.addCell(designationValue);
 				
+				PdfPCell scategorieValue = new PdfPCell(new Paragraph(prod.getScategorie().getLibelle(), tableBody));
+				scategorieValue.setBorderColor(BaseColor.BLACK);
+				scategorieValue.setPaddingLeft(10);
+				scategorieValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				scategorieValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				scategorieValue.setBackgroundColor(BaseColor.WHITE);
+				scategorieValue.setExtraParagraphSpace(5f);
+				table.addCell(scategorieValue);
+
 				PdfPCell categorieValue = new PdfPCell(new Paragraph(prod.getCategorie().getDesignation(), tableBody));
 				categorieValue.setBorderColor(BaseColor.BLACK);
 				categorieValue.setPaddingLeft(10);
@@ -380,7 +399,11 @@ public class ProduitServiceImpl implements ProduitService {
 			designation.setCellValue("Designation");
 			designation.setCellStyle(headerCellStyle);
 			
-			HSSFCell categorie = headerRow.createCell(2);
+			HSSFCell scategorie = headerRow.createCell(2);
+			scategorie.setCellValue("Scategorie");
+			scategorie.setCellStyle(headerCellStyle);
+
+			HSSFCell categorie = headerRow.createCell(3);
 			categorie.setCellValue("Categorie");
 			categorie.setCellStyle(headerCellStyle);
 			
@@ -399,7 +422,11 @@ public class ProduitServiceImpl implements ProduitService {
 				designationValue.setCellValue(prod.getDesignation());
 				designationValue.setCellStyle(bodyCellStyle);
 				
-				HSSFCell categorieValue = bodyRow.createCell(2);
+				HSSFCell scategorieValue = bodyRow.createCell(2);
+				scategorieValue.setCellValue(prod.getScategorie().getLibelle());
+				scategorieValue.setCellStyle(bodyCellStyle);
+
+				HSSFCell categorieValue = bodyRow.createCell(3);
 				categorieValue.setCellValue(prod.getCategorie().getDesignation());
 				categorieValue.setCellStyle(bodyCellStyle);
 				
