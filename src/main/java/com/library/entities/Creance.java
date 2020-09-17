@@ -2,11 +2,7 @@ package com.library.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,4 +23,11 @@ public class Creance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private double soldeCreance;
+	private int nbreJours;
+
+	@ManyToOne
+	@JoinColumn(name="client_id", nullable = false)
+	private Client client;
+
 }

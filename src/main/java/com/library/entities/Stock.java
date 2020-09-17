@@ -1,12 +1,9 @@
 package com.library.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,5 +24,12 @@ public class Stock implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private int quantite;
+
+	private Date dateMiseAJour;
+
+	@ManyToOne
+	@JoinColumn(name="prod_id", nullable = false)
+	private Produit produit;
 }
 
