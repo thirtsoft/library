@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -51,9 +52,86 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 		
 		return commandeClientRepository.findById(comId);
 	}
+	
+	@Override
+	public CommandeClient createCommande(CommandeClient commandeClient) { 
+		CommandeForm orderForm = new CommandeForm();
+		Client client = new Client();
+		client.setRaisonSocial(orderForm.getClient().getRaisonSocial());
+		client.setChefService(orderForm.getClient().getChefService());
+		client.setAdresse(orderForm.getClient().getAdresse());
+		client.setTelephone(orderForm.getClient().getTelephone());
+		client.setEmail(orderForm.getClient().getEmail());
+		
+		client = clientRepository.save(client);
+		
+		System.out.println(client.getId());
+		
+		commandeClient.setClient(client);
+		
+		commandeClientRepository.save(commandeClient);
+		
+		
+		commandeClientRepository.save(commandeClient);
+		
+		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
+		
+		double total = 0;
+		for(OrderProduct p : orderForm.getProducts()) {
+			LigneCmdClient lcmdClient = new LigneCmdClient();
+			
+			lcmdClient.setCommande(commandeClient);
+			Produit produit = produitRepository.findById(p.getId()).get();
+			lcmdClient.setProduit(produit);
+			lcmdClient.setPrix(produit.getPrixVente());;
+			lcmdClient.setQuantite(p.getQuantity());
+			ligneCmdClientRepository.save(lcmdClient);
+			total+=p.getQuantity()*produit.getPrixVente();
+		}
+		
+		commandeClient.setTotalCommande(total);
 
+		return commandeClientRepository.save(commandeClient);
+	}
+	
 	@Override
 	public CommandeClient saveCommandeClient(CommandeClient commande) {
+		
+		Produit produit = new Produit();
+		produitRepository.save(produit);
+		
+		Client client = new Client();
+		clientRepository.save(client);
+		
+		commande.setClient(client);
+		commande.setNumCommande("Cmd "+15+(int)(Math.random()*100));
+		
+		commande = commandeClientRepository.save(commande);
+		
+		List<LigneCmdClient> ligneCmdClients = commande.getLigneCmdClients();
+		
+		double total = 0;
+		for (LigneCmdClient lcmdClt: ligneCmdClients) {
+			lcmdClt.setNumero(commande.getNumCommande());
+			lcmdClt.setProduit(produit);
+			lcmdClt.setQuantite(produit.getQtestock());
+			lcmdClt.setPrix(produit.getPrixVente());
+			ligneCmdClientRepository.save(lcmdClt);
+			
+			total = produit.getQtestock()*produit.getPrixVente();
+			
+		}
+		
+		commande.setTotalCommande(total);
+		commande.setStatus("valider");
+		commande.setDateCommande(new Date());
+		return commandeClientRepository.save(commande);
+		
+		
+	}
+
+	@Override
+	public CommandeClient saveCommandeCliente(CommandeClient commande) {
 		CommandeForm orderForm = new CommandeForm();
 		Client client = new Client();
 		client.setRaisonSocial(orderForm.getClient().getRaisonSocial());
@@ -67,14 +145,13 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 		System.out.println(client.getId());
 		
 		commande.setClient(client);
-		commande.setNumCommande("Cmd "+15+(int)(Math.random()*100));
-		commande.setStatus("livre");
-		commande = commandeClientRepository.save(commande);
+		
+		commandeClientRepository.save(commande);
 		
 		double total = 0;
 		for(OrderProduct p : orderForm.getProducts()) {
 			LigneCmdClient lcmdClient = new LigneCmdClient();
-			//orderItem.setCommande(order);
+			
 			lcmdClient.setCommande(commande);
 			Produit produit = produitRepository.findById(p.getId()).get();
 			lcmdClient.setProduit(produit);
@@ -85,6 +162,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 		}
 		
 		commande.setTotalCommande(total);
+		commande.setNumCommande("Cmd "+15+(int)(Math.random()*100));
+		commande.setStatus("valider");
 		
 		return commandeClientRepository.save(commande);
 	}

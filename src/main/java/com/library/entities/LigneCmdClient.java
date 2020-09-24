@@ -2,13 +2,18 @@ package com.library.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,17 +34,18 @@ public class LigneCmdClient implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String numero;
+	private int quantite;
+	private double prix;
 	
 	@ManyToOne
-	//@JoinColumn(name = "Num_Commande", nullable = false)
+	@JoinColumn(name="cmdClient_id", nullable = false)
 	private CommandeClient commande;
 		
 	@ManyToOne
-	//@JoinColumn(name = "Ref_Produit", nullable = false)
+	@JoinColumn(name="prod_id", nullable = false)
 	private Produit produit;
 	
-	private int quantite;
 	
-	private double prix;
 }
 
