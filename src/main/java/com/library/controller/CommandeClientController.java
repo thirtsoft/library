@@ -111,7 +111,28 @@ public class CommandeClientController {
 			@RequestParam(name = "size") int size) {
 		return commandeClientService.findCommandeClientByKeyWord(mc, PageRequest.of(page, size));
 	}
+
+	/**
+	 *
+	 * @param commandeClient
+	 * @return Methode qui marche ce 06/09/2020
+	 */
+	@PostMapping("/comms")
+	public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
+		commandeClientService.createCommande(commandeClient);
+		
+		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
+		for (LigneCmdClient lc : lcomms) {
+			lc.setNumero(commandeClient.getNumCommande());
+			ligneCmdClientService.saveLigneCmdClient(lc);
+			
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
+	}
 	
+<<<<<<< HEAD
 	@PostMapping("/comms")
 	public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
 		commandeClientRepository.save(commandeClient);
@@ -131,12 +152,26 @@ public class CommandeClientController {
 	public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
 	    
 		commandeClientService.createCommande(commandeClient);
+=======
+	@PostMapping("/commandes")
+	public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
+	    
+		commandeClientService.createCommande(commandeClient);
+
+//		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
+//		for (LigneCmdClient lc : lcomms) {
+//			lc.setNumero(commandeClient.getNumCommande());
+//			ligneCmdClientService.saveLigneCmdClient(lc);
+//
+//		}
+>>>>>>> 962d992518874a2014c813f38e02d77021502842
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 	
 	@PostMapping("/commandesClientes") 
+<<<<<<< HEAD
 	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) {
 		/*
 		 * commandeClientService.saveCommandeCliente(commandeClient);
@@ -149,11 +184,16 @@ public class CommandeClientController {
 		 */
 	    
 		return commandeClientService.saveCommandeCliente(commandeClient);
+=======
+	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) throws Exception  {
+
+		return commandeClientService.saveCommandeClient(commandeClient);
+>>>>>>> 962d992518874a2014c813f38e02d77021502842
 		
 	}
 	
 	@PutMapping("/commandes/{id}")
-	public ResponseEntity<CommandeClient>  updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) {
+	public ResponseEntity<CommandeClient>  updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) throws Exception {
 		commandeClient.setId(id);
 		return new ResponseEntity<>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.OK);
 		

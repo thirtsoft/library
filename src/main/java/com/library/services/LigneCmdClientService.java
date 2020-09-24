@@ -3,6 +3,7 @@ package com.library.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.library.entities.Produit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -29,4 +30,5 @@ public interface LigneCmdClientService {
 	
 	//public Page<LigneCmdClient> findLigneCmdClientByKeyWord(String mc, Pageable pageable);
 
+	boolean isValideQuantiteStock(int qtesSaisie, int qtitesStock);
 }

@@ -35,6 +35,7 @@ public class Produit implements Serializable {
 	private String designation;
 	private Double prixAchat;
 	private Double prixVente;
+	private Double prixDetail;
 	private Double tva;
 	private int qtestock;
 	private int stockInitial;
