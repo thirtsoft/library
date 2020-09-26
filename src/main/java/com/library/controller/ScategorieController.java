@@ -62,14 +62,11 @@ public class ScategorieController {
 	
 	@GetMapping("/searchListScategoriesByCategoryId/{catId}")
 	public List<Scategorie> getListScategoriesByCategoryId(@PathVariable (name="catId") Long catId) {
-<<<<<<< HEAD
-=======
 		return scategorieService.findScategorieByCateoryId(catId);
 	}
 
 	@GetMapping("/searchListScategoriesByCategoryId")
 	public List<Scategorie> getListScategoriesByCategory(@RequestParam (name="catId") Long catId) {
->>>>>>> 962d992518874a2014c813f38e02d77021502842
 		return scategorieService.findScategorieByCateoryId(catId);
 	}
 	

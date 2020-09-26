@@ -131,28 +131,7 @@ public class CommandeClientController {
 		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
-	
-<<<<<<< HEAD
-	@PostMapping("/comms")
-	public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
-		commandeClientRepository.save(commandeClient);
-		
-		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
-		for (LigneCmdClient lc : lcomms) {
-			lc.setNumero(commandeClient.getNumCommande());
-			ligneCmdClientRepository.save(lc);
-			
-		}
-		
-		return new ResponseEntity<>(HttpStatus.OK);
-		
-	}
-	
-	@PostMapping("/commandes") 
-	public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
-	    
-		commandeClientService.createCommande(commandeClient);
-=======
+
 	@PostMapping("/commandes")
 	public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
 	    
@@ -164,32 +143,12 @@ public class CommandeClientController {
 //			ligneCmdClientService.saveLigneCmdClient(lc);
 //
 //		}
->>>>>>> 962d992518874a2014c813f38e02d77021502842
-		
 		return new ResponseEntity<>(HttpStatus.OK);
-		
 	}
 	
-	@PostMapping("/commandesClientes") 
-<<<<<<< HEAD
-	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) {
-		/*
-		 * commandeClientService.saveCommandeCliente(commandeClient);
-		 * List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients(); for
-		 * (LigneCmdClient lc : lcomms) { lc.setNumero(commandeClient.getNumCommande());
-		 * ligneCmdClientService.saveLigneCmdClient(lc); }
-		 * commandeClient.setNumCommande("Cmd "+15+(int)(Math.random()*100));
-		 * commandeClient.setStatus("valider"); commandeClient.setDateCommande(new
-		 * Date());
-		 */
-	    
-		return commandeClientService.saveCommandeCliente(commandeClient);
-=======
+	@PostMapping("/commandesClientes")
 	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) throws Exception  {
-
 		return commandeClientService.saveCommandeClient(commandeClient);
->>>>>>> 962d992518874a2014c813f38e02d77021502842
-		
 	}
 	
 	@PutMapping("/commandes/{id}")
