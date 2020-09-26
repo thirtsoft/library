@@ -39,13 +39,6 @@ public class LigneCmdClient implements Serializable {
 	private double prix;
 	
 	@ManyToOne
-<<<<<<< HEAD
-	@JoinColumn(name="cmdClient_id", nullable = false)
-	private CommandeClient commande;
-		
-	@ManyToOne
-	@JoinColumn(name="prod_id", nullable = false)
-=======
 	@JoinColumn(name="cmdClient_id")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private CommandeClient commande;
@@ -53,11 +46,6 @@ public class LigneCmdClient implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="prod_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
->>>>>>> 962d992518874a2014c813f38e02d77021502842
 	private Produit produit;
-
-
-	
-	
 }
 
