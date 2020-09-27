@@ -28,10 +28,9 @@ public class VenteController {
     }
 
     @GetMapping("/ventes/{id}")
-    public ResponseEntity<Vente> getVenteById(@PathVariable(value = "id") Long id)
-            throws ResourceNotFoundException {
+    public ResponseEntity<Vente> getVenteById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         Vente vente = venteService.findVenteById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Vente N ° " + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vente N ° " + id + "not found"));
         return ResponseEntity.ok().body(vente);
 
     }
@@ -56,9 +55,7 @@ public class VenteController {
 
 
     @GetMapping("/searchListVenteByKeyword")
-    public Page<Vente> getAllVenteByPageable(@RequestParam(name = "mc")String mc,
-                                                         @RequestParam(name = "page") int page,
-                                                         @RequestParam(name = "size") int size) {
+    public Page<Vente> getAllVenteByPageable(@RequestParam(name = "mc") String mc, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
         return venteService.findVenteByKeyWord(mc, PageRequest.of(page, size));
     }
 
@@ -68,18 +65,17 @@ public class VenteController {
         venteService.saveVente(vente);
 
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 
     @PutMapping("/ventes/{id}")
-    public ResponseEntity<Vente>  updateVente(@PathVariable(value = "id") Long id, @RequestBody Vente vente) throws Exception {
+    public ResponseEntity<Vente> updateVente(@PathVariable(value = "id") Long id, @RequestBody Vente vente) throws Exception {
         vente.setId(id);
         return new ResponseEntity<>(venteService.saveVente(vente), HttpStatus.OK);
 
     }
+
     @DeleteMapping("/ventes/{id}")
     public ResponseEntity<Object> deleteVente(@PathVariable(value = "id") Long id) {
         return venteService.deleteVente(id);
-
     }
 }
