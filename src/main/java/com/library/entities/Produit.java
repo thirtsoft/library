@@ -44,11 +44,11 @@ public class Produit implements Serializable {
 	private Date add_date;
 	@ManyToOne
 	//@JoinColumn(name="cat_id", insertable = false, updatable = false)
-	@JoinColumn(name="cat_id", nullable = false)
+	@JoinColumn(name="cat_id")
 	private Category categorie;
 	
 	@ManyToOne
-	@JoinColumn(name="scat_id", nullable = false)
+	@JoinColumn(name="scat_id")
 	private Scategorie scategorie;
 	
 	
