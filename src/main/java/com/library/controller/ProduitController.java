@@ -5,10 +5,13 @@ import com.library.message.ResponseMessage;
 import com.library.services.ExcelService;
 import com.library.services.ProduitService;
 import com.library.utils.ExcelUtils;
+import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -99,11 +100,13 @@ public class ProduitController {
                                                  @RequestParam(name = "size") int size) {
         return produitService.findProduitByKeyWord("%" + mc + "%", PageRequest.of(page, size));
     }
-
+/*
     @PostMapping("/categories/{catId}/produits")
     public Produit createProduit(@PathVariable(value = "catId") Long catId, @RequestBody Produit produit) {
         return produitService.saveProduit(catId, produit);
     }
+
+    */
 
     @PostMapping("/produits")
     public Produit saveProduit(@RequestBody Produit produit) {
@@ -138,8 +141,8 @@ public class ProduitController {
         boolean isFlag = produitService.createExcel(produitList, context, request, response);
 
         if (isFlag) {
-            String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "articles" + ".xls");
-            filedownload(fullPath, response, "articles.xls");
+            String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "articles" + ".xlsx");
+            filedownload(fullPath, response, "articles.xlsx");
         }
     }
 
@@ -184,6 +187,22 @@ public class ProduitController {
             }
         }
 
+    }
+
+
+    @GetMapping(value = "/download/articles.xlsx")
+    public ResponseEntity<InputStreamResource> excelProduitsReport() throws IOException {
+        List<Produit> produits = (List<Produit>) produitService.findAllProduits();
+
+        ByteArrayInputStream in = ExcelUtils.produitsToExcel(produits);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=articles.xlsx");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(new InputStreamResource(in));
     }
 
 }

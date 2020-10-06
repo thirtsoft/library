@@ -1,5 +1,6 @@
 package com.library.services.impl;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -386,7 +387,7 @@ public class ProduitServiceImpl implements ProduitService {
 			new File(filePath).mkdirs();
 		}
 		try {
-			FileOutputStream outputStream = new FileOutputStream(file+"/"+"articles"+".xls");
+			FileOutputStream outputStream = new FileOutputStream(file+"/"+"articles"+".xlsx");
 			HSSFWorkbook workbook = new HSSFWorkbook();
 			HSSFSheet workSheet = workbook.createSheet("Articles");
 			workSheet.setDefaultColumnWidth(30);
@@ -404,7 +405,8 @@ public class ProduitServiceImpl implements ProduitService {
 			HSSFCell designation = headerRow.createCell(1);
 			designation.setCellValue("Designation");
 			designation.setCellStyle(headerCellStyle);
-			
+
+			/*
 			HSSFCell scategorie = headerRow.createCell(2);
 			scategorie.setCellValue("Scategorie");
 			scategorie.setCellStyle(headerCellStyle);
@@ -412,7 +414,8 @@ public class ProduitServiceImpl implements ProduitService {
 			HSSFCell categorie = headerRow.createCell(3);
 			categorie.setCellValue("Categorie");
 			categorie.setCellStyle(headerCellStyle);
-			
+
+			*/
 			int i = 1;
 			for (Produit prod: produitList) {
 				HSSFRow bodyRow = workSheet.createRow(i);
@@ -427,7 +430,7 @@ public class ProduitServiceImpl implements ProduitService {
 				HSSFCell designationValue = bodyRow.createCell(1);
 				designationValue.setCellValue(prod.getDesignation());
 				designationValue.setCellStyle(bodyCellStyle);
-				
+				/*
 				HSSFCell scategorieValue = bodyRow.createCell(2);
 				scategorieValue.setCellValue(prod.getScategorie().getLibelle());
 				scategorieValue.setCellStyle(bodyCellStyle);
@@ -435,7 +438,8 @@ public class ProduitServiceImpl implements ProduitService {
 				HSSFCell categorieValue = bodyRow.createCell(3);
 				categorieValue.setCellValue(prod.getCategorie().getDesignation());
 				categorieValue.setCellStyle(bodyCellStyle);
-				
+
+				*/
 				i++;
 				
 			}
@@ -458,6 +462,7 @@ public class ProduitServiceImpl implements ProduitService {
         return null;
    
 	}
-	
-	
+
+
+
 }

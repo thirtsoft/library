@@ -1,13 +1,12 @@
 package com.library.utils;
 
 import com.library.entities.Produit;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -70,6 +69,58 @@ public class ExcelUtils {
             return produits;
         } catch (IOException e) {
             throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
+    }
+
+    public static ByteArrayInputStream produitsToExcel(List<Produit> produits) throws IOException {
+
+        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "StockInitial", "Date_Ajout"};
+
+        try(
+                Workbook workbook = new XSSFWorkbook();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ){
+            CreationHelper createHelper = workbook.getCreationHelper();
+
+            Sheet sheet = workbook.createSheet("Produits");
+
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setColor(IndexedColors.BLUE.getIndex());
+
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFont(headerFont);
+
+            // Row for Header
+            Row headerRow = sheet.createRow(0);
+
+            // Header
+            for (int col = 0; col < COLUMNs.length; col++) {
+                Cell cell = headerRow.createCell(col);
+                cell.setCellValue(COLUMNs[col]);
+                cell.setCellStyle(headerCellStyle);
+            }
+
+            // CellStyle for Date
+            CellStyle dateCellStyle = workbook.createCellStyle();
+            dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy/mm/dd"));
+
+            int rowIdx = 1;
+            for (Produit produit : produits) {
+                Row row = sheet.createRow(rowIdx++);
+
+                row.createCell(0).setCellValue(produit.getReference());
+                row.createCell(1).setCellValue(produit.getDesignation());
+                row.createCell(2).setCellValue(produit.getPrixAchat());
+                row.createCell(3).setCellValue(produit.getStockInitial());
+
+                Cell dateCell = row.createCell(4);
+                dateCell.setCellValue(produit.getAdd_date());
+                dateCell.setCellStyle(dateCellStyle);
+            }
+
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
         }
     }
 }
