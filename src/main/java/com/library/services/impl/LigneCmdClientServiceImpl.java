@@ -104,4 +104,9 @@ public class LigneCmdClientServiceImpl implements LigneCmdClientService {
         return qtitesStock > 0 && qtesSaisie < qtitesStock;
     }
 
+    @Override
+    public List<LigneCmdClient> saveListLigneCmd(List<LigneCmdClient> lcmdClients) {
+        return ligneCmdClientRepository.saveAll(lcmdClients);
+    }
+
 }

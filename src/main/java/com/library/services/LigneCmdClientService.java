@@ -31,4 +31,6 @@ public interface LigneCmdClientService {
 	//public Page<LigneCmdClient> findLigneCmdClientByKeyWord(String mc, Pageable pageable);
 
 	boolean isValideQuantiteStock(int qtesSaisie, int qtitesStock);
+
+	public List<LigneCmdClient> saveListLigneCmd(List<LigneCmdClient> lcmdClients);
 }

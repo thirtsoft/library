@@ -50,9 +50,12 @@ public class ProduitServiceImpl implements ProduitService {
 	
 	@Autowired
 	private ProduitRepository produitRepository;
-	
+
+	/*
 	@Autowired
 	private CategoryRepository categoryRepository;
+
+	*/
 
 	@Override
 	public List<Produit> findAllProduits() {
@@ -112,6 +115,7 @@ public class ProduitServiceImpl implements ProduitService {
 		return produitRepository.findProduitByKeyWord(mc, pageable);
 	}
 
+	/*
 	@Override
 	public Produit saveProduit(Long catId, Produit produit) {
 		Set<Produit> products = new HashSet<Produit>(); 
@@ -131,6 +135,8 @@ public class ProduitServiceImpl implements ProduitService {
 	  
 		return prod;
 	}
+
+	*/
 
 	@Override
 	public Produit saveProduit(Produit produit) {

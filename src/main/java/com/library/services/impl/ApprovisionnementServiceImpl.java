@@ -81,12 +81,12 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     @Override
     public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement) {
         approvisionnementRepository.save(approvisionnement);
-        List<LigneApprovisionnement> LigneApprovisionnements = approvisionnement.getLigneApprovisionnements();
+        List<LigneApprovisionnement> ligneApprovisionnements = approvisionnement.getLigneApprovisionnements();
         double total = 0;
-        for (LigneApprovisionnement lAppro: LigneApprovisionnements) {
+        for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
             lAppro.setApprovisionnement(approvisionnement);
-            Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
-            lAppro.setProduit(produit);
+            //Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
+            //lAppro.setProduit(produit);
             lAppro.setPrix(lAppro.getProduit().getPrixAchat());
 
             ligneApprovisionnementService.saveLigneApprovisionnement(lAppro);
@@ -130,5 +130,4 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
 
         return ResponseEntity.ok().build();
     }
-
 }

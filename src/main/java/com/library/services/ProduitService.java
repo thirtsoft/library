@@ -17,7 +17,7 @@ import com.library.entities.Produit;
 public interface ProduitService {
 	
 	public Optional<Produit> findProduitById(Long prodId);
-	public Produit saveProduit(Long catId, Produit produit);
+	//public Produit saveProduit(Long catId, Produit produit);
 	public Produit saveProduit(Produit produit);
 	
 	public Produit updateProduit(Long prodId, Produit produit);

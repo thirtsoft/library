@@ -31,20 +31,25 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Autowired
     private CommandeClientRepository commandeClientRepository;
 
-    @Autowired
-    private LigneCmdClientRepository ligneCmdClientRepository;
+
 
     @Autowired
     private LigneCmdClientService ligneCmdClientService;
 
     @Autowired
+    private ProduitService produitService;
+
+/*
+    @Autowired
     private ProduitRepository produitRepository;
 
     @Autowired
-    private ProduitService produitService;
+    private LigneCmdClientRepository ligneCmdClientRepository;
 
     @Autowired
     private ClientRepository clientRepository;
+
+    */
 
     @Override
     public List<CommandeClient> findAllCommandeClient() {
@@ -79,7 +84,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 //		commandeClientRepository.save(commandeClient);
 
         List<LigneCmdClient> lcmdClient = commandeClient.getLigneCmdClients();
-        ligneCmdClientRepository.saveAll(lcmdClient);
+        ligneCmdClientService.saveListLigneCmd(lcmdClient);
+       // ligneCmdClientRepository.saveAll(lcmdClient);
 
 //        CommandeClient saveCom = commandeClientRepository.save(commandeClient);
 
@@ -91,7 +97,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             Produit produit = produitService.findProduitById(lcdClient.getProduit().getId()).get();
             lcdClient.setProduit(produit);
 //			lcdClient.setPrix(produit.getPrixVente());
-            ligneCmdClientRepository.save(lcdClient);
+            ligneCmdClientService.saveLigneCmdClient(lcdClient);
+           // ligneCmdClientRepository.save(lcdClient);
 
             total += lcdClient.getQuantite() * lcdClient.getProduit().getPrixVente();
         }
@@ -121,7 +128,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
                 //    Produit produit = produitService.findProduitById(lcmdClt.getProduit().getId()).get();
                 //    lcmdClt.setProduit(produit);
                 lcmdClt.setPrix(lcmdClt.getProduit().getPrixVente());
-                ligneCmdClientRepository.save(lcmdClt);
+                ligneCmdClientService.saveLigneCmdClient(lcmdClt);
+               // ligneCmdClientRepository.save(lcmdClt);
 
                 total += lcmdClt.getQuantite() * lcmdClt.getProduit().getPrixVente();
 
@@ -136,7 +144,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         return commandeClientRepository.save(commande);
 
     }
-
+    /*
     @Override
     public CommandeClient saveCommandeCliente(CommandeClient commande) {
         CommandeForm orderForm = new CommandeForm();
@@ -175,6 +183,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         return commandeClientRepository.save(commande);
     }
+
+    */
 
     @Override
     public CommandeClient updateCommandeClient(Long comId, CommandeClient commande) {

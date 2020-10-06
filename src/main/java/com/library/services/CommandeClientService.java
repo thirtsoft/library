@@ -36,7 +36,7 @@ public interface CommandeClientService {
 	
 	public Page<CommandeClient> findCommandeClientByKeyWord(String mc, Pageable pageable);
 	
-	public CommandeClient saveCommandeCliente(CommandeClient commande);
+	//public CommandeClient saveCommandeCliente(CommandeClient commande);
 	
 	public CommandeClient createCommande(CommandeClient commandeClient);
 	
