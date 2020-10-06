@@ -37,7 +37,7 @@ public class ContratRepositoryTest {
 		Long clientId = (long) 1;
 		Optional<Client> client = clientRepository.findById(clientId);
 		
-		Contrat contrat = new Contrat(null, "Cont1", "Prestation", "Logiciel", new Date(), client.get());
+		Contrat contrat = new Contrat(null, "Cont1", "Prestation",1200, "Logiciel", new Date(), new Date(), client.get());
 		
 		Contrat saveContrat = contratRepository.save(contrat);
 		
@@ -66,13 +66,14 @@ public class ContratRepositoryTest {
 		String contratReference = "ContratZ";
 		String contratNature = "Java Marketing";
 		String contratDescription = "Marketing Digital";
+		double montantContrat = 12000;
 		
 		Long clientId = (long) 2;
 		Optional<Client> client = clientRepository.findById(clientId);
 		Client emp = client.get();
 		
-		Contrat contrat = new Contrat(null, contratReference, contratNature, 
-				contratDescription, new Date(), emp);
+		Contrat contrat = new Contrat(null, contratReference, contratNature, montantContrat,
+				contratDescription, new Date(), new Date(), emp);
 		
 		contrat.setId((long) 3);
 		contratRepository.save(contrat);

@@ -85,7 +85,8 @@ public class ContratServiceImpl implements ContratService {
 		contratResult.setReference(contrat.getReference());
 		contratResult.setNature(contrat.getNature());
 		contratResult.setDescription(contrat.getDescription());
-		contratResult.setDateContrat(contrat.getDateContrat());
+		contratResult.setDateDebutContrat(contrat.getDateDebutContrat());
+		contratResult.setDateFinContrat(contrat.getDateFinContrat());
 		
 		return contratRepository.save(contratResult);
 	}

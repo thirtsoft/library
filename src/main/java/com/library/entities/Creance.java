@@ -23,6 +23,8 @@ public class Creance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String reference;
+	private String libelle;
 	private double soldeCreance;
 	private int nbreJours;
 
