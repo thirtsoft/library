@@ -1,6 +1,7 @@
 package com.library.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,5 +28,9 @@ public class Charge implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private String codeCharge;
+	private String nature;
+	private double montantCharge;
+	private Date date;
 
 }
