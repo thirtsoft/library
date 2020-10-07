@@ -61,6 +61,15 @@ public class ExcelUtils {
                         case 5:
                             produit.setAdd_date(currentCell.getDateCellValue());
                             break;
+                        case 6:
+                            produit.setPrixVente(currentCell.getNumericCellValue());
+                            break;
+                        case 7:
+                            produit.setPrixDetail(currentCell.getNumericCellValue());
+                            break;
+                        case 8:
+                            produit.setQtestock((int)currentCell.getNumericCellValue());
+                            break;
                     }
                     cellIndex++;
                 }
@@ -74,7 +83,7 @@ public class ExcelUtils {
 
     public static ByteArrayInputStream produitsToExcel(List<Produit> produits) throws IOException {
 
-        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "StockInitial", "Date_Ajout"};
+        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Date_Ajout"};
 
         try(
                 Workbook workbook = new XSSFWorkbook();
@@ -112,9 +121,12 @@ public class ExcelUtils {
                 row.createCell(0).setCellValue(produit.getReference());
                 row.createCell(1).setCellValue(produit.getDesignation());
                 row.createCell(2).setCellValue(produit.getPrixAchat());
-                row.createCell(3).setCellValue(produit.getStockInitial());
+                row.createCell(3).setCellValue(produit.getPrixVente());
+                row.createCell(4).setCellValue(produit.getPrixDetail());
+                row.createCell(5).setCellValue(produit.getQtestock());
+                row.createCell(6).setCellValue(produit.getStockInitial());
 
-                Cell dateCell = row.createCell(4);
+                Cell dateCell = row.createCell(7);
                 dateCell.setCellValue(produit.getAdd_date());
                 dateCell.setCellStyle(dateCellStyle);
             }

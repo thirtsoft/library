@@ -134,7 +134,7 @@ public class ProduitController {
             filedownload(fullPath, response, "articles.pdf");
         }
     }
-
+/*
     @GetMapping(value = "/createExcel")
     public void createExcel(HttpServletRequest request, HttpServletResponse response) {
         List<Produit> produitList = produitService.findAllProduits();
@@ -144,7 +144,7 @@ public class ProduitController {
             String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "articles" + ".xlsx");
             filedownload(fullPath, response, "articles.xlsx");
         }
-    }
+    }*/
 
     @PostMapping(value = "/upload")
     public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("file") MultipartFile file) {
