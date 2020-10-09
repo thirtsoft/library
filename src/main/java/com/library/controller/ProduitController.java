@@ -36,6 +36,8 @@ public class ProduitController {
     private ExcelService excelService;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private ExcelUtils utils;
 
     @Autowired
     private ServletContext context;
@@ -146,7 +148,7 @@ public class ProduitController {
     @PostMapping(value = "/upload")
     public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("file") MultipartFile file) {
         String message;
-        if (ExcelUtils.isExcelFile(file)) {
+        if (utils.isExcelFile(file)) {
             try {
                 excelService.store(file);
                 message = messageSource.getMessage("message.upload.success", null, Locale.getDefault()) + file.getOriginalFilename();

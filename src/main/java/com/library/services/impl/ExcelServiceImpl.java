@@ -16,11 +16,13 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Autowired
     private ProduitService produitService;
+    @Autowired
+    private ExcelUtils utils;
 
     @Override
     public void store(MultipartFile file) {
         try {
-            List<Produit> produits = ExcelUtils.parseExcelFile(file.getInputStream());
+            List<Produit> produits = utils.parseExcelFile(file.getInputStream());
             produits.forEach(p->produitService.saveProduit(p));
         } catch (IOException e) {
             throw new RuntimeException("FAIL! -> message = " + e.getMessage());

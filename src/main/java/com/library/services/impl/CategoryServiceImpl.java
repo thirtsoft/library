@@ -1,10 +1,8 @@
 package com.library.services.impl;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.transaction.Transactional;
-
+import com.library.entities.Category;
+import com.library.exceptions.ResourceNotFoundException;
+import com.library.repository.CategoryRepository;
 import com.library.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,13 +10,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.library.entities.Category;
-import com.library.exceptions.ResourceNotFoundException;
-import com.library.repository.CategoryRepository;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
+	private static String CATEGORY = "notFound";
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
@@ -32,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public Optional<Category> findCategoryById(Long catId) {
 		
 		if(!categoryRepository.existsById(catId)) {
-			throw new ResourceNotFoundException("Category that id is" + catId + "not found");
+			throw new ResourceNotFoundException(CATEGORY);
 		}
 		return categoryRepository.findById(catId);
 		
