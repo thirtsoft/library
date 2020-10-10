@@ -3,11 +3,8 @@ package com.library.services.impl;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -94,7 +91,12 @@ public class ProduitServiceImpl implements ProduitService {
 	public List<Produit> findProductByScateoryId(Long scatId) {
 		return produitRepository.findProductByScateoryId(scatId);
 	}
-	
+
+	@Override
+	public List<Produit> findListProduitByAddDate(Date add_date) {
+		return produitRepository.findByAdd_date(add_date);
+	}
+
 	@Override
 	public Page<Produit> findAllProduitsByPageable(Pageable page) {
 		return produitRepository.findAllProduitsByPageable(page);

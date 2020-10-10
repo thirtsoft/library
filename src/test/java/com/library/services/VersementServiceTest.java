@@ -56,8 +56,8 @@ public class VersementServiceTest {
 	public void testFindVersementByNumVersement() {
 		
 		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219","776543219", "ad@gmail.com");
-		
-		Versement versement = new Versement(null, "Vers08", "Casse", 2000000.0, new Date(), employe);
+
+		Versement versement = new Versement(null, "Vers08", "Casse", "Recu","BCEAO", 2000000.0, "Ver", new Date(), employe);
 		
 		when(versementRepository.findByNumVersement(versement.getNumVersement())).thenReturn(versement);
 		
@@ -72,8 +72,8 @@ public class VersementServiceTest {
 	public void testFindVersementByNature() {
 		
 		Employe employe = new Employe(null, "Diallo", "Saliou Woury", "1989d", "B", "776543219","776543219", "ad@gmail.com");
-		
-		Versement versement = new Versement(null, "Vers08", "Casse", 2000000.0, new Date(), employe);
+
+		Versement versement = new Versement(null, "Vers08", "Casse", "Recu","BCEAO", 2000000.0, "Ver", new Date(), employe);
 		
 		when(versementRepository.findByNature(versement.getNature())).thenReturn(versement);
 		
@@ -89,8 +89,8 @@ public class VersementServiceTest {
 	public void testfindAllVersements() {
 		Employe emp = new Employe(null, "Emp", "Emp","Empl","Emp","Emp","Emp","Emp"); 
 		when(versementRepository.findAll()).thenReturn(Stream
-				.of(new Versement(null, "VER1", "VER1",30000.0,new Date(), emp), 
-		new Versement(null, "VER2", "VER2",300.0,new Date(), emp)).collect(Collectors.toList()));
+				.of(new Versement(null, "Vers08", "Casse", "Recu","BCEAO", 2000000.0, "Ver", new Date(), emp),
+		new Versement(null, "Vers08", "Casse", "Recu","BCEAO", 2000000.0, "Ver", new Date(), emp)).collect(Collectors.toList()));
 		assertEquals(2, versementService.findAllVersements().size());
 	}
 	

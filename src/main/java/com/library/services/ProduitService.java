@@ -1,6 +1,7 @@
 package com.library.services;
 
 import java.io.ByteArrayInputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +34,9 @@ public interface ProduitService {
 	public List<Produit> findListProduitByDesignation(String designation);
 	public List<Produit> findProductByCateoryId(Long catId);
 	public List<Produit> findProductByScateoryId(Long scatId);
-	
-	
+	public List<Produit> findListProduitByAddDate(Date add_date);
+
+
 	public Page<Produit> findAllProduitsByPageable(Pageable page);
 	public Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);
 	

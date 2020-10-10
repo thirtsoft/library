@@ -32,9 +32,12 @@ public class Versement implements Serializable {
 	private Long id;
 	private String numVersement;
 	private String nature;
+	private String numeroRecu;
+	private String nomBank;
 	private Double montantVersement;
+	private String motif;
 	private Date dateVersement;
-	
+
 	@ManyToOne
 	@JoinColumn(name="empId", nullable = false)
 	private Employe employe;

@@ -37,7 +37,7 @@ public class VersementRepositoryTest {
 		Long empId = (long) 3;
 		Optional<Employe> employe = employeRepository.findById(empId);
 		
-		Versement versement = new Versement(null, "Vers08", "Casse", 2000000.0, new Date(), employe.get());
+		Versement versement = new Versement(null, "Vers08", "Casse", "Recu","BCEAO", 2000000.0, "Ver", new Date(), employe.get());
 		
 		Versement saveVersement = versementRepository.save(versement);
 		
@@ -73,14 +73,17 @@ public class VersementRepositoryTest {
 	public void testUpdateVersement() {
 		String verNumVersement = "BCEAO";
 		String verNature = "BCEAO";
+		String verRecu = "Recu";
+		String verBank = "BCEAO";
 		Double verMontant = 5000000.0;
+		String verMotif = "Ver";
 		
 		Long empId = (long) 5;
 		Optional<Employe> employe = employeRepository.findById(empId);
 		Employe emp = employe.get();
 		
-		Versement versement = new Versement(null, verNumVersement, verNature, 
-				verMontant, new Date(), emp);
+		Versement versement = new Versement(null, verNumVersement, verNature, verRecu, verBank,
+				verMontant, verMotif, new Date(), emp);
 		
 		versement.setId((long) 4);
 		versementRepository.save(versement);

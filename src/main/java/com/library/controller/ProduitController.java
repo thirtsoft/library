@@ -21,6 +21,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -79,6 +80,11 @@ public class ProduitController {
     @GetMapping("/searchListProduitsByScategoryId")
     public List<Produit> getAllProduitsByScategoryId(@RequestParam("scaId") Long scatId) {
         return produitService.findProductByScateoryId(scatId);
+    }
+
+    @GetMapping("/searchListProduitsByDate")
+    public List<Produit> getAllProduitsByAddDate(@RequestParam("date") Date add_date) {
+        return produitService.findListProduitByAddDate(add_date);
     }
 
     @GetMapping("/searchListProduitsByCategoryPageable")
@@ -204,5 +210,6 @@ public class ProduitController {
                 .headers(headers)
                 .body(new InputStreamResource(in));
     }
+
 
 }
