@@ -1,5 +1,6 @@
 package com.library.services;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import com.library.entities.Contrat;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ContratService {
 	
@@ -40,6 +42,6 @@ public interface ContratService {
 	boolean createPdf(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 	
 	boolean createExcel(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
-	
+
 
 }

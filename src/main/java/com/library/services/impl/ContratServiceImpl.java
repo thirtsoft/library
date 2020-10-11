@@ -1,5 +1,6 @@
 package com.library.services.impl;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 import com.library.entities.Contrat;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.ContratRepository;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -128,5 +131,7 @@ public class ContratServiceImpl implements ContratService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 
 }

@@ -1,6 +1,8 @@
 package com.library.utils;
 
+import com.library.entities.Category;
 import com.library.entities.Produit;
+import com.library.entities.Scategorie;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,6 +83,84 @@ public class ExcelUtils {
         }
     }
 
+    public static List<Category> parseCategorieExcelFile(InputStream inputStream) {
+        try(Workbook workbook = new XSSFWorkbook(inputStream)) {
+            Sheet sheet = workbook.getSheet("Categories");
+            Iterator<Row> rows = sheet.iterator();
+            List<Category> categories = new ArrayList<>();
+
+            int rowNumber = 0;
+            while (rows.hasNext()) {
+                Row currentRow = rows.next();
+                //skip header
+                if (rowNumber == 0) {
+                    rowNumber++;
+                    continue;
+                }
+
+                Iterator<Cell> cellsInRow = currentRow.iterator();
+                Category categorie = new Category();
+                int cellIndex = 0;
+                while (cellsInRow.hasNext()) {
+                    Cell currentCell = cellsInRow.next();
+                    switch (cellIndex) {
+                        case 0:
+                            categorie.setCode(currentCell.getStringCellValue());
+                            break;
+                        case 1:
+                            categorie.setDesignation(currentCell.getStringCellValue());
+                            break;
+                    }
+                    cellIndex++;
+                }
+                categories.add(categorie);
+            }
+            return categories;
+        } catch (IOException e) {
+            throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
+    }
+
+    public static List<Scategorie> parseScategorieExcelFile(InputStream inputStream) {
+        try(Workbook workbook = new XSSFWorkbook(inputStream)) {
+            Sheet sheet = workbook.getSheet("Scategories");
+            Iterator<Row> rows = sheet.iterator();
+            List<Scategorie> scategories = new ArrayList<>();
+
+            int rowNumber = 0;
+            while (rows.hasNext()) {
+                Row currentRow = rows.next();
+                //skip header
+                if (rowNumber == 0) {
+                    rowNumber++;
+                    continue;
+                }
+
+                Iterator<Cell> cellsInRow = currentRow.iterator();
+                Scategorie scategorie = new Scategorie();
+                int cellIndex = 0;
+                while (cellsInRow.hasNext()) {
+                    Cell currentCell = cellsInRow.next();
+                    switch (cellIndex) {
+                        case 0:
+                            scategorie.setCode(currentCell.getStringCellValue());
+                            break;
+                        case 1:
+                            scategorie.setLibelle(currentCell.getStringCellValue());
+                            break;
+                    }
+                    cellIndex++;
+                }
+                scategories.add(scategorie);
+            }
+            return scategories;
+        } catch (IOException e) {
+            throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
+    }
+
+
+
     public static ByteArrayInputStream produitsToExcel(List<Produit> produits) throws IOException {
 
         String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Date_Ajout"};
@@ -129,6 +209,93 @@ public class ExcelUtils {
                 Cell dateCell = row.createCell(7);
                 dateCell.setCellValue(produit.getAdd_date());
                 dateCell.setCellStyle(dateCellStyle);
+            }
+
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+        }
+    }
+
+    public static ByteArrayInputStream CategoriesToExcel(List<Category> categories) throws IOException {
+
+        String[] COLUMNs = {"Code", "Designation"};
+
+        try(
+                Workbook workbook = new XSSFWorkbook();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ){
+            CreationHelper createHelper = workbook.getCreationHelper();
+
+            Sheet sheet = workbook.createSheet("Categories");
+
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setColor(IndexedColors.BLUE.getIndex());
+
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFont(headerFont);
+
+            // Row for Header
+            Row headerRow = sheet.createRow(0);
+
+            // Header
+            for (int col = 0; col < COLUMNs.length; col++) {
+                Cell cell = headerRow.createCell(col);
+                cell.setCellValue(COLUMNs[col]);
+                cell.setCellStyle(headerCellStyle);
+            }
+
+
+            int rowIdx = 1;
+            for (Category category : categories) {
+                Row row = sheet.createRow(rowIdx++);
+
+                row.createCell(0).setCellValue(category.getCode());
+                row.createCell(1).setCellValue(category.getDesignation());
+
+            }
+
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+        }
+    }
+
+    public static ByteArrayInputStream ScategoriesToExcel(List<Scategorie> scategories) throws IOException {
+
+        String[] COLUMNs = {"Code", "Libelle"};
+
+        try(
+                Workbook workbook = new XSSFWorkbook();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ){
+            CreationHelper createHelper = workbook.getCreationHelper();
+
+            Sheet sheet = workbook.createSheet("Scategories");
+
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setColor(IndexedColors.BLUE.getIndex());
+
+            CellStyle headerCellStyle = workbook.createCellStyle();
+            headerCellStyle.setFont(headerFont);
+
+            // Row for Header
+            Row headerRow = sheet.createRow(0);
+
+            // Header
+            for (int col = 0; col < COLUMNs.length; col++) {
+                Cell cell = headerRow.createCell(col);
+                cell.setCellValue(COLUMNs[col]);
+                cell.setCellStyle(headerCellStyle);
+            }
+
+            int rowIdx = 1;
+            for (Scategorie scategorie : scategories) {
+                Row row = sheet.createRow(rowIdx++);
+
+                row.createCell(0).setCellValue(scategorie.getCode());
+                row.createCell(1).setCellValue(scategorie.getLibelle());
+
             }
 
             workbook.write(out);

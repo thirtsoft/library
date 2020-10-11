@@ -34,6 +34,6 @@ public class Scategorie implements Serializable {
 	private String libelle;
 	
 	@ManyToOne
-	@JoinColumn(name="cat_id", nullable = false)
+	@JoinColumn(name="cat_id")
 	private Category categorie;
 }

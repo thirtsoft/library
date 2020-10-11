@@ -8,6 +8,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import com.library.entities.Category;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 public interface CategoryService {
@@ -25,8 +30,11 @@ public interface CategoryService {
 	
 	public Page<Category> findAllCategoryByPage(Pageable page);
 	public Page<Category> findCategoryByKeyWord(String mc, Pageable pageable);
-	
-	
+
+	boolean createCategoriePdf(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+
+	boolean createCategorieExcel(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+
 
 
 }

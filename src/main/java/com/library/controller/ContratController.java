@@ -1,11 +1,16 @@
 package com.library.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import com.library.services.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.library.entities.Contrat;
 import com.library.services.ContratService;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -29,6 +35,9 @@ public class ContratController {
 	
 	@Autowired
 	private ContratService contratService;
+
+	@Autowired
+	private ExcelService excelService;
 	
 	@GetMapping("/contrats")
 	public List<Contrat> getAllContrats() {
@@ -101,6 +110,20 @@ public class ContratController {
 	@DeleteMapping("/contrats/{id}")
 	public ResponseEntity<Object> deleteContrat(@PathVariable(value="id") Long id) {
 		return contratService.deleteContrat(id);
+	}
+
+	@PostMapping("/uploadContrat")
+	public ResponseEntity<Object> uploadContratFile(@RequestParam("file") MultipartFile file) throws IOException {
+		//Contrat contrat = new Contrat();
+		//excelService.storeContratFile(file);
+
+		File convertFile = new File("C:/Users/Folio9470m/Music/contrat/"+file.getOriginalFilename());
+		convertFile.createNewFile();
+		FileOutputStream fout = new FileOutputStream(convertFile);
+		fout.write(file.getBytes());
+		fout.close();
+		return new ResponseEntity<>("File is uploaded successfully", HttpStatus.OK);
+
 	}
 	
 

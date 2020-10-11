@@ -36,6 +36,8 @@ public class Contrat implements Serializable {
 	private String description;
 	private Date dateDebutContrat;
 	private Date dateFinContrat;
+	private String fileName;
+
 	@ManyToOne
 	@JoinColumn(name="client_id", nullable = false)
 	private Client client;
