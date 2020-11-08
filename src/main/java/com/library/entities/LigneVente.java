@@ -31,6 +31,6 @@ public class LigneVente implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="prod_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Produit produit;
 }

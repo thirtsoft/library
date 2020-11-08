@@ -12,17 +12,19 @@ import com.library.entities.LigneCmdClient;
 
 public interface LigneCmdClientService {
 	
-	public List<LigneCmdClient> findAllLigneCmdClient();
-	public Optional<LigneCmdClient> findLigneCmdClientById(Long lCmdId);
-	public LigneCmdClient saveLigneCmdClient(LigneCmdClient ligneCmdClient);
-	public LigneCmdClient updateLigneCmdClient(Long lCmdId, LigneCmdClient ligneCmdClient);
-	public ResponseEntity<Object> deleteLigneCmdClient(Long id);
-	
+	List<LigneCmdClient> findAllLigneCmdClient();
+	Optional<LigneCmdClient> findLigneCmdClientById(Long lCmdId);
+	LigneCmdClient saveLigneCmdClient(LigneCmdClient ligneCmdClient);
+	LigneCmdClient updateLigneCmdClient(Long lCmdId, LigneCmdClient ligneCmdClient);
+	ResponseEntity<Object> deleteLigneCmdClient(Long id);
+
+	void deleteLcomByNumero(int numero);
 	//public LigneCmdClient findByQuantite(int quantite);
 	
 	//public List<LigneCmdClient> findListLigneCmdClientByQuantite(int quantite);
 	public List<LigneCmdClient> findLigneCmdClientByProduitId(Long prodId);
 	public List<LigneCmdClient> findLigneCmdClientByCommandeClientId(Long comId);
+	List<LigneCmdClient> findAllLcomByNumero(int numero);
 	
 	public Page<LigneCmdClient> findAllLigneCmdClientByPageable(Pageable pageable);
 	public Page<LigneCmdClient> findAllLigneCmdClientByCommandeClient(Long comId, Pageable pageable);

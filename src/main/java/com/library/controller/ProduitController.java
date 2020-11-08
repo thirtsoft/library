@@ -38,6 +38,8 @@ public class ProduitController {
     private ExcelService excelService;
     @Autowired
     private MessageSource messageSource;
+    @Autowired
+    private ExcelUtils utils;
 
     @Autowired
     private ServletContext context;
@@ -155,7 +157,7 @@ public class ProduitController {
     @PostMapping(value = "/upload")
     public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("file") MultipartFile file) {
         String message;
-        if (ExcelUtils.isExcelFile(file)) {
+        if (utils.isExcelFile(file)) {
             try {
                 excelService.store(file);
                 message = messageSource.getMessage("message.upload.success", null, Locale.getDefault()) + file.getOriginalFilename();
@@ -200,7 +202,7 @@ public class ProduitController {
     public ResponseEntity<InputStreamResource> excelProduitsReport() throws IOException {
         List<Produit> produits = (List<Produit>) produitService.findAllProduits();
 
-        ByteArrayInputStream in = ExcelUtils.produitsToExcel(produits);
+        ByteArrayInputStream in = utils.produitsToExcel(produits);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=articles.xlsx");

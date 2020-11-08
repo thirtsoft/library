@@ -5,16 +5,24 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.library.entities.LigneCmdClient;
 
+import javax.transaction.Transactional;
+
 @Repository
 public interface LigneCmdClientRepository extends JpaRepository<LigneCmdClient, Long> {
-	
-	
+
+	List<LigneCmdClient> findAllByNumero(int numero);
+
+	@Modifying
+	@Query("delete from LigneCmdClient where numero = :numero")
+	void deleteByNumero(@Param("numero") int numero);
+
 	@Query("select p from LigneCmdClient p where p.produit.id =:prod")
 	public List<LigneCmdClient> ListLigneCmdClientByProduitId(@Param("prod") Long prodId);
 	

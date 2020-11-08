@@ -3,8 +3,12 @@ package com.library.utils;
 import com.library.entities.Category;
 import com.library.entities.Produit;
 import com.library.entities.Scategorie;
+import com.library.services.CategoryService;
+import com.library.services.ScategorieService;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -15,16 +19,23 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Component
 public class ExcelUtils {
 
     public static String EXCELTYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+    @Autowired
+    private ScategorieService scategorieService;
+    @Autowired
+    private CategoryService categoryService;
+
 
     public static boolean isExcelFile(MultipartFile file) {
         return EXCELTYPE.equals(file.getContentType());
     }
 
-    public static List<Produit> parseExcelFile(InputStream inputStream) {
-        try(Workbook workbook = new XSSFWorkbook(inputStream)) {
+    public List<Produit> parseExcelFile(InputStream inputStream) {
+        try (Workbook workbook = new XSSFWorkbook(inputStream)) {
             Sheet sheet = workbook.getSheet("Produits");
             Iterator<Row> rows = sheet.iterator();
             List<Produit> produits = new ArrayList<>();
@@ -71,6 +82,14 @@ public class ExcelUtils {
                             break;
                         case 8:
                             produit.setQtestock((int)currentCell.getNumericCellValue());
+                            break;
+                        case 9:
+                            Scategorie scategorie = scategorieService.findByLibelle(currentCell.getStringCellValue());
+                            produit.setScategorie(scategorie);
+                            break;
+                        case 10:
+                            Category category = categoryService.findByDesignation(currentCell.getStringCellValue());
+                            produit.setCategorie(category);
                             break;
                     }
                     cellIndex++;
@@ -160,10 +179,9 @@ public class ExcelUtils {
     }
 
 
-
     public static ByteArrayInputStream produitsToExcel(List<Produit> produits) throws IOException {
 
-        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Date_Ajout"};
+        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Date_Ajout", "Scategorie", "Categorie"};
 
         try(
                 Workbook workbook = new XSSFWorkbook();
@@ -209,6 +227,9 @@ public class ExcelUtils {
                 Cell dateCell = row.createCell(7);
                 dateCell.setCellValue(produit.getAdd_date());
                 dateCell.setCellStyle(dateCellStyle);
+
+                row.createCell(8).setCellValue(produit.getScategorie().getLibelle());
+                row.createCell(9).setCellValue(produit.getCategorie().getDesignation());
             }
 
             workbook.write(out);

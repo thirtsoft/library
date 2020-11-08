@@ -209,7 +209,7 @@ public class ProduitServiceImpl implements ProduitService {
 			paragraph.setSpacingAfter(10);
 			document.add(paragraph);
 			
-			PdfPTable table = new PdfPTable(8);
+			PdfPTable table = new PdfPTable(10);
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(10f);
 			table.setSpacingAfter(10);
@@ -311,6 +311,24 @@ public class ProduitServiceImpl implements ProduitService {
             add_date.setExtraParagraphSpace(5f);
             table.addCell(add_date);
 
+			PdfPCell scategorie = new PdfPCell(new Paragraph("Scategorie", tableHeader));
+			scategorie.setBorderColor(BaseColor.BLACK);
+			scategorie.setPaddingLeft(10);
+			scategorie.setHorizontalAlignment(Element.ALIGN_CENTER);
+			scategorie.setVerticalAlignment(Element.ALIGN_CENTER);
+			scategorie.setBackgroundColor(BaseColor.GRAY);
+			scategorie.setExtraParagraphSpace(5f);
+			table.addCell(scategorie);
+
+			PdfPCell categorie = new PdfPCell(new Paragraph("Categorie", tableHeader));
+			categorie.setBorderColor(BaseColor.BLACK);
+			categorie.setPaddingLeft(10);
+			categorie.setHorizontalAlignment(Element.ALIGN_CENTER);
+			categorie.setVerticalAlignment(Element.ALIGN_CENTER);
+			categorie.setBackgroundColor(BaseColor.GRAY);
+			categorie.setExtraParagraphSpace(5f);
+			table.addCell(categorie);
+
             for (Produit prod: produits) {
 				PdfPCell referenceValue = new PdfPCell(new Paragraph(prod.getReference(), tableBody));
 				referenceValue.setBorderColor(BaseColor.BLACK);
@@ -383,6 +401,24 @@ public class ProduitServiceImpl implements ProduitService {
                 addDateValue.setBackgroundColor(BaseColor.WHITE);
                 addDateValue.setExtraParagraphSpace(5f);
                 table.addCell(addDateValue);
+
+				PdfPCell scategorieValue = new PdfPCell(new Paragraph(prod.getScategorie().getLibelle(), tableBody));
+				scategorieValue.setBorderColor(BaseColor.BLACK);
+				scategorieValue.setPaddingLeft(10);
+				scategorieValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				scategorieValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				scategorieValue.setBackgroundColor(BaseColor.WHITE);
+				scategorieValue.setExtraParagraphSpace(5f);
+				table.addCell(scategorieValue);
+
+				PdfPCell categorieValue = new PdfPCell(new Paragraph(prod.getCategorie().getDesignation(), tableBody));
+				categorieValue.setBorderColor(BaseColor.BLACK);
+				categorieValue.setPaddingLeft(10);
+				categorieValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				categorieValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				categorieValue.setBackgroundColor(BaseColor.WHITE);
+				categorieValue.setExtraParagraphSpace(5f);
+				table.addCell(categorieValue);
 
 			}
 			

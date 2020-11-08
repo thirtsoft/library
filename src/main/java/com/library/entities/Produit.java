@@ -1,16 +1,13 @@
 package com.library.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.stream.Collectors;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +16,7 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "produit")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 public class Produit implements Serializable {
 	/**
 	 * 
@@ -50,8 +44,145 @@ public class Produit implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="scat_id")
 	private Scategorie scategorie;
-	
-	
-	
+
+/*	@OneToMany(mappedBy = "produit", fetch=FetchType.LAZY)
+	private Collection<LigneCmdClient> lcomms;
+	*/
+
+	public Produit() {
+		super();
+	}
+
+
+	public Produit(Long id, String reference, String designation, Double prixAchat, Double prixVente, Double prixDetail, Double tva, int qtestock, int stockInitial, boolean promo, String photo, Date add_date, Category categorie, Scategorie scategorie) {
+		this.id = id;
+		this.reference = reference;
+		this.designation = designation;
+		this.prixAchat = prixAchat;
+		this.prixVente = prixVente;
+		this.prixDetail = prixDetail;
+		this.tva = tva;
+		this.qtestock = qtestock;
+		this.stockInitial = stockInitial;
+		this.promo = promo;
+		this.photo = photo;
+		this.add_date = add_date;
+		this.categorie = categorie;
+		this.scategorie = scategorie;
+
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public Double getPrixAchat() {
+		return prixAchat;
+	}
+
+	public void setPrixAchat(Double prixAchat) {
+		this.prixAchat = prixAchat;
+	}
+
+	public Double getPrixVente() {
+		return prixVente;
+	}
+
+	public void setPrixVente(Double prixVente) {
+		this.prixVente = prixVente;
+	}
+
+	public Double getPrixDetail() {
+		return prixDetail;
+	}
+
+	public void setPrixDetail(Double prixDetail) {
+		this.prixDetail = prixDetail;
+	}
+
+	public Double getTva() {
+		return tva;
+	}
+
+	public void setTva(Double tva) {
+		this.tva = tva;
+	}
+
+	public int getQtestock() {
+		return qtestock;
+	}
+
+	public void setQtestock(int qtestock) {
+		this.qtestock = qtestock;
+	}
+
+	public int getStockInitial() {
+		return stockInitial;
+	}
+
+	public void setStockInitial(int stockInitial) {
+		this.stockInitial = stockInitial;
+	}
+
+	public boolean isPromo() {
+		return promo;
+	}
+
+	public void setPromo(boolean promo) {
+		this.promo = promo;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public Date getAdd_date() {
+		return add_date;
+	}
+
+	public void setAdd_date(Date add_date) {
+		this.add_date = add_date;
+	}
+
+	public Category getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Category categorie) {
+		this.categorie = categorie;
+	}
+
+	public Scategorie getScategorie() {
+		return scategorie;
+	}
+
+	public void setScategorie(Scategorie scategorie) {
+		this.scategorie = scategorie;
+	}
+
 
 }

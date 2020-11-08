@@ -74,6 +74,11 @@ public class LigneCmdClientServiceImpl implements LigneCmdClientService {
     }
 
     @Override
+    public void deleteLcomByNumero(int numero) {
+        ligneCmdClientRepository.deleteByNumero(numero);
+    }
+
+    @Override
     public List<LigneCmdClient> findLigneCmdClientByProduitId(Long prodId) {
         return ligneCmdClientRepository.ListLigneCmdClientByProduitId(prodId);
     }
@@ -81,6 +86,11 @@ public class LigneCmdClientServiceImpl implements LigneCmdClientService {
     @Override
     public List<LigneCmdClient> findLigneCmdClientByCommandeClientId(Long comId) {
         return ligneCmdClientRepository.ListLigneCmdClientByCommandeClientId(comId);
+    }
+
+    @Override
+    public List<LigneCmdClient> findAllLcomByNumero(int numero) {
+        return ligneCmdClientRepository.findAllByNumero(numero);
     }
 
     @Override

@@ -32,10 +32,13 @@ public class ExcelServiceImpl implements ExcelService {
     @Autowired
     private ScategorieService scategorieService;
 
+    @Autowired
+    private ExcelUtils utils;
+
     @Override
     public void store(MultipartFile file) {
         try {
-            List<Produit> produits = ExcelUtils.parseExcelFile(file.getInputStream());
+            List<Produit> produits = utils.parseExcelFile(file.getInputStream());
             produits.forEach(p->produitService.saveProduit(p));
         } catch (IOException e) {
             throw new RuntimeException("FAIL! -> message = " + e.getMessage());
@@ -45,7 +48,7 @@ public class ExcelServiceImpl implements ExcelService {
     @Override
     public void storeCategorieFile(MultipartFile file) {
         try {
-            List<Category> categories = ExcelUtils.parseCategorieExcelFile(file.getInputStream());
+            List<Category> categories = utils.parseCategorieExcelFile(file.getInputStream());
             categories.forEach(cat->categoryService.saveCategory(cat));
 
         }catch (IOException e) {
@@ -57,7 +60,7 @@ public class ExcelServiceImpl implements ExcelService {
     @Override
     public void storeScategorieFile(MultipartFile file) {
         try {
-            List<Scategorie> scategories = ExcelUtils.parseScategorieExcelFile(file.getInputStream());
+            List<Scategorie> scategories = utils.parseScategorieExcelFile(file.getInputStream());
             scategories.forEach(scat->scategorieService.saveScategorie(scat));
 
         }catch (IOException e) {

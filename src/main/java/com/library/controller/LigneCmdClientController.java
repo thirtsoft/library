@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.library.entities.LigneCmdClient;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneCmdClientService;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -44,6 +47,17 @@ public class LigneCmdClientController {
 		return ResponseEntity.ok().body(ligneCmdClient);
 		
 	}
+
+	@GetMapping("/lcomms/{id}")
+	public List<LigneCmdClient> getAllByNumero(@PathVariable(value = "id") int numero) {
+		System.out.println("Get all Lcomms...");
+
+		List<LigneCmdClient> Lcomms = new ArrayList<>();
+		ligneCmdClientService.findAllLcomByNumero(numero).forEach(Lcomms::add);
+
+
+		return Lcomms;
+	}
 	
 	@GetMapping("/searchListLigneCmdClientByProduitId")
 	public List<LigneCmdClient> getAllLigneCmdClientByProduitId(@RequestParam("prodId") Long prodId) {
@@ -57,11 +71,12 @@ public class LigneCmdClientController {
 		return ligneCmdClientService.findAllLigneCmdClientByProduit(prodId, PageRequest.of(page, size));
 	}
 	
-	@GetMapping("/searchListLigneCmdClientByCommandeId")
-	public List<LigneCmdClient> getAllLigneCmdClientByCommandeId(@RequestParam("comId") Long comId) {
+	@GetMapping("/searchListLigneCmdClientByCommandeId/{comId}")
+	public List<LigneCmdClient> getAllLigneCmdClientByCommandeId(@PathVariable("comId") Long comId) {
 		return ligneCmdClientService.findLigneCmdClientByCommandeClientId(comId);
 	}
-	
+
+
 	@GetMapping("/searchListLigneCmdClientByCommandePageable")
 	public Page<LigneCmdClient> getAllCommandeByPageable(@RequestParam(name = "prod")Long comId,
 			@RequestParam(name = "page") int page,

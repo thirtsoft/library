@@ -3,10 +3,14 @@ package com.library.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +31,8 @@ import com.library.repository.LigneCmdClientRepository;
 import com.library.services.ClientService;
 import com.library.services.CommandeClientService;
 import com.library.services.LigneCmdClientService;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
@@ -65,16 +71,12 @@ public class CommandeClientController {
 		
 	}
 	
-	@GetMapping("/searchCommandeClientByNumCommande")
-	public CommandeClient getCommandeClientByNumCommande(@RequestParam("num") String numCommande) {
-		return commandeClientService.findByNumCommande(numCommande);
+	@GetMapping("/searchCommandeByNumeroCommande")
+	public CommandeClient getCommandeClientByNumeroCommande(@RequestParam("num") int numeroCommande) {
+		return commandeClientService.findByNumeroCommande(numeroCommande);
 	}
 	
-	@GetMapping("/searchListCommandeClientByNumCommande")
-	public List<CommandeClient> getAllCommandeClientByNumCommande(@RequestParam("num") String numCommande) {
-		return commandeClientService.findListCommandeClientByNumCommande(numCommande);
-	}
-	
+
 	@GetMapping("/searchCommandeClientByStatus")
 	public CommandeClient getCommandeClientByStatus(@RequestParam("status") String status) {
 		return commandeClientService.findByStatus(status);
@@ -88,6 +90,12 @@ public class CommandeClientController {
 	@GetMapping("/searchListCommandeClientByClientId")
 	public List<CommandeClient> getAllCommandeClientByClientId(@RequestParam("clientId") Long clientId) {
 		return commandeClientService.findCommandeClientByClientId(clientId);
+	}
+
+	@GetMapping("/getAllCommandewithdate")
+	public List<CommandeClient> getAllCommandesWithDatet(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date dateCommande){
+
+		return commandeClientService.findCommandeByDate(dateCommande);
 	}
 	
 	@GetMapping("/searchListCommandeClientByPageable")
@@ -104,13 +112,6 @@ public class CommandeClientController {
 		return commandeClientService.findAllCommandeClientByClient(clientId, PageRequest.of(page, size));
 	}
 	
-	
-	@GetMapping("/searchListCommandeClientByKeyword")
-	public Page<CommandeClient> getAllCommandeByPageable(@RequestParam(name = "mc")String mc,
-			@RequestParam(name = "page") int page,
-			@RequestParam(name = "size") int size) {
-		return commandeClientService.findCommandeClientByKeyWord(mc, PageRequest.of(page, size));
-	}
 
 	/**
 	 *
@@ -121,9 +122,9 @@ public class CommandeClientController {
 	public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
 		commandeClientService.createCommande(commandeClient);
 		
-		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
+		List<LigneCmdClient> lcomms = commandeClient.getLcomms();
 		for (LigneCmdClient lc : lcomms) {
-			lc.setNumero(commandeClient.getNumCommande());
+			lc.setNumero(commandeClient.getNumeroCommande());
 			ligneCmdClientService.saveLigneCmdClient(lc);
 			
 		}
@@ -147,8 +148,9 @@ public class CommandeClientController {
 	}
 	
 	@PostMapping("/commandesClientes")
-	public CommandeClient createCommandeClient(@RequestBody CommandeClient commandeClient) throws Exception  {
-		return commandeClientService.saveCommandeClient(commandeClient);
+	public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient) {
+		CommandeClient Resultat = commandeClientService.saveCommandeClient(commandeClient);
+		return ResponseEntity.ok(Resultat);
 	}
 	
 	@PutMapping("/commandes/{id}")
@@ -157,10 +159,22 @@ public class CommandeClientController {
 		return new ResponseEntity<>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.OK);
 		
 	}
+
 	@DeleteMapping("/commandes/{id}")
+	public void deleteCommande(@PathVariable(value = "id")Long id) {
+		commandeClientService.deleteCommande(id);
+		//return new ResponseEntity<>(HttpStatus.OK);
+	}
+/*
+	@DeleteMapping("/commandes/{delete}")
 	public ResponseEntity<Object> deleteCommandeClient(@PathVariable(value = "id") Long id) {
 		return commandeClientService.deleteCommandeClient(id);
 		
 	}
+*/
+    @PostMapping(path = "/createOrder", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createUserRequest(@RequestBody CommandeClient CcmmandeClient) {
+        return commandeClientService.createOrder(CcmmandeClient);
+    }
 
 }
