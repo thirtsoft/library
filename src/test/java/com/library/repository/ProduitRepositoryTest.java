@@ -39,14 +39,15 @@ public class ProduitRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testCreateProduit() {
-		
+		/*
 		Long catId = (long) 6;
 		Optional<Category> category = categoryRepository.findById(catId);
-		
+		*/
+
 		Long scatId = (long) 2;
 		Optional<Scategorie> scat = scategoryRepository.findById(scatId);
 		
-		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0,25000.0,26000.0, 20.0, 20, 10, true, "photo", new Date(), category.get(), scat.get());
+		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0,25000.0,26000.0, 20.0, 20, 10, true, "photo", new Date(), scat.get());
 		
 		Produit saveProduit = produitRepository.save(produit);
 		
@@ -81,7 +82,7 @@ public class ProduitRepositoryTest {
 		//assertThat(categoriesList.size()).isEqualTo(3);
 		assertThat(produitList.size()).isGreaterThan(0);
 	}
-	
+/*
 	@Test 
 	public void testFindListProduitByCategory() { 
 		Long catId = (long) 6;
@@ -95,7 +96,7 @@ public class ProduitRepositoryTest {
 		//assertThat(categoriesList.size()).isEqualTo(3);
 		assertThat(produitList.size()).isGreaterThan(0);
 	}
-	
+*/
 	@Test 
 	@Rollback(false)
 	public void TestUpdateProduit() {
@@ -105,17 +106,17 @@ public class ProduitRepositoryTest {
 		Double prodprixVente = 10000.0;
 		Double prixDetail = 11000.0;
 		Double prodtva = 5.0;
-		
+		/*
 		Long catId = (long) 6;
 		Optional<Category> category = categoryRepository.findById(catId);
 		Category cat = category.get();
-		
+		*/
 		Long scatId = (long) 6;
 		Optional<Scategorie> scategory = scategoryRepository.findById(scatId);
 		Scategorie scat = scategory.get();
 		
 		Produit produit = new Produit(null,prodReference, prodDesignation, prodprixAchat, 
-				prodprixVente,prixDetail, prodtva, 300, 15, true, "photoUpdate", new Date(), cat, scat);
+				prodprixVente,prixDetail, prodtva, 300, 15, true, "photoUpdate", new Date(), scat);
 		
 		produit.setId((long) 7);
 		produitRepository.save(produit);

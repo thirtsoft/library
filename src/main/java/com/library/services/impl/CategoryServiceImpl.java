@@ -8,13 +8,11 @@ import java.util.Optional;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.library.entities.Produit;
 import com.library.services.CategoryService;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,7 @@ import org.springframework.stereotype.Service;
 import com.library.entities.Category;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.CategoryRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service

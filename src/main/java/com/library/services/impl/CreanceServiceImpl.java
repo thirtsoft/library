@@ -5,18 +5,16 @@ import org.springframework.stereotype.Service;
 import com.library.entities.Creance;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.CreanceRepository;
-import com.library.services.CreanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 @Service
 @Transactional

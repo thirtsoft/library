@@ -9,10 +9,11 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 
 import com.itextpdf.text.*;
+import com.library.entities.Stock;
 import com.library.services.ProduitService;
+import com.library.services.StockService;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -24,6 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itextpdf.text.pdf.PdfPCell;
@@ -48,6 +50,9 @@ public class ProduitServiceImpl implements ProduitService {
 	private CategoryRepository categoryRepository;
 
 	*/
+
+	@Autowired
+	private StockService stockService;
 
 	@Override
 	public List<Produit> findAllProduits() {
@@ -81,12 +86,7 @@ public class ProduitServiceImpl implements ProduitService {
 	public List<Produit> findListProduitByDesignation(String designation) {
 		return produitRepository.findListProduitByDesignation(designation);
 	}
-		
-	@Override
-	public List<Produit> findProductByCateoryId(Long catId) {
-		return produitRepository.findProductByCateoryId(catId);
-	}
-	
+
 	@Override
 	public List<Produit> findProductByScateoryId(Long scatId) {
 		return produitRepository.findProductByScateoryId(scatId);
@@ -100,11 +100,6 @@ public class ProduitServiceImpl implements ProduitService {
 	@Override
 	public Page<Produit> findAllProduitsByPageable(Pageable page) {
 		return produitRepository.findAllProduitsByPageable(page);
-	}
-
-	@Override
-	public Page<Produit> findAllProduitsByCategory(Long catId, Pageable pageable) {
-		return produitRepository.findProduitByCateoryId(catId, pageable);
 	}
 
 	@Override
@@ -137,7 +132,26 @@ public class ProduitServiceImpl implements ProduitService {
 
 	@Override
 	public Produit saveProduit(Produit produit) {
-		return produitRepository.save(produit);
+		Produit productinfo = produitRepository.save(produit);
+		/*
+		Optional<Stock> stockinfo = stockService.findStockById(productinfo.getId());
+		if (stockinfo.isPresent()) {
+			Stock stockResultat = stockinfo.get();
+			if (stockResultat !=null) {
+				stockResultat.setProduit(productinfo);
+				stockResultat.setQuantite(productinfo.getQtestock());
+				stockResultat.setDateMiseAJour(productinfo.getAdd_date());
+				stockService.saveStock(stockResultat);
+			} else {
+				stockResultat.setProduit(productinfo);
+				stockResultat.setQuantite(productinfo.getQtestock());
+				stockResultat.setDateMiseAJour(productinfo.getAdd_date());
+				stockService.updateStock(stockResultat.getId(), stockResultat);
+			}
+		}*/
+
+		return productinfo;
+
 	}
 
 	@Override
@@ -209,7 +223,7 @@ public class ProduitServiceImpl implements ProduitService {
 			paragraph.setSpacingAfter(10);
 			document.add(paragraph);
 			
-			PdfPTable table = new PdfPTable(10);
+			PdfPTable table = new PdfPTable(8);
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(10f);
 			table.setSpacingAfter(10);
@@ -234,26 +248,6 @@ public class ProduitServiceImpl implements ProduitService {
 			designation.setBackgroundColor(BaseColor.GRAY);
 			designation.setExtraParagraphSpace(5f);
 			table.addCell(designation);
-        /*
-			PdfPCell scategorie = new PdfPCell(new Paragraph("Scategorie", tableHeader));
-			scategorie.setBorderColor(BaseColor.BLACK);
-			scategorie.setPaddingLeft(10);
-			scategorie.setHorizontalAlignment(Element.ALIGN_CENTER);
-			scategorie.setVerticalAlignment(Element.ALIGN_CENTER);
-			scategorie.setBackgroundColor(BaseColor.GRAY);
-			scategorie.setExtraParagraphSpace(5f);
-			table.addCell(scategorie);
-
-
-			PdfPCell categorie = new PdfPCell(new Paragraph("Categorie", tableHeader));
-			categorie.setBorderColor(BaseColor.BLACK);
-			categorie.setPaddingLeft(10);
-			categorie.setHorizontalAlignment(Element.ALIGN_CENTER);
-			categorie.setVerticalAlignment(Element.ALIGN_CENTER);
-			categorie.setBackgroundColor(BaseColor.GRAY);
-			categorie.setExtraParagraphSpace(5f);
-			table.addCell(categorie);
-			*/
 
 			PdfPCell prixAchat = new PdfPCell(new Paragraph("P.Achat", tableHeader));
 			prixAchat.setBorderColor(BaseColor.BLACK);
@@ -292,7 +286,7 @@ public class ProduitServiceImpl implements ProduitService {
 			stock.setExtraParagraphSpace(5f);
 			table.addCell(stock);
 
-
+		/*
 			PdfPCell stockInitial = new PdfPCell(new Paragraph("StockInitial", tableHeader));
             stockInitial.setBorderColor(BaseColor.BLACK);
             stockInitial.setPaddingLeft(10);
@@ -310,7 +304,7 @@ public class ProduitServiceImpl implements ProduitService {
             add_date.setBackgroundColor(BaseColor.GRAY);
             add_date.setExtraParagraphSpace(5f);
             table.addCell(add_date);
-
+*/
 			PdfPCell scategorie = new PdfPCell(new Paragraph("Scategorie", tableHeader));
 			scategorie.setBorderColor(BaseColor.BLACK);
 			scategorie.setPaddingLeft(10);
@@ -383,7 +377,7 @@ public class ProduitServiceImpl implements ProduitService {
 				stockValue.setBackgroundColor(BaseColor.WHITE);
 				stockValue.setExtraParagraphSpace(5f);
 				table.addCell(stockValue);
-
+	/*
 				PdfPCell stockInitValue = new PdfPCell(new Paragraph(String.valueOf(prod.getStockInitial()), tableBody));
 				stockInitValue.setBorderColor(BaseColor.BLACK);
 				stockInitValue.setPaddingLeft(10);
@@ -401,7 +395,7 @@ public class ProduitServiceImpl implements ProduitService {
                 addDateValue.setBackgroundColor(BaseColor.WHITE);
                 addDateValue.setExtraParagraphSpace(5f);
                 table.addCell(addDateValue);
-
+*/
 				PdfPCell scategorieValue = new PdfPCell(new Paragraph(prod.getScategorie().getLibelle(), tableBody));
 				scategorieValue.setBorderColor(BaseColor.BLACK);
 				scategorieValue.setPaddingLeft(10);
@@ -411,7 +405,7 @@ public class ProduitServiceImpl implements ProduitService {
 				scategorieValue.setExtraParagraphSpace(5f);
 				table.addCell(scategorieValue);
 
-				PdfPCell categorieValue = new PdfPCell(new Paragraph(prod.getCategorie().getDesignation(), tableBody));
+				PdfPCell categorieValue = new PdfPCell(new Paragraph(prod.getScategorie().getCategorie().getDesignation(), tableBody));
 				categorieValue.setBorderColor(BaseColor.BLACK);
 				categorieValue.setPaddingLeft(10);
 				categorieValue.setHorizontalAlignment(Element.ALIGN_CENTER);

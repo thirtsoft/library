@@ -1,10 +1,8 @@
 package com.library.controller;
 
 import com.library.entities.LigneApprovisionnement;
-import com.library.entities.LigneCmdClient;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneApprovisionnementService;
-import com.library.services.LigneCmdClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,13 +21,13 @@ public class LigneApprovisionnementController {
     @Autowired
     private LigneApprovisionnementService ligneApprovisionnementService;
 
-    @GetMapping("/ligneApprovisionnement")
+    @GetMapping("/ligneApprovisionnements")
     public List<LigneApprovisionnement> getAllLigneApprovisionnements() {
         return ligneApprovisionnementService.findAllLigneApprovisionnements();
 
     }
 
-    @GetMapping("/ligneApprovisionnement/{id}")
+    @GetMapping("/ligneApprovisionnements/{id}")
     public ResponseEntity<LigneApprovisionnement> getLigneApprovisionnementById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         LigneApprovisionnement ligneApprovisionnement = ligneApprovisionnementService.findLigneApprovisionnementById(id)
@@ -36,6 +35,18 @@ public class LigneApprovisionnementController {
         return ResponseEntity.ok().body(ligneApprovisionnement);
 
     }
+
+    @GetMapping("/lappros/{id}")
+    public List<LigneApprovisionnement> getAllByNumero(@PathVariable(value = "id") int numero) {
+        System.out.println("Get all Lappros...");
+
+        List<LigneApprovisionnement> lappros = new ArrayList<>();
+        ligneApprovisionnementService.findAllLApproByNumero(numero).forEach(lappros::add);
+
+
+        return lappros;
+    }
+
 
     @GetMapping("/searchListLigneApprovisionnementByProduitId")
     public List<LigneApprovisionnement> getListLigneApprovisionnementByProduitId(@RequestParam("prodId") Long prodId) {
@@ -49,8 +60,8 @@ public class LigneApprovisionnementController {
         return ligneApprovisionnementService.findAllLigneApprovisionnementByProduit(prodId, PageRequest.of(page, size));
     }
 
-    @GetMapping("/searchListLigneApprovisionnementByApprovisionnementId")
-    public List<LigneApprovisionnement> getListLigneApprovisionnementByApprovisionnementId(@RequestParam("approId") Long approId) {
+    @GetMapping("/searchListLigneApproByApprovisionnementId/{approId}")
+    public List<LigneApprovisionnement> getListLigneApprovisionnementByApprovisionnementId(@PathVariable("approId") Long approId) {
         return ligneApprovisionnementService.findListLigneApprovisionnementByApprovisionnementId(approId);
     }
 

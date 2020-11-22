@@ -8,13 +8,11 @@ import java.util.Optional;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.library.entities.Category;
 import com.library.services.ScategorieService;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ import org.springframework.stereotype.Service;
 import com.library.entities.Scategorie;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.ScategorieRepository;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -144,7 +142,7 @@ public class ScategorieServiceImpl implements ScategorieService {
 			paragraph.setSpacingAfter(10);
 			document.add(paragraph);
 
-			PdfPTable table = new PdfPTable(2);
+			PdfPTable table = new PdfPTable(3);
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(10f);
 			table.setSpacingAfter(10);
@@ -170,6 +168,15 @@ public class ScategorieServiceImpl implements ScategorieService {
 			libelle.setExtraParagraphSpace(5f);
 			table.addCell(libelle);
 
+			PdfPCell categorie = new PdfPCell(new Paragraph("Categorie", tableHeader));
+			categorie.setBorderColor(BaseColor.BLACK);
+			categorie.setPaddingLeft(10);
+			categorie.setHorizontalAlignment(Element.ALIGN_CENTER);
+			categorie.setVerticalAlignment(Element.ALIGN_CENTER);
+			categorie.setBackgroundColor(BaseColor.GRAY);
+			categorie.setExtraParagraphSpace(5f);
+			table.addCell(categorie);
+
 			for (Scategorie scategorie: scategories) {
 				PdfPCell codeValue = new PdfPCell(new Paragraph(scategorie.getCode(), tableBody));
 				codeValue.setBorderColor(BaseColor.BLACK);
@@ -188,6 +195,15 @@ public class ScategorieServiceImpl implements ScategorieService {
 				libelleValue.setBackgroundColor(BaseColor.WHITE);
 				libelleValue.setExtraParagraphSpace(5f);
 				table.addCell(libelleValue);
+
+				PdfPCell categorieValue = new PdfPCell(new Paragraph(scategorie.getCategorie().getDesignation(), tableBody));
+				categorieValue.setBorderColor(BaseColor.BLACK);
+				categorieValue.setPaddingLeft(10);
+				categorieValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+				categorieValue.setVerticalAlignment(Element.ALIGN_CENTER);
+				categorieValue.setBackgroundColor(BaseColor.WHITE);
+				categorieValue.setExtraParagraphSpace(5f);
+				table.addCell(categorieValue);
 
 			}
 
@@ -230,6 +246,11 @@ public class ScategorieServiceImpl implements ScategorieService {
 			libelle.setCellValue("Libelle");
 			libelle.setCellStyle(headerCellStyle);
 
+
+			HSSFCell categorie = headerRow.createCell(2);
+			libelle.setCellValue("Categorie");
+			libelle.setCellStyle(headerCellStyle);
+
 			int i = 1;
 			for (Scategorie scategorie: scategories) {
 				HSSFRow bodyRow = workSheet.createRow(i);
@@ -243,6 +264,10 @@ public class ScategorieServiceImpl implements ScategorieService {
 
 				HSSFCell libelleValue = bodyRow.createCell(1);
 				libelleValue.setCellValue(scategorie.getLibelle());
+				libelleValue.setCellStyle(bodyCellStyle);
+
+				HSSFCell categorieValue = bodyRow.createCell(2);
+				libelleValue.setCellValue(scategorie.getCategorie().getDesignation());
 				libelleValue.setCellStyle(bodyCellStyle);
 
 				i++;

@@ -18,6 +18,9 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     public Stock findByQuantite(@Param("qte") int quantite);
 
     @Query("select p from Stock p where p.produit.id =:prod")
+    Stock findStockByProductId(@Param("prod") Long prodId);
+
+    @Query("select p from Stock p where p.produit.id =:prod")
     public List<Stock> findListStockByProductId(@Param("prod") Long prodId);
 
     @Query("select p from Stock p where p.produit.id =:id")

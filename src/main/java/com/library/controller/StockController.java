@@ -36,6 +36,11 @@ public class StockController {
         return stockService.findStockByQuantite(quantite);
     }
 
+    @GetMapping("/searchStockByProduct")
+    public Stock getStockByProduct(@RequestParam("id") Long prodId) {
+        return stockService.findStockByProductId(prodId);
+    }
+
 
     @GetMapping("/searchListStocksByProduitId")
     public List<Stock> getListStocksByProduitId(@RequestParam("id") Long prodId) {

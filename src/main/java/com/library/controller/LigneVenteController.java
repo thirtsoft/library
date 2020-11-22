@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,17 @@ public class LigneVenteController {
 
     }
 
+    @GetMapping("/lventes/{id}")
+    public List<LigneVente> getAllByNumero(@PathVariable(value = "id") int numero) {
+        System.out.println("Get all Lventes...");
+
+        List<LigneVente> Lventes = new ArrayList<>();
+        ligneVenteService.findAllLventeByNumero(numero).forEach(Lventes::add);
+
+        return Lventes;
+    }
+
+
     @GetMapping("/searchListLigneVentestByProduitId")
     public List<LigneVente> getAllLigneVenteByProduitId(@RequestParam("prodId") Long prodId) {
         return ligneVenteService.findLigneVenteByProduitId(prodId);
@@ -47,8 +59,8 @@ public class LigneVenteController {
         return ligneVenteService.findAllLigneVenteByProduit(prodId, PageRequest.of(page, size));
     }
 
-    @GetMapping("/searchListLigneVentesByVenteId")
-    public List<LigneVente> getAllLigneVenteByVenteId(@RequestParam("comId") Long venteId) {
+    @GetMapping("/searchListLigneVentesByVenteId/{venteId}")
+    public List<LigneVente> getAllLigneVenteByVenteId(@PathVariable("venteId") Long venteId) {
         return ligneVenteService.findLigneVenteByVenteId(venteId);
     }
 

@@ -3,7 +3,6 @@ package com.library.services.impl;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
 
 import com.library.entities.Produit;
 import com.library.services.LigneCmdClientService;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.library.entities.LigneCmdClient;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.LigneCmdClientRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

@@ -17,14 +17,16 @@ public interface ApprovisionnementService {
     public Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement);
     public ResponseEntity<Object> deleteApprovisionnement(Long id);
 
-    public Approvisionnement findApprovisionnementByCode(String code);
+    Approvisionnement findApprovisionnementByCode(int code);
 
-    public List<Approvisionnement> findListApprovisionnementByCode(String code);
+   // public List<Approvisionnement> findListApprovisionnementByCode(String code);
     public List<Approvisionnement> findListApprovisionnementByFournisseurId(Long fourId);
 
     public Page<Approvisionnement> findAllApprovisionnementByPageable(Pageable pageable);
     public Page<Approvisionnement> findAllApprovisionnementByFournisseur(Long fourId, Pageable pageable);
 
     public Page<Approvisionnement> findApprovisionnementByKeyWord(String mc, Pageable pageable);
+
+    void deleteAppro(Long id);
 
 }

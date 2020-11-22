@@ -42,13 +42,8 @@ public class ApprovisionnementController {
     }
 
     @GetMapping("/searchApprovisionnementByCode")
-    public Approvisionnement getApprovisionnementByCode(@RequestParam("code") String code) {
+    public Approvisionnement getApprovisionnementByCode(@RequestParam("code") int code) {
         return approvisionnementService.findApprovisionnementByCode(code);
-    }
-
-    @GetMapping("/searchListApprovisionnementByCode")
-    public List<Approvisionnement> getListApprovisionnementByCode(@RequestParam("code") String code) {
-        return approvisionnementService.findListApprovisionnementByCode(code);
     }
 
 
@@ -79,7 +74,13 @@ public class ApprovisionnementController {
         return approvisionnementService.findApprovisionnementByKeyWord(mc, PageRequest.of(page, size));
     }
 
+    @PostMapping("/approvisionnements")
+    public ResponseEntity<Approvisionnement> createApprovisionnement(@RequestBody Approvisionnement approvisionnement) {
+        Approvisionnement Resultat = approvisionnementService.saveApprovisionnement(approvisionnement);
+        return ResponseEntity.ok(Resultat);
+    }
 
+/*  Commenté le 18/10/2020
 
     @PostMapping("/approvisionnements")
     public ResponseEntity<Approvisionnement> createApprovisionnement(@RequestBody Approvisionnement approvisionnement) {
@@ -89,7 +90,7 @@ public class ApprovisionnementController {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
-
+*/
 
     @PutMapping("/approvisionnements/{id}")
     public ResponseEntity<Approvisionnement>  updateApprovisionnement(@PathVariable(value = "id") Long ApproId, @RequestBody Approvisionnement approvisionnement) throws Exception {
@@ -97,9 +98,17 @@ public class ApprovisionnementController {
         return new ResponseEntity<>(approvisionnementService.saveApprovisionnement(approvisionnement), HttpStatus.OK);
 
     }
+
+    @DeleteMapping("/approvisionnements/{id}")
+    public void deleteAppro(@PathVariable(value = "id")Long id) {
+        approvisionnementService.deleteAppro(id);
+        //return new ResponseEntity<>(HttpStatus.OK);
+    }
+    /*
+
     @DeleteMapping("/approvisionnements/{id}")
     public ResponseEntity<Object> deleteApprovisionnement(@PathVariable(value = "id") Long ApproId) {
         return approvisionnementService.deleteApprovisionnement(ApproId);
-
     }
+    */
 }

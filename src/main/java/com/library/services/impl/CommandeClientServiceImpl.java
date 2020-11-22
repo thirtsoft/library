@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.library.services.*;
 import org.slf4j.Logger;
@@ -28,6 +26,7 @@ import com.library.repository.ClientRepository;
 import com.library.repository.CommandeClientRepository;
 import com.library.repository.LigneCmdClientRepository;
 import com.library.repository.ProduitRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -269,6 +268,11 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public int getNombreCommandes(Date d1, Date d2) {
         return commandeClientRepository.countBetween(d1, d2);
+    }
+
+    @Override
+    public int getNumberOfCommande() {
+        return commandeClientRepository.countNumberOfCommande();
     }
 
     @Override

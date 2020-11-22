@@ -9,8 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,13 +71,23 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     }
 
     @Override
+    public void deleteLventeByNumero(int numero) {
+        ligneVenteRepository.deleteByNumero(numero);
+    }
+
+    @Override
+    public List<LigneVente> findAllLventeByNumero(int numero) {
+        return ligneVenteRepository.findAllByNumero(numero);
+    }
+
+    @Override
     public List<LigneVente> findLigneVenteByProduitId(Long prodId) {
         return null ;
     }
 
     @Override
     public List<LigneVente> findLigneVenteByVenteId(Long venteId) {
-        return null;
+        return ligneVenteRepository.ListLigneVenteByVenteId(venteId);
     }
 
     @Override

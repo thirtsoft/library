@@ -17,6 +17,9 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 	
 	@Query("select count(p) from CommandeClient p where p.dateCommande between :d1 and :d2")
 	Integer countBetween(@Param("d1")Date d1, @Param("d2")Date d2);
+
+	@Query("select count(p) from CommandeClient p ")
+	Integer countNumberOfCommande();
 	
 	@Query("select p from CommandeClient p where p.numeroCommande like :num")
 	CommandeClient findByNumeroCommande(@Param("num") int numeroCommande);

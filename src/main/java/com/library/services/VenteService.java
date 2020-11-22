@@ -5,24 +5,32 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 public interface VenteService {
 
-    public List<Vente> findAllVentes();
-    public Optional<Vente> findVenteById(Long venteId);
-    public Vente saveVente(Vente vente);
+    List<Vente> findAllVentes();
+    Optional<Vente> findVenteById(Long venteId);
+    Vente saveVente(Vente vente);
 
-    public Vente updateVente(Long venteId, Vente vente);
-    public ResponseEntity<Object> deleteVente(Long id);
+    Vente updateVente(Long venteId, Vente vente);
+    ResponseEntity<Object> deleteVenteClient(Long id);
 
-    public Vente findVenteByNumeroVente(String numeroVente);
+    int getNombreVentes(Date d1, Date d2);
+    int getNumberOfVente();
 
-    public List<Vente> findListVenteByNumeroVente(String numeroVente);
+    Vente findVenteByNumeroVente(int numeroVente);
+    Vente findByStatus(String status);
 
-    public Page<Vente> findAllVenteByPageable(Pageable pageable);
+    /*
+    List<Vente> findListVenteByNumeroVente(String numeroVente);
+*/
+    Page<Vente> findAllVenteByPageable(Pageable pageable);
 
-    public Page<Vente> findVenteByKeyWord(String mc, Pageable pageable);
+    Page<Vente> findVenteByKeyWord(String mc, Pageable pageable);
+
+    void deleteVente(Long id);
 
 }

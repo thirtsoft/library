@@ -36,11 +36,12 @@ public class Produit implements Serializable {
 	private boolean promo; 
 	private String photo;
 	private Date add_date;
+	/*
 	@ManyToOne
-	//@JoinColumn(name="cat_id", insertable = false, updatable = false)
 	@JoinColumn(name="cat_id")
 	private Category categorie;
-	
+	*/
+
 	@ManyToOne
 	@JoinColumn(name="scat_id")
 	private Scategorie scategorie;
@@ -54,7 +55,7 @@ public class Produit implements Serializable {
 	}
 
 
-	public Produit(Long id, String reference, String designation, Double prixAchat, Double prixVente, Double prixDetail, Double tva, int qtestock, int stockInitial, boolean promo, String photo, Date add_date, Category categorie, Scategorie scategorie) {
+	public Produit(Long id, String reference, String designation, Double prixAchat, Double prixVente, Double prixDetail, Double tva, int qtestock, int stockInitial, boolean promo, String photo, Date add_date, Scategorie scategorie) {
 		this.id = id;
 		this.reference = reference;
 		this.designation = designation;
@@ -67,7 +68,6 @@ public class Produit implements Serializable {
 		this.promo = promo;
 		this.photo = photo;
 		this.add_date = add_date;
-		this.categorie = categorie;
 		this.scategorie = scategorie;
 
 	}
@@ -166,14 +166,6 @@ public class Produit implements Serializable {
 
 	public void setAdd_date(Date add_date) {
 		this.add_date = add_date;
-	}
-
-	public Category getCategorie() {
-		return categorie;
-	}
-
-	public void setCategorie(Category categorie) {
-		this.categorie = categorie;
 	}
 
 	public Scategorie getScategorie() {

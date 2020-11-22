@@ -36,15 +36,19 @@ public class VenteController {
     }
 
     @GetMapping("/searchVenteByNumeroVente")
-    public Vente getVenteByNumeroVente(@RequestParam("num") String numeroVente) {
+    public Vente getVenteByNumeroVente(@RequestParam("num") int numeroVente) {
         return venteService.findVenteByNumeroVente(numeroVente);
     }
 
-    @GetMapping("/searchListVentetByNumeroVente")
-    public List<Vente> getAllVenteByNumeroVEnte(@RequestParam("num") String numeroVente) {
-        return venteService.findListVenteByNumeroVente(numeroVente);
+    @GetMapping("/NumberOfVente")
+    public int getNumberOfVentes() {
+        return venteService.getNumberOfVente();
     }
 
+    @GetMapping("/searchVenteByStatus")
+    public Vente getVenteByStatus(@RequestParam("status") String status) {
+        return venteService.findByStatus(status);
+    }
 
     @GetMapping("/searchListVenteByPageable")
     public Page<Vente> getVenteByPageable(
@@ -52,7 +56,6 @@ public class VenteController {
             @RequestParam(name = "size") int size) {
         return venteService.findAllVenteByPageable(PageRequest.of(page, size));
     }
-
 
     @GetMapping("/searchListVenteByKeyword")
     public Page<Vente> getAllVenteByPageable(@RequestParam(name = "mc") String mc, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
@@ -73,9 +76,15 @@ public class VenteController {
         return new ResponseEntity<>(venteService.saveVente(vente), HttpStatus.OK);
 
     }
-
+/*
     @DeleteMapping("/ventes/{id}")
     public ResponseEntity<Object> deleteVente(@PathVariable(value = "id") Long id) {
-        return venteService.deleteVente(id);
+        return venteService.deleteVenteClient(id);
+    }
+*/
+    @DeleteMapping("/ventes/{id}")
+    public void deleteVente(@PathVariable(value = "id")Long id) {
+        venteService.deleteVente(id);
+        //return new ResponseEntity<>(HttpStatus.OK);
     }
 }

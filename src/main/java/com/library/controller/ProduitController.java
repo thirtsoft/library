@@ -73,12 +73,12 @@ public class ProduitController {
     public List<Produit> getAllProduitsByDesignation(@RequestParam(name = "des") String designation) {
         return produitService.findListProduitByDesignation("%" + designation + "%");
     }
-
+/*
     @GetMapping("/searchListProduitsByCategoryId")
     public List<Produit> getAllProduitsByCategoryId(@RequestParam("caId") Long catId) {
         return produitService.findProductByCateoryId(catId);
     }
-
+*/
     @GetMapping("/searchListProduitsByScategoryId")
     public List<Produit> getAllProduitsByScategoryId(@RequestParam("scaId") Long scatId) {
         return produitService.findProductByScateoryId(scatId);
@@ -88,14 +88,14 @@ public class ProduitController {
     public List<Produit> getAllProduitsByAddDate(@RequestParam("date") Date add_date) {
         return produitService.findListProduitByAddDate(add_date);
     }
-
+/*
     @GetMapping("/searchListProduitsByCategoryPageable")
     public Page<Produit> getAllProduitsByPageable(@RequestParam(name = "cat") Long catId,
                                                   @RequestParam(name = "page") int page,
                                                   @RequestParam(name = "size") int size) {
         return produitService.findAllProduitsByCategory(catId, PageRequest.of(page, size));
     }
-
+*/
     @GetMapping("/searchListProduitsByPageable")
     public Page<Produit> getAllProduitsByPageable(@RequestParam(name = "page") int page,
                                                   @RequestParam(name = "size") int size) {

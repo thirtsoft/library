@@ -13,8 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -48,13 +48,8 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     }
 
     @Override
-    public Approvisionnement findApprovisionnementByCode(String code) {
-        return approvisionnementRepository.findApprovisionnementByCode(code);
-    }
-
-    @Override
-    public List<Approvisionnement> findListApprovisionnementByCode(String code) {
-        return approvisionnementRepository.findListApprovisionnementByCode(code);
+    public Approvisionnement findApprovisionnementByCode(int code) {
+        return approvisionnementRepository.findByCode(code);
     }
 
     @Override
@@ -77,6 +72,50 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
         return approvisionnementRepository.findApprovisionnementByKeyWord(mc, pageable);
     }
 
+    public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement) {
+
+        approvisionnementRepository.save(approvisionnement);
+
+        List<LigneApprovisionnement> ligneApprovisionnements = approvisionnement.getLigneApprovisionnements();
+
+        double total = 0;
+
+        for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
+            lAppro.setApprovisionnement(approvisionnement);
+            lAppro.setNumero(approvisionnement.getCode());
+
+            ligneApprovisionnementService.saveLigneApprovisionnement(lAppro);
+
+            Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
+            if (produit != null) {
+                produit.setQtestock(produit.getQtestock() + lAppro.getQuantite());
+                produitService.saveProduit(produit);
+            }
+
+            lAppro.setPrix(produit.getPrixAchat());
+
+            System.out.println(produit.getPrixAchat());
+            System.out.println(lAppro.getQuantite());
+            System.out.println(lAppro.getQuantite() * produit.getPrixAchat());
+
+            total += (lAppro.getQuantite() * produit.getPrixAchat());
+
+        }
+
+        approvisionnement.setTotalAppro(total);
+        approvisionnement.setStatus("valider");
+        // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
+        approvisionnement.setDateApprovisionnement(new Date());
+
+        return approvisionnementRepository.save(approvisionnement);
+
+    }
+
+    /**
+     * Commenté le 18/10/2020
+     * @param
+     * @return
+     *
 
     @Override
     public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement) {
@@ -101,6 +140,7 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
 
         return approvisionnementRepository.save(approvisionnement);
     }
+    */
 
     @Override
     public Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement) {
@@ -130,4 +170,15 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
 
         return ResponseEntity.ok().build();
     }
+
+    @Override
+    public void deleteAppro(Long id) {
+        Optional<Approvisionnement> approInfo = approvisionnementRepository.findById(id);
+        if (approInfo.isPresent()) {
+            Approvisionnement approvisionnement = approInfo.get();
+            ligneApprovisionnementService.deleteLApproByNumero(approvisionnement.getCode());
+            approvisionnementRepository.delete(approvisionnement);
+        }
+    }
+
 }

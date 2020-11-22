@@ -75,6 +75,11 @@ public class CommandeClientController {
 	public CommandeClient getCommandeClientByNumeroCommande(@RequestParam("num") int numeroCommande) {
 		return commandeClientService.findByNumeroCommande(numeroCommande);
 	}
+
+	@GetMapping("/NumberOfCommande")
+	public int getNumberOfCommandes() {
+		return commandeClientService.getNumberOfCommande();
+	}
 	
 
 	@GetMapping("/searchCommandeClientByStatus")

@@ -14,12 +14,16 @@ import java.util.List;
 
 @Repository
 public interface ApprovisionnementRepository extends JpaRepository<Approvisionnement, Long> {
-
+/*
     @Query("select p from Approvisionnement p where p.code like :code")
     public Approvisionnement findApprovisionnementByCode(@Param("code") String code);
-
+*/
+    @Query("select p from Approvisionnement p where p.code like :num")
+    Approvisionnement findByCode(@Param("num") int code);
+/*
     @Query("select c from Approvisionnement c where c.code like :code")
     public List<Approvisionnement> findListApprovisionnementByCode(@Param("code") String code);
+*/
 
     @Query("select p from Approvisionnement p where p.fournisseur.id =:cl")
     public List<Approvisionnement> findListApprovisionnementByFournisseurId(@Param("cl") Long fourId);

@@ -25,6 +25,7 @@ public interface CommandeClientService {
 	//public CommandeClient saveCommandeClient(Long num, Date date, boolean valide, Client clt);
 
 	public int getNombreCommandes(Date d1, Date d2);
+	int getNumberOfCommande();
 	
 	public CommandeClient findByNumeroCommande(int numeroCommande);
 	public CommandeClient findByStatus(String status);

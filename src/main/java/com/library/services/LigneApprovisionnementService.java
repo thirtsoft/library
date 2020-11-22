@@ -10,17 +10,20 @@ import java.util.Optional;
 
 public interface LigneApprovisionnementService {
 
-    public List<LigneApprovisionnement> findAllLigneApprovisionnements();
-    public Optional<LigneApprovisionnement> findLigneApprovisionnementById(Long lApproId);
-    public LigneApprovisionnement saveLigneApprovisionnement(LigneApprovisionnement ligneApprovisionnement);
-    public LigneApprovisionnement updateLigneApprovisionnement(Long lApproId, LigneApprovisionnement ligneApprovisionnement);
-    public ResponseEntity<Object> deleteLigneApprovisionnement(Long lApproid);
+    List<LigneApprovisionnement> findAllLigneApprovisionnements();
+    Optional<LigneApprovisionnement> findLigneApprovisionnementById(Long lApproId);
+    LigneApprovisionnement saveLigneApprovisionnement(LigneApprovisionnement ligneApprovisionnement);
+    LigneApprovisionnement updateLigneApprovisionnement(Long lApproId, LigneApprovisionnement ligneApprovisionnement);
+    ResponseEntity<Object> deleteLigneApprovisionnement(Long lApproid);
 
-    public List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(Long prodId);
-    public List<LigneApprovisionnement> findListLigneApprovisionnementByApprovisionnementId(Long approId);
+    void deleteLApproByNumero(int numero);
+    List<LigneApprovisionnement> findAllLApproByNumero(int numero);
 
-    public Page<LigneApprovisionnement> findAllLigneApprovisionnementByPageable(Pageable pageable);
-    public Page<LigneApprovisionnement> findAllLigneApprovisionnementByApproviosionnement(Long approId, Pageable pageable);
-    public Page<LigneApprovisionnement> findAllLigneApprovisionnementByProduit(Long prodId, Pageable pageable);
+    List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(Long prodId);
+    List<LigneApprovisionnement> findListLigneApprovisionnementByApprovisionnementId(Long approId);
+
+    Page<LigneApprovisionnement> findAllLigneApprovisionnementByPageable(Pageable pageable);
+    Page<LigneApprovisionnement> findAllLigneApprovisionnementByApproviosionnement(Long approId, Pageable pageable);
+    Page<LigneApprovisionnement> findAllLigneApprovisionnementByProduit(Long prodId, Pageable pageable);
 
 }

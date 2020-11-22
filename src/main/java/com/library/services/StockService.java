@@ -15,18 +15,20 @@ import java.util.Optional;
 
 public interface StockService {
 
-    public List<Stock> findListStocks();
-    public Optional<Stock> findStockById(Long stockId);
-    public Stock findStockByQuantite(int quantite);
+    List<Stock> findListStocks();
+    Optional<Stock> findStockById(Long stockId);
+    Stock findStockByQuantite(int quantite);
 
-    public List<Stock> findListStockByProductId(Long prodId);
+    Stock findStockByProductId(Long prodId);
 
-    public Page<Stock> findAllStocksByPageable(Pageable page);
-    public Page<Stock>findAllStocksByProduitIdByPageable(Long prodId, Pageable pageable);
+    List<Stock> findListStockByProductId(Long prodId);
 
-    public Stock saveStock(Stock stock);
-    public Stock updateStock(Long stockId, Stock stock);
-    public ResponseEntity<Object> deleteStock(Long stockId);
+    Page<Stock> findAllStocksByPageable(Pageable page);
+    Page<Stock>findAllStocksByProduitIdByPageable(Long prodId, Pageable pageable);
+
+    Stock saveStock(Stock stock);
+    Stock updateStock(Long stockId, Stock stock);
+    ResponseEntity<Object> deleteStock(Long stockId);
 
 
 

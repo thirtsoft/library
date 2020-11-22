@@ -22,13 +22,13 @@ public interface LigneCmdClientService {
 	//public LigneCmdClient findByQuantite(int quantite);
 	
 	//public List<LigneCmdClient> findListLigneCmdClientByQuantite(int quantite);
-	public List<LigneCmdClient> findLigneCmdClientByProduitId(Long prodId);
-	public List<LigneCmdClient> findLigneCmdClientByCommandeClientId(Long comId);
+	List<LigneCmdClient> findLigneCmdClientByProduitId(Long prodId);
+	List<LigneCmdClient> findLigneCmdClientByCommandeClientId(Long comId);
 	List<LigneCmdClient> findAllLcomByNumero(int numero);
 	
-	public Page<LigneCmdClient> findAllLigneCmdClientByPageable(Pageable pageable);
-	public Page<LigneCmdClient> findAllLigneCmdClientByCommandeClient(Long comId, Pageable pageable);
-	public Page<LigneCmdClient> findAllLigneCmdClientByProduit(Long prodId, Pageable pageable);
+	Page<LigneCmdClient> findAllLigneCmdClientByPageable(Pageable pageable);
+	Page<LigneCmdClient> findAllLigneCmdClientByCommandeClient(Long comId, Pageable pageable);
+	Page<LigneCmdClient> findAllLigneCmdClientByProduit(Long prodId, Pageable pageable);
 	
 	//public Page<LigneCmdClient> findLigneCmdClientByKeyWord(String mc, Pageable pageable);
 

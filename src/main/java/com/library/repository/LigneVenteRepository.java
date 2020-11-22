@@ -4,6 +4,7 @@ import com.library.entities.LigneVente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,19 +14,25 @@ import java.util.List;
 @Repository
 public interface LigneVenteRepository extends JpaRepository<LigneVente, Long> {
 
+    List<LigneVente> findAllByNumero(int numero);
+
+    @Modifying
+    @Query("delete from LigneVente where numero = :numero")
+    void deleteByNumero(@Param("numero") int numero);
+
     @Query("select p from LigneVente p where p.produit.id =:prod")
-    public List<LigneVente> ListLigneVenteByProduitId(@Param("prod") Long prodId);
+    List<LigneVente> ListLigneVenteByProduitId(@Param("prod") Long prodId);
 
     @Query("select p from LigneVente p where p.vente.id =:num")
-    public List<LigneVente> ListLigneVenteByVenteId(@Param("num") Long venteId);
+    List<LigneVente> ListLigneVenteByVenteId(@Param("num") Long venteId);
 
     @Query("select p from LigneVente p where p.vente.id =:id")
-    public Page<LigneVente> findLigneVenteByVentePageable(@Param("id") Long venteId, Pageable pageable);
+    Page<LigneVente> findLigneVenteByVentePageable(@Param("id") Long venteId, Pageable pageable);
 
     @Query("select p from LigneVente p where p.produit.id =:id")
-    public Page<LigneVente> findLigneVenteByProduitPageable(@Param("id") Long prodId, Pageable pageable);
+    Page<LigneVente> findLigneVenteByProduitPageable(@Param("id") Long prodId, Pageable pageable);
 
     @Query("select p from LigneVente p")
-    public Page<LigneVente> findAllLigneVenteByPageable(Pageable pageable);
+    Page<LigneVente> findAllLigneVenteByPageable(Pageable pageable);
 
 }

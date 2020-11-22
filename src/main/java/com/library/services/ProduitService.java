@@ -18,27 +18,27 @@ import com.library.entities.Produit;
 
 public interface ProduitService {
 	
-	public Optional<Produit> findProduitById(Long prodId);
+	Optional<Produit> findProduitById(Long prodId);
 	//public Produit saveProduit(Long catId, Produit produit);
-	public Produit saveProduit(Produit produit);
+	Produit saveProduit(Produit produit);
 	
-	public Produit updateProduit(Long prodId, Produit produit);
-	public Produit updateProduit(Produit produit);
-	public ResponseEntity<Object> deleteProduit(Long prodId);
+	Produit updateProduit(Long prodId, Produit produit);
+	Produit updateProduit(Produit produit);
+	ResponseEntity<Object> deleteProduit(Long prodId);
 	
-	public Produit findByReference(String reference);
-	public Produit findByDesignation(String designation);
-	public Produit findByPrixAchat(Double prixAchat);
+	Produit findByReference(String reference);
+	Produit findByDesignation(String designation);
+	Produit findByPrixAchat(Double prixAchat);
 	
-	public List<Produit> findAllProduits();
-	public List<Produit> findListProduitByDesignation(String designation);
-	public List<Produit> findProductByCateoryId(Long catId);
-	public List<Produit> findProductByScateoryId(Long scatId);
-	public List<Produit> findListProduitByAddDate(Date add_date);
+	List<Produit> findAllProduits();
+	List<Produit> findListProduitByDesignation(String designation);
+//	List<Produit> findProductByCateoryId(Long catId);
+	List<Produit> findProductByScateoryId(Long scatId);
+	List<Produit> findListProduitByAddDate(Date add_date);
 
 
 	public Page<Produit> findAllProduitsByPageable(Pageable page);
-	public Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);
+//	public Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);
 	
 	public Page<Produit> findProduitByKeyWord(String mc, Pageable pageable);
 	

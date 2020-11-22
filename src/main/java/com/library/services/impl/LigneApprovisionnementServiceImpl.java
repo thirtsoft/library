@@ -9,8 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,5 +93,15 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
         ligneApprovisionnementRepository.deleteById(lApproid);
 
         return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public void deleteLApproByNumero(int numero) {
+        ligneApprovisionnementRepository.deleteByNumero(numero);
+    }
+
+    @Override
+    public List<LigneApprovisionnement> findAllLApproByNumero(int numero) {
+        return ligneApprovisionnementRepository.findAllByNumero(numero);
     }
 }

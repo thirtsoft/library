@@ -87,10 +87,12 @@ public class ExcelUtils {
                             Scategorie scategorie = scategorieService.findByLibelle(currentCell.getStringCellValue());
                             produit.setScategorie(scategorie);
                             break;
+                            /*
                         case 10:
                             Category category = categoryService.findByDesignation(currentCell.getStringCellValue());
                             produit.setCategorie(category);
                             break;
+                            */
                     }
                     cellIndex++;
                 }
@@ -140,7 +142,7 @@ public class ExcelUtils {
         }
     }
 
-    public static List<Scategorie> parseScategorieExcelFile(InputStream inputStream) {
+    public List<Scategorie> parseScategorieExcelFile(InputStream inputStream) {
         try(Workbook workbook = new XSSFWorkbook(inputStream)) {
             Sheet sheet = workbook.getSheet("Scategories");
             Iterator<Row> rows = sheet.iterator();
@@ -167,6 +169,10 @@ public class ExcelUtils {
                         case 1:
                             scategorie.setLibelle(currentCell.getStringCellValue());
                             break;
+                        case 2:
+                            Category category = categoryService.findByDesignation(currentCell.getStringCellValue());
+                            scategorie.setCategorie(category);
+                            break;
                     }
                     cellIndex++;
                 }
@@ -181,7 +187,7 @@ public class ExcelUtils {
 
     public static ByteArrayInputStream produitsToExcel(List<Produit> produits) throws IOException {
 
-        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Date_Ajout", "Scategorie", "Categorie"};
+        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Date_Ajout", "Scategorie"};
 
         try(
                 Workbook workbook = new XSSFWorkbook();
@@ -229,7 +235,7 @@ public class ExcelUtils {
                 dateCell.setCellStyle(dateCellStyle);
 
                 row.createCell(8).setCellValue(produit.getScategorie().getLibelle());
-                row.createCell(9).setCellValue(produit.getCategorie().getDesignation());
+              //  row.createCell(9).setCellValue(produit.getCategorie().getDesignation());
             }
 
             workbook.write(out);
@@ -283,7 +289,7 @@ public class ExcelUtils {
 
     public static ByteArrayInputStream ScategoriesToExcel(List<Scategorie> scategories) throws IOException {
 
-        String[] COLUMNs = {"Code", "Libelle"};
+        String[] COLUMNs = {"Code", "Libelle", "Categorie"};
 
         try(
                 Workbook workbook = new XSSFWorkbook();
@@ -316,6 +322,7 @@ public class ExcelUtils {
 
                 row.createCell(0).setCellValue(scategorie.getCode());
                 row.createCell(1).setCellValue(scategorie.getLibelle());
+                row.createCell(2).setCellValue(scategorie.getCategorie().getDesignation());
 
             }
 

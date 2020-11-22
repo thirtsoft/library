@@ -5,6 +5,7 @@ import com.library.entities.LigneCmdClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,12 @@ import java.util.List;
 
 @Repository
 public interface LigneApprovisionnementRepository extends JpaRepository<LigneApprovisionnement, Long> {
+
+    List<LigneApprovisionnement> findAllByNumero(int numero);
+
+    @Modifying
+    @Query("delete from LigneApprovisionnement where numero = :numero")
+    void deleteByNumero(@Param("numero") int numero);
 
     @Query("select p from LigneApprovisionnement p where p.produit.id =:prod")
     public List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(@Param("prod") Long prodId);
