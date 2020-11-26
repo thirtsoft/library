@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,10 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 
 	@Query("select count(p) from CommandeClient p ")
 	Integer countNumberOfCommande();
+
+//	@Query("select count(*) from CommandeClient group by (dateCommande)")
+	@Query("select sum(c.totalCommande) from CommandeClient c")
+	BigDecimal countNumbersOfCommandes();
 	
 	@Query("select p from CommandeClient p where p.numeroCommande like :num")
 	CommandeClient findByNumeroCommande(@Param("num") int numeroCommande);

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import org.springframework.core.io.Resource;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,9 +32,12 @@ public interface ContratService {
 	
 	public List<Contrat> findContratByClientId(Long clientId);
 	
-	public Contrat saveContrat(Contrat contrat);
-	public Contrat updateProduit(Long id, Contrat contrat);
-	public ResponseEntity<Object> deleteContrat(Long id);
+	Contrat saveContrat(Contrat contrat);
+	Contrat updateProduit(Long id, Contrat contrat);
+	ResponseEntity<Object> deleteContrat(Long id);
+
+	Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException;
+	Resource loadFileAsResource(String fileName) throws Exception;
 	
 	
 	public Page<Contrat> findAllContratsByPageable(Pageable page);

@@ -3,29 +3,33 @@ package com.library.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.services.ExcelService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.library.entities.Contrat;
 import com.library.services.ContratService;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @RestController
@@ -38,6 +42,11 @@ public class ContratController {
 
 	@Autowired
 	private ExcelService excelService;
+
+    private static final Logger logger = LoggerFactory.getLogger(ContratController.class);
+
+	private final Path fileStorageLocation = Paths.get("C://Users//Folio9470m//AlAmine//Contrat//");
+    private String contratsDir="C://Users//Folio9470m//AlAmine//Contrat//";
 	
 	@GetMapping("/contrats")
 	public List<Contrat> getAllContrats() {
@@ -94,8 +103,72 @@ public class ContratController {
 		return contratService.findContratByKeyWord("%"+mc+"%", PageRequest.of(page, size));
 		
 	}
-	
-	@PostMapping("/contrats")
+
+	@PostMapping("/saveContrat")
+    public ResponseEntity<Object> saveContrat(@RequestParam(name = "contrat") String cont,
+                                              @RequestParam(name = "file") MultipartFile file) throws Exception {
+        Contrat contrat = new ObjectMapper().readValue(cont, Contrat.class);
+        if (!(file.isEmpty())) {
+            contrat.setFileContrat(file.getOriginalFilename());
+        }
+        contratService.saveContrat(contrat);
+        if (!(file.isEmpty())) {
+            contrat.setFileContrat(file.getOriginalFilename());
+            file.transferTo(new File(contratsDir+file.getOriginalFilename()));
+        }
+        return new ResponseEntity<>("Contrat with file is create successfull", HttpStatus.OK);
+    }
+
+    // methode pour afficher la photo d'un produit
+    @GetMapping("/fileContrat/{id}")
+    public byte[] getFileContrat(@PathVariable("id") Long id) throws Exception {
+	    Contrat cont = contratService.findContrattById(id).get();
+        return Files.readAllBytes(Paths.get(System.getProperty("user.home")+"/AlAmine/Contrat/"+cont.getFileContrat()));
+    }
+
+
+
+
+    @PostMapping("/createContrat")
+	public ResponseEntity<?> createCandidate(@RequestPart("contrat") String contrat, @RequestParam("file_contrat")
+			MultipartFile file1) throws JsonParseException, JsonMappingException, IOException {
+		Contrat contrat2 = contratService.createContrat(contrat, file1);
+		if (contrat2!=null) {
+			return  ResponseEntity.status(HttpStatus.ACCEPTED).body("Contrat is saved");
+		}else {
+			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Contrat is not saved");
+		}
+	}
+
+    @GetMapping("/downloadFile/{fileName:.+}")
+
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
+
+        // Load file as Resource
+        Resource resource = contratService.loadFileAsResource(fileName);
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+
+        // Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+
+
+    @PostMapping("/contrats")
 	public Contrat createContrat(@RequestBody Contrat contrat) {
 		return contratService.saveContrat(contrat);
 	}

@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -79,6 +80,11 @@ public class CommandeClientController {
 	@GetMapping("/NumberOfCommande")
 	public int getNumberOfCommandes() {
 		return commandeClientService.getNumberOfCommande();
+	}
+
+	@GetMapping("/NumbersOfCommandes")
+	public BigDecimal getNumbersOfCommandes() {
+		return commandeClientService.countNumbersOfCommandes();
 	}
 	
 

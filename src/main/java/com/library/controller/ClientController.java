@@ -44,6 +44,11 @@ public class ClientController {
 		return ResponseEntity.ok().body(client);
 		
 	}
+
+	@GetMapping("/NumberOfClients")
+	public Long getNumberOfClient() {
+		return clientService.countNumberOfClient();
+	}
 	
 	@GetMapping("/searchClientByRaisonSocial")
 	public Client getClientByRaisonSocial(@RequestParam(value = "raisonSocial") String raisonSocial) {

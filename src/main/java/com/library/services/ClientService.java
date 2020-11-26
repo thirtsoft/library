@@ -11,21 +11,22 @@ import com.library.entities.Client;
 
 public interface ClientService {
 	
-	public List<Client> findAllClient();
-	public Client saveClient(Client client);
-	public Optional<Client> findClientById(Long id);
-	public Client updateClient(Long id, Client client);
-	public ResponseEntity<Object> deleteClient(Long id);
+	List<Client> findAllClient();
+	Client saveClient(Client client);
+	Optional<Client> findClientById(Long id);
+	Client updateClient(Long id, Client client);
+	ResponseEntity<Object> deleteClient(Long id);
 	
-	public Client findByRaisonSocial(String raisonSocial);
-	public Client findByChefService(String chefService);
+	Client findByRaisonSocial(String raisonSocial);
+	Client findByChefService(String chefService);
 	
-	public List<Client> ListClientByRaisonSocial(String raisonSocial);
-	public List<Client> ListClientByChefService(String chefService);
+	List<Client> ListClientByRaisonSocial(String raisonSocial);
+	List<Client> ListClientByChefService(String chefService);
 	
-	public Page<Client> findAllClientByPage(Pageable page);
-	public Page<Client> findClientByKeyWord(String mc, Pageable pageable);
-	
+	Page<Client> findAllClientByPage(Pageable page);
+	Page<Client> findClientByKeyWord(String mc, Pageable pageable);
+
+	Long countNumberOfClient();
 	
 
 

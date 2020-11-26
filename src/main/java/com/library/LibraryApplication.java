@@ -16,6 +16,7 @@ import java.util.Date;
 
 @SpringBootApplication
 public class LibraryApplication implements CommandLineRunner {
+
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -38,6 +39,7 @@ public class LibraryApplication implements CommandLineRunner {
 */
     @Override
     public void run(String... args) throws Exception {
+    /*
         Category c1 = categoryRepository.save(new Category(null,"cat1", "cat1"));
         Category c2 = categoryRepository.save(new Category(null,"cat2", "cat2"));
         Category c3 = categoryRepository.save(new Category(null,"cat3", "cat3"));

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -146,6 +147,11 @@ public class VenteServiceImpl implements VenteService {
     @Override
     public int getNumberOfVente() {
         return venteRepository.countNumberOfVente();
+    }
+
+    @Override
+    public BigDecimal countSumsOfVentess() {
+        return venteRepository.sumTotalOfVentes();
     }
 
     @Override

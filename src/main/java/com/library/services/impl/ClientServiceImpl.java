@@ -64,7 +64,12 @@ public class ClientServiceImpl implements ClientService {
 	public Page<Client> findClientByKeyWord(String mc, Pageable pageable) {
 		return clientRepository.findClientByKeyWord(mc, pageable);
 	}
-	
+
+	@Override
+	public Long countNumberOfClient() {
+		return clientRepository.count();
+	}
+
 	@Override
 	public Client saveClient(Client client) {
 		return clientRepository.save(client);

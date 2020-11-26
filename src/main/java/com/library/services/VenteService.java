@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public interface VenteService {
 
     int getNombreVentes(Date d1, Date d2);
     int getNumberOfVente();
+
+    BigDecimal countSumsOfVentess();
 
     Vente findVenteByNumeroVente(int numeroVente);
     Vente findByStatus(String status);

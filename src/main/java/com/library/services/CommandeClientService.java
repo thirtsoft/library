@@ -1,5 +1,6 @@
 package com.library.services;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +27,8 @@ public interface CommandeClientService {
 
 	public int getNombreCommandes(Date d1, Date d2);
 	int getNumberOfCommande();
+
+	BigDecimal countNumbersOfCommandes();
 	
 	public CommandeClient findByNumeroCommande(int numeroCommande);
 	public CommandeClient findByStatus(String status);

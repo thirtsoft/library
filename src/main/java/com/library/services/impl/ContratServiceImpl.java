@@ -1,15 +1,24 @@
 package com.library.services.impl;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
+import java.net.MalformedURLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.services.ContratService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.AbstractFileResolvingResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +37,8 @@ public class ContratServiceImpl implements ContratService {
 	
 	@Autowired
 	private ContratRepository contratRepository;
+
+	private final Path fileStorageLocation = Paths.get("C:\\Users\\Folio9470m\\AlAmine\\Contrat");
 
 	@Override
 	public List<Contrat> findAllContrats() {
@@ -101,6 +112,37 @@ public class ContratServiceImpl implements ContratService {
 		}
 		contratRepository.deleteById(id);
 		return ResponseEntity.ok().build();
+	}
+
+	@Override
+	public Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException {
+
+		Contrat contrat1 = new ObjectMapper().readValue(contrat , Contrat.class);
+		System.out.println(contrat1);
+
+		contrat1.setFileContrat(fileContrant.getOriginalFilename());
+
+		Contrat contrat2 = contratRepository.save(contrat1);
+
+		return contrat2;
+
+	}
+
+	@Override
+	public Resource loadFileAsResource(String fileName) throws Exception {
+		try {
+			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+			Resource resource = new UrlResource(filePath.toUri());
+			if (((AbstractFileResolvingResource) resource).exists()) {
+				return resource;
+			}else {
+				throw new Exception("File not found " + fileName);
+			}
+
+		} catch (MalformedURLException ex) {
+			throw new Exception("File not found " + fileName, ex);
+		}
+
 	}
 
 	@Override

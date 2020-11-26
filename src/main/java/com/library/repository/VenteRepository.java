@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,9 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
 
     @Query("select count(p) from Vente p ")
     Integer countNumberOfVente();
+
+    @Query("select sum(c.totalVente) from Vente c")
+    BigDecimal sumTotalOfVentes();
 
     @Query("select p from Vente p where p.numeroVente like :num")
     Vente findByNumeroVente(@Param("num") int numeroVente);

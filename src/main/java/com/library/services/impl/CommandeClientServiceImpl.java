@@ -1,5 +1,6 @@
 package com.library.services.impl;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -273,6 +274,11 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public int getNumberOfCommande() {
         return commandeClientRepository.countNumberOfCommande();
+    }
+
+    @Override
+    public BigDecimal countNumbersOfCommandes() {
+        return commandeClientRepository.countNumbersOfCommandes();
     }
 
     @Override
