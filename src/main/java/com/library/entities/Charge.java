@@ -3,11 +3,7 @@ package com.library.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -34,5 +30,9 @@ public class Charge implements Serializable {
 	private double montantCharge;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
 	private Date date;
+
+	@ManyToOne
+	@JoinColumn(name="catCharge_id")
+	private CategorieCharge categorieCharge;
 
 }
