@@ -1,13 +1,17 @@
 package com.library.controller;
 
 import com.library.entities.Creance;
+import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.CreanceService;
+import com.library.services.LigneCreanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,76 +23,74 @@ public class CreanceController {
     @Autowired
     private CreanceService creanceService;
 
+    @Autowired
+    private LigneCreanceService ligneCreanceService;
+
+
+    private Double total = 0.0;
+
     @GetMapping("/creances")
     public List<Creance> getAllCreances() {
         return creanceService.findAllCreances();
+
     }
 
     @GetMapping("/creances/{id}")
-    public Optional<Creance> getCreanceById(@PathVariable(value = "id") Long id) {
-        return creanceService.findCreanceById(id);
+    public ResponseEntity<Creance> getCreanceById(@PathVariable(value = "id") Long id)
+            throws ResourceNotFoundException {
+        Creance creance = creanceService.findCreanceById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Commande that id is" + id + "not found"));
+        return ResponseEntity.ok().body(creance);
+
     }
 
     @GetMapping("/searchCreanceByReference")
-    public Creance getCreanceByReference(@RequestParam(name = "ref") String reference) {
+    public Creance getCreanceByReference(@RequestParam("num") int reference) {
         return creanceService.findByReference(reference);
     }
 
-    @GetMapping("/searchListCreancesByReference")
-    public List<Creance> getAllCreancesByReference(@RequestParam(name = "ref") String reference) {
-        return creanceService.findListCreanceByReference("%"+reference+"%");
+    @GetMapping("/NumberOfCreances")
+    public int getNumberOfCreances() {
+        return creanceService.getNumberOfCreances();
     }
 
-    @GetMapping("/searchCreanceByLibelle")
-    public Creance getCreanceByLibelle(@RequestParam(name = "lib") String libelle) {
-        return creanceService.findByLibelle(libelle);
+    @GetMapping("/SumNumbersOfCreances")
+    public BigDecimal getNumbersOfCreances() {
+        return creanceService.countNumbersOfCreances();
     }
 
-    @GetMapping("/searchListCreancesByLibelle")
-    public List<Creance> getAllCreancesByLibelle(@RequestParam(name = "lib") String libelle) {
-        return creanceService.findListCreanceByLibelle("%"+libelle+"%");
+
+    @GetMapping("/searchCreanceByStatus")
+    public Creance getCreanceByStatus(@RequestParam("status") String status) {
+        return creanceService.findByStatus(status);
     }
 
-    @GetMapping("/searchListCreancesByClientId")
-    public List<Creance> getAllCreancesByClientId(@RequestParam("client") Long clientId) {
+    @GetMapping("/searchListCreanceByStatus")
+    public List<Creance> getAllCreanceByStatus(@RequestParam("status") String status) {
+        return creanceService.findListCreanceByStatus(status);
+    }
+
+    @GetMapping("/searchListCreanceByClientId")
+    public List<Creance> getAllCreanceByClientId(@RequestParam("clientId") Long clientId) {
         return creanceService.findCreanceByClientId(clientId);
     }
 
-    @GetMapping("/searchListCreancesByClientPageable")
-    public Page<Creance> getAllCreancesByPageable(@RequestParam(name = "client")Long clientId,
-                                                  @RequestParam(name = "page") int page,
-                                                  @RequestParam(name = "size") int size) {
-        return creanceService.findAllCreancesByClient(clientId, PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListCreancesByPageable")
-    public Page<Creance> getAllCreancesByPageable(@RequestParam(name = "page") int page,
-                                                  @RequestParam(name = "size") int size) {
-        return creanceService.findAllCreancesByPageable(PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListCreancesByKeyword")
-    public Page<Creance> getAllCreancesByKeyword(@RequestParam(name = "mc") String mc,
-                                                 @RequestParam(name = "page") int page,
-                                                 @RequestParam(name = "size") int size) {
-        return creanceService.findCreanceByKeyWord("%"+mc+"%", PageRequest.of(page, size));
-
-    }
 
     @PostMapping("/creances")
-    public Creance createCreance(@RequestBody Creance creance) {
-        return creanceService.saveCreance(creance);
+    public ResponseEntity<Creance> createCreance(@RequestBody Creance creance) {
+        Creance Resultat = creanceService.saveCreance(creance);
+        return ResponseEntity.ok(Resultat);
     }
 
-
     @PutMapping("/creances/{id}")
-    public Creance updateCreance(@PathVariable Long id, @RequestBody Creance creance) {
+    public ResponseEntity<Creance> updateCreance(@PathVariable(value = "id") Long id, @RequestBody Creance creance) throws Exception {
         creance.setId(id);
-        return creanceService.saveCreance(creance);
+        return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/creances/{id}")
-    public ResponseEntity<Object> deleteCreance(@PathVariable(value="id") Long id) {
-        return creanceService.deleteCreance(id);
+    public void deleteCreance(@PathVariable(value = "id") Long id) {
+        creanceService.deleteCreance(id);
     }
 }

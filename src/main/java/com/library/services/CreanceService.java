@@ -1,36 +1,34 @@
 package com.library.services;
 import com.library.entities.Creance;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 public interface CreanceService {
 
-    public List<Creance> findAllCreances();
-    public Optional<Creance> findCreanceById(Long id);
+    List<Creance> findAllCreances();
+    Optional<Creance> findCreanceById(Long creanceId);
 
-    public Creance findByReference(String reference);
-    public List<Creance> findListCreanceByReference(String reference);
+    Creance findByReference(int reference);
+    List<Creance> findListCreanceByReference(int reference);
+    Creance findByStatus(String status);
+    List<Creance> findListCreanceByStatus(String status);
 
-    public Creance findByLibelle(String libelle);
-    public List<Creance> findListCreanceByLibelle(String libelle);
-
-
-    public List<Creance> findCreanceByClientId(Long clientId);
-
-    public Creance saveCreance(Creance creance);
-    public Creance updateCreance(Long id, Creance creance);
-    public ResponseEntity<Object> deleteCreance(Long id);
+    Creance findByLibelle(String libelle);
+    List<Creance> findListCreanceByLibelle(String libelle);
 
 
-    public Page<Creance> findAllCreancesByPageable(Pageable page);
-    public Page<Creance>findAllCreancesByClient(Long clientId, Pageable pageable);
+    List<Creance> findCreanceByClientId(Long clientId);
 
-    public Page<Creance> findCreanceByKeyWord(String mc, Pageable pageable);
+    int getNumberOfCreances();
+
+    BigDecimal countNumbersOfCreances();
+
+    Creance saveCreance(Creance creance);
+    Creance updateCreance(Long id, Creance creance);
+
+
+    void deleteCreance(Long id);
+
+
 }
