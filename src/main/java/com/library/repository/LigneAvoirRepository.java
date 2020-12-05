@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.LigneAvoir;
 import com.library.entities.LigneCmdClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,8 +13,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface LigneAvoirRepository extends JpaRepository<LigneCmdClient, Long> {
+public interface LigneAvoirRepository extends JpaRepository<LigneAvoir, Long> {
 
+    List<LigneAvoir> findAllByNumero(int numero);
 
+    @Modifying
+    @Query("delete from LigneAvoir where numero = :numero")
+    void deleteByNumero(@Param("numero") int numero);
+
+    @Query("select p from LigneAvoir p where p.produit.id =:prod")
+    List<LigneAvoir> ListLigneAvoirByProduitId(@Param("prod") Long prodId);
+
+    @Query("select p from LigneAvoir p where p.avoir.id =:num")
+    List<LigneAvoir> ListLigneAvoirByAvoirId(@Param("num") Long avoirId);
 
 }

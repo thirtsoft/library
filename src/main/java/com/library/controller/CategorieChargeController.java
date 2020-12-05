@@ -72,7 +72,7 @@ public class CategorieChargeController {
         return catChargeService.ListCategoryByNomCategorieCharge(designation);
     }
 
-    @PostMapping("/categorieCharges/create")
+    @PostMapping("/categorieCharges")
     public ResponseEntity<CategorieCharge> createCategorieCharge(@RequestBody CategorieCharge categorieCharge) {
         try {
             catChargeService.saveCategorieCharge(categorieCharge);

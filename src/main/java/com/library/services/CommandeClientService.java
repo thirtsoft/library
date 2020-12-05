@@ -16,12 +16,12 @@ import com.library.entities.CommandeClient;
 
 public interface CommandeClientService {
 
-	public List<CommandeClient> findAllCommandeClient();
-	public Optional<CommandeClient> findCommandeClientById(Long comId);
-	public CommandeClient saveCommandeClient(CommandeClient commande);
+	List<CommandeClient> findAllCommandeClient();
+	Optional<CommandeClient> findCommandeClientById(Long comId);
+	CommandeClient saveCommandeClient(CommandeClient commande);
 	
-	public CommandeClient updateCommandeClient(Long comId, CommandeClient commande);
-	public ResponseEntity<Object> deleteCommandeClient(Long id);
+	CommandeClient updateCommandeClient(Long comId, CommandeClient commande);
+	ResponseEntity<Object> deleteCommandeClient(Long id);
 	
 	//public CommandeClient saveCommandeClient(Long num, Date date, boolean valide, Client clt);
 

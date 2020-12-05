@@ -2,6 +2,7 @@ package com.library.controller;
 
 import com.library.entities.Avoir;
 import com.library.entities.Creance;
+import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AvoirService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,18 +27,22 @@ public class AvoirController {
     }
 
     @GetMapping("/avoirs/{id}")
-    public Optional<Avoir> getAvoirById(@PathVariable(value = "id") Long id) {
-        return avoirService.findAvoirById(id);
+    public ResponseEntity<Avoir> getAvoirById(@PathVariable(value = "id") Long id)
+            throws ResourceNotFoundException {
+        Avoir avoir = avoirService.findAvoirById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Avoir that id is" + id + "not found"));
+        return ResponseEntity.ok().body(avoir);
+
     }
 
     @GetMapping("/searchAvoirByReference")
-    public Avoir getAvoirByReference(@RequestParam(name = "ref") String reference) {
+    public Avoir getAvoirByReference(@RequestParam(name = "ref") int reference) {
         return avoirService.findAvoirByReference(reference);
     }
 
     @GetMapping("/searchListAvoirsByReference")
-    public List<Avoir> getAllAvoirsByReference(@RequestParam(name = "ref") String reference) {
-        return avoirService.findListAvoirByReference("%"+reference+"%");
+    public List<Avoir> getAllAvoirsByReference(@RequestParam(name = "ref") int reference) {
+        return avoirService.findListAvoirByReference(reference);
     }
 
     @GetMapping("/searchAvoirByLibelle")
@@ -55,26 +60,16 @@ public class AvoirController {
         return avoirService.findListAvoirByFournisseurId(fourId);
     }
 
-    @GetMapping("/searchListAvoirsByFournisseurByPageable")
-    public Page<Avoir> getAllAvoirsByPageable(@RequestParam(name = "four")Long fourId,
-                                              @RequestParam(name = "page") int page,
-                                              @RequestParam(name = "size") int size) {
-        return avoirService.findAllAvoirsByFournisseur(fourId, PageRequest.of(page, size));
+    @GetMapping("/searchAvoirByStatus")
+    public Avoir getAvoirByStatus(@RequestParam("status") String status) {
+        return avoirService.findByStatus(status);
     }
 
-    @GetMapping("/searchListAvoirsByPageable")
-    public Page<Avoir> getAllAvoirsByPageable(@RequestParam(name = "page") int page,
-                                              @RequestParam(name = "size") int size) {
-        return avoirService.findAllAvoirsByPageable(PageRequest.of(page, size));
+    @GetMapping("/searchListAvoirByStatus")
+    public List<Avoir> getAllAvoirByStatus(@RequestParam("status") String status) {
+        return avoirService.findListAvoirByStatus(status);
     }
 
-    @GetMapping("/searchListAvoirsByKeyword")
-    public Page<Avoir> getAllAvoirsByKeyword(@RequestParam(name = "mc") String mc,
-                                             @RequestParam(name = "page") int page,
-                                             @RequestParam(name = "size") int size) {
-        return avoirService.findAvoirByKeyWord("%"+mc+"%", PageRequest.of(page, size));
-
-    }
 
     @PostMapping("/avoirs")
     public Avoir createAvoir(@RequestBody Avoir avoir) {
@@ -89,8 +84,8 @@ public class AvoirController {
     }
 
     @DeleteMapping("/avoirs/{id}")
-    public ResponseEntity<Object> deleteAvoir(@PathVariable(value="id") Long id) {
-        return avoirService.deleteAvoir(id);
+    public void deleteAvoir(@PathVariable(value = "id")Long id) {
+        avoirService.deleteAvoir(id);
     }
 
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ligneCmdClient")
+@Table(name = "ligneAvoir")
 /*@Data
 @Getter
 @Setter
@@ -26,38 +26,34 @@ public class LigneAvoir implements Serializable {
 	private double prix;
 
 	@ManyToOne (fetch = FetchType.LAZY)
-	//@JsonBackReference
-	@JoinColumn(name="cmd_id")
-//	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-   // @JsonIgnore
-	@JsonIgnoreProperties(value = {"lcomms"})
-	private CommandeClient commande;
+	@JoinColumn(name="avoir_id")
+	@JsonIgnoreProperties(value = {"lavoirs"})
+	private Avoir avoir;
 
 	@ManyToOne
 	@JoinColumn(name="prod_id")
-   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Produit produit;
 
 	public LigneAvoir() {
 		super();
 	}
 
-	public LigneAvoir(Long id, int numero, int quantite, double prix, CommandeClient commande, Produit produit) {
+	public LigneAvoir(Long id, int numero, int quantite, double prix, Avoir avoir, Produit produit) {
 		this.id = id;
 		this.numero = numero;
 		this.quantite = quantite;
 		this.prix = prix;
-		this.commande = commande;
+		this.avoir = avoir;
 		this.produit = produit;
 	}
 
 	public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public int getNumero() {
 		return numero;
@@ -83,12 +79,12 @@ public class LigneAvoir implements Serializable {
 		this.prix = prix;
 	}
 
-	public CommandeClient getCommande() {
-		return commande;
+	public Avoir getAvoir() {
+		return avoir;
 	}
 
-	public void setCommande(CommandeClient commande) {
-		this.commande = commande;
+	public void setAvoir(Avoir avoir) {
+		this.avoir = avoir;
 	}
 
 	public Produit getProduit() {
@@ -98,7 +94,5 @@ public class LigneAvoir implements Serializable {
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
-
-
 }
 

@@ -11,25 +11,26 @@ import java.util.Optional;
 
 public interface AvoirService {
 
-    public List<Avoir> findAllAvoirs();
-    public Optional<Avoir> findAvoirById(Long id);
+    List<Avoir> findAllAvoirs();
+    Optional<Avoir> findAvoirById(Long id);
 
-    public Avoir findAvoirByReference(String reference);
-    public List<Avoir> findListAvoirByReference(String reference);
+    Avoir findAvoirByReference(int reference);
+    List<Avoir> findListAvoirByReference(int reference);
 
-    public Avoir findAvoirByLibelle(String libelle);
-    public List<Avoir> findListAvoirByLibelle(String libelle);
-
-
-    public List<Avoir> findListAvoirByFournisseurId(Long fourId);
-
-    public Avoir saveAvoir(Avoir avoir);
-    public Avoir updateAvoir(Long id, Avoir avoir);
-    public ResponseEntity<Object> deleteAvoir(Long id);
+    Avoir findAvoirByLibelle(String libelle);
+    List<Avoir> findListAvoirByLibelle(String libelle);
 
 
-    public Page<Avoir> findAllAvoirsByPageable(Pageable page);
-    public Page<Avoir>findAllAvoirsByFournisseur(Long fourId, Pageable pageable);
+    List<Avoir> findListAvoirByFournisseurId(Long fourId);
 
-    public Page<Avoir> findAvoirByKeyWord(String mc, Pageable pageable);
+    Avoir saveAvoir(Avoir avoir);
+    Avoir updateAvoir(Long id, Avoir avoir);
+
+    Avoir findByReference(int reference);
+    Avoir findByStatus(String status);
+
+    List<Avoir> findListAvoirByStatus(String status);
+
+    void deleteAvoir(Long id);
+
 }

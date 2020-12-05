@@ -1,9 +1,15 @@
 package com.library.services.impl;
 
 import com.library.entities.Avoir;
+import com.library.entities.LigneAvoir;
+import com.library.entities.Produit;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.AvoirRepository;
 import com.library.services.AvoirService;
+import com.library.services.LigneAvoirService;
+import com.library.services.ProduitService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +24,17 @@ import java.util.Optional;
 @Transactional
 public class AvoirServiceImpl implements AvoirService {
 
+    Logger logger = LoggerFactory.getLogger(CommandeClientServiceImpl.class);
+
+
     @Autowired
     private AvoirRepository avoirRepository;
+
+    @Autowired
+    private LigneAvoirService ligneAvoirService;
+
+    @Autowired
+    private ProduitService produitService;
 
     @Override
     public List<Avoir> findAllAvoirs() {
@@ -27,21 +42,109 @@ public class AvoirServiceImpl implements AvoirService {
     }
 
     @Override
-    public Optional<Avoir> findAvoirById(Long id) {
-        if (!avoirRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Avoir N° " + id + "not found");
+    public Optional<Avoir> findAvoirById(Long comId) {
+        if (!avoirRepository.existsById(comId)) {
+            throw new ResourceNotFoundException("CommandeClient that id is" + comId + "not found");
         }
 
-        return avoirRepository.findById(id);
+        return avoirRepository.findById(comId);
+    }
+
+    /**
+     * @param avoir
+     * @return methode permettant d'ajouter d'abord une commande
+     * puis les lignes de commandes correspondantes
+     */
+
+    @Override
+    public Avoir saveAvoir(Avoir avoir) {
+
+        logger.info("Avoir {}", avoir);
+        avoirRepository.save(avoir);
+
+
+        List<LigneAvoir> ligneAvoirs = avoir.getLavoirs();
+
+        double total = 0;
+        for (LigneAvoir lavoir  : ligneAvoirs) {
+            lavoir.setAvoir(avoir);
+            lavoir.setNumero(avoir.getReference());
+
+            ligneAvoirService.saveLigneAvoir(lavoir);
+
+            Produit produit = produitService.findProduitById(lavoir.getProduit().getId()).get();
+            if (produit != null) {
+                produit.setQtestock(produit.getQtestock() - lavoir.getQuantite());
+                produitService.saveProduit(produit);
+            }
+
+            lavoir.setPrix(produit.getPrixVente());
+
+            System.out.println(produit.getPrixVente());
+            System.out.println(lavoir.getQuantite());
+            System.out.println(lavoir.getQuantite() * produit.getPrixVente());
+
+            total += (lavoir.getQuantite() * produit.getPrixVente());
+
+        }
+
+        avoir.setTotalAvoir(total);
+        avoir.setStatus("valider");
+        // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
+       // commande.setDateCommande(new Date());
+
+
+        return avoirRepository.save(avoir);
+
     }
 
     @Override
-    public Avoir findAvoirByReference(String reference) {
+    public void deleteAvoir(Long id) {
+        Optional<Avoir> avoirInfo = avoirRepository.findById(id);
+        if (avoirInfo.isPresent()) {
+            Avoir avoir = avoirInfo.get();
+            ligneAvoirService.deleteLavoirByNumero(avoir.getReference());
+            avoirRepository.delete(avoir);
+        }
+    }
+
+
+    @Override
+    public Avoir updateAvoir(Long avoirId, Avoir avoir) {
+        if (!avoirRepository.existsById(avoirId)) {
+            throw new ResourceNotFoundException("Commande that id is" + avoirId + "not found");
+        }
+
+        Optional<Avoir> avoirInfo = avoirRepository.findById(avoirId);
+
+        if (!avoirInfo.isPresent()) {
+            throw new ResourceNotFoundException("Avoir that id is" + avoirInfo + "not found");
+        }
+
+        Avoir avoirResult = avoirInfo.get();
+
+        avoirResult.setReference(avoir.getReference());
+       // cmdClientResult.setDateCommande(commande.getDateCommande());
+        avoirResult.setFournisseur(avoir.getFournisseur());
+        avoirResult.setTotalAvoir(avoir.getTotalAvoir());
+        avoirResult.setStatus(avoir.getStatus());
+
+        return avoirRepository.save(avoirResult);
+    }
+
+    @Override
+    public Avoir findByReference(int reference) {
+        return avoirRepository.findByReference(reference);
+    }
+
+
+    @Override
+    public Avoir findAvoirByReference(int reference) {
         return avoirRepository.findByReference(reference);
     }
 
     @Override
-    public List<Avoir> findListAvoirByReference(String reference) {
+    public List<Avoir> findListAvoirByReference(int reference) {
         return avoirRepository.findListAvoirByReference(reference);
     }
 
@@ -56,58 +159,19 @@ public class AvoirServiceImpl implements AvoirService {
     }
 
     @Override
+    public Avoir findByStatus(String status) {
+        return avoirRepository.findByStatus(status);
+    }
+
+    @Override
+    public List<Avoir> findListAvoirByStatus(String status) {
+        return avoirRepository.ListAvoirByStatus(status);
+    }
+
+    @Override
     public List<Avoir> findListAvoirByFournisseurId(Long fourId) {
         return avoirRepository.findLitAvoirByFournisseurId(fourId);
     }
 
-    @Override
-    public Avoir saveAvoir(Avoir avoir) {
-        return avoirRepository.save(avoir);
-    }
-
-    @Override
-    public Avoir updateAvoir(Long id, Avoir avoir) {
-        if (!avoirRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Avoir N° " + id + "not found");
-        }
-        Optional<Avoir> avoirOptional = avoirRepository.findById(id);
-        if (!avoirOptional.isPresent()) {
-            throw new ResourceNotFoundException("Avoir N° " + id + "not found");
-        }
-
-        Avoir avoirResultat = avoirOptional.get();
-        avoirResultat.setReference(avoir.getReference());
-        avoirResultat.setLibelle(avoir.getLibelle());
-        avoirResultat.setSoldeAvoir(avoir.getSoldeAvoir());
-        avoirResultat.setNbreJours(avoir.getNbreJours());
-        avoirResultat.setFournisseur(avoir.getFournisseur());
-
-        return avoirRepository.save(avoirResultat);
-    }
-
-    @Override
-    public ResponseEntity<Object> deleteAvoir(Long id) {
-        if (!avoirRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Avoir N° " + id + "not found");
-        }
-        avoirRepository.deleteById(id);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @Override
-    public Page<Avoir> findAllAvoirsByPageable(Pageable page) {
-        return avoirRepository.findAllAvoirsByPageable(page);
-    }
-
-    @Override
-    public Page<Avoir> findAllAvoirsByFournisseur(Long fourId, Pageable pageable) {
-        return avoirRepository.findAvoirByFournisseurByPageable(fourId, pageable);
-    }
-
-    @Override
-    public Page<Avoir> findAvoirByKeyWord(String mc, Pageable pageable) {
-        return avoirRepository.findAvoirsByKeyWord(mc, pageable);
-    }
 
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "ligneCmdClient")
+@Table(name = "ligneCreance")
 /*@Data
 @Getter
 @Setter
