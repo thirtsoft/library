@@ -31,7 +31,7 @@ public class Approvisionnement implements Serializable {
     private Long id;
 
     private int code;
-
+    private double montantAvance;
     private double totalAppro;
 
    // @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -52,9 +52,10 @@ public class Approvisionnement implements Serializable {
     public Approvisionnement() {
     }
 
-    public Approvisionnement(Long id, int code, double totalAppro, Date dateApprovisionnement, String status, String observation, Fournisseur fournisseur, @Valid List<LigneApprovisionnement> ligneApprovisionnements) {
+    public Approvisionnement(Long id, int code, double montantAvance, double totalAppro, Date dateApprovisionnement, String status, String observation, Fournisseur fournisseur, @Valid List<LigneApprovisionnement> ligneApprovisionnements) {
         this.id = id;
         this.code = code;
+        this.montantAvance = montantAvance;
         this.totalAppro = totalAppro;
         this.dateApprovisionnement = dateApprovisionnement;
         this.status = status;
@@ -77,6 +78,14 @@ public class Approvisionnement implements Serializable {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public double getMontantAvance() {
+        return montantAvance;
+    }
+
+    public void setMontantAvance(double montantAvance) {
+        this.montantAvance = montantAvance;
     }
 
     public double getTotalAppro() {

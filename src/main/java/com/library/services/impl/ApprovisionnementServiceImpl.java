@@ -98,7 +98,8 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
             System.out.println(lAppro.getQuantite());
             System.out.println(lAppro.getQuantite() * produit.getPrixAchat());
 
-            total += (lAppro.getQuantite() * produit.getPrixAchat());
+         //   total += (lAppro.getQuantite() * produit.getPrixAchat());
+            total += (lAppro.getQuantite() * lAppro.getPrixAppro());
 
         }
 

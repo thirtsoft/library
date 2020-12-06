@@ -38,6 +38,7 @@ public class LigneCmdClient implements Serializable {
 	private int numero;
 	private int quantite;
 	private double prix;
+	private double prixCommande;
 
 	@ManyToOne (fetch = FetchType.LAZY)
 	//@JsonBackReference
@@ -56,11 +57,12 @@ public class LigneCmdClient implements Serializable {
 		super();
 	}
 
-	public LigneCmdClient(Long id, int numero, int quantite, double prix, CommandeClient commande, Produit produit) {
+	public LigneCmdClient(Long id, int numero, int quantite, double prix, double prixCommande, CommandeClient commande, Produit produit) {
 		this.id = id;
 		this.numero = numero;
 		this.quantite = quantite;
 		this.prix = prix;
+		this.prixCommande = prixCommande;
 		this.commande = commande;
 		this.produit = produit;
 	}
@@ -95,6 +97,14 @@ public class LigneCmdClient implements Serializable {
 
 	public void setPrix(double prix) {
 		this.prix = prix;
+	}
+
+	public double getPrixCommande() {
+		return prixCommande;
+	}
+
+	public void setPrixCommande(double prixCommande) {
+		this.prixCommande = prixCommande;
 	}
 
 	public CommandeClient getCommande() {

@@ -123,7 +123,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             System.out.println(lcmdClt.getQuantite());
             System.out.println(lcmdClt.getQuantite() * produit.getPrixVente());
 
-            total += (lcmdClt.getQuantite() * produit.getPrixVente());
+        //    total += (lcmdClt.getQuantite() * produit.getPrixVente());
+            total += (lcmdClt.getQuantite() * lcmdClt.getPrixCommande());
 
         }
 

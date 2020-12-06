@@ -28,6 +28,7 @@ public class LigneApprovisionnement implements Serializable {
     private int numero;
     private int quantite;
     private double prix;
+    private double prixAppro;
 
    // @ManyToOne
     //@JoinColumn(name="Appro_id")
@@ -47,7 +48,7 @@ public class LigneApprovisionnement implements Serializable {
         super();
     }
 
-    public LigneApprovisionnement(Long id, int numero, int quantite, double prix, Approvisionnement approvisionnement, Produit produit) {
+    public LigneApprovisionnement(Long id, int numero, int quantite, double prix, double prixAppro, Approvisionnement approvisionnement, Produit produit) {
         this.id = id;
         this.numero = numero;
         this.quantite = quantite;
@@ -86,6 +87,14 @@ public class LigneApprovisionnement implements Serializable {
 
     public void setPrix(double prix) {
         this.prix = prix;
+    }
+
+    public double getPrixAppro() {
+        return prixAppro;
+    }
+
+    public void setPrixAppro(double prixAppro) {
+        this.prixAppro = prixAppro;
     }
 
     public Approvisionnement getApprovisionnement() {
