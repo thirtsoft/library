@@ -2,18 +2,24 @@ package com.library.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(name = "creance")
+@Table(name = "creance",
+uniqueConstraints = {
+@UniqueConstraint(columnNames = "codeCreance")
+})
 /*
 @Data
 @AllArgsConstructor
@@ -29,11 +35,14 @@ public class Creance implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private int reference;
+    private String codeCreance;
 	private String libelle;
 	private double soldeCreance;
 	private int nbreJours;
 	private double totalCreance;
 	private String status;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
+	private Date dateCreance;
 
 	@ManyToOne
 	@JoinColumn(name="client_id")
@@ -47,14 +56,16 @@ public class Creance implements Serializable {
 		super();
 	}
 
-	public Creance(Long id, int reference, String libelle, double soldeCreance, int nbreJours, double totalCreance, String status, Client client, @Valid List<LigneCreance> lcreances) {
+	public Creance(Long id, int reference,String codeCreance, String libelle, double soldeCreance, int nbreJours, double totalCreance, String status, Date dateCreance, Client client, @Valid List<LigneCreance> lcreances) {
 		this.id = id;
 		this.reference = reference;
 		this.libelle = libelle;
+		this.codeCreance = codeCreance;
 		this.soldeCreance = soldeCreance;
 		this.nbreJours = nbreJours;
 		this.totalCreance = totalCreance;
 		this.status = status;
+		this.dateCreance = dateCreance;
 		this.client = client;
 		this.lcreances = lcreances;
 	}
@@ -83,7 +94,15 @@ public class Creance implements Serializable {
 		this.libelle = libelle;
 	}
 
-	public double getSoldeCreance() {
+    public String getCodeCreance() {
+        return codeCreance;
+    }
+
+    public void setCodeCreance(String codeCreance) {
+        this.codeCreance = codeCreance;
+    }
+
+    public double getSoldeCreance() {
 		return soldeCreance;
 	}
 
@@ -113,6 +132,14 @@ public class Creance implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Date getDateCreance() {
+		return dateCreance;
+	}
+
+	public void setDateCreance(Date dateCreance) {
+		this.dateCreance = dateCreance;
 	}
 
 	public Client getClient() {

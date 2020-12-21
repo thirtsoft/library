@@ -2,11 +2,13 @@ package com.library.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,6 +37,8 @@ public class Avoir implements Serializable {
 	private int nbreJours;
 	private double totalAvoir;
 	private String status;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
+	private Date dateAvoir;
 
 	@ManyToOne
 	@JoinColumn(name="four_id")
@@ -47,7 +51,7 @@ public class Avoir implements Serializable {
 	public Avoir() {
 	}
 
-	public Avoir(Long id, int reference, String libelle, double soldeAvoir, int nbreJours, double totalAvoir, String status, Fournisseur fournisseur, @Valid List<LigneAvoir> lavoirs) {
+	public Avoir(Long id, int reference, String libelle, double soldeAvoir, int nbreJours, double totalAvoir, String status, Date dateAvoir, Fournisseur fournisseur, @Valid List<LigneAvoir> lavoirs) {
 		this.id = id;
 		this.reference = reference;
 		this.libelle = libelle;
@@ -55,6 +59,7 @@ public class Avoir implements Serializable {
 		this.nbreJours = nbreJours;
 		this.totalAvoir = totalAvoir;
 		this.status = status;
+		this.dateAvoir = dateAvoir;
 		this.fournisseur = fournisseur;
 		this.lavoirs = lavoirs;
 	}
@@ -113,6 +118,14 @@ public class Avoir implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Date getDateAvoir() {
+		return dateAvoir;
+	}
+
+	public void setDateAvoir(Date dateAvoir) {
+		this.dateAvoir = dateAvoir;
 	}
 
 	public Fournisseur getFournisseur() {

@@ -33,7 +33,7 @@ public class CommandeClient implements Serializable {
     /*@DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern="yyyy-MM-dd") */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateCommande;
 
     @ManyToOne

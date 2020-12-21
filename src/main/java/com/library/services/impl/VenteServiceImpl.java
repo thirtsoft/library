@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -182,6 +183,26 @@ public class VenteServiceImpl implements VenteService {
             ligneVenteService.deleteLventeByNumero(vente.getNumeroVente());
             venteRepository.delete(vente);
         }
+    }
+
+    @Override
+    public List<Vente> findVenteWithParticularDayAndMonth() {
+        return venteRepository.findVenteWithParticularDayAndMonth();
+    }
+
+    @Override
+    public BigDecimal sumTotalOfVenteByDay() {
+        return venteRepository.sumTotalOfVenteByDay();
+    }
+
+    @Override
+    public Integer countNumberOfVenteByDay() {
+        return venteRepository.countNumberOfVenteByDay();
+    }
+
+    @Override
+    public List<?> sumTotalOfVenteByMonth() {
+        return venteRepository.sumTotalOfVenteByMonth();
     }
 
 

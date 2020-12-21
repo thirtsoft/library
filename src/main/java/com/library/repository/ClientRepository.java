@@ -25,7 +25,16 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 	
 	@Query("select c from Client c where c.chefService like :chefService") 
 	public List<Client> ListClientByChefService(@Param("chefService") String chefService);
-	
+
+	@Query("select c.raisonSocial, count(c) as countClient from Client c group by c.raisonSocial")
+	List<Object[]> ListClientGroupByRaisonSocial();
+//	@Query("SELECT u.serverName,count(u) as controlRunCount from RunList u where u.controlRunDate < :lastUploadDate group by u.serverName")
+//	List<Object[]> findAllControlRunAfterDate(@Param("lastUploadDate") Date lastUploadDate);
+	//@Query("SELECT c.year, COUNT(c.year) FROM Comment AS c GROUP BY c.year ORDER BY c.year DESC")
+	//List<Object[]> countTotalCommentsByYear();
+
+
+
 	@Query("select p from Client p")
 	public Page<Client> findClientByPageable(Pageable pageable);
 	  

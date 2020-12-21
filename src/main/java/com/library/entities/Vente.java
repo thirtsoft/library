@@ -32,7 +32,7 @@ public class Vente implements Serializable {
 	private int numeroVente;
 
 	//@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
 	private Date dateVente;
 
 

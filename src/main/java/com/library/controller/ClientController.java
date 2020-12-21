@@ -7,16 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.library.entities.Client;
 import com.library.exceptions.ResourceNotFoundException;
@@ -62,6 +53,11 @@ public class ClientController {
 		return clientService.ListClientByRaisonSocial("%"+raisonSocial+"%");
 		
 	}
+
+	@GetMapping("/ListClientGroupByRaisonSocial")
+	public List<Object[]> getListClientGroupByRaisonSocial() {
+		return clientService.ListClientGroupByRaisonSocial();
+	}
 	
 	@GetMapping("/searchClientByChefService")
 	public Client getClientByChefService(@RequestParam(value = "chefService") String chefService) {
@@ -70,10 +66,9 @@ public class ClientController {
 	
 	@GetMapping("/searchListClientByChefService")
 	public List<Client> getListClientByChefService(@RequestParam(value = "chefService") String chefService) {
-		
 		return clientService.ListClientByChefService("%"+chefService+"%");
-		
 	}
+
 	@GetMapping("/searchListClientByPageable")
 	public Page<Client> getAllClientByPageable(@RequestParam(name = "page") int page,
 			@RequestParam(name = "size") int size) {
@@ -99,6 +94,13 @@ public class ClientController {
 		return new ResponseEntity<>(clientService.saveClient(client), HttpStatus.OK);
 		
 	}
+
+	@PatchMapping("/udapteClientByEmail/{id}")
+	public ResponseEntity<?> updateClientByEmail(@RequestParam("email") String email, @PathVariable("id") String id) {
+		Client newClient = clientService.updateClientByEmail(email, id);
+		return new ResponseEntity<>(newClient, HttpStatus.OK);
+	}
+
 	@DeleteMapping("/clients/{id}")
 	public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") Long id) {
 		return clientService.deleteClient(id);

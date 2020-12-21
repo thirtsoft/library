@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +63,6 @@ public class AvoirServiceImpl implements AvoirService {
         logger.info("Avoir {}", avoir);
         avoirRepository.save(avoir);
 
-
         List<LigneAvoir> ligneAvoirs = avoir.getLavoirs();
 
         double total = 0;
@@ -73,11 +73,12 @@ public class AvoirServiceImpl implements AvoirService {
             ligneAvoirService.saveLigneAvoir(lavoir);
 
             Produit produit = produitService.findProduitById(lavoir.getProduit().getId()).get();
+            /*
             if (produit != null) {
-                produit.setQtestock(produit.getQtestock() - lavoir.getQuantite());
+                produit.setQtestock(produit.getQtestock() + lavoir.getQuantite());
                 produitService.saveProduit(produit);
             }
-
+            */
             lavoir.setPrix(produit.getPrixVente());
 
             System.out.println(produit.getPrixVente());
@@ -90,9 +91,7 @@ public class AvoirServiceImpl implements AvoirService {
 
         avoir.setTotalAvoir(total);
         avoir.setStatus("valider");
-        // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
-       // commande.setDateCommande(new Date());
-
+        avoir.setDateAvoir(new Date());
 
         return avoirRepository.save(avoir);
 

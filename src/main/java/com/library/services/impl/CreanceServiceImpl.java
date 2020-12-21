@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -53,6 +54,11 @@ public class CreanceServiceImpl implements CreanceService {
         return creanceRepository.findById(creanceId);
     }
 
+    @Override
+    public Creance findByReferences(int reference) {
+        return null;
+    }
+
 
     /**
      * @param creance
@@ -65,7 +71,6 @@ public class CreanceServiceImpl implements CreanceService {
 
         logger.info("Creance {}", creance);
         creanceRepository.save(creance);
-
 
         List<LigneCreance> lcreances = creance.getLcreances();
 
@@ -93,10 +98,7 @@ public class CreanceServiceImpl implements CreanceService {
         }
 
         creance.setTotalCreance(total);
-        creance.setStatus("valider");
-        // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
-       // commande.setDateCommande(new Date());
-
+        creance.setDateCreance(new Date());
 
         return creanceRepository.save(creance);
 
@@ -141,6 +143,15 @@ public class CreanceServiceImpl implements CreanceService {
         return creanceRepository.save(creanceResult);
     }
 
+    @Override
+    public void updateCreanceStatus(Long id, String status) {
+
+        Creance creance = this.creanceRepository.findById(id).get();
+        creance.setStatus(creance.getStatus());
+
+        creanceRepository.updateCreanceStatus(status, id);
+    }
+
 
     @Override
     public int getNumberOfCreances() {
@@ -152,9 +163,155 @@ public class CreanceServiceImpl implements CreanceService {
         return creanceRepository.countNumbersOfCommandes();
     }
 
+
     @Override
-    public Creance findByReference(int reference) {
-        return creanceRepository.findByNumeroCreance(reference);
+    public Optional<Creance> findByReference(int reference) {
+        return creanceRepository.findByReference(reference);
+    }
+
+    @Override
+    public boolean updateStatus(int reference, String status) {
+        Optional<Creance> creance = this.creanceRepository.findByReference(reference);
+        Creance creanceResult;
+        if(creance.isPresent()) {
+            creanceResult =  creance.get();
+            creanceResult.setStatus(status);
+            this.creanceRepository.save(creanceResult);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Optional<Creance> findByCodeCreance(String codeCreance) {
+        return creanceRepository.findByCodeCreance(codeCreance);
+    }
+
+    public boolean updateCodeStatusCreance(Long creanceId, String status) {
+        if (!creanceRepository.existsById(creanceId)) {
+            throw new ResourceNotFoundException("Creance that id is" + creanceId + "not found");
+        }
+
+        Optional<Creance> creanceClient = creanceRepository.findById(creanceId);
+        Creance creanceResult;
+
+        if (creanceClient.isPresent()) {
+            creanceResult = creanceClient.get();
+            this.creanceRepository.save(creanceResult);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public void setCreanceStatusById(String status, Long id) {
+        Optional<Creance> creance = creanceRepository.findById(id);
+        if (creance.isPresent()) {
+            Creance creanceResult = creance.get();
+            creanceResult.setStatus(status);
+
+            creanceRepository.save(creanceResult);
+        }
+
+        //creanceRepository.setCreanceStatusById(status, id);
+    }
+
+    @Override
+    public void setPartialCranceFiel(Long id, Creance cranceField) {
+        if (!creanceRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Creance N° " + id + "nout found");
+        }
+        Optional<Creance> creanceOptional = creanceRepository.findById(id);
+        if (!creanceOptional.isPresent()) {
+            throw new ResourceNotFoundException("Creance N° " + id + "not found");
+        }
+        Creance creanceResult = creanceOptional.get();
+        creanceResult.setReference(cranceField.getReference());
+        creanceResult.setCodeCreance(cranceField.getCodeCreance());
+        creanceResult.setSoldeCreance(cranceField.getSoldeCreance());
+        creanceResult.setLibelle(cranceField.getLibelle());
+        creanceResult.setNbreJours(cranceField.getNbreJours());
+        creanceResult.setTotalCreance(cranceField.getTotalCreance());
+        creanceResult.setDateCreance(cranceField.getDateCreance());
+        creanceResult.setClient(cranceField.getClient());
+        creanceResult.setStatus(cranceField.getStatus());
+
+        creanceRepository.save(creanceResult);
+    }
+
+    public  void setPartialCranceFiel(Creance cranceField) {
+        Optional<Creance> c = creanceRepository.findById(cranceField.getId());
+        if (c.isPresent()) {
+            Creance creance = c.get();
+            if (cranceField.getReference() != 01) {
+                creance.setReference(cranceField.getReference());
+            }
+            if (cranceField.getLibelle() != null) {
+                creance.setLibelle(cranceField.getLibelle());
+            }
+            if (cranceField.getTotalCreance() != 02) {
+                creance.setTotalCreance(cranceField.getTotalCreance());
+            }
+            if (cranceField.getClient() != null) {
+                creance.setClient(cranceField.getClient());
+            }
+            if (cranceField.getCodeCreance() != null) {
+                creance.setCodeCreance(cranceField.getCodeCreance());
+            }
+            if (cranceField.getLcreances() != null) {
+                creance.setLcreances(cranceField.getLcreances());
+            }
+            if (cranceField.getSoldeCreance() != 03) {
+                creance.setSoldeCreance(cranceField.getSoldeCreance());
+            }
+            if (cranceField.getNbreJours() != 04) {
+                creance.setNbreJours(cranceField.getNbreJours());
+            }
+            if (cranceField.getDateCreance() != null) {
+                creance.setDateCreance(cranceField.getDateCreance());
+            }
+            if (cranceField.getStatus() != null) {
+                creance.setStatus(cranceField.getStatus());
+            }
+
+            creanceRepository.save(creance);
+
+        }
+    }
+
+    public void setStatusById(String status) {
+
+    }
+
+    @Override
+    public Creance setCreanceOnlyStatus(String status, String id) {
+        Optional<Creance> originalCreance = creanceRepository.findById(Long.valueOf(id));
+        Creance creance = originalCreance.get();
+        creance.setStatus(status);
+        return creanceRepository.save(creance);
+    }
+
+    @Override
+    public Creance setCreanceOnlySolde(double soldeCreance, String id) {
+        Optional<Creance> originalCreance = creanceRepository.findById(Long.valueOf(id));
+        Creance creance = originalCreance.get();
+        creance.setSoldeCreance(soldeCreance);
+        return creanceRepository.save(creance);
+    }
+
+    @Override
+    public boolean updateStatusCreance(String codeCreance, String status) {
+        Optional<Creance> creance = this.creanceRepository.findByCodeCreance(codeCreance);
+        Creance creanceResult;
+        if(creance.isPresent()) {
+            creanceResult =  creance.get();
+            creanceResult.setStatus(status);
+            this.creanceRepository.save(creanceResult);
+            return true;
+        }
+
+        return false;
     }
 
     @Override

@@ -56,6 +56,11 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
+	public List<Object[]> ListClientGroupByRaisonSocial() {
+		return clientRepository.ListClientGroupByRaisonSocial();
+	}
+
+	@Override
 	public Page<Client> findAllClientByPage(Pageable page) {
 		return clientRepository.findClientByPageable(page);
 	}
@@ -68,6 +73,14 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public Long countNumberOfClient() {
 		return clientRepository.count();
+	}
+
+	@Override
+	public Client updateClientByEmail(String email, String id) {
+		Optional<Client> originalClient = clientRepository.findById(Long.valueOf(id));
+		Client client = originalClient.get();
+		client.setEmail(email);
+		return clientRepository.save(client);
 	}
 
 	@Override

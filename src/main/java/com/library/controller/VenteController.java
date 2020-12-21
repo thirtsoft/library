@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -46,11 +47,16 @@ public class VenteController {
         return venteService.getNumberOfVente();
     }
 
+    @GetMapping("/NumberOfVenteByDay")
+    public int getNumberOfVenteByDay() {
+        return venteService.countNumberOfVenteByDay();
+    }
+
+
     @GetMapping("/SumsOfVentes")
     public BigDecimal getSumsOfVentes() {
         return venteService.countSumsOfVentess();
     }
-
 
     @GetMapping("/searchVenteByStatus")
     public Vente getVenteByStatus(@RequestParam("status") String status) {
@@ -94,4 +100,20 @@ public class VenteController {
         venteService.deleteVente(id);
         //return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/searchVenteWithParticularDayAndMonth")
+    public List<Vente> getVenteWithParticularDayAndMonth() {
+        return venteService.findVenteWithParticularDayAndMonth();
+    }
+
+    @GetMapping("/searchSumVenteByMonth")
+    public List<?> getSumTotalOfVenteByMonth() {
+        return venteService.sumTotalOfVenteByMonth();
+    }
+
+    @GetMapping("/searchSumsOfVenteByDay")
+    public BigDecimal getSumsOfVenteByDay() {
+        return venteService.sumTotalOfVenteByDay();
+    }
+
 }

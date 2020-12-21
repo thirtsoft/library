@@ -22,11 +22,14 @@ public interface ClientService {
 	
 	List<Client> ListClientByRaisonSocial(String raisonSocial);
 	List<Client> ListClientByChefService(String chefService);
+	List<Object[]> ListClientGroupByRaisonSocial();
 	
 	Page<Client> findAllClientByPage(Pageable page);
 	Page<Client> findClientByKeyWord(String mc, Pageable pageable);
 
 	Long countNumberOfClient();
+
+	Client updateClientByEmail(String email, String id);
 	
 
 

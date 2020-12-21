@@ -1,5 +1,8 @@
 package com.library.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.library.entities.Creance;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.CreanceService;
@@ -16,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/alAmine")
 public class CreanceController {
 
@@ -45,9 +48,66 @@ public class CreanceController {
     }
 
     @GetMapping("/searchCreanceByReference")
-    public Creance getCreanceByReference(@RequestParam("num") int reference) {
+    public Optional<Creance> getCreanceByReference(@RequestParam("num") int reference) {
         return creanceService.findByReference(reference);
     }
+
+    @PostMapping(path="/updateStatus")
+    public ResponseEntity<Boolean> updateStatus(@RequestBody ObjectNode json){
+        int reference;
+        String ref;
+        String status;
+        try {
+            ref = new ObjectMapper().treeToValue(json.get("ref"), String.class);
+            reference = Integer.parseInt(ref);
+            status = new ObjectMapper().treeToValue(json.get("status"), String.class);
+            boolean test = this.creanceService.updateStatus(reference, status);
+            if(test)
+                return new ResponseEntity<Boolean>(test,HttpStatus.OK);
+
+        } catch (JsonProcessingException e) {
+            System.out.println("Parsing Exception!!");
+            e.printStackTrace();
+            return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+
+        }
+
+        return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+
+    }
+
+    @PostMapping(path="/updateStatusCreance")
+    public ResponseEntity<Boolean> updateStatusCreance(@RequestBody ObjectNode json){
+        String codeCreance;
+        String status;
+        try {
+            codeCreance = new ObjectMapper().treeToValue(json.get("codeCreance"), String.class);
+            status = new ObjectMapper().treeToValue(json.get("status"), String.class);
+            boolean test = this.creanceService.updateStatusCreance(codeCreance, status);
+            if(test)
+                return new ResponseEntity<Boolean>(test,HttpStatus.OK);
+
+        } catch (JsonProcessingException e) {
+            System.out.println("Parsing Exception!!");
+            e.printStackTrace();
+            return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+
+        }
+
+        return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+
+    }
+
+    @PostMapping(path="/updateCodeStatusCreance")
+    public ResponseEntity<Boolean> updateCodeStatusCreance(Long creanceId, String status){
+        boolean test = creanceService.updateCodeStatusCreance(creanceId, status);
+        if (test) {
+            return new ResponseEntity<Boolean>(test,HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Boolean>(test,HttpStatus.NOT_MODIFIED);
+        }
+    }
+
 
     @GetMapping("/NumberOfCreances")
     public int getNumberOfCreances() {
@@ -87,6 +147,35 @@ public class CreanceController {
         creance.setId(id);
         return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.OK);
 
+    }
+
+    @PutMapping("/updateCreancesStatus/{idCreance}")
+    public void updateCreanceStatus(@PathVariable(value = "idCreance") Long idCreance, String status) {
+        creanceService.updateCreanceStatus(idCreance, status);
+    }
+
+    @PatchMapping("/setCreanceStatusById/{id}")
+    public ResponseEntity<Creance> setCreanceStatusById(@PathVariable("id") Long id, @RequestBody Creance creance) {
+        creance.setId(id);
+        return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.OK);
+    }
+
+    @PatchMapping("/setPartialCranceFiel/{id}")
+    public  void setPartialCranceFiel(@PathVariable("id") Long id, @RequestBody Creance cranceField) {
+        cranceField.setId(id);
+        creanceService.saveCreance(cranceField);
+    }
+
+    @PatchMapping("/setCreanceOnlyStatus/{id}")
+    public ResponseEntity<?> setCreanceOnlyStatus(@RequestParam("status") String status, @PathVariable("id") String id) {
+        Creance newCreance = creanceService.setCreanceOnlyStatus(status, id);
+        return new ResponseEntity<>(newCreance, HttpStatus.OK);
+    }
+
+    @PatchMapping("/setCreanceOnlySolde/{id}")
+    public ResponseEntity<?> setCreanceOnlySolde(@RequestParam("soldeCreance") double soldeCreance, @PathVariable("id") String id) {
+        Creance newCreance = creanceService.setCreanceOnlySolde(soldeCreance, id);
+        return new ResponseEntity<>(newCreance, HttpStatus.OK);
     }
 
     @DeleteMapping("/creances/{id}")

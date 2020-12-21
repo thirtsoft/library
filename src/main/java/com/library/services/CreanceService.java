@@ -9,7 +9,7 @@ public interface CreanceService {
     List<Creance> findAllCreances();
     Optional<Creance> findCreanceById(Long creanceId);
 
-    Creance findByReference(int reference);
+    Creance findByReferences(int reference);
     List<Creance> findListCreanceByReference(int reference);
     Creance findByStatus(String status);
     List<Creance> findListCreanceByStatus(String status);
@@ -26,9 +26,22 @@ public interface CreanceService {
 
     Creance saveCreance(Creance creance);
     Creance updateCreance(Long id, Creance creance);
-
+    void updateCreanceStatus(Long id, String status);
 
     void deleteCreance(Long id);
+
+    Optional<Creance> findByReference(int reference);
+    boolean updateStatus(int reference, String status);
+
+    Optional<Creance> findByCodeCreance(String codeCreance);
+    boolean updateStatusCreance(String codeCreance, String status);
+    boolean updateCodeStatusCreance(Long creanceId, String status);
+    void setCreanceStatusById(String status, Long id);
+    void setPartialCranceFiel(Long id, Creance cranceField);
+    void setStatusById(String status);
+
+    Creance setCreanceOnlyStatus(String status, String id);
+    Creance setCreanceOnlySolde(double soldeCreance, String id);
 
 
 }

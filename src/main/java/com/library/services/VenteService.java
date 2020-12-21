@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface VenteService {
@@ -35,5 +36,12 @@ public interface VenteService {
     Page<Vente> findVenteByKeyWord(String mc, Pageable pageable);
 
     void deleteVente(Long id);
+
+    List<Vente> findVenteWithParticularDayAndMonth();
+
+    BigDecimal sumTotalOfVenteByDay();
+
+    Integer countNumberOfVenteByDay();
+    List<?> sumTotalOfVenteByMonth();
 
 }
