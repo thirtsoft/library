@@ -42,6 +42,8 @@ public interface VenteService {
     BigDecimal sumTotalOfVenteByDay();
 
     Integer countNumberOfVenteByDay();
+
+    List<?> countNumberTotalOfVenteByMonth();
     List<?> sumTotalOfVenteByMonth();
 
 }

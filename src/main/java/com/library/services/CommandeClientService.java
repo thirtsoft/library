@@ -41,9 +41,7 @@ public interface CommandeClientService {
 	public Page<CommandeClient> findAllCommandeClientByPageable(Pageable pageable);
 	public Page<CommandeClient> findAllCommandeClientByClient(Long clientId, Pageable pageable);
 	
-	//public Page<CommandeClient> findCommandeClientByKeyWord(int mc, Pageable pageable);
-	
-	//public CommandeClient saveCommandeCliente(CommandeClient commande);
+
 	
 	public CommandeClient createCommande(CommandeClient commandeClient);
 
@@ -51,6 +49,9 @@ public interface CommandeClientService {
     ResponseEntity<String> createOrder(CommandeClient commandeClient);
 
     void deleteCommande(Long id);
+
+	List<?> countNumberTotalOfCommandeByMonth();
+	List<?> sumTotalOfCommandeByMonth();
 	
 
 }

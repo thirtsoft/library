@@ -106,6 +106,11 @@ public class VenteController {
         return venteService.findVenteWithParticularDayAndMonth();
     }
 
+    @GetMapping("/searchNumberOfVenteByMonth")
+    public List<?> getNumberTotalOfVenteByMonth() {
+        return venteService.countNumberTotalOfVenteByMonth();
+    }
+
     @GetMapping("/searchSumVenteByMonth")
     public List<?> getSumTotalOfVenteByMonth() {
         return venteService.sumTotalOfVenteByMonth();

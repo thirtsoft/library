@@ -8,8 +8,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.CreanceService;
 import com.library.services.LigneCreanceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -98,17 +96,6 @@ public class CreanceController {
 
     }
 
-    @PostMapping(path="/updateCodeStatusCreance")
-    public ResponseEntity<Boolean> updateCodeStatusCreance(Long creanceId, String status){
-        boolean test = creanceService.updateCodeStatusCreance(creanceId, status);
-        if (test) {
-            return new ResponseEntity<Boolean>(test,HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Boolean>(test,HttpStatus.NOT_MODIFIED);
-        }
-    }
-
-
     @GetMapping("/NumberOfCreances")
     public int getNumberOfCreances() {
         return creanceService.getNumberOfCreances();
@@ -149,21 +136,10 @@ public class CreanceController {
 
     }
 
-    @PutMapping("/updateCreancesStatus/{idCreance}")
-    public void updateCreanceStatus(@PathVariable(value = "idCreance") Long idCreance, String status) {
-        creanceService.updateCreanceStatus(idCreance, status);
-    }
-
     @PatchMapping("/setCreanceStatusById/{id}")
     public ResponseEntity<Creance> setCreanceStatusById(@PathVariable("id") Long id, @RequestBody Creance creance) {
         creance.setId(id);
         return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.OK);
-    }
-
-    @PatchMapping("/setPartialCranceFiel/{id}")
-    public  void setPartialCranceFiel(@PathVariable("id") Long id, @RequestBody Creance cranceField) {
-        cranceField.setId(id);
-        creanceService.saveCreance(cranceField);
     }
 
     @PatchMapping("/setCreanceOnlyStatus/{id}")

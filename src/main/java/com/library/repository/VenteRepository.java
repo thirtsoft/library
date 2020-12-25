@@ -35,6 +35,9 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
     @Query("select sum(v.totalVente) from Vente v where v.dateVente > current_date")
     BigDecimal sumTotalOfVenteByDay();
 
+    @Query("select EXTRACT(month from(v.dateVente)), count(v) from Vente v group by EXTRACT(month from(v.dateVente))")
+    List<?> countNumberOfVenteByMonth();
+
     @Query("select EXTRACT(month from(v.dateVente)), sum(v.totalVente) from Vente v group by EXTRACT(month from(v.dateVente))")
     List<?> sumTotalOfVenteByMonth();
 

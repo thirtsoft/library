@@ -176,7 +176,18 @@ public class CommandeClientController {
 		commandeClientService.deleteCommande(id);
 		//return new ResponseEntity<>(HttpStatus.OK);
 	}
-/*
+
+	@GetMapping("/searchNumberOfCommandeByMonth")
+	public List<?> getNumberTotalOfCommandeByMonth() {
+		return commandeClientService.countNumberTotalOfCommandeByMonth();
+	}
+
+	@GetMapping("/searchSumCommandeByMonth")
+	public List<?> getSumTotalOfCommandeByMonth() {
+		return commandeClientService.sumTotalOfCommandeByMonth();
+	}
+
+	/*
 	@DeleteMapping("/commandes/{delete}")
 	public ResponseEntity<Object> deleteCommandeClient(@PathVariable(value = "id") Long id) {
 		return commandeClientService.deleteCommandeClient(id);

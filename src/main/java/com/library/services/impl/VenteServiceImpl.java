@@ -201,6 +201,12 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    public List<?> countNumberTotalOfVenteByMonth() {
+        return venteRepository.countNumberOfVenteByMonth();
+    }
+
+
+    @Override
     public List<?> sumTotalOfVenteByMonth() {
         return venteRepository.sumTotalOfVenteByMonth();
     }

@@ -38,6 +38,12 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 
 	public List<CommandeClient> findAllByDateCommande(Date dateCommande);
 
+	@Query("select EXTRACT(month from(c.dateCommande)), count(c) from CommandeClient c group by EXTRACT(month from(c.dateCommande))")
+	List<?> countNumberOfCommandeByMonth();
+
+	@Query("select EXTRACT(month from(c.dateCommande)), sum(c.totalCommande) from CommandeClient c group by EXTRACT(month from(c.dateCommande))")
+	List<?> sumTotalOfCommandeByMonth();
+
 	@Query("select p from CommandeClient p where p.client.id =:id")
 	public Page<CommandeClient> findCommandeClientByClientId(@Param("id") Long clientId, Pageable pageable);
 	

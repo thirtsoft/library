@@ -35,10 +35,6 @@ public interface CreanceService {
 
     Optional<Creance> findByCodeCreance(String codeCreance);
     boolean updateStatusCreance(String codeCreance, String status);
-    boolean updateCodeStatusCreance(Long creanceId, String status);
-    void setCreanceStatusById(String status, Long id);
-    void setPartialCranceFiel(Long id, Creance cranceField);
-    void setStatusById(String status);
 
     Creance setCreanceOnlyStatus(String status, String id);
     Creance setCreanceOnlySolde(double soldeCreance, String id);

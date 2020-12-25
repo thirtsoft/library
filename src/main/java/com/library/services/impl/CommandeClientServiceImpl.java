@@ -231,6 +231,16 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
     }
 
+    @Override
+    public List<?> countNumberTotalOfCommandeByMonth() {
+        return commandeClientRepository.countNumberOfCommandeByMonth();
+    }
+
+    @Override
+    public List<?> sumTotalOfCommandeByMonth() {
+        return commandeClientRepository.sumTotalOfCommandeByMonth();
+    }
+
 
     @Override
     public CommandeClient updateCommandeClient(Long comId, CommandeClient commande) {
