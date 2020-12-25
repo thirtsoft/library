@@ -41,6 +41,9 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
     @Query("select EXTRACT(month from(v.dateVente)), sum(v.totalVente) from Vente v group by EXTRACT(month from(v.dateVente))")
     List<?> sumTotalOfVenteByMonth();
 
+    @Query("select EXTRACT(year from(v.dateVente)), sum(v.totalVente) from Vente v group by EXTRACT(year from(v.dateVente))")
+    List<?> sumTotalOfVenteByYears();
+
     @Query("select p from Vente p where p.numeroVente like :num")
     Vente findByNumeroVente(@Param("num") int numeroVente);
 /*

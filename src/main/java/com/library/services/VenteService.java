@@ -45,5 +45,6 @@ public interface VenteService {
 
     List<?> countNumberTotalOfVenteByMonth();
     List<?> sumTotalOfVenteByMonth();
+    List<?> sumTotalOfVenteByYears();
 
 }

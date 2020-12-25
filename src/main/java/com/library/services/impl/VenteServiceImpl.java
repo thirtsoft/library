@@ -211,6 +211,10 @@ public class VenteServiceImpl implements VenteService {
         return venteRepository.sumTotalOfVenteByMonth();
     }
 
+    @Override
+    public List<?> sumTotalOfVenteByYears() {
+        return venteRepository.sumTotalOfVenteByYears();
+    }
 
     @Override
     public Page<Vente> findAllVenteByPageable(Pageable pageable) {

@@ -116,6 +116,12 @@ public class VenteController {
         return venteService.sumTotalOfVenteByMonth();
     }
 
+    @GetMapping("/searchSumVenteByYears")
+    public List<?> getSumTotalOfVenteByYears() {
+        return venteService.sumTotalOfVenteByYears();
+    }
+
+
     @GetMapping("/searchSumsOfVenteByDay")
     public BigDecimal getSumsOfVenteByDay() {
         return venteService.sumTotalOfVenteByDay();
