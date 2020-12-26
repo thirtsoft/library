@@ -28,6 +28,9 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 	@Query("select p from Produit p where p.scategorie.id =:scat")
 	public List<Produit> findProductByScateoryId(@Param("scat") Long scatId);
 
+	@Query("select (p.scategorie.libelle), count(p) from Produit p where (p.qtestock > p.stockInitial) group by(p.scategorie)")
+	List<?> countNumberOfProduitWithStoc();
+
 	@Query("select p from Produit p where p.designation like :des") 
 	public List<Produit> findListProduitByDesignation(@Param("des") String designation);
 

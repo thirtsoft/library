@@ -32,13 +32,11 @@ public interface ProduitService {
 	
 	List<Produit> findAllProduits();
 	List<Produit> findListProduitByDesignation(String designation);
-//	List<Produit> findProductByCateoryId(Long catId);
 	List<Produit> findProductByScateoryId(Long scatId);
 	List<Produit> findListProduitByAddDate(Date add_date);
 
 
 	public Page<Produit> findAllProduitsByPageable(Pageable page);
-//	public Page<Produit>findAllProduitsByCategory(Long catId, Pageable pageable);
 	
 	public Page<Produit> findProduitByKeyWord(String mc, Pageable pageable);
 	
@@ -47,6 +45,8 @@ public interface ProduitService {
 	boolean createExcel(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 	
 	public ResponseEntity<List<Produit>> importExcelFile(MultipartFile files);
+
+	List<?> countNumberOfProduitWithStoc();
 
 
 }

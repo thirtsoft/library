@@ -88,14 +88,7 @@ public class ProduitController {
     public List<Produit> getAllProduitsByAddDate(@RequestParam("date") Date add_date) {
         return produitService.findListProduitByAddDate(add_date);
     }
-/*
-    @GetMapping("/searchListProduitsByCategoryPageable")
-    public Page<Produit> getAllProduitsByPageable(@RequestParam(name = "cat") Long catId,
-                                                  @RequestParam(name = "page") int page,
-                                                  @RequestParam(name = "size") int size) {
-        return produitService.findAllProduitsByCategory(catId, PageRequest.of(page, size));
-    }
-*/
+
     @GetMapping("/searchListProduitsByPageable")
     public Page<Produit> getAllProduitsByPageable(@RequestParam(name = "page") int page,
                                                   @RequestParam(name = "size") int size) {
@@ -108,13 +101,11 @@ public class ProduitController {
                                                  @RequestParam(name = "size") int size) {
         return produitService.findProduitByKeyWord("%" + mc + "%", PageRequest.of(page, size));
     }
-/*
-    @PostMapping("/categories/{catId}/produits")
-    public Produit createProduit(@PathVariable(value = "catId") Long catId, @RequestBody Produit produit) {
-        return produitService.saveProduit(catId, produit);
-    }
 
-    */
+    @GetMapping("/searchCountProduitsByStock")
+    public List<?> countNumberOfProduitWithStoc() {
+        return produitService.countNumberOfProduitWithStoc();
+    }
 
     @PostMapping("/produits")
     public Produit saveProduit(@RequestBody Produit produit) {

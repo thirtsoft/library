@@ -513,6 +513,10 @@ public class ProduitServiceImpl implements ProduitService {
    
 	}
 
+	@Override
+	public List<?> countNumberOfProduitWithStoc() {
+		return produitRepository.countNumberOfProduitWithStoc();
+	}
 
 
 }
