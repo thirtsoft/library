@@ -19,6 +19,7 @@ public interface ClientService {
 	
 	Client findByRaisonSocial(String raisonSocial);
 	Client findByChefService(String chefService);
+	Client findByEmail(String email);
 	
 	List<Client> ListClientByRaisonSocial(String raisonSocial);
 	List<Client> ListClientByChefService(String chefService);

@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FactureCommande" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2177628b-12c9-4426-a878-f4f8ee38ffc2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YWxhbWluZS5jbGllbnQgLDE4OSwxNSw3OTc4ZjI2Ny02MGU5LTRkMGYtOWIwNS1hNmFiMjA0OGVm
+ZWE7YWxhbWluZS5jb21tYW5kZV9jbGllbnQgLDE1LDI4LDJhZGI1NzE2LWQ5N2UtNDcwNC1hNzBj
+LWQwZDM2NzVlM2ZkNDs=]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="301"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="692"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="DatasetFactureCommande" uuid="8b07b75c-fa66-4ba5-ac88-5b76dbdfa112">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.xml"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="318"/>
+		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="675"/>
+		<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="692"/>
+		<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="294"/>
+		<parameter name="comId" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT alamine.produit.designation,
+	alamine.ligne_cmd_client.prix_commande,
+	alamine.ligne_cmd_client.quantite,
+	alamine.commande_client.total_commande,
+	alamine.commande_client.id
+FROM alamine.ligne_cmd_client
+	INNER JOIN alamine.commande_client ON 
+	 alamine.ligne_cmd_client.cmd_id = alamine.commande_client.id 
+	INNER JOIN alamine.produit ON 
+	 alamine.ligne_cmd_client.prod_id = alamine.produit.id 
+WHERE 
+	 alamine.commande_client.id = '$P!{comId}']]>
+		</queryString>
+		<field name="designation" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="designation"/>
+			<property name="com.jaspersoft.studio.field.label" value="designation"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="produit"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prix_commande" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="prix_commande"/>
+			<property name="com.jaspersoft.studio.field.label" value="prix_commande"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ligne_cmd_client"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="quantite" class="java.lang.Integer">
+			<property name="com.jaspersoft.studio.field.name" value="quantite"/>
+			<property name="com.jaspersoft.studio.field.label" value="quantite"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="ligne_cmd_client"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="total_commande" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="total_commande"/>
+			<property name="com.jaspersoft.studio.field.label" value="total_commande"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="commande_client"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="id" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="id"/>
+			<property name="com.jaspersoft.studio.field.label" value="id"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="commande_client"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<variable name="SubTotal" class="java.math.BigDecimal">
+			<variableExpression><![CDATA[$F{quantite}*$F{prix_commande}]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="comId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT alamine.commande_client.date_commande,
+	alamine.commande_client.numero_commande,
+	alamine.client.chef_service,
+	alamine.commande_client.id comId,
+	alamine.client.id clientId,
+	alamine.commande_client.total_commande
+FROM alamine.commande_client
+	INNER JOIN alamine.client ON 
+	 alamine.commande_client.client_id = alamine.client.id 
+WHERE 
+	 alamine.commande_client.id = '$P!{comId}']]>
+	</queryString>
+	<field name="date_commande" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="date_commande"/>
+		<property name="com.jaspersoft.studio.field.label" value="date_commande"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="commande_client"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numero_commande" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="numero_commande"/>
+		<property name="com.jaspersoft.studio.field.label" value="numero_commande"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="commande_client"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="chef_service" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="chef_service"/>
+		<property name="com.jaspersoft.studio.field.label" value="chef_service"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="client"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="comId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="comId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="commande_client"/>
+	</field>
+	<field name="clientId" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="id"/>
+		<property name="com.jaspersoft.studio.field.label" value="clientId"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="client"/>
+	</field>
+	<field name="total_commande" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total_commande"/>
+		<property name="com.jaspersoft.studio.field.label" value="total_commande"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="commande_client"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="SumTotal" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[$F{total_commande}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="160" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement mode="Opaque" x="80" y="2" width="410" height="54" forecolor="#000000" uuid="f4805f67-b988-498d-9fda-4f6b99bd119b"/>
+				<box>
+					<pen lineWidth="2.0"/>
+					<topPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="2.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[AL AMINE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-11" y="65" width="581" height="55" uuid="a94f8330-8116-4817-a9a2-1acc5fb83f5b"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prestation de Service & Commerce GeneralRC SN ZGR 2016 C233 / NINEA 0005816676 2P6
+N° Compte CNCAS SN 048 03001 000108318801 J/40N° Compte BNDE SN 169 03001 001000519301/30
+ Tél : 77 109 18 18 / Email papeteriealamine@gmail.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="122" width="180" height="30" uuid="a5617dad-9eb4-4589-957b-ca810cb621bb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTURE PROFORMA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="76" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="2" y="1" width="88" height="30" uuid="a5c4a13e-5320-4f12-a639-63414e7fb10e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTURE N° : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="2" width="49" height="30" uuid="a022b87f-fb90-41de-9450-9065a6e22590"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="45" width="59" height="30" uuid="d92a1a81-36c0-44b2-acdd-3654d5e389ed"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[M    :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="2" width="160" height="30" uuid="c74dd5a3-1cc8-41c7-9e27-6f2e89639387"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_commande}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="425" y="2" width="148" height="30" uuid="3d8d1bf5-9cd7-4dd0-9fbf-926731afdf68"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date_commande}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="47" width="100" height="27" uuid="f899a3b6-0ec0-4bee-8380-04248c22d234"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{chef_service}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="230" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<componentElement>
+				<reportElement x="0" y="0" width="555" height="90" uuid="8b4ff939-946e-443d-9acb-92036ae6a307">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="DatasetFactureCommande" uuid="39feb62c-a588-4b88-a67e-e72b63e93b87">
+						<datasetParameter name="comId">
+							<datasetParameterExpression><![CDATA[$P{comId}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="80" uuid="92c290d5-1a9b-43d7-aef5-f233a3b0c288">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Colonne1"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="5e4d41d7-5a80-4e7c-9f12-39ff5d75fc87"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[QUANTITE]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="80" height="30" uuid="a3b4d3d8-95af-4815-bb8e-044f1385ea24"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{quantite}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="240" uuid="86870722-2222-4d78-920f-ecdd7e9add61">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Colonne2"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="240" height="30" uuid="e352a910-3aec-49a7-98ec-e39e286b76e4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[DESIGNATION]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<staticText>
+								<reportElement x="0" y="0" width="240" height="30" uuid="eda2213e-e310-4cd7-8476-185975d04ae9"/>
+								<box>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="18"/>
+								</textElement>
+								<text><![CDATA[MONTANT TOTAL ]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="240" height="30" uuid="1c756d6b-eaa6-404e-9212-398351a9dd61"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{designation}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="100" uuid="71dab7dc-a56a-4c73-b05b-9037869797b6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Colonne3"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="b168702c-b31a-47ba-8eb0-3245255ab4cd"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[P.UNITAIRE]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1"/>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="100" height="30" uuid="590c7c2b-58db-4c78-87a9-fcb327adb39a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{prix_commande}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="135" uuid="4e57b410-e391-4d23-ae63-0f2fa0f38232">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Colonne4"/>
+						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="135" height="30" uuid="ea690059-fb12-4e91-94d1-488c8d58b8ff"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<text><![CDATA[P.TOTAL]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter style="Table_CH" height="30" rowSpan="1">
+							<box>
+								<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+							</box>
+							<textField>
+								<reportElement x="0" y="0" width="135" height="30" uuid="4b980628-cf4a-49bf-9d9c-3431792014a4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="14"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{total_commande}]]></textFieldExpression>
+							</textField>
+						</jr:columnFooter>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="135" height="30" uuid="90f5c266-e128-4da9-8e3b-08a3eb6f1458"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{quantite}*$F{prix_commande}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="2" y="152" width="278" height="30" uuid="6557a981-f3c7-40e9-b35b-4e0844fc39da"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Arrêtée la présente facture à la somme de :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="293" y="152" width="156" height="30" uuid="f80664ff-b1a8-4944-a98c-301c4f7c5efa"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_commande}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

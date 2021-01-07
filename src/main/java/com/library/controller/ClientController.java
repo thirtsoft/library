@@ -40,6 +40,11 @@ public class ClientController {
 	public Long getNumberOfClient() {
 		return clientService.countNumberOfClient();
 	}
+
+	@GetMapping("/searchClientByEmail")
+	public Client getClientByEmail(String email) {
+		return clientService.findByEmail(email);
+	}
 	
 	@GetMapping("/searchClientByRaisonSocial")
 	public Client getClientByRaisonSocial(@RequestParam(value = "raisonSocial") String raisonSocial) {

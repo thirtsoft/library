@@ -46,6 +46,11 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
+	public Client findByEmail(String email) {
+		return clientRepository.findByEmail(email);
+	}
+
+	@Override
 	public List<Client> ListClientByRaisonSocial(String raisonSocial) {
 		return clientRepository.ListClientByRaisonSocial(raisonSocial);
 	}

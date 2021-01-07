@@ -13,19 +13,21 @@ import com.library.entities.Fournisseur;
 
 @Repository
 public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> {
+
+	Fournisseur findByEmail(String email);
 	
 	@Query("select c from Fournisseur c where c.raisonSociale like :raison")
-	public Fournisseur findByRaisonSociale(@Param("raison") String raisonSociale);
+	Fournisseur findByRaisonSociale(@Param("raison") String raisonSociale);
 	
 	@Query("select c from Fournisseur c where c.raisonSociale like :r") 
-	public List<Fournisseur> ListFournisseurByRaisonSociale(@Param("r") String raisonSociale);
+	List<Fournisseur> ListFournisseurByRaisonSociale(@Param("r") String raisonSociale);
 	
 
 	@Query("select c from Fournisseur c where c.code like :code")
-	public Fournisseur findByCode(@Param("code") String code);
+	Fournisseur findByCode(@Param("code") String code);
 	
 	@Query("select c from Fournisseur c where c.code like :c") 
-	public List<Fournisseur> ListFournisseurByCode(@Param("c") String code);
+	List<Fournisseur> ListFournisseurByCode(@Param("c") String code);
 	
 	
 	

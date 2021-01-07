@@ -44,6 +44,11 @@ public class EmployeController {
 		return ResponseEntity.ok().body(employe);
 		
 	}
+
+	@GetMapping("/serachEmployeByEmail")
+	public Employe getEmployeByEmail(String email) {
+		return employeService.findByEmail(email);
+	}
 	
 	@GetMapping("/searchEmployeByCni")
 	public Employe getEmployeByCni(@RequestParam(value = "cni") String cni) {
@@ -93,13 +98,7 @@ public class EmployeController {
 		
 		return employeService.ListEmployeByTelephone("%"+telephone+"%");
 	}
-	
-	@GetMapping("/searchEmployeByEmail")
-	public Employe getEmployeByEmail(@RequestParam(value = "mail") String email) {
-		return employeService.findByEmail(email);
-		
-	}
-	
+
 	@GetMapping("/searchListEmployeByEmail")
 	public List<Employe> getEmployesByEmail(@RequestParam(value = "mail") String email) {
 		

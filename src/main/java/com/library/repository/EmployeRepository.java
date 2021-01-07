@@ -13,21 +13,20 @@ import com.library.entities.Employe;
 
 @Repository
 public interface EmployeRepository extends JpaRepository<Employe, Long> {
+
+	Employe findByEmail(String email);
 	
 	@Query("select c from Employe c where c.cni like :cni")
-	public Employe findByCni(@Param("cni") String cni);
+	Employe findByCni(@Param("cni") String cni);
 	
 	@Query("select c from Employe c where c.cni like :cni") 
-	public List<Employe> ListEmployeByCni(@Param("cni") String cni);
-	
-	@Query("select c from Employe c where c.email like :mail")
-	public Employe findByEmail(@Param("mail") String email);
+	List<Employe> ListEmployeByCni(@Param("cni") String cni);
 	
 	@Query("select c from Employe c where c.email like :mail") 
-	public List<Employe> ListEmployeByEmail(@Param("mail") String email);
+	List<Employe> ListEmployeByEmail(@Param("mail") String email);
 	
 	@Query("select c from Employe c where c.nom like :name")
-	public Employe findByNom(@Param("name") String nom);
+	Employe findByNom(@Param("name") String nom);
 	
 	@Query("select c from Employe c where c.nom like :name") 
 	public List<Employe> ListEmployeByNom(@Param("name") String nom);

@@ -1,10 +1,17 @@
 package com.library.controller;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.library.jasper.Report;
+//import com.library.jasper.ReportService;
+import com.library.jasper.StringResult;
+import com.library.services.ReportService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.domain.Page;
@@ -33,6 +40,7 @@ import com.library.services.ClientService;
 import com.library.services.CommandeClientService;
 import com.library.services.LigneCmdClientService;
 
+
 import javax.validation.Valid;
 
 @RestController
@@ -48,12 +56,16 @@ public class CommandeClientController {
 	
 	@Autowired
 	private ClientService clientService;
-	
+/*
 	@Autowired
 	private CommandeClientRepository commandeClientRepository;
 	
 	@Autowired
 	private LigneCmdClientRepository ligneCmdClientRepository;
+*/
+
+	@Autowired
+	private ReportService reportCommande;
 	
 	private Double total = 0.0;
 	
@@ -198,5 +210,23 @@ public class CommandeClientController {
     public ResponseEntity<String> createUserRequest(@RequestBody CommandeClient CcmmandeClient) {
         return commandeClientService.createOrder(CcmmandeClient);
     }
+
+    /*
+	@PostMapping(path = "/reports/commande/pdf")
+	public StringResult printCommande(@RequestBody Report report) {
+		StringResult reportName = new StringResult();
+    	try {
+			reportName = this.reportService.createReport(report);
+
+		} catch (SQLException e) {
+    		e.printStackTrace();
+		}
+    	return  reportName;
+	}
+*/
+	@GetMapping("/report/pdf/{id}")
+	public String generateReport (@PathVariable Long id) throws FileNotFoundException, JRException {
+		return reportCommande.exportReport(id);
+	}
 
 }

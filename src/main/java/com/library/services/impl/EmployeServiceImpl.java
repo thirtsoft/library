@@ -97,7 +97,7 @@ public class EmployeServiceImpl implements EmployeService {
 	public Employe findByTelephone(String telephone) {
 		return employeRepository.findByTelephone(telephone);
 	}
-	
+
 	@Override
 	public List<Employe> ListEmployeByCni(String cni) {
 		return employeRepository.ListEmployeByCni(cni);

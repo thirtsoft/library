@@ -43,6 +43,11 @@ public class FournisseurController {
 		return ResponseEntity.ok().body(fournisseur);
 		
 	}
+
+	@GetMapping("/serachFournisseurByEmail")
+	public Fournisseur getFournisseurByEmail(String email) {
+		return fournisseurService.findByEmail(email);
+	}
 	
 	@GetMapping("/searchFournisseurByCode")
 	public Fournisseur getFournisseurByCode(@RequestParam(value = "code") String code) {

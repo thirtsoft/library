@@ -3,7 +3,7 @@ package com.library.jasper;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class StringResult {
+public class StringResult {
 
     private Long id;
     private String name;

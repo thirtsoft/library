@@ -11,23 +11,23 @@ import com.library.entities.Employe;
 
 public interface EmployeService {
 	
-	public List<Employe> findAllEmploye();
-	public Employe saveEmploye(Employe employe);
-	public Optional<Employe> findEmployeById(Long empId);
-	public Employe updateEmploye(Long empId, Employe employe);
-	public ResponseEntity<Object> deleteEmploye(Long empId);
+	List<Employe> findAllEmploye();
+	Employe saveEmploye(Employe employe);
+	Optional<Employe> findEmployeById(Long empId);
+	Employe updateEmploye(Long empId, Employe employe);
+	ResponseEntity<Object> deleteEmploye(Long empId);
 	
-	public Employe findByNom(String nom);
-	public Employe findByPrenom(String prenom);
-	public Employe findByCni(String cni);
-	public Employe findByEmail(String email);
-	public Employe findByTelephone(String telephone);
+	Employe findByNom(String nom);
+	Employe findByPrenom(String prenom);
+	Employe findByCni(String cni);
+	Employe findByTelephone(String telephone);
+	Employe findByEmail(String email);
 	
-	public List<Employe> ListEmployeByNom(String nom);
-	public List<Employe> ListEmployeByPrenom(String prenom);
-	public List<Employe> ListEmployeByCni(String cni);
-	public List<Employe> ListEmployeByEmail(String email);
-	public List<Employe> ListEmployeByTelephone(String telephone);
+	List<Employe> ListEmployeByNom(String nom);
+	List<Employe> ListEmployeByPrenom(String prenom);
+	List<Employe> ListEmployeByCni(String cni);
+	List<Employe> ListEmployeByEmail(String email);
+	List<Employe> ListEmployeByTelephone(String telephone);
 	
 	public Page<Employe> findAllEmployeByPage(Pageable page);
 	public Page<Employe> findEmployeByKeyWord(String mc, Pageable pageable);

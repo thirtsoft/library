@@ -12,20 +12,21 @@ import com.library.entities.Fournisseur;
 
 public interface FournisseurService {
 	
-	public Optional<Fournisseur> findProduitById(Long id);
-	public Fournisseur saveFournisseur(Fournisseur fournisseur);
+	Optional<Fournisseur> findProduitById(Long id);
+	Fournisseur saveFournisseur(Fournisseur fournisseur);
+
+	Fournisseur updateFournisseurt(Long id, Fournisseur fournisseur);
+	ResponseEntity<Object> deleteFournisseur(Long id);
 	
-	public Fournisseur updateFournisseurt(Long id, Fournisseur fournisseur);
-	public ResponseEntity<Object> deleteFournisseur(Long id);
+	Fournisseur findByCode(String code);
+	Fournisseur findByNom(String nom);
+	Fournisseur findByRaisonSociale(String raisonSociale);
+	Fournisseur findByEmail(String email);
 	
-	public Fournisseur findByCode(String code);
-	public Fournisseur findByNom(String nom);
-	public Fournisseur findByRaisonSociale(String raisonSociale);
-	
-	public List<Fournisseur> findAllFournisseurs();
-	public List<Fournisseur> findListFournisseurByCode(String code);
-	public List<Fournisseur> findListFournisseurByNom(String nom);
-	public List<Fournisseur> findListFournisseurByRaisonSociale(String raisonSociale);
+	List<Fournisseur> findAllFournisseurs();
+	List<Fournisseur> findListFournisseurByCode(String code);
+	List<Fournisseur> findListFournisseurByNom(String nom);
+	List<Fournisseur> findListFournisseurByRaisonSociale(String raisonSociale);
 	
 	
 	public Page<Fournisseur> findAllFournisseursByPageable(Pageable page);

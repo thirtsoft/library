@@ -13,6 +13,8 @@ import com.library.entities.Client;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
+
+	Client findByEmail(String email);
 	
 	@Query("select c from Client c where c.raisonSocial like :raisonSocial")
 	public Client findByRaisonSocial(@Param("raisonSocial") String raisonSocial);

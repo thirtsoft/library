@@ -90,6 +90,11 @@ public class FournisseurServiceImpl implements FournisseurService {
 	}
 
 	@Override
+	public Fournisseur findByEmail(String email) {
+		return fournisseurRepository.findByEmail(email);
+	}
+
+	@Override
 	public List<Fournisseur> findListFournisseurByCode(String code) {
 		return fournisseurRepository.ListFournisseurByCode(code);
 	}
