@@ -6,6 +6,9 @@ import com.library.repository.ClientRepository;
 import com.library.repository.ProduitRepository;
 import com.library.repository.ScategorieRepository;
 import com.library.services.AccountService;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,9 +31,14 @@ public class LibraryApplication implements CommandLineRunner {
     @Autowired
     private AccountService accountService;
 
+
     public static void main(String[] args) {
         SpringApplication.run(LibraryApplication.class, args);
+
     }
+
+
+
 
    // @Bean
   /*  public BCryptPasswordEncoder getBCPE() {
