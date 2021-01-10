@@ -5,6 +5,7 @@ import com.library.services.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,8 +66,11 @@ public class ChargeController {
     }
 
     @PostMapping("/charges")
-    public Charge createCharge(@RequestBody Charge charge) {
-        return chargeService.saveCharge(charge);
+    public ResponseEntity<Charge> createCharge(@RequestBody Charge charge) {
+        if (chargeService.findChargeByCodeCharge(charge.getCodeCharge()) != null) {
+            return new ResponseEntity<Charge>(charge, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<Charge>(charge, HttpStatus.CREATED);
     }
 
 
@@ -77,8 +81,9 @@ public class ChargeController {
     }
 
     @DeleteMapping("/charges/{id}")
-    public ResponseEntity<Object> deleteCharge(@PathVariable(value="id") Long id) {
-        return chargeService.deleteCharge(id);
+    public ResponseEntity<?> deleteCharge(@PathVariable(value="id") Long id) {
+        chargeService.deleteCharge(id);
+        return ResponseEntity.ok().build();
     }
 
 

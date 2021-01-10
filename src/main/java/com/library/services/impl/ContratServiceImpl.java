@@ -80,6 +80,10 @@ public class ContratServiceImpl implements ContratService {
 
 	@Override
 	public Contrat saveContrat(Contrat contrat) {
+		if (contratRepository.findByReference(contrat.getReference()) != null) {
+			throw new IllegalArgumentException("Ce Contrat existe");
+		}
+
 		return contratRepository.save(contrat);
 	}
 
@@ -91,7 +95,7 @@ public class ContratServiceImpl implements ContratService {
 		
 		Optional<Contrat> cont = contratRepository.findById(id);
 		if (!cont.isPresent()) {
-			throw new ResourceNotFoundException("Contrat N° " + id + "not found");
+			throw new ResourceNotFoundException("Contrat not found");
 		}
 		
 		Contrat contratResult = cont.get();
@@ -106,12 +110,11 @@ public class ContratServiceImpl implements ContratService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteContrat(Long id) {
+	public void deleteContrat(Long id) {
 		if (!contratRepository.existsById(id)) {
-			throw new ResourceNotFoundException("Contrat N° " + id + "not found");
+			throw new ResourceNotFoundException("Contrat not found");
 		}
 		contratRepository.deleteById(id);
-		return ResponseEntity.ok().build();
 	}
 
 	@Override

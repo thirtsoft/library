@@ -107,9 +107,14 @@ public class ProduitController {
         return produitService.countNumberOfProduitWithStoc();
     }
 
+
     @PostMapping("/produits")
-    public Produit saveProduit(@RequestBody Produit produit) {
-        return produitService.saveProduit(produit);
+    public ResponseEntity<Produit> saveProduit(@RequestBody Produit produit) {
+        if (produitService.findByReference(produit.getReference()) !=null) {
+            return new ResponseEntity<Produit>(produit, HttpStatus.BAD_REQUEST);
+        }
+        produitService.saveProduit(produit);
+        return new ResponseEntity<Produit>(produit, HttpStatus.CREATED);
     }
 
     @PutMapping("/produits/{prodId}")
@@ -119,8 +124,10 @@ public class ProduitController {
     }
 
     @DeleteMapping("/produits/{id}")
-    public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") Long prodId) {
-        return produitService.deleteProduit(prodId);
+    public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long prodId) {
+        produitService.deleteProduit(prodId);
+        return ResponseEntity.ok().build();
+
     }
 
     @GetMapping(value = "/createPdf")

@@ -29,6 +29,9 @@ public class EmployeServiceImpl implements EmployeService {
 
 	@Override
 	public Employe saveEmploye(Employe employe) {
+		if (employeRepository.findByCni(employe.getCni()) != null && (employeRepository.findByEmail(employe.getEmail())) !=null) {
+			throw new IllegalArgumentException("Cet Employe existe");
+		}
 		return employeRepository.save(employe);
 	}
 
@@ -64,13 +67,12 @@ public class EmployeServiceImpl implements EmployeService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteEmploye(Long empId) {
+	public void deleteEmploye(Long empId) {
 		if (!employeRepository.existsById(empId)) {
 			throw new ResourceNotFoundException("Employe N° " + empId + "not found");
 		}
 		employeRepository.deleteById(empId);
-		
-		return ResponseEntity.ok().build();
+
 	}
 	
 	@Override

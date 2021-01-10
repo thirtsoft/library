@@ -132,25 +132,13 @@ public class ProduitServiceImpl implements ProduitService {
 
 	@Override
 	public Produit saveProduit(Produit produit) {
-		Produit productinfo = produitRepository.save(produit);
-		/*
-		Optional<Stock> stockinfo = stockService.findStockById(productinfo.getId());
-		if (stockinfo.isPresent()) {
-			Stock stockResultat = stockinfo.get();
-			if (stockResultat !=null) {
-				stockResultat.setProduit(productinfo);
-				stockResultat.setQuantite(productinfo.getQtestock());
-				stockResultat.setDateMiseAJour(productinfo.getAdd_date());
-				stockService.saveStock(stockResultat);
-			} else {
-				stockResultat.setProduit(productinfo);
-				stockResultat.setQuantite(productinfo.getQtestock());
-				stockResultat.setDateMiseAJour(productinfo.getAdd_date());
-				stockService.updateStock(stockResultat.getId(), stockResultat);
-			}
-		}*/
+		Produit productinfo = produitRepository.findByReference(produit.getReference());
 
-		return productinfo;
+		if (productinfo != null) {
+			throw new IllegalArgumentException("Cet Article existe déjà");
+		}
+
+		return produitRepository.save(produit);
 
 	}
 
@@ -188,14 +176,11 @@ public class ProduitServiceImpl implements ProduitService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteProduit(Long prodId) {
+	public void deleteProduit(Long prodId) {
 		if(!produitRepository.existsById(prodId)) {
 			throw new ResourceNotFoundException("Produit that id is" + prodId + "not found");
 		}
-		
 		produitRepository.deleteById(prodId);
-		
-		return ResponseEntity.ok().build();
 	}
 
 	@Override

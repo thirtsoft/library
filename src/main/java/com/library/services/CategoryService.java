@@ -22,7 +22,7 @@ public interface CategoryService {
 
     Category updateCategory(Long catId, Category category);
 
-    ResponseEntity<Object> deleteCategory(Long catId);
+    void deleteCategory(Long catId);
 
     Category findByCode(String code);
 

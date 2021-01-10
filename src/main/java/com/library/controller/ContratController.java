@@ -12,6 +12,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.domaine.Response;
 import com.library.services.ExcelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,14 +167,14 @@ public class ContratController {
                 .body(resource);
     }
 
-
-
     @PostMapping("/contrats")
-	public Contrat createContrat(@RequestBody Contrat contrat) {
-		return contratService.saveContrat(contrat);
+	public ResponseEntity<Contrat> createContrat(@RequestBody Contrat contrat) {
+		if (contratService.findByReference(contrat.getReference()) != null) {
+			return new ResponseEntity<Contrat>(contrat, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Contrat>(contrat, HttpStatus.CREATED);
 	}
-	
-	
+
 	@PutMapping("/contrats/{id}")
 	public Contrat updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
 		contrat.setId(id);
@@ -181,8 +182,9 @@ public class ContratController {
 	}
 	
 	@DeleteMapping("/contrats/{id}")
-	public ResponseEntity<Object> deleteContrat(@PathVariable(value="id") Long id) {
-		return contratService.deleteContrat(id);
+	public ResponseEntity<?> deleteContrat(@PathVariable(value="id") Long id) {
+		contratService.deleteContrat(id);
+		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("/uploadContrat")

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -87,8 +88,11 @@ public class VersementController {
 	}
 	
 	@PostMapping("/versements")
-	public Versement saveVersement(@RequestBody Versement versement) {
-		return versementService.saveVersement(versement);
+	public ResponseEntity<Versement> saveVersement(@RequestBody Versement versement) {
+		if (versementService.findByNumVersement(versement.getNumVersement()) !=null) {
+			return new ResponseEntity<Versement>(versement, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Versement>(versement, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/versements/{id}")
@@ -98,8 +102,9 @@ public class VersementController {
 	}
 	
 	@DeleteMapping("/versements/{id}")
-	public ResponseEntity<Object> deleteVersement(@PathVariable(value="id") Long id) {
-		return versementService.deleteVersement(id);
+	public ResponseEntity<?> deleteVersement(@PathVariable(value="id") Long id) {
+		versementService.deleteVersement(id);
+		return ResponseEntity.ok().build();
 	}
 	
 	

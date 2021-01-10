@@ -15,7 +15,7 @@ public interface EmployeService {
 	Employe saveEmploye(Employe employe);
 	Optional<Employe> findEmployeById(Long empId);
 	Employe updateEmploye(Long empId, Employe employe);
-	ResponseEntity<Object> deleteEmploye(Long empId);
+	void deleteEmploye(Long empId);
 	
 	Employe findByNom(String nom);
 	Employe findByPrenom(String prenom);
@@ -29,7 +29,7 @@ public interface EmployeService {
 	List<Employe> ListEmployeByEmail(String email);
 	List<Employe> ListEmployeByTelephone(String telephone);
 	
-	public Page<Employe> findAllEmployeByPage(Pageable page);
-	public Page<Employe> findEmployeByKeyWord(String mc, Pageable pageable);
+	Page<Employe> findAllEmployeByPage(Pageable page);
+	Page<Employe> findEmployeByKeyWord(String mc, Pageable pageable);
 
 }

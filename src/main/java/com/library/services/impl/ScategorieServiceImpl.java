@@ -72,8 +72,14 @@ public class ScategorieServiceImpl implements ScategorieService {
 	}
 
 	@Override
-	public Scategorie saveScategorie(Scategorie sCategorie) {
-		return scategorieRepository.save(sCategorie);
+	public Scategorie saveScategorie(Scategorie scategorie) {
+		Scategorie scategorieinfo = scategorieRepository.findByCode(scategorie.getCode());
+
+		if (scategorieinfo != null) {
+			throw new IllegalArgumentException("Scategorie existe");
+		}
+
+		return scategorieRepository.save(scategorie);
 	}
 
 	@Override
@@ -95,13 +101,11 @@ public class ScategorieServiceImpl implements ScategorieService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteScategorie(Long sCatId) {
+	public void deleteScategorie(Long sCatId) {
 		if (!scategorieRepository.existsById(sCatId)) {
-			throw new ResourceNotFoundException("sCategorie N° " + sCatId + "not found");
+			throw new ResourceNotFoundException("Scategorie not found");
 		}
 		scategorieRepository.deleteById(sCatId);
-		
-		return ResponseEntity.ok().build();
 	}
 
 	@Override

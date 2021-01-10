@@ -3,13 +3,7 @@ package com.library.entities;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -31,8 +25,10 @@ public class Versement implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(length = 100, unique = true)
 	private String numVersement;
 	private String nature;
+	@Column(length = 100, unique = true)
 	private String numeroRecu;
 	private String nomBank;
 	private Double montantVersement;

@@ -16,25 +16,25 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface ScategorieService {
 	
-	public List<Scategorie> findAllScategories();
-	public Optional<Scategorie> findScategorieById(Long sCatId);
+	List<Scategorie> findAllScategories();
+	Optional<Scategorie> findScategorieById(Long sCatId);
 	
-	public Scategorie findByCode(String code);
-	public List<Scategorie> findListScategorieByCode(String code);
+	Scategorie findByCode(String code);
+	List<Scategorie> findListScategorieByCode(String code);
 	
-	public Scategorie findByLibelle(String libelle);
-	public List<Scategorie> findListScategorieByLibelle(String libelle);
+	Scategorie findByLibelle(String libelle);
+	List<Scategorie> findListScategorieByLibelle(String libelle);
 	
-	public List<Scategorie> findScategorieByCateoryId(Long catId);
+	List<Scategorie> findScategorieByCateoryId(Long catId);
 	
-	public Scategorie saveScategorie(Scategorie sCategorie);
-	public Scategorie updateScategorie(Long sCatId, Scategorie sCategorie);
-	public ResponseEntity<Object> deleteScategorie(Long sCatId);
+	Scategorie saveScategorie(Scategorie sCategorie);
+	Scategorie updateScategorie(Long sCatId, Scategorie sCategorie);
+	void deleteScategorie(Long sCatId);
 	
-	public Page<Scategorie> findAllScategorietsByPageable(Pageable page);
-	public Page<Scategorie>findAllScategoriesByCategory(Long catId, Pageable pageable);
+	Page<Scategorie> findAllScategorietsByPageable(Pageable page);
+	Page<Scategorie>findAllScategoriesByCategory(Long catId, Pageable pageable);
 	
-	public Page<Scategorie> findScategorieByKeyWord(String mc, Pageable pageable);
+	Page<Scategorie> findScategorieByKeyWord(String mc, Pageable pageable);
 
 	boolean createScategoriePdf(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 

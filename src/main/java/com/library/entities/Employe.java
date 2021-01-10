@@ -2,11 +2,7 @@ package com.library.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,10 +25,13 @@ public class Employe implements Serializable {
 	private Long id;
 	private String prenom;
 	private String nom;
+	@Column(length = 100, unique = true)
 	private String cni;
 	private String adresse;
+	@Column(length = 100, unique = true)
 	private String telephone;
 	private String telephone2;
+	@Column(length = 100, unique = true)
 	private String email;
 	
 }

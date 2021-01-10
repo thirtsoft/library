@@ -13,31 +13,30 @@ import com.library.entities.Contrat;
 
 @Repository
 public interface ContratRepository extends JpaRepository<Contrat, Long> {
-	
-	@Query("select p from Contrat p where p.reference like :ref")
-	public Contrat findByReference(@Param("ref") String reference);
+
+	Contrat findByReference(String reference);
 	
 	@Query("select p from Contrat p where p.reference like :ref") 
-	public List<Contrat> findListContratByReference(@Param("ref") String reference);
+	List<Contrat> findListContratByReference(@Param("ref") String reference);
 	
 	
 	@Query("select p from Contrat p where p.nature like :nat")
-	public Contrat findByNature(@Param("nat") String nature);
+	Contrat findByNature(@Param("nat") String nature);
 	
 	@Query("select p from Contrat p where p.nature like :nat") 
-	public List<Contrat> findListContratByNature(@Param("nat") String nature);
+	List<Contrat> findListContratByNature(@Param("nat") String nature);
 	
 	@Query("select p from Contrat p where p.client.id =:client")
-	public List<Contrat> findLitContratByClientId(@Param("client") Long clientId);
+	List<Contrat> findLitContratByClientId(@Param("client") Long clientId);
 	
 	@Query("select p from Contrat p where p.client.id =:id")
-	public Page<Contrat> findContratByClientPageable(@Param("id") Long clientId, Pageable pageable);
+	Page<Contrat> findContratByClientPageable(@Param("id") Long clientId, Pageable pageable);
 	
 	@Query("select p from Contrat p")
-	public Page<Contrat> findAllContratsByPageable(Pageable pageable);
+	Page<Contrat> findAllContratsByPageable(Pageable pageable);
 	  
 	@Query("select p from Contrat p where p.nature like :mc")
-	public Page<Contrat> findContratsByKeyWord(@Param("mc") String mc, Pageable pageable);
+	Page<Contrat> findContratsByKeyWord(@Param("mc") String mc, Pageable pageable);
 
 	  	
 

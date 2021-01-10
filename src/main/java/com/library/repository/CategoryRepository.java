@@ -14,23 +14,22 @@ import com.library.entities.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 	
-	@Query("select c from Category c where c.code like :code")
-	public Category findByCode(@Param("code") String code);
+
+	Category findByCode(String code);
 	
 	@Query("select c from Category c where c.code like :c") 
-	public List<Category> ListCategoryByCode(@Param("c") String code);
-	
-	@Query("select c from Category c where c.designation like :des")
-	public Category findByDesignation(@Param("des") String designation);
+	List<Category> ListCategoryByCode(@Param("c") String code);
+
+	Category findByDesignation(String designation);
 	
 	@Query("select c from Category c where c.designation like :des") 
-	public List<Category> ListCategoryByDesignation(@Param("des") String designation);
+	List<Category> ListCategoryByDesignation(@Param("des") String designation);
 	
 	@Query("select p from Category p")
-	public Page<Category> findCategoryByPageable(Pageable pageable);
+	Page<Category> findCategoryByPageable(Pageable pageable);
 	  
 	@Query("select p from Category p where p.designation like :x")
-	public Page<Category> findCategoryByKeyWord(@Param("x") String mc, Pageable pageable);
+	Page<Category> findCategoryByKeyWord(@Param("x") String mc, Pageable pageable);
 	
 	/*
 	 * @Query("select c from Category c") public Page<Category>

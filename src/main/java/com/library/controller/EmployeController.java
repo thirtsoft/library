@@ -118,10 +118,15 @@ public class EmployeController {
 		return employeService.findEmployeByKeyWord("%"+mc+"%", PageRequest.of(page, size));
 	}
 	
-	
 	@PostMapping("/employes") 
-	public Employe createEmploye(@RequestBody Employe employe) {
-		return employeService.saveEmploye(employe);	
+	public ResponseEntity<Employe> createEmploye(@RequestBody Employe employe) {
+		if (employeService.findByCni(employe.getCni()) !=null) {
+			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
+		}
+		if (employeService.findByEmail(employe.getEmail()) !=null) {
+			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Employe>(employe, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/employes/{empId}")
@@ -131,8 +136,9 @@ public class EmployeController {
 		
 	}
 	@DeleteMapping("/employes/{id}")
-	public ResponseEntity<Object> deleteEmploye(@PathVariable(value = "id") Long id) {
-		return employeService.deleteEmploye(id);
+	public ResponseEntity<?> deleteEmploye(@PathVariable(value = "id") Long id) {
+		employeService.deleteEmploye(id);
+		return ResponseEntity.ok().build();
 		
 	}
 

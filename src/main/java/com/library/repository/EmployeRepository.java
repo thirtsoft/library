@@ -15,9 +15,8 @@ import com.library.entities.Employe;
 public interface EmployeRepository extends JpaRepository<Employe, Long> {
 
 	Employe findByEmail(String email);
-	
-	@Query("select c from Employe c where c.cni like :cni")
-	Employe findByCni(@Param("cni") String cni);
+
+	Employe findByCni(String cni);
 	
 	@Query("select c from Employe c where c.cni like :cni") 
 	List<Employe> ListEmployeByCni(@Param("cni") String cni);

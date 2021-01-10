@@ -113,11 +113,14 @@ public class ScategorieController {
 		return scategorieService.findScategorieByKeyWord("%"+mc+"%", PageRequest.of(page, size));
 		
 	}
-	
-	
+
 	@PostMapping("/scategories")
-	public Scategorie saveScategorie(@RequestBody Scategorie sCategorie) {
-		return scategorieService.saveScategorie(sCategorie);
+	public ResponseEntity<Scategorie> saveScategorie(@RequestBody Scategorie scategorie) {
+		if (scategorieService.findByCode(scategorie.getCode()) != null) {
+			return new ResponseEntity<Scategorie>(scategorie, HttpStatus.BAD_REQUEST);
+		}
+		scategorieService.saveScategorie(scategorie);
+		return new ResponseEntity<Scategorie>(scategorie, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/scategories/{ScatId}")
@@ -127,8 +130,9 @@ public class ScategorieController {
 	}
 	
 	@DeleteMapping("/scategories/{id}")
-	public ResponseEntity<Object> deleteScategorie(@PathVariable(value="id") Long ScatId) {
-		return scategorieService.deleteScategorie(ScatId);
+	public ResponseEntity<?> deleteScategorie(@PathVariable(value="id") Long ScatId) {
+		scategorieService.deleteScategorie(ScatId);
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping(value = "/createScategoriePdf")

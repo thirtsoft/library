@@ -86,11 +86,19 @@ public class ClientController {
 			@RequestParam(name = "size") int size) {
 		return clientService.findClientByKeyWord("%"+mc+"%", PageRequest.of(page, size));
 	}
-	
-	
+
 	@PostMapping("/clients") 
-	public Client createClient(@RequestBody Client client) {
-		return clientService.saveClient(client);	
+	public ResponseEntity<Client> createClient(@RequestBody Client client) {
+		if (clientService.findByCodeClient(client.getCodeClient()) != null) {
+			return new ResponseEntity<Client>(client, HttpStatus.BAD_REQUEST);
+		}
+		if (clientService.findByEmail(client.getEmail()) != null) {
+			return new ResponseEntity<Client>(client, HttpStatus.BAD_REQUEST);
+		}
+		if (clientService.findByTelephone(client.getTelephone()) != null) {
+			return new ResponseEntity<Client>(client, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Client>(client, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/clients/{clientId}")
@@ -107,8 +115,9 @@ public class ClientController {
 	}
 
 	@DeleteMapping("/clients/{id}")
-	public ResponseEntity<Object> deleteClient(@PathVariable(value = "id") Long id) {
-		return clientService.deleteClient(id);
+	public ResponseEntity<?> deleteClient(@PathVariable(value = "id") Long id) {
+		clientService.deleteClient(id);
+		return ResponseEntity.ok().build();
 		
 	}
 

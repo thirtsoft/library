@@ -39,6 +39,9 @@ public class FournisseurServiceImpl implements FournisseurService {
 
 	@Override
 	public Fournisseur saveFournisseur(Fournisseur fournisseur) {
+		if ((fournisseurRepository.findByEmail(fournisseur.getEmail())) != null && (fournisseurRepository.findByCode(fournisseur.getCode())) != null) {
+			throw new IllegalArgumentException("Ce Founisseur existe");
+		}
 		return fournisseurRepository.save(fournisseur);
 	}
 
@@ -65,16 +68,6 @@ public class FournisseurServiceImpl implements FournisseurService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteFournisseur(Long id) {
-		if (!fournisseurRepository.existsById(id)) {
-			throw new ResourceNotFoundException("Fournisseur that id is" + id + "is not found");
-		}
-		fournisseurRepository.deleteById(id);
-		
-		return ResponseEntity.ok().build();
-	}
-
-	@Override
 	public Fournisseur findByCode(String code) {
 		return fournisseurRepository.findByCode(code);
 	}
@@ -87,6 +80,11 @@ public class FournisseurServiceImpl implements FournisseurService {
 	@Override
 	public Fournisseur findByRaisonSociale(String raisonSociale) {
 		return fournisseurRepository.findByRaisonSociale(raisonSociale);
+	}
+
+	@Override
+	public Fournisseur findByNomBank(String nomBank) {
+		return fournisseurRepository.findByNomBank(nomBank);
 	}
 
 	@Override
@@ -119,5 +117,15 @@ public class FournisseurServiceImpl implements FournisseurService {
 	public Page<Fournisseur> findFournisseurByKeyWord(String mc, Pageable pageable) {
 		return fournisseurRepository.findFournisseurByKeyWord(mc, pageable);
 	}
+
+	@Override
+	public void deleteFournisseur(Long id) {
+		if (!fournisseurRepository.existsById(id)) {
+			throw new ResourceNotFoundException("Fournisseur is not found");
+		}
+		fournisseurRepository.deleteById(id);
+
+	}
+
 
 }

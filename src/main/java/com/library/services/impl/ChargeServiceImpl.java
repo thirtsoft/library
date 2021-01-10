@@ -56,6 +56,9 @@ public class ChargeServiceImpl implements ChargeService {
 
     @Override
     public Charge saveCharge(Charge charge) {
+        if (chargeRepository.findByCodeCharge(charge.getCodeCharge()) != null) {
+            throw new IllegalArgumentException("Charge existe");
+        }
         return chargeRepository.save(charge);
     }
 
@@ -80,17 +83,6 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
-    public ResponseEntity<Object> deleteCharge(Long id) {
-        if (!chargeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Charge N° " + id + "not found");
-        }
-
-        chargeRepository.deleteById(id);
-
-        return ResponseEntity.ok().build();
-    }
-
-    @Override
     public Page<Charge> findAllChargesByPageable(Pageable page) {
         return chargeRepository.findAllChargesByPageable(page);
     }
@@ -99,4 +91,15 @@ public class ChargeServiceImpl implements ChargeService {
     public Page<Charge> findChargesByKeyWord(String mc, Pageable pageable) {
         return chargeRepository.findChargesByKeyWord(mc, pageable);
     }
+
+    @Override
+    public void deleteCharge(Long id) {
+        if (!chargeRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Charge not found");
+        }
+
+        chargeRepository.deleteById(id);
+
+    }
+
 }

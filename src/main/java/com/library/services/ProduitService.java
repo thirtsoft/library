@@ -24,7 +24,7 @@ public interface ProduitService {
 	
 	Produit updateProduit(Long prodId, Produit produit);
 	Produit updateProduit(Produit produit);
-	ResponseEntity<Object> deleteProduit(Long prodId);
+	void deleteProduit(Long prodId);
 	
 	Produit findByReference(String reference);
 	Produit findByDesignation(String designation);

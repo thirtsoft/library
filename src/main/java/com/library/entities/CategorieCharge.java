@@ -19,6 +19,7 @@ public class CategorieCharge implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 100, unique = true)
     private String codeCategorieCharge;
     private String nomCategorieCharge;
 }

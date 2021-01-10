@@ -91,8 +91,9 @@ public class CategoryController {
     }
 
     @PostMapping("/categories")
-    public CategoryModel createCategory(@RequestBody Category category) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category));
+    public ResponseEntity<CategoryModel>  createCategory(@RequestBody Category category) {
+        return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category)), HttpStatus.OK);
+
     }
 
     @PutMapping("/categories/{catId}")
@@ -102,8 +103,9 @@ public class CategoryController {
     }
 
     @DeleteMapping("/categories/{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable(value = "id") Long id) {
-        return categoryService.deleteCategory(id);
+    public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Long id) {
+        categoryService.deleteCategory(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/createCategoriePdf")

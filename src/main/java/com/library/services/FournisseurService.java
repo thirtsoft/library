@@ -16,11 +16,12 @@ public interface FournisseurService {
 	Fournisseur saveFournisseur(Fournisseur fournisseur);
 
 	Fournisseur updateFournisseurt(Long id, Fournisseur fournisseur);
-	ResponseEntity<Object> deleteFournisseur(Long id);
+	void deleteFournisseur(Long id);
 	
 	Fournisseur findByCode(String code);
 	Fournisseur findByNom(String nom);
 	Fournisseur findByRaisonSociale(String raisonSociale);
+	Fournisseur findByNomBank(String nomBank);
 	Fournisseur findByEmail(String email);
 	
 	List<Fournisseur> findAllFournisseurs();

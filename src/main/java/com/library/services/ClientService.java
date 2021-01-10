@@ -15,11 +15,14 @@ public interface ClientService {
 	Client saveClient(Client client);
 	Optional<Client> findClientById(Long id);
 	Client updateClient(Long id, Client client);
-	ResponseEntity<Object> deleteClient(Long id);
+	void deleteClient(Long id);
 	
 	Client findByRaisonSocial(String raisonSocial);
 	Client findByChefService(String chefService);
 	Client findByEmail(String email);
+	Client findByTelephone(String telephone);
+
+	Client findByCodeClient(String codeClient);
 	
 	List<Client> ListClientByRaisonSocial(String raisonSocial);
 	List<Client> ListClientByChefService(String chefService);

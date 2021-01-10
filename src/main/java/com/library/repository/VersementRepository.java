@@ -13,31 +13,31 @@ import com.library.entities.Versement;
 
 @Repository
 public interface VersementRepository extends JpaRepository<Versement, Long> {
-	
-	@Query("select p from Versement p where p.numVersement like :num")
-	public Versement findByNumVersement(@Param("num") String numVersement);
+
+	Versement findByNumVersement(String numVersement);
+
+	Versement findByNumeroRecu(String numeroRecu);
 	
 	@Query("select p from Versement p where p.numVersement like :num") 
-	public List<Versement> findListVersementByNumVersement(@Param("num") String numVersement);
-	
+	List<Versement> findListVersementByNumVersement(@Param("num") String numVersement);
 	
 	@Query("select p from Versement p where p.nature like :nat")
-	public Versement findByNature(@Param("nat") String nature);
+	Versement findByNature(@Param("nat") String nature);
 	
 	@Query("select p from Versement p where p.nature like :nat") 
-	public List<Versement> findListVersementNature(@Param("nat") String nature);
+	List<Versement> findListVersementNature(@Param("nat") String nature);
 	
 	@Query("select p from Versement p where p.employe.id =:emp")
-	public List<Versement> findVersementByEmployeId(@Param("emp") Long empId);
+	List<Versement> findVersementByEmployeId(@Param("emp") Long empId);
 	
 	@Query("select p from Versement p where p.employe.id =:id")
-	public Page<Versement> findVersementByEmployeId(@Param("id") Long empId, Pageable pageable);
+	Page<Versement> findVersementByEmployeId(@Param("id") Long empId, Pageable pageable);
 	
 	@Query("select p from Versement p")
-	public Page<Versement> findAllVersementsByPageable(Pageable pageable);
+	Page<Versement> findAllVersementsByPageable(Pageable pageable);
 	  
 	@Query("select p from Versement p where p.nature like :mc")
-	public Page<Versement> findVersementByKeyWord(@Param("mc") String mc, Pageable pageable);
+	Page<Versement> findVersementByKeyWord(@Param("mc") String mc, Pageable pageable);
 
 
 }

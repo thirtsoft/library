@@ -10,21 +10,21 @@ import java.util.Optional;
 
 public interface ChargeService {
 
-    public List<Charge> findAllCharges();
-    public Optional<Charge> findChargeById(Long id);
+    List<Charge> findAllCharges();
+    Optional<Charge> findChargeById(Long id);
 
-    public Charge findChargeByCodeCharge(String codeCharge);
-    public List<Charge> findListChargeByCodeCharge(String codeCharge);
+    Charge findChargeByCodeCharge(String codeCharge);
+    List<Charge> findListChargeByCodeCharge(String codeCharge);
 
-    public Charge findChargeByNature(String nature);
-    public List<Charge> findListChargeByNature(String nature);
+    Charge findChargeByNature(String nature);
+    List<Charge> findListChargeByNature(String nature);
 
-    public Charge saveCharge(Charge charge);
-    public Charge updateCharge(Long id, Charge charge);
-    public ResponseEntity<Object> deleteCharge(Long id);
+    Charge saveCharge(Charge charge);
+    Charge updateCharge(Long id, Charge charge);
+    void deleteCharge(Long id);
 
-    public Page<Charge> findAllChargesByPageable(Pageable page);
+    Page<Charge> findAllChargesByPageable(Pageable page);
 
-    public Page<Charge> findChargesByKeyWord(String mc, Pageable pageable);
+    Page<Charge> findChargesByKeyWord(String mc, Pageable pageable);
 
 }

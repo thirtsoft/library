@@ -100,23 +100,29 @@ public class FournisseurController {
 			@RequestParam(name = "size") int size) {
 		return fournisseurService.findFournisseurByKeyWord("%"+mc+"%", PageRequest.of(page, size));
 	}
-	
-	
+
+
 	@PostMapping("/fournisseurs") 
-	public Fournisseur createFournisseur(@RequestBody Fournisseur fournisseur) {
-		return fournisseurService.saveFournisseur(fournisseur);	
+	public ResponseEntity<Fournisseur> createFournisseur(@RequestBody Fournisseur fournisseur) {
+		if (fournisseurService.findByCode(fournisseur.getCode()) != null) {
+			return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.BAD_REQUEST);
+		}
+		if (fournisseurService.findByEmail(fournisseur.getEmail()) != null) {
+			return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/fournisseurs/{id}")
-	public ResponseEntity<Fournisseur>  updateFournisseur(@PathVariable(value = "id") Long id, @RequestBody Fournisseur fournisseur) {
+	public ResponseEntity<Fournisseur> updateFournisseur(@PathVariable(value = "id") Long id, @RequestBody Fournisseur fournisseur) {
 		fournisseur.setId(id);
 		return new ResponseEntity<>(fournisseurService.saveFournisseur(fournisseur), HttpStatus.OK);
 		
 	}
 	@DeleteMapping("/fournisseurs/{id}")
-	public ResponseEntity<Object> deleteFournisseur(@PathVariable(value = "id") Long id) {
-		return fournisseurService.deleteFournisseur(id);
-		
+	public ResponseEntity<?> deleteFournisseur(@PathVariable(value = "id") Long id) {
+		fournisseurService.deleteFournisseur(id);
+		return ResponseEntity.ok().build();
 	}
 
 }

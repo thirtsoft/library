@@ -51,6 +51,16 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
+	public Client findByTelephone(String telephone) {
+		return clientRepository.findByTelephone(telephone);
+	}
+
+	@Override
+	public Client findByCodeClient(String codeClient) {
+		return clientRepository.findByCodeClient(codeClient);
+	}
+
+	@Override
 	public List<Client> ListClientByRaisonSocial(String raisonSocial) {
 		return clientRepository.ListClientByRaisonSocial(raisonSocial);
 	}
@@ -90,6 +100,10 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public Client saveClient(Client client) {
+		if ((clientRepository.findByCodeClient(client.getCodeClient()) !=null) && (clientRepository.findByTelephone(client.getTelephone()) != null) &&
+				(clientRepository.findByEmail(client.getEmail()) != null)) {
+			throw new IllegalArgumentException("Ce Client existe");
+		}
 		return clientRepository.save(client);
 	}
 	
@@ -113,13 +127,12 @@ public class ClientServiceImpl implements ClientService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteClient(Long id) {
+	public void deleteClient(Long id) {
 		if (!clientRepository.existsById(id)) {
-			throw new ResourceNotFoundException("Client N° " + id + "not found");
+			throw new ResourceNotFoundException("Client not found");
 		}
 		clientRepository.deleteById(id);
-		
-		return ResponseEntity.ok().build();
+
 	}
 
 

@@ -25,6 +25,7 @@ public class Charge implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(length = 100, unique = true)
 	private String codeCharge;
 	private String nature;
 	private double montantCharge;

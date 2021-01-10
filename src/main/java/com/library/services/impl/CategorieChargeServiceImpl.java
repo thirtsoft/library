@@ -42,6 +42,9 @@ public class CategorieChargeServiceImpl implements CategorieChargeService {
 
 	@Override
 	public CategorieCharge saveCategorieCharge(CategorieCharge categorieCharge) {
+		if (catChargeRepository.findByCodeCategorieCharge(categorieCharge.getCodeCategorieCharge()) != null) {
+			throw new IllegalArgumentException("Categorie de charge existe");
+		}
 		return catChargeRepository.save(categorieCharge);
 	}
 

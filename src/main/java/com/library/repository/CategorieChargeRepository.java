@@ -13,9 +13,8 @@ import java.util.List;
 
 @Repository
 public interface CategorieChargeRepository extends JpaRepository<CategorieCharge, Long> {
-	
-	@Query("select c from CategorieCharge c where c.codeCategorieCharge like :code")
-	CategorieCharge findByCodeCategorieCharge(@Param("code") String codeCategorieCharge);
+
+	CategorieCharge findByCodeCategorieCharge(String codeCategorieCharge);
 	
 	@Query("select c from CategorieCharge c where c.codeCategorieCharge like :c")
 	List<CategorieCharge> ListCategorieChargeByCodeCategorieCharge(@Param("c") String codeCategorieCharge);

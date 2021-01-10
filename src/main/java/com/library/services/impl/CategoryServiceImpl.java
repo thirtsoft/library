@@ -48,9 +48,15 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryRepository.findById(catId);
 		
 	}
-	
+
+
 	@Override
 	public Category saveCategory(Category category) {
+		Category checkCategorie = categoryRepository.findByCode(category.getCode());
+		if (checkCategorie != null) {
+			throw new IllegalArgumentException("La Categorie existe déjà");
+		}
+
 		return categoryRepository.save(category);
 	}
 
@@ -73,12 +79,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteCategory(Long catId) {
+	public void deleteCategory(Long catId) {
 		if (!categoryRepository.existsById(catId)) {
 			throw new ResourceNotFoundException("Category that id is" + catId + "is not found");
 		}
 		categoryRepository.deleteById(catId);
-		return ResponseEntity.ok().build();
+	//	return ResponseEntity.ok().build();
 	}
 
 	@Override

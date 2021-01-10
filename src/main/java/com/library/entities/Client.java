@@ -2,11 +2,7 @@ package com.library.entities;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,17 +22,20 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int codeClient;
+	@Column(length = 100, unique = true)
+	private String codeClient;
 	private String raisonSocial;
 	private String chefService;
 	private String adresse;
+	@Column(length = 100, unique = true)
 	private String telephone;
+	@Column(length = 100, unique = true)
 	private String email;
 
 	private String subject;
 	private String message;
 
-	public Client(Long id, int codeClient, String raisonSocial, String chefService, String adresse, String telephone, String email) {
+	public Client(Long id, String codeClient, String raisonSocial, String chefService, String adresse, String telephone, String email) {
 		this.id = id;
 		this.codeClient = codeClient;
 		this.raisonSocial = raisonSocial;

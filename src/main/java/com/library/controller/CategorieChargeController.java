@@ -74,12 +74,10 @@ public class CategorieChargeController {
 
     @PostMapping("/categorieCharges")
     public ResponseEntity<CategorieCharge> createCategorieCharge(@RequestBody CategorieCharge categorieCharge) {
-        try {
-            catChargeService.saveCategorieCharge(categorieCharge);
-            return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            return new ResponseEntity<CategorieCharge>(HttpStatus.NOT_ACCEPTABLE);
+        if (catChargeService.findByCodeCategorieCharge(categorieCharge.getCodeCategorieCharge()) != null) {
+            return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.BAD_REQUEST);
 
     }
 

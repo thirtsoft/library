@@ -12,28 +12,29 @@ import com.library.entities.Versement;
 
 public interface VersementService {
 	
-	public List<Versement> findAllVersements();
-	public Optional<Versement> findVersementById(Long id);
+	List<Versement> findAllVersements();
+	Optional<Versement> findVersementById(Long id);
 	
-	public Versement findByNumVersement(String numVersement);
-	public Versement findByNature(String nature);
+	Versement findByNumVersement(String numVersement);
+	Versement findByNumeroRecu(String numeroRecu);
+	Versement findByNature(String nature);
 	
-	public List<Versement> findListVersementByNumVersement(String numVersement);
-	public List<Versement> findListVersementByNature(String nature);
-	public List<Versement> findVersementByEmployeId(Long empId);
-	
-	
-	public Versement saveVersement(Long empId, Versement versement);
-	public Versement saveVersement(Versement versement);
-	
-	public Versement updateVersement(Long id, Versement versement);
-	public ResponseEntity<Object> deleteVersement(Long id);
+	List<Versement> findListVersementByNumVersement(String numVersement);
+	List<Versement> findListVersementByNature(String nature);
+	List<Versement> findVersementByEmployeId(Long empId);
 	
 	
-	public Page<Versement> findAllVersementsByPageable(Pageable page);
-	public Page<Versement>findAllVersementsByEmploye(Long empId, Pageable pageable);
+//	Versement saveVersement(Long empId, Versement versement);
+	Versement saveVersement(Versement versement);
 	
-	public Page<Versement> findVersementByKeyWord(String mc, Pageable pageable);
+	Versement updateVersement(Long id, Versement versement);
+	void deleteVersement(Long id);
+	
+	
+	Page<Versement> findAllVersementsByPageable(Pageable page);
+	Page<Versement>findAllVersementsByEmploye(Long empId, Pageable pageable);
+	
+	Page<Versement> findVersementByKeyWord(String mc, Pageable pageable);
 	
 	
 }

@@ -43,6 +43,11 @@ public class VersementServiceImpl implements VersementService {
 	}
 
 	@Override
+	public Versement findByNumeroRecu(String numeroRecu) {
+		return versementRepository.findByNumeroRecu(numeroRecu);
+	}
+
+	@Override
 	public Versement findByNature(String nature) {
 		return versementRepository.findByNature(nature);
 	}
@@ -63,12 +68,10 @@ public class VersementServiceImpl implements VersementService {
 	}
 
 	@Override
-	public Versement saveVersement(Long empId, Versement versement) {
-		return null;
-	}
-
-	@Override
 	public Versement saveVersement(Versement versement) {
+		if (versementRepository.findByNumVersement(versement.getNumVersement()) !=null) {
+			throw new IllegalArgumentException("Cet Versement existe");
+		}
 		return versementRepository.save(versement);
 	}
 
@@ -93,13 +96,11 @@ public class VersementServiceImpl implements VersementService {
 	}
 
 	@Override
-	public ResponseEntity<Object> deleteVersement(Long id) {
+	public void deleteVersement(Long id) {
 		if (!versementRepository.existsById(id)) {
-			throw new ResourceNotFoundException("Versement N° " + id + "not found");
+			throw new ResourceNotFoundException("Versement not found");
 		}
 		versementRepository.deleteById(id);
-		
-		return ResponseEntity.ok().build();
 	}
 
 	@Override

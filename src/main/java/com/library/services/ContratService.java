@@ -20,30 +20,29 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ContratService {
 	
-	public List<Contrat> findAllContrats();
-	public Optional<Contrat> findContrattById(Long id);
+	List<Contrat> findAllContrats();
+	Optional<Contrat> findContrattById(Long id);
 	
-	public Contrat findByReference(String reference);
-	public List<Contrat> findListContratByReference(String reference);
+	Contrat findByReference(String reference);
+	List<Contrat> findListContratByReference(String reference);
 	
-	public Contrat findByNature(String nature);
-	public List<Contrat> findListContratByNature(String nature);
+	Contrat findByNature(String nature);
+	List<Contrat> findListContratByNature(String nature);
 
-	
-	public List<Contrat> findContratByClientId(Long clientId);
+	List<Contrat> findContratByClientId(Long clientId);
 	
 	Contrat saveContrat(Contrat contrat);
 	Contrat updateProduit(Long id, Contrat contrat);
-	ResponseEntity<Object> deleteContrat(Long id);
+	void deleteContrat(Long id);
 
 	Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException;
 	Resource loadFileAsResource(String fileName) throws Exception;
 	
 	
-	public Page<Contrat> findAllContratsByPageable(Pageable page);
-	public Page<Contrat>findAllContratsByClient(Long clientId, Pageable pageable);
+	Page<Contrat> findAllContratsByPageable(Pageable page);
+	Page<Contrat>findAllContratsByClient(Long clientId, Pageable pageable);
 	
-	public Page<Contrat> findContratByKeyWord(String mc, Pageable pageable);
+	Page<Contrat> findContratByKeyWord(String mc, Pageable pageable);
 	
 	boolean createPdf(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 	

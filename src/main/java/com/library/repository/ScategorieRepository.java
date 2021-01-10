@@ -13,9 +13,8 @@ import com.library.entities.Scategorie;
 
 @Repository
 public interface ScategorieRepository extends JpaRepository<Scategorie, Long> {
-	
-	@Query("select p from Scategorie p where p.code like :code")
-	public Scategorie findByCode(@Param("code") String code);
+
+	Scategorie findByCode(String code);
 	
 	@Query("select p from Scategorie p where p.code like :code") 
 	public List<Scategorie> findListScategorieByCode(@Param("code") String code);
