@@ -59,8 +59,9 @@ public class LigneAvoirController {
 	}
 
 	@PostMapping("/ligneAvoirs")
-	public LigneAvoir createLigneAvoir(@RequestBody LigneAvoir ligneAvoir) {
-		return ligneAvoirService.saveLigneAvoir(ligneAvoir);
+	public ResponseEntity<LigneAvoir> createLigneAvoir(@RequestBody LigneAvoir ligneAvoir) {
+	//	return ligneAvoirService.saveLigneAvoir(ligneAvoir);
+		return new ResponseEntity<LigneAvoir>(ligneAvoirService.saveLigneAvoir(ligneAvoir), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/ligneAvoirs/{lcId}")

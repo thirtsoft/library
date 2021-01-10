@@ -172,6 +172,7 @@ public class ContratController {
 		if (contratService.findByReference(contrat.getReference()) != null) {
 			return new ResponseEntity<Contrat>(contrat, HttpStatus.BAD_REQUEST);
 		}
+		contratService.saveContrat(contrat);
 		return new ResponseEntity<Contrat>(contrat, HttpStatus.CREATED);
 	}
 

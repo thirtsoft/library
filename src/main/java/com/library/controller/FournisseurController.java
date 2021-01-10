@@ -110,6 +110,7 @@ public class FournisseurController {
 		if (fournisseurService.findByEmail(fournisseur.getEmail()) != null) {
 			return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.BAD_REQUEST);
 		}
+		fournisseurService.saveFournisseur(fournisseur);
 		return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.CREATED);
 	}
 	

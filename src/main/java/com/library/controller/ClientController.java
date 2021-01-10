@@ -98,6 +98,7 @@ public class ClientController {
 		if (clientService.findByTelephone(client.getTelephone()) != null) {
 			return new ResponseEntity<Client>(client, HttpStatus.BAD_REQUEST);
 		}
+		clientService.saveClient(client);
 		return new ResponseEntity<Client>(client, HttpStatus.CREATED);
 	}
 	

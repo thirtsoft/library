@@ -172,8 +172,12 @@ public class CommandeClientController {
 	
 	@PostMapping("/commandesClientes")
 	public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient) {
+		/*
 		CommandeClient Resultat = commandeClientService.saveCommandeClient(commandeClient);
 		return ResponseEntity.ok(Resultat);
+		*/
+
+		return new ResponseEntity<CommandeClient>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/commandes/{id}")

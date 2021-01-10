@@ -72,8 +72,9 @@ public class LigneVenteController {
     }
 
     @PostMapping("/ligneVentes")
-    public LigneVente createLigneVente(@RequestBody LigneVente ligneVente) {
-        return ligneVenteService.saveLigneVente(ligneVente);
+    public ResponseEntity<LigneVente> createLigneVente(@RequestBody LigneVente ligneVente) {
+    //    return ligneVenteService.saveLigneVente(ligneVente);
+        return new ResponseEntity<LigneVente>(ligneVenteService.saveLigneVente(ligneVente), HttpStatus.CREATED);
     }
 
     @PutMapping("/ligneVentes/{lcId}")

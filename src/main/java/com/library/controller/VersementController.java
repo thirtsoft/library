@@ -92,6 +92,7 @@ public class VersementController {
 		if (versementService.findByNumVersement(versement.getNumVersement()) !=null) {
 			return new ResponseEntity<Versement>(versement, HttpStatus.BAD_REQUEST);
 		}
+		versementService.saveVersement(versement);
 		return new ResponseEntity<Versement>(versement, HttpStatus.CREATED);
 	}
 	

@@ -70,6 +70,7 @@ public class ChargeController {
         if (chargeService.findChargeByCodeCharge(charge.getCodeCharge()) != null) {
             return new ResponseEntity<Charge>(charge, HttpStatus.BAD_REQUEST);
         }
+        chargeService.saveCharge(charge);
         return new ResponseEntity<Charge>(charge, HttpStatus.CREATED);
     }
 

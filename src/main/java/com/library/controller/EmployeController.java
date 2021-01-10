@@ -126,6 +126,7 @@ public class EmployeController {
 		if (employeService.findByEmail(employe.getEmail()) !=null) {
 			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
 		}
+		employeService.saveEmploye(employe);
 		return new ResponseEntity<Employe>(employe, HttpStatus.CREATED);
 	}
 	

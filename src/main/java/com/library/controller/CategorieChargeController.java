@@ -77,7 +77,8 @@ public class CategorieChargeController {
         if (catChargeService.findByCodeCategorieCharge(categorieCharge.getCodeCategorieCharge()) != null) {
             return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.BAD_REQUEST);
+        catChargeService.saveCategorieCharge(categorieCharge);
+        return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.CREATED);
 
     }
 

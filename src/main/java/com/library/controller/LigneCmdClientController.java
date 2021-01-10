@@ -85,8 +85,9 @@ public class LigneCmdClientController {
 	}
 	
 	@PostMapping("/ligneCommandes") 
-	public LigneCmdClient createLigneCmdClient(@RequestBody LigneCmdClient ligneCmdClient) {
-		return ligneCmdClientService.saveLigneCmdClient(ligneCmdClient);	
+	public ResponseEntity<LigneCmdClient> createLigneCmdClient(@RequestBody LigneCmdClient ligneCmdClient) {
+	//	return ligneCmdClientService.saveLigneCmdClient(ligneCmdClient);
+		return new ResponseEntity<LigneCmdClient>(ligneCmdClientService.saveLigneCmdClient(ligneCmdClient), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/ligneCommandes/{lcId}")

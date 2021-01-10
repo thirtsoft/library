@@ -125,8 +125,11 @@ public class CreanceController {
 
     @PostMapping("/creances")
     public ResponseEntity<Creance> createCreance(@RequestBody Creance creance) {
+       /*
         Creance Resultat = creanceService.saveCreance(creance);
         return ResponseEntity.ok(Resultat);
+        */
+        return new ResponseEntity<Creance>(creanceService.saveCreance(creance), HttpStatus.CREATED);
     }
 
     @PutMapping("/creances/{id}")

@@ -73,8 +73,9 @@ public class LigneApprovisionnementController {
     }
 
     @PostMapping("/ligneApprovisionnements")
-    public LigneApprovisionnement createLigneApprovisionnement(@RequestBody LigneApprovisionnement ligneApprovisionnement) {
-        return ligneApprovisionnementService.saveLigneApprovisionnement(ligneApprovisionnement);
+    public ResponseEntity<LigneApprovisionnement>  createLigneApprovisionnement(@RequestBody LigneApprovisionnement ligneApprovisionnement) {
+       // return ligneApprovisionnementService.saveLigneApprovisionnement(ligneApprovisionnement);
+        return new ResponseEntity<LigneApprovisionnement>(ligneApprovisionnementService.saveLigneApprovisionnement(ligneApprovisionnement), HttpStatus.CREATED);
     }
 
     @PutMapping("/ligneApprovisionnements/{lApproId}")
