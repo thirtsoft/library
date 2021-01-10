@@ -99,31 +99,41 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     public CommandeClient saveCommandeClient(CommandeClient commande) {
 
         logger.info("Commande {}", commande);
+        List<LigneCmdClient> ligneCmd = commande.getLcomms();
+        if (ligneCmd == null || ligneCmd.size() == 0) {
+            throw new IllegalArgumentException("Vous devez au moins commander un produit");
+        }
+        if ((commande.getClient().getId() == null)) {
+            throw new IllegalArgumentException("Vous devez selectionner un client");
+        }
+
+        for (LigneCmdClient lcom :ligneCmd) {
+            Produit produitInitial = produitService.findProduitById(lcom.getProduit().getId()).get();
+            if (lcom.getQuantite() > produitInitial.getQtestock()) {
+                throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
+            }
+        }
+
         commandeClientRepository.save(commande);
 
-
         List<LigneCmdClient> ligneCmdClients = commande.getLcomms();
-
         double total = 0;
-        for (LigneCmdClient lcmdClt : ligneCmdClients) {
+        for (LigneCmdClient lcmdClt: ligneCmdClients) {
             lcmdClt.setCommande(commande);
             lcmdClt.setNumero(commande.getNumeroCommande());
-
             ligneCmdClientService.saveLigneCmdClient(lcmdClt);
 
             Produit produit = produitService.findProduitById(lcmdClt.getProduit().getId()).get();
             if (produit != null) {
                 produit.setQtestock(produit.getQtestock() - lcmdClt.getQuantite());
-                produitService.saveProduit(produit);
+                produitService.updateProduit(produit);
             }
-
             lcmdClt.setPrix(produit.getPrixVente());
 
             System.out.println(produit.getPrixVente());
             System.out.println(lcmdClt.getQuantite());
             System.out.println(lcmdClt.getQuantite() * produit.getPrixVente());
 
-        //    total += (lcmdClt.getQuantite() * produit.getPrixVente());
             total += (lcmdClt.getQuantite() * lcmdClt.getPrixCommande());
 
         }
@@ -132,7 +142,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         commande.setStatus("valider");
         // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
         commande.setDateCommande(new Date());
-
 
         return commandeClientRepository.save(commande);
 

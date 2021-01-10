@@ -53,7 +53,7 @@ public class ContratServiceTest {
 	@Test
 	public void testFindContratByReference() {
 		
-		Client client = new Client(null, 1234, "CL", "CL","CL","CL","CL");
+		Client client = new Client(null, "BIC103", "CL", "CL","CL","CL","CL");
 		
 		Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", "file", client);
 		
@@ -69,7 +69,7 @@ public class ContratServiceTest {
 	@Test
 	public void testFindContratByNature() {
 		
-		Client client = new Client(null, 1234, "CL", "CL","CL","CL","CL");
+		Client client = new Client(null, "BIC103", "CL", "CL","CL","CL","CL");
 		
 		Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", "file", client);
 		
@@ -85,7 +85,7 @@ public class ContratServiceTest {
 	
 	@Test
 	public void testfindAllContrats() {
-		Client client = new Client(null, 1234, "CL", "CL","CL","CL","CL");
+		Client client = new Client(null, "BIC103", "CL", "CL","CL","CL","CL");
 		when(contratRepository.findAll()).thenReturn(Stream
 				.of(new Contrat(null, "CONT22", "CONT22", 1200, "CONT22", new Date(), new Date(), "fileName", "file", client),
 		new Contrat(null, "CONT33", "CONT33", 1200, "CONT33", new Date(), new Date(), "fileName", "file", client)).collect(Collectors.toList()));

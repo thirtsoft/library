@@ -29,7 +29,7 @@ public class ClientRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testCreateClient() {
-		Client client = new Client(null, 1234, "Dieng", "Sidiya", "Mbao", "775643219", "seydou@gmail.com");
+		Client client = new Client(null, "BIC12", "Dieng", "Sidiya", "Mbao", "775643219", "seydou@gmail.com");
 		
 		Client saveClient = clientRepository.save(client);
 		
@@ -68,7 +68,7 @@ public class ClientRepositoryTest {
 		String clientAdress = "DK";
 		String clientEmail = "adama@gmail.com";
 		
-		Client client = new Client(null, 1234, clientRaisonSocial, clientChefService, clientAdress,
+		Client client = new Client(null, "BIC12", clientRaisonSocial, clientChefService, clientAdress,
 				"775643219", clientEmail);
 		
 		client.setId((long) 11);
