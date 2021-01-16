@@ -100,8 +100,7 @@ public class ClientServiceImpl implements ClientService {
 
 	@Override
 	public Client saveClient(Client client) {
-		if ((clientRepository.findByCodeClient(client.getCodeClient()) !=null) && (clientRepository.findByTelephone(client.getTelephone()) != null) &&
-				(clientRepository.findByEmail(client.getEmail()) != null)) {
+		if ((clientRepository.findByCodeClient(client.getCodeClient()) !=null)) {
 			throw new IllegalArgumentException("Ce Client existe");
 		}
 		return clientRepository.save(client);
@@ -110,7 +109,7 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public Client updateClient(Long id, Client client) {
 		if (!clientRepository.existsById(id)) {
-			throw new ResourceNotFoundException("Client N° " + id + "nout found");
+			throw new ResourceNotFoundException("Client N° nout found");
 		}
 		Optional<Client> clt = clientRepository.findById(id);
 		if (!clt.isPresent()) {

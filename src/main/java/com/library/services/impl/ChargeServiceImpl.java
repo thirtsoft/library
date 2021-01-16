@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,21 +60,23 @@ public class ChargeServiceImpl implements ChargeService {
         if (chargeRepository.findByCodeCharge(charge.getCodeCharge()) != null) {
             throw new IllegalArgumentException("Charge existe");
         }
+        charge.setDate(new Date());
         return chargeRepository.save(charge);
     }
 
     @Override
     public Charge updateCharge(Long id, Charge charge) {
         if (!chargeRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Charge N° " + id + "not found");
+            throw new ResourceNotFoundException("Charge not found");
         }
         Optional <Charge> charg = chargeRepository.findById(id);
-        if (charg.isPresent()) {
-            throw new ResourceNotFoundException("Charge N° " + id + "not found");
+        if (!charg.isPresent()) {
+            throw new ResourceNotFoundException("Charge not found");
         }
 
         Charge chargeResult = charg.get();
         chargeResult.setCodeCharge(charge.getCodeCharge());
+        chargeResult.setCategorieCharge(charge.getCategorieCharge());
         chargeResult.setNature(charge.getNature());
         chargeResult.setMontantCharge(charge.getMontantCharge());
         chargeResult.setDate(charge.getDate());

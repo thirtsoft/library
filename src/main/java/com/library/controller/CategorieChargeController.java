@@ -83,19 +83,13 @@ public class CategorieChargeController {
     }
 
     @PutMapping("/categorieCharges/{catId}")
-    public ResponseEntity<CategorieCharge> updateCategorieCharge(@PathVariable(value = "catId") Long catId, @RequestBody CategorieCharge catCharge) {
+    public ResponseEntity<CategorieCharge> updateCategorieCharge(@PathVariable Long catId, @RequestBody CategorieCharge catCharge) {
         catCharge.setId(catId);
-        try {
-            catChargeService.saveCategorieCharge(catCharge);
-            return new ResponseEntity<CategorieCharge>(catCharge, HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            return new ResponseEntity<CategorieCharge>(HttpStatus.NOT_ACCEPTABLE);
-        }
-
+        return new ResponseEntity<>(catChargeService.updateCategorieCharge(catId, catCharge), HttpStatus.OK);
     }
 
     @DeleteMapping("/categorieCharges/{id}")
-    public ResponseEntity<Object> deleteCategory(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> deleteCategorieCharge(@PathVariable(value = "id") Long id) {
          catChargeService.deleteCategorieCharge(id);
         return ResponseEntity.ok().build();
     }

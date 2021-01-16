@@ -38,6 +38,7 @@ public class Creance implements Serializable {
     private String codeCreance;
 	private String libelle;
 	private double soldeCreance;
+	private double avanceCreance;
 	private int nbreJours;
 	private double totalCreance;
 	private String status;
@@ -56,12 +57,13 @@ public class Creance implements Serializable {
 		super();
 	}
 
-	public Creance(Long id, int reference,String codeCreance, String libelle, double soldeCreance, int nbreJours, double totalCreance, String status, Date dateCreance, Client client, @Valid List<LigneCreance> lcreances) {
+	public Creance(Long id, int reference,String codeCreance, String libelle, double soldeCreance, double avanceCreance, int nbreJours, double totalCreance, String status, Date dateCreance, Client client, @Valid List<LigneCreance> lcreances) {
 		this.id = id;
 		this.reference = reference;
 		this.libelle = libelle;
 		this.codeCreance = codeCreance;
 		this.soldeCreance = soldeCreance;
+		this.avanceCreance = avanceCreance;
 		this.nbreJours = nbreJours;
 		this.totalCreance = totalCreance;
 		this.status = status;
@@ -108,6 +110,14 @@ public class Creance implements Serializable {
 
 	public void setSoldeCreance(double soldeCreance) {
 		this.soldeCreance = soldeCreance;
+	}
+
+	public double getAvanceCreance() {
+		return avanceCreance;
+	}
+
+	public void setAvanceCreance(double avanceCreance) {
+		this.avanceCreance = avanceCreance;
 	}
 
 	public int getNbreJours() {

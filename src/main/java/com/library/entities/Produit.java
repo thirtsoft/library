@@ -16,7 +16,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "produit")
-
 public class Produit implements Serializable {
 	/**
 	 * 
@@ -25,7 +24,7 @@ public class Produit implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(length = 100, unique = true)
+	@Column(unique = true)
 	private String reference;
 	private String designation;
 	private Double prixAchat;

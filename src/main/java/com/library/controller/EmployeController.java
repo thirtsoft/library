@@ -120,12 +120,14 @@ public class EmployeController {
 	
 	@PostMapping("/employes") 
 	public ResponseEntity<Employe> createEmploye(@RequestBody Employe employe) {
+		if (employeService.findByEmail(employe.getEmail()) != null) {
+			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
+		}
+		/*
 		if (employeService.findByCni(employe.getCni()) !=null) {
 			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
 		}
-		if (employeService.findByEmail(employe.getEmail()) !=null) {
-			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
-		}
+		*/
 		employeService.saveEmploye(employe);
 		return new ResponseEntity<Employe>(employe, HttpStatus.CREATED);
 	}
@@ -133,7 +135,7 @@ public class EmployeController {
 	@PutMapping("/employes/{empId}")
 	public ResponseEntity<Employe>  updateEmploye(@PathVariable(value = "empId") Long empId, @RequestBody Employe employe) {
 		employe.setId(empId);
-		return new ResponseEntity<>(employeService.saveEmploye(employe), HttpStatus.OK);
+		return new ResponseEntity<>(employeService.updateEmploye(empId, employe), HttpStatus.OK);
 		
 	}
 	@DeleteMapping("/employes/{id}")

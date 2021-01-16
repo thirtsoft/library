@@ -74,11 +74,11 @@ public class ChargeController {
         return new ResponseEntity<Charge>(charge, HttpStatus.CREATED);
     }
 
-
     @PutMapping("/charges/{id}")
-    public Charge updateCharge(@PathVariable Long id, @RequestBody Charge charge) {
+    public ResponseEntity<Charge> updateCharge(@PathVariable Long id, @RequestBody Charge charge) {
         charge.setId(id);
-        return chargeService.saveCharge(charge);
+        return new ResponseEntity<>(chargeService.updateCharge(id, charge), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/charges/{id}")
@@ -86,6 +86,5 @@ public class ChargeController {
         chargeService.deleteCharge(id);
         return ResponseEntity.ok().build();
     }
-
 
 }

@@ -118,9 +118,9 @@ public class ProduitController {
     }
 
     @PutMapping("/produits/{prodId}")
-    public Produit updateProduit(@PathVariable Long prodId, @RequestBody Produit produit) {
+    public ResponseEntity<Produit>  updateProduit(@PathVariable Long prodId, @RequestBody Produit produit) {
         produit.setId(prodId);
-        return produitService.saveProduit(produit);
+        return new ResponseEntity<>(produitService.updateProduit(prodId, produit), HttpStatus.OK);
     }
 
     @DeleteMapping("/produits/{id}")

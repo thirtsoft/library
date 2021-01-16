@@ -95,11 +95,11 @@ public class VersementController {
 		versementService.saveVersement(versement);
 		return new ResponseEntity<Versement>(versement, HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/versements/{id}")
-	public Versement updateVersement(@PathVariable Long id, @RequestBody Versement versement) {
+	public ResponseEntity<Versement> updateVersement(@PathVariable Long id, @RequestBody Versement versement) {
 		versement.setId(id);
-		return versementService.saveVersement(versement);	
+		return new ResponseEntity<>(versementService.updateVersement(id, versement), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/versements/{id}")

@@ -65,7 +65,7 @@ public class VenteServiceImpl implements VenteService {
             Produit produit = produitService.findProduitById(lvente.getProduit().getId()).get();
             if (produit != null) {
                 produit.setQtestock(produit.getQtestock() - lvente.getQuantite());
-                produitService.saveProduit(produit);
+                produitService.updateProduit(produit.getId(), produit);
             }
 
             lvente.setPrixVente(produit.getPrixDetail());

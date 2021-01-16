@@ -99,7 +99,7 @@ public class CategoryController {
     @PutMapping("/categories/{catId}")
     public ResponseEntity<CategoryModel> updateCategory(@PathVariable(value = "catId") Long catId, @RequestBody Category category) {
         category.setId(catId);
-        return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category)), HttpStatus.OK);
+        return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.updateCategory(catId, category)), HttpStatus.OK);
     }
 
     @DeleteMapping("/categories/{id}")

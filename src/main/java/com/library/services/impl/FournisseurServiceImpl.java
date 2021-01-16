@@ -39,7 +39,7 @@ public class FournisseurServiceImpl implements FournisseurService {
 
 	@Override
 	public Fournisseur saveFournisseur(Fournisseur fournisseur) {
-		if ((fournisseurRepository.findByEmail(fournisseur.getEmail())) != null && (fournisseurRepository.findByCode(fournisseur.getCode())) != null) {
+		if (fournisseurRepository.findByEmail(fournisseur.getEmail()) != null) {
 			throw new IllegalArgumentException("Ce Founisseur existe");
 		}
 		return fournisseurRepository.save(fournisseur);
@@ -48,17 +48,20 @@ public class FournisseurServiceImpl implements FournisseurService {
 	@Override
 	public Fournisseur updateFournisseurt(Long id, Fournisseur fournisseur) {
 		if(!fournisseurRepository.existsById(id)) {
-			throw new ResourceNotFoundException("Fournisseur that id is" + id + "not found"); 
+			throw new ResourceNotFoundException("Fournisseur not found");
 		}
 		Optional<Fournisseur> four = fournisseurRepository.findById(id);
 		if(!four.isPresent()) {
-			throw new ResourceNotFoundException("Fournisseur that id is" + id + "not found"); 
+			throw new ResourceNotFoundException("Fournisseur not found");
 		}
 		
 		Fournisseur  fournisseurResult = four.get();
 		fournisseurResult.setCode(fournisseur.getCode());
+        fournisseurResult.setRaisonSociale(fournisseur.getRaisonSociale());
+        fournisseurResult.setPrenom(fournisseur.getPrenom());
 		fournisseurResult.setNom(fournisseur.getNom());
-		fournisseurResult.setRaisonSociale(fournisseur.getRaisonSociale());
+		fournisseurResult.setNomBank(fournisseur.getNomBank());
+		fournisseurResult.setNumeroCompte(fournisseur.getNumeroCompte());
 		fournisseurResult.setAdresse(fournisseur.getAdresse());
 		fournisseurResult.setTelephone(fournisseur.getTelephone());
 		fournisseurResult.setFax(fournisseur.getFax());

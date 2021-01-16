@@ -177,9 +177,9 @@ public class ContratController {
 	}
 
 	@PutMapping("/contrats/{id}")
-	public Contrat updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
+	public ResponseEntity<Contrat> updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
 		contrat.setId(id);
-		return contratService.saveContrat(contrat);
+		return new ResponseEntity<>(contratService.updateContrat(id, contrat), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/contrats/{id}")

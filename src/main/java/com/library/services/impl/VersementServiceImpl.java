@@ -1,5 +1,6 @@
 package com.library.services.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +73,7 @@ public class VersementServiceImpl implements VersementService {
 		if (versementRepository.findByNumVersement(versement.getNumVersement()) !=null) {
 			throw new IllegalArgumentException("Cet Versement existe");
 		}
+		versement.setDateVersement(new Date());
 		return versementRepository.save(versement);
 	}
 
@@ -91,6 +93,7 @@ public class VersementServiceImpl implements VersementService {
 		versementResult.setNature(versement.getNature());
 		versementResult.setMontantVersement(versement.getMontantVersement());
 		versementResult.setDateVersement(versement.getDateVersement());
+
 		
 		return versementRepository.save(versementResult);
 	}

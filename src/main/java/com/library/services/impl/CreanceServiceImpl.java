@@ -75,6 +75,8 @@ public class CreanceServiceImpl implements CreanceService {
         List<LigneCreance> lcreances = creance.getLcreances();
 
         double total = 0;
+        double total1 = 0;
+        double soldeCreance = 0;
         for (LigneCreance lcreance : lcreances) {
             lcreance.setCreance(creance);
             lcreance.setNumero(creance.getReference());
@@ -84,7 +86,7 @@ public class CreanceServiceImpl implements CreanceService {
             Produit produit = produitService.findProduitById(lcreance.getProduit().getId()).get();
             if (produit != null) {
                 produit.setQtestock(produit.getQtestock() - lcreance.getQuantite());
-                produitService.saveProduit(produit);
+                produitService.updateProduit(produit.getId(), produit);
             }
 
             lcreance.setPrix(produit.getPrixVente());
@@ -97,7 +99,11 @@ public class CreanceServiceImpl implements CreanceService {
 
         }
 
-        creance.setTotalCreance(total);
+        total1 = total + creance.getSoldeCreance();
+
+        System.out.println(total1);
+
+        creance.setTotalCreance(total1);
         creance.setDateCreance(new Date());
 
         return creanceRepository.save(creance);

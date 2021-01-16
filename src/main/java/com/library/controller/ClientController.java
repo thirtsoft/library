@@ -105,8 +105,7 @@ public class ClientController {
 	@PutMapping("/clients/{clientId}")
 	public ResponseEntity<Client>  updateClient(@PathVariable(value = "clientId") Long clientId, @RequestBody Client client) {
 		client.setId(clientId);
-		return new ResponseEntity<>(clientService.saveClient(client), HttpStatus.OK);
-		
+		return new ResponseEntity<>(clientService.updateClient(clientId, client), HttpStatus.OK);
 	}
 
 	@PatchMapping("/udapteClientByEmail/{id}")

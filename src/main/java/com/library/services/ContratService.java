@@ -32,7 +32,7 @@ public interface ContratService {
 	List<Contrat> findContratByClientId(Long clientId);
 	
 	Contrat saveContrat(Contrat contrat);
-	Contrat updateProduit(Long id, Contrat contrat);
+	Contrat updateContrat(Long id, Contrat contrat);
 	void deleteContrat(Long id);
 
 	Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException;

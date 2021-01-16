@@ -96,6 +96,7 @@ public class ScategorieServiceImpl implements ScategorieService {
 		Scategorie sCat = Scat.get();
 		sCat.setCode(sCategorie.getCode());
 		sCat.setLibelle(sCategorie.getLibelle());
+		sCat.setCategorie(sCategorie.getCategorie());
 		
 		return scategorieRepository.save(sCat);
 	}

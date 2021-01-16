@@ -41,20 +41,20 @@ public class CategorieChargeServiceImpl implements CategorieChargeService {
 	}
 
 	@Override
-	public CategorieCharge saveCategorieCharge(CategorieCharge categorieCharge) {
-		if (catChargeRepository.findByCodeCategorieCharge(categorieCharge.getCodeCategorieCharge()) != null) {
-			throw new IllegalArgumentException("Categorie de charge existe");
-		}
-		return catChargeRepository.save(categorieCharge);
-	}
-
-	@Override
 	public Optional<CategorieCharge> findCategorieChargeById(Long catId) {
 		if (!catChargeRepository.existsById(catId)) {
 			throw new ResourceNotFoundException("This CategorieCharge is not found");
 		}
 
 		return catChargeRepository.findById(catId);
+	}
+
+	@Override
+	public CategorieCharge saveCategorieCharge(CategorieCharge categorieCharge) {
+		if (catChargeRepository.findByCodeCategorieCharge(categorieCharge.getCodeCategorieCharge()) != null) {
+			throw new IllegalArgumentException("Categorie de charge existe");
+		}
+		return catChargeRepository.save(categorieCharge);
 	}
 
 	@Override

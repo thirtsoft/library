@@ -64,11 +64,11 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category updateCategory(Long catId, Category category) {
 		
 		if(!categoryRepository.existsById(catId)) {
-			throw new ResourceNotFoundException("Category that id is" + catId + "not found"); 
+			throw new ResourceNotFoundException("Category not found");
 		}
 		Optional<Category> cat = categoryRepository.findById(catId);
 		if(!cat.isPresent()) {
-			throw new ResourceNotFoundException("Category that id is" + catId + "not found"); 
+			throw new ResourceNotFoundException("Category that not found");
 		}
 		
 		Category categorie = cat.get();

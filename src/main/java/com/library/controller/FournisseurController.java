@@ -117,7 +117,7 @@ public class FournisseurController {
 	@PutMapping("/fournisseurs/{id}")
 	public ResponseEntity<Fournisseur> updateFournisseur(@PathVariable(value = "id") Long id, @RequestBody Fournisseur fournisseur) {
 		fournisseur.setId(id);
-		return new ResponseEntity<>(fournisseurService.saveFournisseur(fournisseur), HttpStatus.OK);
+		return new ResponseEntity<>(fournisseurService.updateFournisseurt(id, fournisseur), HttpStatus.OK);
 		
 	}
 	@DeleteMapping("/fournisseurs/{id}")

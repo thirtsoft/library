@@ -47,7 +47,7 @@ public class LibraryApplication implements CommandLineRunner {
 */
     @Override
     public void run(String... args) throws Exception {
-
+    /*
         Category c1 = categoryRepository.save(new Category(null,"cat1", "cat1"));
         Category c2 = categoryRepository.save(new Category(null,"cat2", "cat2"));
         Category c3 = categoryRepository.save(new Category(null,"cat3", "cat3"));
@@ -61,7 +61,8 @@ public class LibraryApplication implements CommandLineRunner {
         Produit p2= produitRepository.save(new Produit(null,"prod2","prod2", 150.0,170.0,180.0,1.0, 2, 4,true,"photo",new Date(),sc3));
         Produit p3= produitRepository.save(new Produit(null,"prod3","prod3", 15000.0,17000.0,18000.0,3.0, 6, 4,true,"photo",new Date(),sc4));
         Produit p4= produitRepository.save(new Produit(null,"prod4","prod4", 150000.0,170000.0,180000.0,4.0, 8, 4,true,"photo",new Date(),sc2));
-    /*
+      */
+        /*
         Client cl1 = clientRepository.save(new Client(null, 1234, "cl1","cl1","cl1","cl1","cl1"));
         Client cl2 = clientRepository.save(new Client(null, 1234,"cl2","cl2","cl2","cl2","cl2"));
         Client cl3 = clientRepository.save(new Client(null, 1234, "cl3","cl3","cl3","cl3","cl3"));

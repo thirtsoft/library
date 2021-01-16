@@ -89,7 +89,7 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
             Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
             if (produit != null) {
                 produit.setQtestock(produit.getQtestock() + lAppro.getQuantite());
-                produitService.saveProduit(produit);
+                produitService.updateProduit(produit.getId(), produit);
             }
 
             lAppro.setPrix(produit.getPrixAchat());

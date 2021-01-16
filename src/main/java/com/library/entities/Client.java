@@ -22,14 +22,14 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(length = 100, unique = true)
+	@Column(unique = true)
 	private String codeClient;
 	private String raisonSocial;
 	private String chefService;
 	private String adresse;
-	@Column(length = 100, unique = true)
+	@Column(unique = true)
 	private String telephone;
-	@Column(length = 100, unique = true)
+	@Column(unique = true)
 	private String email;
 
 	private String subject;

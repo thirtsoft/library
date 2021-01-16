@@ -126,7 +126,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             Produit produit = produitService.findProduitById(lcmdClt.getProduit().getId()).get();
             if (produit != null) {
                 produit.setQtestock(produit.getQtestock() - lcmdClt.getQuantite());
-                produitService.updateProduit(produit);
+                produitService.updateProduit(produit.getId(), produit);
             }
             lcmdClt.setPrix(produit.getPrixVente());
 

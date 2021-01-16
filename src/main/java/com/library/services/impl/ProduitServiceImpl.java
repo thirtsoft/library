@@ -110,21 +110,21 @@ public class ProduitServiceImpl implements ProduitService {
 	/*
 	@Override
 	public Produit saveProduit(Long catId, Produit produit) {
-		Set<Produit> products = new HashSet<Produit>(); 
-		
+		Set<Produit> products = new HashSet<Produit>();
+
 		Category cat = new Category();
-	  
+
 		Optional<Category> catbyId = categoryRepository.findById(catId);
-		
-		if(!catbyId.isPresent()) { throw new ResourceNotFoundException("Category" +catId + "not found"); 
-		
-		} 
-		
+
+		if(!catbyId.isPresent()) { throw new ResourceNotFoundException("Category" +catId + "not found");
+
+		}
+
 		Category category = catbyId.get();
-		
+
 		Produit prod = produitRepository.save(produit); products.add(prod);
 		//cat.setProducts(products);
-	  
+
 		return prod;
 	}
 
@@ -159,15 +159,16 @@ public class ProduitServiceImpl implements ProduitService {
 		product.setDesignation(produit.getDesignation());
 		product.setPrixAchat(produit.getPrixAchat());
 		product.setPrixVente(produit.getPrixVente());
+		product.setQtestock(produit.getQtestock());
 		product.setStockInitial(produit.getStockInitial());
 		product.setTva(produit.getTva());
 		product.setPromo(produit.isPromo());
 		product.setAdd_date(produit.getAdd_date());
 		product.setPhoto(produit.getPhoto());
-		//product1.setCategorie(product.getCategorie());
-		
+		product.setScategorie(produit.getScategorie());
+
 		return produitRepository.save(product);
-	}
+}
 
 	@Override
 	public Produit updateProduit(Produit produit) {

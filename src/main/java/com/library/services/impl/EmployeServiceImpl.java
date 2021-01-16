@@ -28,30 +28,37 @@ public class EmployeServiceImpl implements EmployeService {
 	}
 
 	@Override
-	public Employe saveEmploye(Employe employe) {
-		if (employeRepository.findByCni(employe.getCni()) != null && (employeRepository.findByEmail(employe.getEmail())) !=null) {
-			throw new IllegalArgumentException("Cet Employe existe");
-		}
-		return employeRepository.save(employe);
-	}
-
-	@Override
 	public Optional<Employe> findEmployeById(Long empId) {
 		if (!employeRepository.existsById(empId)) {
 			throw new ResourceNotFoundException("Employee N° " + empId + "not found");
 		}
-		
+
 		return employeRepository.findById(empId);
 	}
+
+
+	@Override
+	public Employe saveEmploye(Employe employe) {
+		if (employeRepository.findByEmail(employe.getEmail()) != null) {
+			throw new IllegalArgumentException("Cet Employe existe");
+		}
+
+		if ((employeRepository.findByEmail(employe.getEmail())) !=null) {
+			throw new IllegalArgumentException("Cet Employe existe");
+		}
+
+		return employeRepository.save(employe);
+	}
+
 
 	@Override
 	public Employe updateEmploye(Long empId, Employe employe) {
 		if (!employeRepository.existsById(empId)) {
-			throw new ResourceNotFoundException("Employee N° " + empId + "not found");
+			throw new ResourceNotFoundException("Employee not found");
 		}
 		Optional<Employe> emp = employeRepository.findById(empId);
 		if (!emp.isPresent()) {
-			throw new ResourceNotFoundException("Employee N° " + empId + "not found");
+			throw new ResourceNotFoundException("Employee not found");
 		}
 		
 		Employe empResult = emp.get();
@@ -61,6 +68,7 @@ public class EmployeServiceImpl implements EmployeService {
 		empResult.setPrenom(employe.getPrenom());
 		empResult.setAdresse(employe.getAdresse());
 		empResult.setTelephone(employe.getTelephone());
+		empResult.setTelephone2(employe.getTelephone2());
 		empResult.setEmail(employe.getEmail());
 		
 		return employeRepository.save(empResult);

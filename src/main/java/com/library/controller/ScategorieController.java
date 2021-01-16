@@ -126,7 +126,7 @@ public class ScategorieController {
 	@PutMapping("/scategories/{ScatId}")
 	public Scategorie updateScategorie(@PathVariable Long ScatId, @RequestBody Scategorie sCategorie) {
 		sCategorie.setId(ScatId);
-		return scategorieService.saveScategorie(sCategorie);	
+		return scategorieService.updateScategorie(ScatId, sCategorie);
 	}
 	
 	@DeleteMapping("/scategories/{id}")
