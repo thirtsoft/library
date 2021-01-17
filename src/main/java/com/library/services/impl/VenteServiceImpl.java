@@ -50,6 +50,17 @@ public class VenteServiceImpl implements VenteService {
     }
 
     public Vente saveVente(Vente vente) {
+        List<LigneVente> ligneVente = vente.getLigneVentes();
+
+        if (ligneVente == null || ligneVente.size() == 0) {
+            throw new IllegalArgumentException("Vous devez au moins ajouter un produit");
+        }
+        for (LigneVente ligneV: ligneVente) {
+            Produit produitInitial = produitService.findProduitById(ligneV.getProduit().getId()).get();
+            if (ligneV.getQuantite() > produitInitial.getQtestock()) {
+                throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
+            }
+        }
 
         venteRepository.save(vente);
 
