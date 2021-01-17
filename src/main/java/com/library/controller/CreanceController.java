@@ -122,7 +122,6 @@ public class CreanceController {
         return creanceService.findCreanceByClientId(clientId);
     }
 
-
     @PostMapping("/creances")
     public ResponseEntity<Creance> createCreance(@RequestBody Creance creance) {
        /*

@@ -59,17 +59,29 @@ public class CreanceServiceImpl implements CreanceService {
         return null;
     }
 
-
     /**
      * @param creance
-     * @return methode permettant d'ajouter d'abord une commande
-     * puis les lignes de commandes correspondantes
+     * @return methode permettant d'ajouter d'abord une crenace
+     * puis les lignes de creances correspondantes
      */
 
     @Override
     public Creance saveCreance(Creance creance) {
-
         logger.info("Creance {}", creance);
+        List<LigneCreance> lignecreances = creance.getLcreances();
+        if (lignecreances == null || lignecreances.size() == 0) {
+            throw new IllegalArgumentException("Vous devez au moins selectionner un produit");
+        }
+        if ((creance.getClient().getId() == null)) {
+            throw new IllegalArgumentException("Vous devez selectionner un client");
+        }
+        for (LigneCreance lc :lignecreances) {
+            Produit produitInitial = produitService.findProduitById(lc.getProduit().getId()).get();
+            if (lc.getQuantite() > produitInitial.getQtestock()) {
+                throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
+            }
+        }
+
         creanceRepository.save(creance);
 
         List<LigneCreance> lcreances = creance.getLcreances();
