@@ -28,7 +28,7 @@ import java.util.Locale;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/alAmine")
+@RequestMapping("/api")
 public class CategoryController {
 
     @Autowired

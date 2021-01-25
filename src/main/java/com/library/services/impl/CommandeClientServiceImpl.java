@@ -146,49 +146,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         return commandeClientRepository.save(commande);
 
     }
-/*
-    @Override
-    public CommandeClient saveCommandeClient(CommandeClient commande) {
 
-        commandeClientRepository.save(commande);
-
-        List<LigneCmdClient> lcomms = commande.getLcomms();
-
-        double total = 0;
-        for (LigneCmdClient lcmdClt : lcomms) {
-             lcmdClt.setCommande(commande);
-             lcmdClt.setNumero(commande.getNumeroCommande());
-
-             ligneCmdClientService.saveLigneCmdClient(lcmdClt);
-
-            Produit produitResult = produitService.findProduitById(lcmdClt.getProduit().getId()).get();
-
-             if (produitResult != null) {
-                 produitResult.setQtestock(produitResult.getQtestock() - lcmdClt.getQuantite());
-                 produitService.saveProduit(produitResult);
-             }
-
-             lcmdClt.setPrix(produitResult.getPrixVente());
-
-             System.out.println(produitResult.getPrixVente());
-             System.out.println(lcmdClt.getQuantite());
-             System.out.println(lcmdClt.getQuantite() * produitResult.getPrixVente());
-
-             total += (lcmdClt.getQuantite() * produitResult.getPrixVente());
-
-        }
-
-        commande.setTotalCommande(total);
-        commande.setStatus("valider");
-       // commande.setNumeroCommande(+2020 + (int) (Math.random() * 100));
-        commande.setDateCommande(new Date());
-
-
-        return commandeClientRepository.save(commande);
-
-    }
-
-    */
 
     @Override
     public ResponseEntity<String> createOrder(CommandeClient commandeClient) {
