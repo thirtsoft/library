@@ -1,35 +1,32 @@
 package com.library.services.impl;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.Optional;
-import java.net.MalformedURLException;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.entities.Contrat;
+import com.library.exceptions.ResourceNotFoundException;
+import com.library.repository.ContratRepository;
 import com.library.services.ContratService;
+import com.library.utils.FileHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.AbstractFileResolvingResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.library.entities.Contrat;
-import com.library.exceptions.ResourceNotFoundException;
-import com.library.repository.ContratRepository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -42,11 +39,13 @@ public class ContratServiceImpl implements ContratService {
 
 	@Override
 	public List<Contrat> findAllContrats() {
-		return contratRepository.findAll();
+		List<Contrat> contrats = contratRepository.findAll();
+		contrats.stream().map(Contrat::getContent).forEach(FileHelper::decompressBytes);
+		return contrats;
 	}
 
 	@Override
-	public Optional<Contrat> findContrattById(Long id) {
+	public Optional<Contrat> findContratById(Long id) {
 		if (!contratRepository.existsById(id)) {
 			throw new ResourceNotFoundException("Contrat N° " + id + "not found");
 		}
@@ -119,15 +118,12 @@ public class ContratServiceImpl implements ContratService {
 	@Override
 	public Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException {
 
-		Contrat contrat1 = new ObjectMapper().readValue(contrat , Contrat.class);
+		Contrat contrat1 = new ObjectMapper().readValue(contrat, Contrat.class);
 		System.out.println(contrat1);
 
 		contrat1.setFileContrat(fileContrant.getOriginalFilename());
 
-		Contrat contrat2 = contratRepository.save(contrat1);
-
-		return contrat2;
-
+		return contratRepository.save(contrat1);
 	}
 
 	@Override

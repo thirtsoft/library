@@ -1,36 +1,36 @@
 package com.library.services;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.library.entities.Contrat;
+import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import org.springframework.core.io.Resource;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-
-import com.library.entities.Contrat;
-import org.springframework.web.multipart.MultipartFile;
-
 public interface ContratService {
-	
+
 	List<Contrat> findAllContrats();
-	Optional<Contrat> findContrattById(Long id);
-	
+
+	Optional<Contrat> findContratById(Long id);
+
 	Contrat findByReference(String reference);
+
 	List<Contrat> findListContratByReference(String reference);
-	
+
 	Contrat findByNature(String nature);
+
 	List<Contrat> findListContratByNature(String nature);
 
 	List<Contrat> findContratByClientId(Long clientId);
-	
+
 	Contrat saveContrat(Contrat contrat);
 	Contrat updateContrat(Long id, Contrat contrat);
 	void deleteContrat(Long id);
