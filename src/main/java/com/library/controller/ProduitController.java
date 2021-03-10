@@ -29,7 +29,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+@RequestMapping("/prodApi")
 public class ProduitController {
 
     @Autowired

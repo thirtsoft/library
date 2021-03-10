@@ -15,7 +15,8 @@ import com.library.services.ClientService;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
+@RequestMapping("/prodApi")
 public class ClientController {
 	
 	@Autowired

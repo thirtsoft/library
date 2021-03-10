@@ -15,7 +15,8 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
+@RequestMapping("/apiSeller")
 public class LigneVenteController {
 
     @Autowired

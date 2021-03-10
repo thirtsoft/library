@@ -45,7 +45,8 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
+@RequestMapping("/prodApi")
 public class CommandeClientController {
 	
 	@Autowired

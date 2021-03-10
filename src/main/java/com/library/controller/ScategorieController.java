@@ -38,7 +38,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/scatApi")
+@RequestMapping("/prodApi")
 public class ScategorieController {
 	
 	@Autowired

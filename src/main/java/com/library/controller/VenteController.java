@@ -16,7 +16,8 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
+@RequestMapping("/apiSeller")
 public class VenteController {
     @Autowired
     private VenteService venteService;
