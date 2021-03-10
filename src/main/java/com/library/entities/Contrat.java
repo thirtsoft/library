@@ -35,6 +35,7 @@ public class Contrat implements Serializable {
 	private Date dateFinContrat;
 	private String fileName;
 	private String fileContrat;
+
 	@Lob
 	private byte[] content;
 

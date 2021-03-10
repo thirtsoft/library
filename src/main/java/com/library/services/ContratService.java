@@ -36,6 +36,7 @@ public interface ContratService {
 	void deleteContrat(Long id);
 
 	Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException;
+
 	Resource loadFileAsResource(String fileName) throws Exception;
 	
 	
@@ -47,6 +48,7 @@ public interface ContratService {
 	boolean createPdf(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 	
 	boolean createExcel(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+
 
 
 }

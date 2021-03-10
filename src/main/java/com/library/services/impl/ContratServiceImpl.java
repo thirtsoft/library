@@ -35,15 +35,23 @@ public class ContratServiceImpl implements ContratService {
 	@Autowired
 	private ContratRepository contratRepository;
 
-	private final Path fileStorageLocation = Paths.get("C:\\Users\\Folio9470m\\AlAmine\\Contrat");
+//	private final Path fileStorageLocation = Paths.get("C:\\Users\\Folio9470m\\AlAmine\\Contrat");
+
+	private final Path fileStorageLocation = Paths.get("C:\\Folio9470m\\AlAmine\\Contrat");
+
 
 	@Override
+	public List<Contrat> findAllContrats() {
+		List<Contrat> contrats = contratRepository.findAll();
+		return contrats;
+	}
+/*
 	public List<Contrat> findAllContrats() {
 		List<Contrat> contrats = contratRepository.findAll();
 		contrats.stream().map(Contrat::getContent).forEach(FileHelper::decompressBytes);
 		return contrats;
 	}
-
+*/
 	@Override
 	public Optional<Contrat> findContratById(Long id) {
 		if (!contratRepository.existsById(id)) {
@@ -127,23 +135,6 @@ public class ContratServiceImpl implements ContratService {
 	}
 
 	@Override
-	public Resource loadFileAsResource(String fileName) throws Exception {
-		try {
-			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
-			Resource resource = new UrlResource(filePath.toUri());
-			if (((AbstractFileResolvingResource) resource).exists()) {
-				return resource;
-			}else {
-				throw new Exception("File not found " + fileName);
-			}
-
-		} catch (MalformedURLException ex) {
-			throw new Exception("File not found " + fileName, ex);
-		}
-
-	}
-
-	@Override
 	public Page<Contrat> findAllContratsByPageable(Pageable page) {
 		return contratRepository.findAllContratsByPageable(page);
 	}
@@ -170,6 +161,20 @@ public class ContratServiceImpl implements ContratService {
 			HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public Resource loadFileAsResource(String fileName) throws Exception {
+		try {
+			Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+			Resource resource = (Resource) new UrlResource(filePath.toUri());
+			if(((AbstractFileResolvingResource) resource).exists()) {
+				return resource;
+			} else {
+				throw new Exception("File not found " + fileName);
+			}
+		} catch (MalformedURLException ex) {
+			throw new Exception("File not found " + fileName, ex);
+		}
 	}
 
 

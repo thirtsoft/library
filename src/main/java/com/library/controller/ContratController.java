@@ -1,5 +1,7 @@
 package com.library.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.entities.Contrat;
 import com.library.services.ContratService;
@@ -36,7 +38,10 @@ import java.util.Optional;
 public class ContratController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContratController.class);
+
     private final Path fileStorageLocation = Paths.get("C://Users//Folio9470m//AlAmine//Contrat//");
+
+    private final Path rootLocation = Paths.get("C:\\Users\\Folio9470m\\AlAmine\\Contrat");
 
     @Autowired
     private ContratService contratService;
@@ -80,40 +85,17 @@ public class ContratController {
         return contratService.findContratByClientId(clientId);
     }
 
-    @GetMapping("/searchListContratsByClientPageable")
-    public Page<Contrat> getAllContratsByPageable(@RequestParam(name = "client") Long clientId,
-                                                  @RequestParam(name = "page") int page,
-                                                  @RequestParam(name = "size") int size) {
-        return contratService.findAllContratsByClient(clientId, PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListContratsByPageable")
-    public Page<Contrat> getAllContratsByPageable(@RequestParam(name = "page") int page,
-                                                  @RequestParam(name = "size") int size) {
-        return contratService.findAllContratsByPageable(PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListContratsByKeyword")
-    public Page<Contrat> getAllContratsByKeyword(@RequestParam(name = "mc") String mc,
-                                                 @RequestParam(name = "page") int page,
-                                                 @RequestParam(name = "size") int size) {
-        return contratService.findContratByKeyWord("%" + mc + "%", PageRequest.of(page, size));
-
-    }
-
-    @PostMapping("/saveContrat")
-    public ResponseEntity<Object> saveContrat(@RequestParam(name = "contrat") String cont,
-                                              @RequestParam(name = "file") MultipartFile file) throws Exception {
+    @PostMapping("/createContrats")
+    public ResponseEntity<?> createContrat(@RequestParam(name = "contrat") String cont,
+                                              @RequestParam(name = "file") MultipartFile file) throws JsonParseException, JsonMappingException, IOException {
         Contrat contrat = new ObjectMapper().readValue(cont, Contrat.class);
-        if (!(file.isEmpty())) {
-            contrat.setFileContrat(file.getOriginalFilename());
-        }
-        contratService.saveContrat(contrat);
-        if (!(file.isEmpty())) {
+        if (file != null && !file.isEmpty()) {
             contrat.setFileContrat(file.getOriginalFilename());
             file.transferTo(new File(contratsDir + file.getOriginalFilename()));
         }
-        return new ResponseEntity<>("Contrat with file is create successfull", HttpStatus.OK);
+
+        contratService.saveContrat(contrat);
+        return new ResponseEntity<>("Contrat with file is create successfull", HttpStatus.CREATED);
     }
 
     @PostMapping("/saveContrats")
@@ -125,25 +107,6 @@ public class ContratController {
         }
         contratService.saveContrat(contrat);
         return ResponseEntity.status(HttpStatus.CREATED);
-    }
-
-    // methode pour afficher la photo d'un produit
-    @GetMapping("/fileContrat/{id}")
-    public byte[] getFileContrat(@PathVariable("id") Long id) throws Exception {
-        Contrat cont = contratService.findContratById(id).get();
-        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/AlAmine/Contrat/" + cont.getFileContrat()));
-    }
-
-
-    @PostMapping("/createContrat")
-    public ResponseEntity<?> createCandidate(@RequestPart("contrat") String contrat, @RequestParam("file_contrat")
-            MultipartFile file1) throws IOException {
-        Contrat contrat2 = contratService.createContrat(contrat, file1);
-        if (contrat2 != null) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Contrat is saved");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Contrat is not saved");
-        }
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")
@@ -161,7 +124,7 @@ public class ContratController {
         }
 
         // Fallback to the default content type if type could not be determined
-        if (contentType == null) {
+        if(contentType == null) {
             contentType = "application/octet-stream";
         }
 
@@ -171,14 +134,6 @@ public class ContratController {
                 .body(resource);
     }
 
-    @PostMapping("/contrats")
-    public ResponseEntity<Contrat> createContrat(@RequestBody Contrat contrat) {
-        if (contratService.findByReference(contrat.getReference()) != null) {
-            return new ResponseEntity<>(contrat, HttpStatus.BAD_REQUEST);
-        }
-        contratService.saveContrat(contrat);
-        return new ResponseEntity<>(contrat, HttpStatus.CREATED);
-    }
 
     @PutMapping("/contrats/{id}")
     public ResponseEntity<Contrat> updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
@@ -192,19 +147,6 @@ public class ContratController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/uploadContrat")
-    public ResponseEntity<Object> uploadContratFile(@RequestParam("file") MultipartFile file) throws IOException {
-        //Contrat contrat = new Contrat();
-        //excelService.storeContratFile(file);
-
-        File convertFile = new File("C:/Users/Folio9470m/Music/contrat/" + file.getOriginalFilename());
-        convertFile.createNewFile();
-        FileOutputStream fout = new FileOutputStream(convertFile);
-        fout.write(file.getBytes());
-        fout.close();
-        return new ResponseEntity<>("File is uploaded successfully", HttpStatus.OK);
-
-    }
 
 
 }
