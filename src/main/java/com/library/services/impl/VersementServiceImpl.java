@@ -96,9 +96,11 @@ public class VersementServiceImpl implements VersementService {
 		
 		versementResult.setNumVersement(versement.getNumVersement());
 		versementResult.setNature(versement.getNature());
+		versementResult.setNumeroRecu(versement.getNumeroRecu());
 		versementResult.setMontantVersement(versement.getMontantVersement());
+		versementResult.setNomBank(versement.getNomBank());
+		versementResult.setMotif(versement.getMotif());
 		versementResult.setDateVersement(versement.getDateVersement());
-
 		
 		return versementRepository.save(versementResult);
 	}
