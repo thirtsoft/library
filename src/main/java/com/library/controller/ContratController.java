@@ -55,6 +55,7 @@ public class ContratController {
 
     private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
 
+
     @GetMapping("/contrats")
     public List<Contrat> getAllContrats() {
         return contratService.findAllContrats();

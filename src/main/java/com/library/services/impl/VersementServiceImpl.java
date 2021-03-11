@@ -1,10 +1,14 @@
 package com.library.services.impl;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.services.VersementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +20,7 @@ import com.library.entities.Versement;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.VersementRepository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -121,6 +126,17 @@ public class VersementServiceImpl implements VersementService {
 		return versementRepository.findVersementByKeyWord(mc, pageable);
 	}
 
-	
+	@Override
+	public Versement createVersement(String versement, MultipartFile fileVersement) throws JsonParseException, JsonMappingException, IOException {
+
+		Versement versement_1 = new ObjectMapper().readValue(versement, Versement.class);
+		System.out.println(versement_1);
+
+		versement_1.setFileVersement(fileVersement.getOriginalFilename());
+
+		return versementRepository.save(versement_1);
+
+	}
+
 
 }
