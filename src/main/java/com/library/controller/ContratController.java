@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
@@ -18,13 +19,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,7 +43,10 @@ public class ContratController {
 
     private final Path fileStorageLocation = Paths.get("C://Users//Folio9470m//AlAmine//Contrat//");
 
-    private final Path rootLocation = Paths.get("C:\\Users\\Folio9470m\\AlAmine\\Contrat");
+    private final Path rootLocation = Paths.get("C:\\Users\\Folio9470m\\AlAmine\\Contrat\\");
+
+    private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Contrat/";
+
 
     @Autowired
     private ContratService contratService;
@@ -109,31 +114,6 @@ public class ContratController {
         return ResponseEntity.status(HttpStatus.CREATED);
     }
 
-    @GetMapping("/downloadFile/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) throws Exception {
-
-        // Load file as Resource
-        Resource resource = contratService.loadFileAsResource(fileName);
-
-        // Try to determine file's content type
-        String contentType = null;
-        try {
-            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (IOException ex) {
-            logger.info("Could not determine file type.");
-        }
-
-        // Fallback to the default content type if type could not be determined
-        if(contentType == null) {
-            contentType = "application/octet-stream";
-        }
-
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-                .body(resource);
-    }
-
 
     @PutMapping("/contrats/{id}")
     public ResponseEntity<Contrat> updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
@@ -145,6 +125,26 @@ public class ContratController {
     public ResponseEntity<?> deleteContrat(@PathVariable(value = "id") Long id) {
         contratService.deleteContrat(id);
         return ResponseEntity.ok().build();
+    }
+
+
+    @RequestMapping("/downloadContratFile/{fileName:.+}")
+    public void downloadContratFile(HttpServletRequest request, HttpServletResponse response,
+                                    @PathVariable("fileName") String fileName) throws IOException {
+        File file = new File(EXTERNAL_FILE_PATH + fileName);
+        if (file.exists()) {
+            String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+            if (mimeType == null) {
+                mimeType = "application/octet-stream";
+            }
+            response.setContentType(mimeType);
+            response.setHeader("Content-Disposition", String.format("attachment; filename=\"" + file.getName() + "\""));
+            response.setContentLength((int) file.length());
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        }
+
     }
 
 
