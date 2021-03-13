@@ -92,7 +92,7 @@ public class ContratController {
     }
 
     @PostMapping("/createContrats")
-    public ResponseEntity<?> createContrat(@RequestParam(name = "contrat") String cont,
+    public ResponseEntity<?> createContrat(@RequestPart(name = "contrat") String cont,
                                               @RequestParam(name = "file") MultipartFile file) throws JsonParseException, JsonMappingException, IOException {
         Contrat contrat = new ObjectMapper().readValue(cont, Contrat.class);
         if (file != null && !file.isEmpty()) {
@@ -101,7 +101,8 @@ public class ContratController {
         }
 
         contratService.saveContrat(contrat);
-        return new ResponseEntity<>("Contrat with file is create successfull", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Contrat is created");
+      //  return new ResponseEntity<>("Contrat with file is create successfull", HttpStatus.CREATED);
     }
 
     @PostMapping("/saveContrats")
