@@ -1,61 +1,40 @@
 package com.library.controller;
 
-import java.io.FileNotFoundException;
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.library.jasper.Report;
-//import com.library.jasper.ReportService;
-import com.library.jasper.StringResult;
+import com.library.entities.CommandeClient;
+import com.library.entities.LigneCmdClient;
+import com.library.exceptions.ResourceNotFoundException;
+import com.library.services.ClientService;
+import com.library.services.CommandeClientService;
+import com.library.services.LigneCmdClientService;
 import com.library.services.ReportService;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.library.entities.CommandeClient;
-import com.library.entities.LigneCmdClient;
-import com.library.exceptions.ResourceNotFoundException;
-import com.library.repository.CommandeClientRepository;
-import com.library.repository.LigneCmdClientRepository;
-import com.library.services.ClientService;
-import com.library.services.CommandeClientService;
-import com.library.services.LigneCmdClientService;
-
-
-import javax.validation.Valid;
+import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/alAmine")
 public class CommandeClientController {
-	
-	@Autowired
-	private CommandeClientService commandeClientService;
-	
-	@Autowired
-	private LigneCmdClientService ligneCmdClientService;
-	
-	@Autowired
-	private ClientService clientService;
+
+    @Autowired
+    private CommandeClientService commandeClientService;
+
+    @Autowired
+    private LigneCmdClientService ligneCmdClientService;
+
+    @Autowired
+    private ClientService clientService;
 /*
 	@Autowired
 	private CommandeClientRepository commandeClientRepository;
@@ -64,102 +43,101 @@ public class CommandeClientController {
 	private LigneCmdClientRepository ligneCmdClientRepository;
 */
 
-	@Autowired
-	private ReportService reportCommande;
-	
-	private Double total = 0.0;
-	
-	@GetMapping("/commandes")
-	public List<CommandeClient> getAllCommandeClients() {
-		return commandeClientService.findAllCommandeClient();
-		
-	}
-	
-	@GetMapping("/commandes/{id}")
-	public ResponseEntity<CommandeClient> getCommandeClientById(@PathVariable(value = "id") Long id)
-			throws ResourceNotFoundException{
-		CommandeClient commandeClient = commandeClientService.findCommandeClientById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Commande that id is" + id + "not found"));
-		return ResponseEntity.ok().body(commandeClient);
-		
-	}
-	
-	@GetMapping("/searchCommandeByNumeroCommande")
-	public CommandeClient getCommandeClientByNumeroCommande(@RequestParam("num") int numeroCommande) {
-		return commandeClientService.findByNumeroCommande(numeroCommande);
-	}
+    @Autowired
+    private ReportService reportCommande;
 
-	@GetMapping("/NumberOfCommande")
-	public int getNumberOfCommandes() {
-		return commandeClientService.getNumberOfCommande();
-	}
+    private Double total = 0.0;
 
-	@GetMapping("/NumbersOfCommandes")
-	public BigDecimal getNumbersOfCommandes() {
-		return commandeClientService.countNumbersOfCommandes();
-	}
-	
+    @GetMapping("/commandes")
+    public List<CommandeClient> getAllCommandeClients() {
+        return commandeClientService.findAllCommandeClient();
 
-	@GetMapping("/searchCommandeClientByStatus")
-	public CommandeClient getCommandeClientByStatus(@RequestParam("status") String status) {
-		return commandeClientService.findByStatus(status);
-	}
-	
-	@GetMapping("/searchListCommandeClientByStatus")
-	public List<CommandeClient> getAllCommandeClientByStatus(@RequestParam("status") String status) {
-		return commandeClientService.findListCommandeClientByStatus(status);
-	}
-	
-	@GetMapping("/searchListCommandeClientByClientId")
-	public List<CommandeClient> getAllCommandeClientByClientId(@RequestParam("clientId") Long clientId) {
-		return commandeClientService.findCommandeClientByClientId(clientId);
-	}
+    }
 
-	@GetMapping("/getAllCommandewithdate")
-	public List<CommandeClient> getAllCommandesWithDatet(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date dateCommande){
+    @GetMapping("/commandes/{id}")
+    public ResponseEntity<CommandeClient> getCommandeClientById(@PathVariable(value = "id") Long id)
+            throws ResourceNotFoundException {
+        CommandeClient commandeClient = commandeClientService.findCommandeClientById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Commande that id is" + id + "not found"));
+        return ResponseEntity.ok().body(commandeClient);
 
-		return commandeClientService.findCommandeByDate(dateCommande);
-	}
-	
-	@GetMapping("/searchListCommandeClientByPageable")
-	public Page<CommandeClient> getCommandeClientByPageable(
-			@RequestParam(name = "page") int page,
-			@RequestParam(name = "size") int size) {
-		return commandeClientService.findAllCommandeClientByPageable(PageRequest.of(page, size));
-	}
-		
-	@GetMapping("/searchListCommandeClientByClientPageable")
-	public Page<CommandeClient> getAllCommandeClientByPageable(@RequestParam(name = "prod")Long clientId,
-			@RequestParam(name = "page") int page,
-			@RequestParam(name = "size") int size) {
-		return commandeClientService.findAllCommandeClientByClient(clientId, PageRequest.of(page, size));
-	}
-	
+    }
 
-	/**
-	 *
-	 * @param commandeClient
-	 * @return Methode qui marche ce 06/09/2020
-	 */
-	@PostMapping("/comms")
-	public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
-		commandeClientService.createCommande(commandeClient);
-		
-		List<LigneCmdClient> lcomms = commandeClient.getLcomms();
-		for (LigneCmdClient lc : lcomms) {
-			lc.setNumero(commandeClient.getNumeroCommande());
-			ligneCmdClientService.saveLigneCmdClient(lc);
-			
-		}
-		
-		return new ResponseEntity<>(HttpStatus.OK);
-		
-	}
+    @GetMapping("/searchCommandeByNumeroCommande")
+    public CommandeClient getCommandeClientByNumeroCommande(@RequestParam("num") int numeroCommande) {
+        return commandeClientService.findByNumeroCommande(numeroCommande);
+    }
 
-	@PostMapping("/commandes")
-	public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
-	    
-		commandeClientService.createCommande(commandeClient);
+    @GetMapping("/NumberOfCommande")
+    public int getNumberOfCommandes() {
+        return commandeClientService.getNumberOfCommande();
+    }
+
+    @GetMapping("/NumbersOfCommandes")
+    public BigDecimal getNumbersOfCommandes() {
+        return commandeClientService.countNumbersOfCommandes();
+    }
+
+
+    @GetMapping("/searchCommandeClientByStatus")
+    public CommandeClient getCommandeClientByStatus(@RequestParam("status") String status) {
+        return commandeClientService.findByStatus(status);
+    }
+
+    @GetMapping("/searchListCommandeClientByStatus")
+    public List<CommandeClient> getAllCommandeClientByStatus(@RequestParam("status") String status) {
+        return commandeClientService.findListCommandeClientByStatus(status);
+    }
+
+    @GetMapping("/searchListCommandeClientByClientId")
+    public List<CommandeClient> getAllCommandeClientByClientId(@RequestParam("clientId") Long clientId) {
+        return commandeClientService.findCommandeClientByClientId(clientId);
+    }
+
+    @GetMapping("/getAllCommandewithdate")
+    public List<CommandeClient> getAllCommandesWithDatet(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateCommande) {
+
+        return commandeClientService.findCommandeByDate(dateCommande);
+    }
+
+    @GetMapping("/searchListCommandeClientByPageable")
+    public Page<CommandeClient> getCommandeClientByPageable(
+            @RequestParam(name = "page") int page,
+            @RequestParam(name = "size") int size) {
+        return commandeClientService.findAllCommandeClientByPageable(PageRequest.of(page, size));
+    }
+
+    @GetMapping("/searchListCommandeClientByClientPageable")
+    public Page<CommandeClient> getAllCommandeClientByPageable(@RequestParam(name = "prod") Long clientId,
+                                                               @RequestParam(name = "page") int page,
+                                                               @RequestParam(name = "size") int size) {
+        return commandeClientService.findAllCommandeClientByClient(clientId, PageRequest.of(page, size));
+    }
+
+
+    /**
+     * @param commandeClient
+     * @return Methode qui marche ce 06/09/2020
+     */
+    @PostMapping("/comms")
+    public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
+        commandeClientService.createCommande(commandeClient);
+
+        List<LigneCmdClient> lcomms = commandeClient.getLcomms();
+        for (LigneCmdClient lc : lcomms) {
+            lc.setNumero(commandeClient.getNumeroCommande());
+            ligneCmdClientService.saveLigneCmdClient(lc);
+
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @PostMapping("/commandes")
+    public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
+
+        commandeClientService.createCommande(commandeClient);
 
 //		List<LigneCmdClient> lcomms = commandeClient.getLigneCmdClients();
 //		for (LigneCmdClient lc : lcomms) {
@@ -167,48 +145,48 @@ public class CommandeClientController {
 //			ligneCmdClientService.saveLigneCmdClient(lc);
 //
 //		}
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-	
-	@PostMapping("/commandesClientes")
-	public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/commandesClientes")
+    public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient) {
 		/*
 		CommandeClient Resultat = commandeClientService.saveCommandeClient(commandeClient);
 		return ResponseEntity.ok(Resultat);
 		*/
 
-		return new ResponseEntity<CommandeClient>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.CREATED);
-	}
-	
-	@PutMapping("/commandes/{id}")
-	public ResponseEntity<CommandeClient>  updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) throws Exception {
-		commandeClient.setId(id);
-		return new ResponseEntity<>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.OK);
-		
-	}
+        return new ResponseEntity<CommandeClient>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.CREATED);
+    }
 
-	@DeleteMapping("/commandes/{id}")
-	public void deleteCommande(@PathVariable(value = "id")Long id) {
-		commandeClientService.deleteCommande(id);
-		//return new ResponseEntity<>(HttpStatus.OK);
-	}
+    @PutMapping("/commandes/{id}")
+    public ResponseEntity<CommandeClient> updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) throws Exception {
+        commandeClient.setId(id);
+        return new ResponseEntity<>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.OK);
 
-	@GetMapping("/searchNumberOfCommandeByMonth")
-	public List<?> getNumberTotalOfCommandeByMonth() {
-		return commandeClientService.countNumberTotalOfCommandeByMonth();
-	}
+    }
 
-	@GetMapping("/searchSumCommandeByMonth")
-	public List<?> getSumTotalOfCommandeByMonth() {
-		return commandeClientService.sumTotalOfCommandeByMonth();
-	}
+    @DeleteMapping("/commandes/{id}")
+    public void deleteCommande(@PathVariable(value = "id") Long id) {
+        commandeClientService.deleteCommande(id);
+        //return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-	/*
-	@DeleteMapping("/commandes/{delete}")
-	public ResponseEntity<Object> deleteCommandeClient(@PathVariable(value = "id") Long id) {
-		return commandeClientService.deleteCommandeClient(id);
-		
-	}
+    @GetMapping("/searchNumberOfCommandeByMonth")
+    public List<?> getNumberTotalOfCommandeByMonth() {
+        return commandeClientService.countNumberTotalOfCommandeByMonth();
+    }
+
+    @GetMapping("/searchSumCommandeByMonth")
+    public List<?> getSumTotalOfCommandeByMonth() {
+        return commandeClientService.sumTotalOfCommandeByMonth();
+    }
+
+    /*
+    @DeleteMapping("/commandes/{delete}")
+    public ResponseEntity<Object> deleteCommandeClient(@PathVariable(value = "id") Long id) {
+        return commandeClientService.deleteCommandeClient(id);
+
+    }
 */
     @PostMapping(path = "/createOrder", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createUserRequest(@RequestBody CommandeClient CcmmandeClient) {
@@ -228,9 +206,13 @@ public class CommandeClientController {
     	return  reportName;
 	}
 */
-	@GetMapping("/report/pdf/{id}")
-	public String generateReport (@PathVariable Long id) throws FileNotFoundException, JRException {
-		return reportCommande.exportReport(id);
-	}
+    @GetMapping("/report/pdf/{id}")
+    public String generateReport(@PathVariable Long id) throws FileNotFoundException, JRException {
+        return reportCommande.exportReport(id);
+    }
 
+    @GetMapping("/generateCodeCommand")
+    public String generateCodeCommand() {
+        return commandeClientService.generateCodeCommand();
+    }
 }
