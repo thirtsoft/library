@@ -8,16 +8,21 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> {
 
-    Utilisateur findByUsername(String username);
+   // Utilisateur findByUsername(String username);
 
    // Utilisateur findByEmail(String email);
 
     @Query("select c from Utilisateur c where c.username like :username")
     List<Utilisateur> findListUtilisateurByUsername(@Param("username") String username);
+
+    Optional<Utilisateur> findByUsername(String username);
+    Boolean existsByUsername(String username);
+    Boolean existsByEmail(String email);
 
 
 }

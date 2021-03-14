@@ -7,6 +7,6 @@ public interface AccountService {
 
   //  Utilisateur saveUtilisateur(Utilisateur utilisateur);
     Role saveRole(Role role);
-    void addRoleToUtilisateur(String username, String roleName);
-    Utilisateur findUtilisateurByUsername(String username);
+  //  void addRoleToUtilisateur(String username, String roleName);
+   // Utilisateur findUtilisateurByUsername(String username);
 }

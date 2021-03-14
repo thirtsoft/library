@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
         }
         Role roleResult = role1.get();
 
-        roleResult.setRoleName(role.getRoleName());
+        roleResult.setName(role.getName());
 
         return roleRepository.save(roleResult);
     }
@@ -63,13 +63,5 @@ public class RoleServiceImpl implements RoleService {
 
     }
 
-    @Override
-    public Role findRoleByRoleName(String roleName) {
-        return roleRepository.findByRoleName(roleName);
-    }
 
-    @Override
-    public List<Role> findListRoleByRoleName(String roleName) {
-        return roleRepository.findListRoleByRoleName(roleName);
-    }
 }

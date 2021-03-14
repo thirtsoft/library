@@ -4,7 +4,7 @@ import com.library.assembler.CategoryRestAssembler;
 import com.library.controller.model.CategoryModel;
 import com.library.entities.Category;
 import com.library.exceptions.ResourceNotFoundException;
-import com.library.message.ResponseMessage;
+import com.library.message.response.ResponseMessage;
 import com.library.services.CategoryService;
 import com.library.services.ExcelService;
 import com.library.utils.ExcelUtils;

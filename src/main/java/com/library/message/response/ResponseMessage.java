@@ -1,4 +1,4 @@
-package com.library.message;
+package com.library.message.response;
 
 public class ResponseMessage {
     private String message;

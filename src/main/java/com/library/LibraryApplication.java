@@ -1,10 +1,8 @@
 package com.library;
 
 import com.library.entities.*;
-import com.library.repository.CategoryRepository;
-import com.library.repository.ClientRepository;
-import com.library.repository.ProduitRepository;
-import com.library.repository.ScategorieRepository;
+import com.library.enumeration.RoleName;
+import com.library.repository.*;
 import com.library.services.AccountService;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
@@ -30,6 +28,10 @@ public class LibraryApplication implements CommandLineRunner {
     private ClientRepository clientRepository;
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    RoleRepository roleRepository;
+
 
 
     public static void main(String[] args) {
@@ -80,7 +82,12 @@ public class LibraryApplication implements CommandLineRunner {
         accountService.addRoleToUtilisateur("admin", "USER");
         accountService.addRoleToUtilisateur("user", "USER");
 */
-
+    /*
+        Role adminRole = new Role(RoleName.ROLE_ADMIN);
+        Role useRole = new Role(RoleName.ROLE_USER);
+        roleRepository.save(adminRole);
+        roleRepository.save(useRole);
+*/
 
 
     }

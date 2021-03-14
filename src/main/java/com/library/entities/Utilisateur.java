@@ -3,8 +3,12 @@ package com.library.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -14,11 +18,14 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "utilisateur")
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@ToString
+@Table(name = "utilisateur", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {
+				"username"
+		}),
+		@UniqueConstraint(columnNames = {
+				"email"
+		})
+})
 public class Utilisateur implements Serializable {
 	/**
 	 * 
@@ -27,23 +34,40 @@ public class Utilisateur implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(unique = true)
+
+	@Size(min=3, max = 50)
+	private String name;
+
+	@Size(min=3, max = 50)
 	private String username;
+
+	@Size(max = 50)
+	@Email
+	private String email;
+
+	@Size(min=6, max = 100)
 	private String password;
+
 	private boolean isActive;
 
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_roles",
+			joinColumns = @JoinColumn(name = "user_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+/*
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Collection<Role> roles = new ArrayList<>();
-
+*/
 	public Utilisateur() {
 	}
 
-	public Utilisateur(Long id, String username, String password, boolean isActive, Collection<Role> roles) {
-		this.id = id;
+	public Utilisateur(String name, String username, String email, String password) {
+		this.name = name;
 		this.username = username;
+		this.email = email;
 		this.password = password;
-		this.isActive = isActive;
-		this.roles = roles;
+
 	}
 
 	public Long getId() {
@@ -81,11 +105,27 @@ public class Utilisateur implements Serializable {
 		isActive = active;
 	}
 
-	public Collection<Role> getRoles() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Collection<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 }
