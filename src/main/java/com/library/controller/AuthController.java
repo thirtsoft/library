@@ -1,6 +1,7 @@
 package com.library.controller;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 
@@ -23,11 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -109,4 +106,16 @@ public class AuthController {
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
     }
+
+    @GetMapping("/getUserByUsername/{username}")
+    public Optional<Utilisateur> getUserByUsername(@PathVariable("username") String username) {
+        return userRepository.findByUsername(username);
+    }
+/*
+    @GetMapping("/searchUtilisateurByUsername")
+    public Utilisateur getUtilisateurByUsername(@RequestParam(value = "username") String username) {
+        return utilisateurService.findUtilisateurByUsername(username);
+
+    }
+  */
 }
