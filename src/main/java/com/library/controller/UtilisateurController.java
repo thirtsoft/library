@@ -1,5 +1,8 @@
 package com.library.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.library.entities.Employe;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
@@ -94,5 +97,48 @@ public class UtilisateurController {
 		return ResponseEntity.ok().build();
 		
 	}
+
+	@PatchMapping("/updateUsername")
+	public ResponseEntity<Boolean> updateUsername(@RequestBody ObjectNode json) {
+		String username;
+		String newUsername;
+		try {
+			username = new ObjectMapper().treeToValue(json.get("username"), String.class);
+			newUsername = new ObjectMapper().treeToValue(json.get("newUsername"), String.class);
+			boolean existsUser = this.utilisateurService.updateUsernameOfUtilisateur(username, newUsername);
+			if (existsUser)
+				return new  ResponseEntity<Boolean>(existsUser, HttpStatus.OK);
+
+		}catch (JsonProcessingException e) {
+			System.out.println("Parsing Exception");
+			e.printStackTrace();
+			return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+		}
+		return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+	}
+
+	@PatchMapping("/updatePassword")
+	ResponseEntity<Boolean> updatePassword(@RequestBody ObjectNode jsonNodes) {
+		String username;
+		String oldPassword;
+		String newPassword;
+
+		try {
+			username = new ObjectMapper().treeToValue(jsonNodes.get("username"), String.class);
+			oldPassword = new ObjectMapper().treeToValue(jsonNodes.get("oldPassword"), String.class);
+			newPassword = new ObjectMapper().treeToValue(jsonNodes.get("newPassword"), String.class);
+
+			boolean existUser = this.utilisateurService.updatePasswordofUtilisateur(username, oldPassword, newPassword);
+			if (existUser)
+				return new ResponseEntity<Boolean>(existUser,HttpStatus.OK);
+		}catch (JsonProcessingException e) {
+			System.out.println("Parsing Exception");
+			e.printStackTrace();
+			return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+		}
+		return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+	}
+
+
 
 }

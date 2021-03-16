@@ -21,4 +21,12 @@ public interface UtilisateurService {
 
     List<Utilisateur> findListUtilisateurByUsername(String username);
 
+  //  public boolean updateUsernameOfUtilisateur(String email, String username);
+
+    public boolean updateUsernameOfUtilisateur(String username, String newUsername);
+
+  //  public boolean updatePasswordofUtilisateur(String email, String oldPass, String newPass);
+
+    public boolean updatePasswordofUtilisateur(String username, String oldPass, String newPass);
+
 }

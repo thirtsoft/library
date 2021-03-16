@@ -6,6 +6,7 @@ import com.library.repository.UtilisateurRepository;
 import com.library.services.RoleService;
 import com.library.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -99,5 +103,35 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public List<Utilisateur> findListUtilisateurByUsername(String username) {
         return utilisateurRepository.findListUtilisateurByUsername(username);
+    }
+
+    @Override
+    public boolean updateUsernameOfUtilisateur(String username, String newUsername) {
+        Optional<Utilisateur> existsUser = this.utilisateurRepository.findByUsername(username);
+        Utilisateur user;
+        if (existsUser.isPresent()) {
+            user = existsUser.get();
+            user.setUsername(newUsername);
+            this.utilisateurRepository.save(user);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean updatePasswordofUtilisateur(String username, String oldPass, String newPass) {
+        Optional<Utilisateur> existsUser = this.utilisateurRepository.findByUsername(username);
+        Utilisateur user;
+        if (existsUser.isPresent()) {
+            user = existsUser.get();
+
+            if (passwordEncoder.matches(oldPass, user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(newPass));
+                this.utilisateurRepository.save(user);
+                return true;
+            }
+        }
+        return false;
     }
 }
