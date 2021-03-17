@@ -1,34 +1,31 @@
 package com.library.services.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.library.services.*;
+import com.library.entities.CommandeClient;
+import com.library.entities.LigneCmdClient;
+import com.library.entities.Produit;
+import com.library.exceptions.ResourceNotFoundException;
+import com.library.repository.CommandeClientRepository;
+import com.library.services.CommandeClientService;
+import com.library.services.LigneCmdClientService;
+import com.library.services.ProduitService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.library.entities.Client;
-import com.library.entities.CommandeClient;
-import com.library.entities.LigneCmdClient;
-import com.library.entities.Produit;
-import com.library.exceptions.ResourceNotFoundException;
-import com.library.repository.ClientRepository;
-import com.library.repository.CommandeClientRepository;
-import com.library.repository.LigneCmdClientRepository;
-import com.library.repository.ProduitRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -107,7 +104,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             throw new IllegalArgumentException("Vous devez selectionner un client");
         }
 
-        for (LigneCmdClient lcom :ligneCmd) {
+        for (LigneCmdClient lcom : ligneCmd) {
             Produit produitInitial = produitService.findProduitById(lcom.getProduit().getId()).get();
             if (lcom.getQuantite() > produitInitial.getQtestock()) {
                 throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
@@ -118,7 +115,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         List<LigneCmdClient> ligneCmdClients = commande.getLcomms();
         double total = 0;
-        for (LigneCmdClient lcmdClt: ligneCmdClients) {
+        for (LigneCmdClient lcmdClt : ligneCmdClients) {
             lcmdClt.setCommande(commande);
             lcmdClt.setNumero(commande.getNumeroCommande());
             ligneCmdClientService.saveLigneCmdClient(lcmdClt);
@@ -295,5 +292,9 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         return commandeClientRepository.findCommandeClientByClientId(clientId, pageable);
     }
 
-
+    @Override
+    public String generateCodeCommand() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now());
+    }
 }
