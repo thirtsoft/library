@@ -48,6 +48,8 @@ public class Utilisateur implements Serializable {
 	@Size(min=6, max = 100)
 	private String password;
 
+	private String photo ="avatar.jpg";
+
 	private boolean isActive;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -87,12 +89,12 @@ public class Utilisateur implements Serializable {
 	}
 
 
-	@JsonIgnore
+	//@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
 
-	@JsonSetter
+//	@JsonSetter
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -103,6 +105,15 @@ public class Utilisateur implements Serializable {
 
 	public void setActive(boolean active) {
 		isActive = active;
+	}
+
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public String getName() {
