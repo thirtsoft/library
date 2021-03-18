@@ -16,12 +16,12 @@ public interface LigneCreanceService {
 	LigneCreance saveLigneCreance(LigneCreance ligneCreance);
 	LigneCreance updateLigneCreance(Long lCreanceId, LigneCreance ligneCreance);
 	ResponseEntity<Object> deleteLigneCreance(Long creanceId);
-	void deleteLcreanceByNumero(int numero);
+	void deleteLcreanceByNumero(long numero);
 
 
 	List<LigneCreance> findLigneCreanceByProduitId(Long prodId);
 	List<LigneCreance> findLigneCreanceByCreanceId(Long creanceId);
-	List<LigneCreance> findAllLcreanceByNumero(int numero);
+	List<LigneCreance> findAllLcreanceByNumero(long numero);
 
 
 }

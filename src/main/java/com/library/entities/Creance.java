@@ -34,7 +34,7 @@ public class Creance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int reference;
+	private long reference;
     private String codeCreance;
 	private String libelle;
 	private double soldeCreance;
@@ -57,7 +57,7 @@ public class Creance implements Serializable {
 		super();
 	}
 
-	public Creance(Long id, int reference,String codeCreance, String libelle, double soldeCreance, double avanceCreance, int nbreJours, double totalCreance, String status, Date dateCreance, Client client, @Valid List<LigneCreance> lcreances) {
+	public Creance(Long id, long reference,String codeCreance, String libelle, double soldeCreance, double avanceCreance, int nbreJours, double totalCreance, String status, Date dateCreance, Client client, @Valid List<LigneCreance> lcreances) {
 		this.id = id;
 		this.reference = reference;
 		this.libelle = libelle;
@@ -80,11 +80,11 @@ public class Creance implements Serializable {
 		this.id = id;
 	}
 
-	public int getReference() {
+	public long getReference() {
 		return reference;
 	}
 
-	public void setReference(int reference) {
+	public void setReference(long reference) {
 		this.reference = reference;
 	}
 

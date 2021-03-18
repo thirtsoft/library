@@ -160,4 +160,9 @@ public class CreanceController {
     public void deleteCreance(@PathVariable(value = "id") Long id) {
         creanceService.deleteCreance(id);
     }
+
+    @GetMapping("/generateReferenceCreance")
+    public long generateReferenceCreance() {
+        return creanceService.generateReferenceCreance();
+    }
 }

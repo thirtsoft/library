@@ -5,6 +5,8 @@ import com.library.entities.Produit;
 import com.library.services.CreanceService;
 import com.library.services.LigneCreanceService;
 import com.library.services.ProduitService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import com.library.entities.Creance;
@@ -54,10 +56,6 @@ public class CreanceServiceImpl implements CreanceService {
         return creanceRepository.findById(creanceId);
     }
 
-    @Override
-    public Creance findByReferences(int reference) {
-        return null;
-    }
 
     /**
      * @param creance
@@ -134,7 +132,6 @@ public class CreanceServiceImpl implements CreanceService {
         }
     }
 
-
     @Override
     public Creance updateCreance(Long creanceId, Creance creance) {
         if (!creanceRepository.existsById(creanceId)) {
@@ -183,12 +180,12 @@ public class CreanceServiceImpl implements CreanceService {
 
 
     @Override
-    public Optional<Creance> findByReference(int reference) {
+    public Optional<Creance> findByReference(long reference) {
         return creanceRepository.findByReference(reference);
     }
 
     @Override
-    public boolean updateStatus(int reference, String status) {
+    public boolean updateStatus(long reference, String status) {
         Optional<Creance> creance = this.creanceRepository.findByReference(reference);
         Creance creanceResult;
         if(creance.isPresent()) {
@@ -222,6 +219,12 @@ public class CreanceServiceImpl implements CreanceService {
     }
 
     @Override
+    public long generateReferenceCreance() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
+    }
+
+    @Override
     public boolean updateStatusCreance(String codeCreance, String status) {
         Optional<Creance> creance = this.creanceRepository.findByCodeCreance(codeCreance);
         Creance creanceResult;
@@ -233,11 +236,6 @@ public class CreanceServiceImpl implements CreanceService {
         }
 
         return false;
-    }
-
-    @Override
-    public List<Creance> findListCreanceByReference(int reference) {
-        return null;
     }
 
     @Override

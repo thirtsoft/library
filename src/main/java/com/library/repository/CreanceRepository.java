@@ -3,10 +3,9 @@ package com.library.repository;
 import com.library.entities.Creance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -28,7 +27,8 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
     @Query("update Creance c set c.status = :status where c.id = :id")
     void setCreanceStatusById(@Param("status") String status, @Param("id") Long id);
 
-    Optional<Creance> findByReference(int reference);
+    Optional<Creance> findByReference(long reference);
+
     Optional<Creance> findByCodeCreance(String CodeCreance);
 
     //	@Query("select count(*) from CommandeClient group by (dateCommande)")
@@ -36,7 +36,7 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
     BigDecimal countNumbersOfCommandes();
 
     @Query("select p from Creance p where p.reference like :num")
-    Creance findByNumeroCreance(@Param("num") int reference);
+    Creance findByNumeroCreance(@Param("num") long reference);
 
 
     @Query("select p from Creance p where p.status like :status")
