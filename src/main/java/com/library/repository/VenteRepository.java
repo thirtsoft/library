@@ -7,18 +7,16 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PatchMapping;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface VenteRepository extends JpaRepository<Vente, Long> {
 
     @Query("select count(p) from Vente p where p.dateVente between :d1 and :d2")
-    Integer countBetween(@Param("d1")Date d1, @Param("d2")Date d2);
+    Integer countBetween(@Param("d1") Date d1, @Param("d2") Date d2);
 
     @Query("select count(p) from Vente p ")
     Integer countNumberOfVente();

@@ -35,4 +35,5 @@ public interface LigneVenteRepository extends JpaRepository<LigneVente, Long> {
     @Query("select p from LigneVente p")
     Page<LigneVente> findAllLigneVenteByPageable(Pageable pageable);
 
+
 }

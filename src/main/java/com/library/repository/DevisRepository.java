@@ -14,7 +14,7 @@ import java.util.List;
 public interface DevisRepository extends JpaRepository<Devis, Long> {
 
     @Query("select count(p) from Devis p where p.dateDevis between :d1 and :d2")
-    Integer countBetween(@Param("d1") Date d1, @Param("d2")Date d2);
+    Integer countBetween(@Param("d1") Date d1, @Param("d2") Date d2);
 
     @Query("select count(p) from Devis p ")
     Integer countNumberOfDevis();
@@ -26,8 +26,6 @@ public interface DevisRepository extends JpaRepository<Devis, Long> {
     @Query("select p from Devis p where p.numeroDevis like :num")
     Devis findByNumeroDevis(@Param("num") long numeroDevis);
 
-
-
     List<Devis> findAllByDateDevis(Date dateDevis);
 
     @Query("select EXTRACT(month from(c.dateDevis)), count(c) from Devis c group by EXTRACT(month from(c.dateDevis))")
@@ -37,6 +35,6 @@ public interface DevisRepository extends JpaRepository<Devis, Long> {
     List<?> sumTotalOfDevisByMonth();
 
     @Query("select p from Devis p where p.client.id =:cl")
-    public List<Devis> ListDevisByClientId(@Param("cl") Long clientId);
+    List<Devis> ListDevisByClientId(@Param("cl") Long clientId);
 
 }
