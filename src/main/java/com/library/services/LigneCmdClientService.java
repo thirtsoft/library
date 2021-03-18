@@ -18,13 +18,13 @@ public interface LigneCmdClientService {
 	LigneCmdClient updateLigneCmdClient(Long lCmdId, LigneCmdClient ligneCmdClient);
 	ResponseEntity<Object> deleteLigneCmdClient(Long id);
 
-	void deleteLcomByNumero(int numero);
+	void deleteLcomByNumero(long numero);
 	//public LigneCmdClient findByQuantite(int quantite);
 	
 	//public List<LigneCmdClient> findListLigneCmdClientByQuantite(int quantite);
 	List<LigneCmdClient> findLigneCmdClientByProduitId(Long prodId);
 	List<LigneCmdClient> findLigneCmdClientByCommandeClientId(Long comId);
-	List<LigneCmdClient> findAllLcomByNumero(int numero);
+	List<LigneCmdClient> findAllLcomByNumero(long numero);
 	
 	Page<LigneCmdClient> findAllLigneCmdClientByPageable(Pageable pageable);
 	Page<LigneCmdClient> findAllLigneCmdClientByCommandeClient(Long comId, Pageable pageable);
@@ -34,5 +34,5 @@ public interface LigneCmdClientService {
 
 	boolean isValideQuantiteStock(int qtesSaisie, int qtitesStock);
 
-	public List<LigneCmdClient> saveListLigneCmd(List<LigneCmdClient> lcmdClients);
+	List<LigneCmdClient> saveListLigneCmd(List<LigneCmdClient> lcmdClients);
 }

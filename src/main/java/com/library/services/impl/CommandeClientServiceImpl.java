@@ -293,8 +293,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
-    public String generateCodeCommand() {
+    public long generateCodeCommand() {
         final String FORMAT = "yyyyMMddHHmmss";
-        return DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now());
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
     }
 }

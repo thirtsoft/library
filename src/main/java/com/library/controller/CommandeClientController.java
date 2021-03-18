@@ -213,7 +213,7 @@ public class CommandeClientController {
     }
 
     @GetMapping("/generateCodeCommand")
-    public String generateCodeCommand() {
+    public long generateCodeCommand() {
         return commandeClientService.generateCodeCommand();
     }
 }

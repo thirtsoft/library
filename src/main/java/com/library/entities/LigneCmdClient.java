@@ -35,7 +35,7 @@ public class LigneCmdClient implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int numero;
+	private long numero;
 	private int quantite;
 	private double prix;
 	private double prixCommande;
@@ -57,7 +57,7 @@ public class LigneCmdClient implements Serializable {
 		super();
 	}
 
-	public LigneCmdClient(Long id, int numero, int quantite, double prix, double prixCommande, CommandeClient commande, Produit produit) {
+	public LigneCmdClient(Long id, long numero, int quantite, double prix, double prixCommande, CommandeClient commande, Produit produit) {
 		this.id = id;
 		this.numero = numero;
 		this.quantite = quantite;
@@ -75,11 +75,11 @@ public class LigneCmdClient implements Serializable {
         this.id = id;
     }
 
-	public int getNumero() {
+	public long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(long numero) {
 		this.numero = numero;
 	}
 

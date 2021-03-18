@@ -59,5 +59,5 @@ public interface CommandeClientService {
      *
      * @return
      */
-    String generateCodeCommand();
+    long generateCodeCommand();
 }

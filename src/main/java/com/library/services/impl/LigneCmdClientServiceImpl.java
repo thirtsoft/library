@@ -74,7 +74,7 @@ public class LigneCmdClientServiceImpl implements LigneCmdClientService {
     }
 
     @Override
-    public void deleteLcomByNumero(int numero) {
+    public void deleteLcomByNumero(long numero) {
         ligneCmdClientRepository.deleteByNumero(numero);
     }
 
@@ -89,7 +89,7 @@ public class LigneCmdClientServiceImpl implements LigneCmdClientService {
     }
 
     @Override
-    public List<LigneCmdClient> findAllLcomByNumero(int numero) {
+    public List<LigneCmdClient> findAllLcomByNumero(long numero) {
         return ligneCmdClientRepository.findAllByNumero(numero);
     }
 
