@@ -29,13 +29,13 @@ public class LigneAvoirController {
     public ResponseEntity<LigneAvoir> getLigneAvoirById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         LigneAvoir ligneAvoir = ligneAvoirService.findLigneAvoirById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("LigneCmdClient that id is" + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("LigneCmdClient Not found"));
         return ResponseEntity.ok().body(ligneAvoir);
 
     }
 
     @GetMapping("/lavoirs/{id}")
-    public List<LigneAvoir> getAllByNumero(@PathVariable(value = "id") int numero) {
+    public List<LigneAvoir> getAllByNumero(@PathVariable(value = "id") long numero) {
         System.out.println("Get all Lavoirs...");
 
         List<LigneAvoir> Lavoirs = new ArrayList<>();
@@ -68,7 +68,7 @@ public class LigneAvoirController {
     }
 
     @DeleteMapping("/ligneAvoirs/{id}")
-    public void deleteLigneAvoir(@PathVariable(value = "id") int numero) {
+    public void deleteLigneAvoir(@PathVariable(value = "id") long numero) {
         ligneAvoirService.deleteLavoirByNumero(numero);
 
     }

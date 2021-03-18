@@ -16,7 +16,7 @@ public interface LigneAvoirService {
     LigneAvoir saveLigneAvoir(LigneAvoir ligneAvoir);
     LigneAvoir updateLigneAvoir(Long lAvoirId, LigneAvoir ligneAvoir);
 
-    void deleteLavoirByNumero(int numero);
+    void deleteLavoirByNumero(long numero);
 
     List<LigneAvoir> findLigneAvoirByProduitId(Long prodId);
     List<LigneAvoir> findLigneAvoirByAvoirId(Long comId);

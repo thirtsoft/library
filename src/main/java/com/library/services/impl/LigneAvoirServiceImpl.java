@@ -64,7 +64,7 @@ public class LigneAvoirServiceImpl implements LigneAvoirService {
     }
 
     @Override
-    public void deleteLavoirByNumero(int numero) {
+    public void deleteLavoirByNumero(long numero) {
         ligneAvoirRepository.deleteByNumero(numero);
     }
 
@@ -79,7 +79,7 @@ public class LigneAvoirServiceImpl implements LigneAvoirService {
     }
 
     @Override
-    public List<LigneAvoir> findAllLavoirByNumero(int numero) {
+    public List<LigneAvoir> findAllLavoirByNumero(long numero) {
         return ligneAvoirRepository.findAllByNumero(numero);
     }
 }

@@ -8,6 +8,8 @@ import com.library.repository.AvoirRepository;
 import com.library.services.AvoirService;
 import com.library.services.LigneAvoirService;
 import com.library.services.ProduitService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +109,12 @@ public class AvoirServiceImpl implements AvoirService {
         }
     }
 
+    @Override
+    public long generateRefereceAvoir() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
+    }
+
 
     @Override
     public Avoir updateAvoir(Long avoirId, Avoir avoir) {
@@ -132,18 +140,18 @@ public class AvoirServiceImpl implements AvoirService {
     }
 
     @Override
-    public Avoir findByReference(int reference) {
+    public Avoir findByReference(long reference) {
         return avoirRepository.findByReference(reference);
     }
 
 
     @Override
-    public Avoir findAvoirByReference(int reference) {
+    public Avoir findAvoirByReference(long reference) {
         return avoirRepository.findByReference(reference);
     }
 
     @Override
-    public List<Avoir> findListAvoirByReference(int reference) {
+    public List<Avoir> findListAvoirByReference(long reference) {
         return avoirRepository.findListAvoirByReference(reference);
     }
 

@@ -31,7 +31,7 @@ public class Avoir implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int reference;
+	private long reference;
 	private String libelle;
 	private double soldeAvoir;
 	private int nbreJours;
@@ -51,7 +51,7 @@ public class Avoir implements Serializable {
 	public Avoir() {
 	}
 
-	public Avoir(Long id, int reference, String libelle, double soldeAvoir, int nbreJours, double totalAvoir, String status, Date dateAvoir, Fournisseur fournisseur, @Valid List<LigneAvoir> lavoirs) {
+	public Avoir(Long id, long reference, String libelle, double soldeAvoir, int nbreJours, double totalAvoir, String status, Date dateAvoir, Fournisseur fournisseur, @Valid List<LigneAvoir> lavoirs) {
 		this.id = id;
 		this.reference = reference;
 		this.libelle = libelle;
@@ -72,11 +72,11 @@ public class Avoir implements Serializable {
 		this.id = id;
 	}
 
-	public int getReference() {
+	public long getReference() {
 		return reference;
 	}
 
-	public void setReference(int reference) {
+	public void setReference(long reference) {
 		this.reference = reference;
 	}
 

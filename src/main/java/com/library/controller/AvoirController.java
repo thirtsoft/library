@@ -26,18 +26,18 @@ public class AvoirController {
     public ResponseEntity<Avoir> getAvoirById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Avoir avoir = avoirService.findAvoirById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Avoir that id is" + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Avoir Not found"));
         return ResponseEntity.ok().body(avoir);
 
     }
 
     @GetMapping("/searchAvoirByReference")
-    public Avoir getAvoirByReference(@RequestParam(name = "ref") int reference) {
+    public Avoir getAvoirByReference(@RequestParam(name = "ref") long reference) {
         return avoirService.findAvoirByReference(reference);
     }
 
     @GetMapping("/searchListAvoirsByReference")
-    public List<Avoir> getAllAvoirsByReference(@RequestParam(name = "ref") int reference) {
+    public List<Avoir> getAllAvoirsByReference(@RequestParam(name = "ref") long reference) {
         return avoirService.findListAvoirByReference(reference);
     }
 
@@ -82,6 +82,11 @@ public class AvoirController {
     @DeleteMapping("/avoirs/{id}")
     public void deleteAvoir(@PathVariable(value = "id") Long id) {
         avoirService.deleteAvoir(id);
+    }
+
+    @GetMapping("/generateReferneceAvoir")
+    public long generateReferneceAvoir() {
+        return avoirService.generateRefereceAvoir();
     }
 
 }
