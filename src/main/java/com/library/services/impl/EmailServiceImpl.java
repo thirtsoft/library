@@ -13,18 +13,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class EmailServiceImpl implements EmailService {
 
+    private static final String from = "thirdiallo@gmail.com";
     @Autowired
     private EmailRepository emailRepository;
-
     @Autowired
     private FournisseurService fournisseurService;
-
-    private static final String from = "thirdiallo@gmail.com";
-
     private JavaMailSender javaMailSender;
 
     @Autowired
@@ -115,7 +111,7 @@ public class EmailServiceImpl implements EmailService {
 
         javaMailSender.send(mail);
 
-    //    fournisseurService.saveFournisseur(fournisseur);
+        //    fournisseurService.saveFournisseur(fournisseur);
 
 
     }

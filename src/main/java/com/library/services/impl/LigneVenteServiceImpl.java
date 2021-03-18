@@ -82,7 +82,7 @@ public class LigneVenteServiceImpl implements LigneVenteService {
 
     @Override
     public List<LigneVente> findLigneVenteByProduitId(Long prodId) {
-        return null ;
+        return null;
     }
 
     @Override

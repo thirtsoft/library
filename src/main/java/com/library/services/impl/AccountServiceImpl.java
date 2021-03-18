@@ -12,24 +12,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
-/*
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-*/
+    /*
+        @Autowired
+        private BCryptPasswordEncoder bCryptPasswordEncoder;
+    */
     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
     @Autowired
     private RoleRepository roleRepository;
 
-/*
-    @Override
-    public Utilisateur saveUtilisateur(Utilisateur utilisateur) {
-        String hashPw = bCryptPasswordEncoder.encode(utilisateur.getPassword());
-        utilisateur.setPassword(hashPw);
-        return utilisateurRepository.save(utilisateur);
-    }
-*/
+    /*
+        @Override
+        public Utilisateur saveUtilisateur(Utilisateur utilisateur) {
+            String hashPw = bCryptPasswordEncoder.encode(utilisateur.getPassword());
+            utilisateur.setPassword(hashPw);
+            return utilisateurRepository.save(utilisateur);
+        }
+    */
     @Override
     public Role saveRole(Role role) {
         return roleRepository.save(role);

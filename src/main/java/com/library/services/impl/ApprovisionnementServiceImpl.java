@@ -82,7 +82,7 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
 
         double total = 0;
 
-        for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
+        for (LigneApprovisionnement lAppro : ligneApprovisionnements) {
             lAppro.setApprovisionnement(approvisionnement);
             lAppro.setNumero(approvisionnement.getCode());
 
@@ -100,7 +100,7 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
             System.out.println(lAppro.getQuantite());
             System.out.println(lAppro.getQuantite() * produit.getPrixAchat());
 
-         //   total += (lAppro.getQuantite() * produit.getPrixAchat());
+            //   total += (lAppro.getQuantite() * produit.getPrixAchat());
             total += (lAppro.getQuantite() * lAppro.getPrixAppro());
 
         }
@@ -116,34 +116,32 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
 
     /**
      * Commenté le 18/10/2020
+     *
      * @param
      * @return
-     *
-
-    @Override
-    public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement) {
-        approvisionnementRepository.save(approvisionnement);
-        List<LigneApprovisionnement> ligneApprovisionnements = approvisionnement.getLigneApprovisionnements();
-        double total = 0;
-        for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
-            lAppro.setApprovisionnement(approvisionnement);
-            //Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
-            //lAppro.setProduit(produit);
-            lAppro.setPrix(lAppro.getProduit().getPrixAchat());
-
-            ligneApprovisionnementService.saveLigneApprovisionnement(lAppro);
-
-            total += lAppro.getQuantite() * lAppro.getProduit().getPrixAchat();
-        }
-
-        approvisionnement.setTotalAppro(total);
-        approvisionnement.setCode("Appro " + 20 + (int) (Math.random() * 100));
-        approvisionnement.setStatus("complète");
-        approvisionnement.setDateApprovisionnement(new Date());
-
-        return approvisionnementRepository.save(approvisionnement);
-    }
-    */
+     * @Override public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement) {
+     * approvisionnementRepository.save(approvisionnement);
+     * List<LigneApprovisionnement> ligneApprovisionnements = approvisionnement.getLigneApprovisionnements();
+     * double total = 0;
+     * for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
+     * lAppro.setApprovisionnement(approvisionnement);
+     * //Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
+     * //lAppro.setProduit(produit);
+     * lAppro.setPrix(lAppro.getProduit().getPrixAchat());
+     * <p>
+     * ligneApprovisionnementService.saveLigneApprovisionnement(lAppro);
+     * <p>
+     * total += lAppro.getQuantite() * lAppro.getProduit().getPrixAchat();
+     * }
+     * <p>
+     * approvisionnement.setTotalAppro(total);
+     * approvisionnement.setCode("Appro " + 20 + (int) (Math.random() * 100));
+     * approvisionnement.setStatus("complète");
+     * approvisionnement.setDateApprovisionnement(new Date());
+     * <p>
+     * return approvisionnementRepository.save(approvisionnement);
+     * }
+     */
 
     @Override
     public Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement) {

@@ -7,7 +7,6 @@ import com.library.services.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -69,7 +68,7 @@ public class ChargeServiceImpl implements ChargeService {
         if (!chargeRepository.existsById(id)) {
             throw new ResourceNotFoundException("Charge not found");
         }
-        Optional <Charge> charg = chargeRepository.findById(id);
+        Optional<Charge> charg = chargeRepository.findById(id);
         if (!charg.isPresent()) {
             throw new ResourceNotFoundException("Charge not found");
         }

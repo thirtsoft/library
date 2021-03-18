@@ -26,7 +26,7 @@ public class LigneDevisServiceImpl implements LigneDevisService {
     @Override
     public Optional<LigneDevis> findLigneDevisById(Long ldevId) {
         if (!ligneDevisRepository.existsById(ldevId)) {
-            throw new ResourceNotFoundException("Ligne Devis N° not found");
+            throw new ResourceNotFoundException("Ligne Devis Not found");
         }
 
         return ligneDevisRepository.findById(ldevId);
@@ -44,7 +44,7 @@ public class LigneDevisServiceImpl implements LigneDevisService {
         }
         Optional<LigneDevis> ldevis = ligneDevisRepository.findById(ldevId);
         if (!ldevis.isPresent()) {
-            throw new ResourceNotFoundException("Ligne Commande N° not found");
+            throw new ResourceNotFoundException("Ligne Commande Not found");
         }
 
         LigneDevis lignedevResult = ldevis.get();
@@ -59,7 +59,7 @@ public class LigneDevisServiceImpl implements LigneDevisService {
     @Override
     public void deleteLigneDevis(Long id) {
         if (!ligneDevisRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Ligne Commande N° not found");
+            throw new ResourceNotFoundException("Ligne Commande Not found");
         }
 
         ligneDevisRepository.deleteById(id);

@@ -62,10 +62,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         List<LigneCmdClient> lcmdClient = commandeClient.getLcomms();
         ligneCmdClientService.saveListLigneCmd(lcmdClient);
-        // ligneCmdClientRepository.saveAll(lcmdClient);
-
-//        CommandeClient saveCom = commandeClientRepository.save(commandeClient);
-
 
         double total = 0;
         for (int i = 0; i < lcmdClient.size(); i++) {
@@ -75,7 +71,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             lcdClient.setProduit(produit);
 //			lcdClient.setPrix(produit.getPrixVente());
             ligneCmdClientService.saveLigneCmdClient(lcdClient);
-            // ligneCmdClientRepository.save(lcdClient);
 
             total += lcdClient.getQuantite() * lcdClient.getProduit().getPrixVente();
         }
@@ -84,7 +79,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         commandeClient.setLcomms(lcmdClient);
         return commandeClientRepository.save(commandeClient);
     }
-
 
     /**
      * @param commande

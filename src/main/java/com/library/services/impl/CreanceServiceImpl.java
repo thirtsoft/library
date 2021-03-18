@@ -1,29 +1,25 @@
 package com.library.services.impl;
 
+import com.library.entities.Creance;
 import com.library.entities.LigneCreance;
 import com.library.entities.Produit;
+import com.library.exceptions.ResourceNotFoundException;
+import com.library.repository.CreanceRepository;
 import com.library.services.CreanceService;
 import com.library.services.LigneCreanceService;
 import com.library.services.ProduitService;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import com.library.entities.Creance;
-import com.library.exceptions.ResourceNotFoundException;
-import com.library.repository.CreanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 @Service
@@ -73,7 +69,7 @@ public class CreanceServiceImpl implements CreanceService {
         if ((creance.getClient().getId() == null)) {
             throw new IllegalArgumentException("Vous devez selectionner un client");
         }
-        for (LigneCreance lc :lignecreances) {
+        for (LigneCreance lc : lignecreances) {
             Produit produitInitial = produitService.findProduitById(lc.getProduit().getId()).get();
             if (lc.getQuantite() > produitInitial.getQtestock()) {
                 throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
@@ -119,7 +115,6 @@ public class CreanceServiceImpl implements CreanceService {
         return creanceRepository.save(creance);
 
     }
-
 
 
     @Override
@@ -188,8 +183,8 @@ public class CreanceServiceImpl implements CreanceService {
     public boolean updateStatus(long reference, String status) {
         Optional<Creance> creance = this.creanceRepository.findByReference(reference);
         Creance creanceResult;
-        if(creance.isPresent()) {
-            creanceResult =  creance.get();
+        if (creance.isPresent()) {
+            creanceResult = creance.get();
             creanceResult.setStatus(status);
             this.creanceRepository.save(creanceResult);
             return true;
@@ -228,8 +223,8 @@ public class CreanceServiceImpl implements CreanceService {
     public boolean updateStatusCreance(String codeCreance, String status) {
         Optional<Creance> creance = this.creanceRepository.findByCodeCreance(codeCreance);
         Creance creanceResult;
-        if(creance.isPresent()) {
-            creanceResult =  creance.get();
+        if (creance.isPresent()) {
+            creanceResult = creance.get();
             creanceResult.setStatus(status);
             this.creanceRepository.save(creanceResult);
             return true;
@@ -263,7 +258,6 @@ public class CreanceServiceImpl implements CreanceService {
     public List<Creance> findCreanceByClientId(Long clientId) {
         return creanceRepository.ListCreanceClientByClientId(clientId);
     }
-
 
 
 }

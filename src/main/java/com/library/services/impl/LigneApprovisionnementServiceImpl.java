@@ -70,7 +70,7 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
         if (!ligneApprovisionnementRepository.existsById(lApproId)) {
             throw new ResourceNotFoundException("Ligne Approvisionnement N° " + lApproId + "not found");
         }
-        Optional<LigneApprovisionnement>  lAppro = ligneApprovisionnementRepository.findById(lApproId);
+        Optional<LigneApprovisionnement> lAppro = ligneApprovisionnementRepository.findById(lApproId);
         if (!lAppro.isPresent()) {
             throw new ResourceNotFoundException("Ligne Approvisionnement N° " + lApproId + "not found");
         }

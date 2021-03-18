@@ -68,11 +68,11 @@ public class StockServiceImpl implements StockService {
     @Override
     public Stock updateStock(Long stockId, Stock stock) {
         if (!stockRepository.existsById(stockId)) {
-            throw new ResourceNotFoundException("Stock N° " + stockId + "not found");
+            throw new ResourceNotFoundException("Stock Not found");
         }
         Optional<Stock> stockReference = stockRepository.findById(stockId);
         if (!stockReference.isPresent()) {
-            throw new ResourceNotFoundException("Stock N° " + stockId + "not found");
+            throw new ResourceNotFoundException("Stock Not found");
         }
         Stock stockResultat = stockReference.get();
 

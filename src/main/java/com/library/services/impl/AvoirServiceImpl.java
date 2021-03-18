@@ -13,9 +13,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,7 +65,7 @@ public class AvoirServiceImpl implements AvoirService {
         List<LigneAvoir> ligneAvoirs = avoir.getLavoirs();
 
         double total = 0;
-        for (LigneAvoir lavoir  : ligneAvoirs) {
+        for (LigneAvoir lavoir : ligneAvoirs) {
             lavoir.setAvoir(avoir);
             lavoir.setNumero(avoir.getReference());
 
@@ -131,7 +128,7 @@ public class AvoirServiceImpl implements AvoirService {
         Avoir avoirResult = avoirInfo.get();
 
         avoirResult.setReference(avoir.getReference());
-       // cmdClientResult.setDateCommande(commande.getDateCommande());
+        // cmdClientResult.setDateCommande(commande.getDateCommande());
         avoirResult.setFournisseur(avoir.getFournisseur());
         avoirResult.setTotalAvoir(avoir.getTotalAvoir());
         avoirResult.setStatus(avoir.getStatus());

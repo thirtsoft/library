@@ -22,7 +22,6 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Autowired
     private RoleService roleService;
 
-
     @Override
     public List<Utilisateur> findAllUtilisateurs() {
         return utilisateurRepository.findAll();
@@ -45,11 +44,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public Utilisateur updateUtilisateur(Long idUser, Utilisateur utilisateur) {
         if (!utilisateurRepository.existsById(idUser)) {
-            throw new ResourceNotFoundException("User N ° " + idUser + "not found");
+            throw new ResourceNotFoundException("User Not found");
         }
         Optional<Utilisateur> user = utilisateurRepository.findById(idUser);
         if (!user.isPresent()) {
-            throw new ResourceNotFoundException("User N ° " + idUser + "not found");
+            throw new ResourceNotFoundException("User Not found");
         }
         Utilisateur userResult = user.get();
 
@@ -59,24 +58,25 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
         return utilisateurRepository.save(userResult);
     }
-/*
-    @Override
-    public boolean updateUsername(String email, String username) {
-        Utilisateur userInfo = utilisateurRepository.findByEmail(email);
-        if (userInfo != null) {
-            userInfo.setUsername(username);
-            utilisateurRepository.save(userInfo);
-            return true;
+
+    /*
+        @Override
+        public boolean updateUsername(String email, String username) {
+            Utilisateur userInfo = utilisateurRepository.findByEmail(email);
+            if (userInfo != null) {
+                userInfo.setUsername(username);
+                utilisateurRepository.save(userInfo);
+                return true;
+            }
+            return false;
         }
-        return false;
-    }
 
-    @Override
-    public boolean updatePassword(String email, String password, String newPassword) {
+        @Override
+        public boolean updatePassword(String email, String password, String newPassword) {
 
-        return false;
-    }
-*/
+            return false;
+        }
+    */
     @Override
     public void deleteUtilisateur(Long idUser) {
         if (!utilisateurRepository.existsById(idUser)) {
@@ -90,12 +90,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     public Utilisateur findUtilisateurByUsername(String username) {
         return null;
     }
-/*
-    @Override
-    public Utilisateur findUtilisateurByEmail(String email) {
-        return utilisateurRepository.findByEmail(email);
-    }
-*/
+
+    /*
+        @Override
+        public Utilisateur findUtilisateurByEmail(String email) {
+            return utilisateurRepository.findByEmail(email);
+        }
+    */
     @Override
     public List<Utilisateur> findListUtilisateurByUsername(String username) {
         return utilisateurRepository.findListUtilisateurByUsername(username);
