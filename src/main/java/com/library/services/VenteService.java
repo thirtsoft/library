@@ -23,14 +23,13 @@ public interface VenteService {
     int getNombreVentes(Date d1, Date d2);
     int getNumberOfVente();
 
+    long generateNumeroVente();
+
     BigDecimal countSumsOfVentess();
 
-    Vente findVenteByNumeroVente(int numeroVente);
+    Vente findVenteByNumeroVente(long numeroVente);
     Vente findByStatus(String status);
 
-    /*
-    List<Vente> findListVenteByNumeroVente(String numeroVente);
-*/
     Page<Vente> findAllVenteByPageable(Pageable pageable);
 
     Page<Vente> findVenteByKeyWord(String mc, Pageable pageable);

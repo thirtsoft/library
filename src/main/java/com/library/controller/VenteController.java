@@ -59,6 +59,11 @@ public class VenteController {
         return venteService.countSumsOfVentess();
     }
 
+    @GetMapping("/generateNumeroVente")
+    public long generateNumeroVente() {
+        return venteService.generateNumeroVente();
+    }
+
     @GetMapping("/searchVenteByStatus")
     public Vente getVenteByStatus(@RequestParam("status") String status) {
         return venteService.findByStatus(status);

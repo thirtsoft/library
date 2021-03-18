@@ -45,17 +45,13 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
     List<?> sumTotalOfVenteByYears();
 
     @Query("select p from Vente p where p.numeroVente like :num")
-    Vente findByNumeroVente(@Param("num") int numeroVente);
-/*
-    @Query("select c from Vente c where c.numeroVente like :num")
-    public List<Vente> findListVenteByNumeroVente(@Param("num") String numCommande);
-*/
+    Vente findByNumeroVente(@Param("num") long numeroVente);
 
     @Query("select p from CommandeClient p where p.status like :status")
     Vente findByStatus(@Param("status") String status);
 
     @Query("select c from Vente c where c.status like :status")
-    public List<Vente> ListCommandeClientByStatus(@Param("status") String status);
+    List<Vente> ListCommandeClientByStatus(@Param("status") String status);
 
     List<Vente> findAllByDateVente(Date dateVente);
 

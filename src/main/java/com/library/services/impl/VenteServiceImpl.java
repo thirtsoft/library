@@ -8,6 +8,8 @@ import com.library.repository.VenteRepository;
 import com.library.services.LigneVenteService;
 import com.library.services.ProduitService;
 import com.library.services.VenteService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -162,12 +164,18 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    public long generateNumeroVente() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
+    }
+
+    @Override
     public BigDecimal countSumsOfVentess() {
         return venteRepository.sumTotalOfVentes();
     }
 
     @Override
-    public Vente findVenteByNumeroVente(int numeroVente) {
+    public Vente findVenteByNumeroVente(long numeroVente) {
         return venteRepository.findByNumeroVente(numeroVente);
     }
 
@@ -179,7 +187,7 @@ public class VenteServiceImpl implements VenteService {
     @Override
     public ResponseEntity<Object> deleteVenteClient(Long id) {
         if (!venteRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Vente N ° " + id + "not found");
+            throw new ResourceNotFoundException("Vente Not found");
         }
         venteRepository.deleteById(id);
 

@@ -16,8 +16,8 @@ public interface LigneVenteService {
     LigneVente updateLigneVente(Long lventeId, LigneVente ligneVente);
     ResponseEntity<Object> deleteLigneVente(Long ligneVenteId);
 
-    void deleteLventeByNumero(int numero);
-    List<LigneVente> findAllLventeByNumero(int numero);
+    void deleteLventeByNumero(long numero);
+    List<LigneVente> findAllLventeByNumero(long numero);
 
     List<LigneVente> findLigneVenteByProduitId(Long prodId);
     List<LigneVente> findLigneVenteByVenteId(Long venteId);
