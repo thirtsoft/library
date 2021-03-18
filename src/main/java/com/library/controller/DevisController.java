@@ -48,7 +48,7 @@ public class DevisController {
     }
 
     @GetMapping("/searchDevisByNumeroDevis")
-    public Devis getDevisByNumeroDevis(@RequestParam("num") int numeroDevis) {
+    public Devis getDevisByNumeroDevis(@RequestParam("num") long numeroDevis) {
         return devisService.findByNumeroDevis(numeroDevis);
     }
 
@@ -102,6 +102,11 @@ public class DevisController {
     public List<?> getSumTotalOfDevisByMonth() {
         return devisService.sumTotalOfDevisByMonth();
 
+    }
+
+    @GetMapping("/generateNumeroDevis")
+    public long generateNumeroDevis() {
+        return devisService.generateNumeroDevis();
     }
 
 

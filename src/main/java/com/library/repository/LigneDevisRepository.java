@@ -15,11 +15,11 @@ import java.util.List;
 @Repository
 public interface LigneDevisRepository extends JpaRepository<LigneDevis, Long> {
 
-    List<LigneDevis> findAllByNumero(int numero);
+    List<LigneDevis> findAllByNumero(long numero);
 
     @Modifying
     @Query("delete from LigneDevis where numero = :numero")
-    void deleteByNumero(@Param("numero") int numero);
+    void deleteByNumero(@Param("numero") long numero);
 
     @Query("select p from LigneDevis p where p.produit.id =:prod")
     List<LigneDevis> ListLigneDevisByProduitId(@Param("prod") Long prodId);

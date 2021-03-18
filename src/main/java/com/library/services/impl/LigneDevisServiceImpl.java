@@ -66,7 +66,7 @@ public class LigneDevisServiceImpl implements LigneDevisService {
     }
 
     @Override
-    public void deleteLigneDevisByNumero(int numero) {
+    public void deleteLigneDevisByNumero(long numero) {
         ligneDevisRepository.deleteByNumero(numero);
     }
 
@@ -81,7 +81,7 @@ public class LigneDevisServiceImpl implements LigneDevisService {
     }
 
     @Override
-    public List<LigneDevis> findAllLigneDevisByNumero(int numero) {
+    public List<LigneDevis> findAllLigneDevisByNumero(long numero) {
         return ligneDevisRepository.findAllByNumero(numero);
     }
 

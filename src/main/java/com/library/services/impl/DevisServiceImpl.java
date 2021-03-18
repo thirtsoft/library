@@ -8,6 +8,8 @@ import com.library.repository.DevisRepository;
 import com.library.services.DevisService;
 import com.library.services.LigneDevisService;
 import com.library.services.ProduitService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,7 +148,7 @@ public class DevisServiceImpl implements DevisService {
     }
 
     @Override
-    public Devis findByNumeroDevis(int numeroDevis) {
+    public Devis findByNumeroDevis(long numeroDevis) {
         return devisRepository.findByNumeroDevis(numeroDevis);
     }
 
@@ -168,5 +170,11 @@ public class DevisServiceImpl implements DevisService {
     @Override
     public List<?> sumTotalOfDevisByMonth() {
         return devisRepository.sumTotalOfDevisByMonth();
+    }
+
+    @Override
+    public long generateNumeroDevis() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
     }
 }

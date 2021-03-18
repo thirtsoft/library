@@ -37,7 +37,7 @@ public class LigneDevisController {
     }
 
     @GetMapping("/ldeviss/{id}")
-    public List<LigneDevis> getAllByNumero(@PathVariable(value = "id") int numero) {
+    public List<LigneDevis> getAllByNumero(@PathVariable(value = "id") long numero) {
         System.out.println("Get all Lcomms...");
 
         List<LigneDevis> Ldevis = new ArrayList<>();

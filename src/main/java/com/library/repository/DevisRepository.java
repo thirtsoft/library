@@ -24,11 +24,11 @@ public interface DevisRepository extends JpaRepository<Devis, Long> {
     BigDecimal countNumbersOfDevis();
 
     @Query("select p from Devis p where p.numeroDevis like :num")
-    Devis findByNumeroDevis(@Param("num") int numeroDevis);
+    Devis findByNumeroDevis(@Param("num") long numeroDevis);
 
 
 
-    public List<Devis> findAllByDateDevis(Date dateDevis);
+    List<Devis> findAllByDateDevis(Date dateDevis);
 
     @Query("select EXTRACT(month from(c.dateDevis)), count(c) from Devis c group by EXTRACT(month from(c.dateDevis))")
     List<?> countNumberOfDevisByMonth();

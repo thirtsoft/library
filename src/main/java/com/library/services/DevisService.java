@@ -22,7 +22,7 @@ public interface DevisService {
 
     BigDecimal countNumbersOfDevis();
 
-    Devis findByNumeroDevis(int numeroDevis);
+    Devis findByNumeroDevis(long numeroDevis);
 
     List<Devis> findDevisByClientId(Long clientId);
 
@@ -30,5 +30,7 @@ public interface DevisService {
 
     List<?> countNumberTotalOfDevisByMonth();
     List<?> sumTotalOfDevisByMonth();
+
+    long generateNumeroDevis();
 
 }

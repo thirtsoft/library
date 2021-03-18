@@ -21,7 +21,7 @@ public class Devis implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int numeroDevis;
+    private long numeroDevis;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateDevis;
@@ -42,7 +42,7 @@ public class Devis implements Serializable {
 
     }
 
-    public Devis(Long id, int numeroDevis, Date dateDevis, Client client, @Valid List<LigneDevis> ldevis, double totalDevis, String status) {
+    public Devis(Long id, long numeroDevis, Date dateDevis, Client client, @Valid List<LigneDevis> ldevis, double totalDevis, String status) {
         this.id = id;
         this.numeroDevis = numeroDevis;
         this.dateDevis = dateDevis;
@@ -60,11 +60,11 @@ public class Devis implements Serializable {
         this.id = id;
     }
 
-    public int getNumeroDevis() {
+    public long getNumeroDevis() {
         return numeroDevis;
     }
 
-    public void setNumeroDevis(int numeroDevis) {
+    public void setNumeroDevis(long numeroDevis) {
         this.numeroDevis = numeroDevis;
     }
 
