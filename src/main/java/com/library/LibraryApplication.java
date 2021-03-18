@@ -1,21 +1,14 @@
 package com.library;
 
-import com.library.entities.*;
 import com.library.repository.CategoryRepository;
 import com.library.repository.ClientRepository;
 import com.library.repository.ProduitRepository;
 import com.library.repository.ScategorieRepository;
 import com.library.services.AccountService;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
-import java.util.Date;
 
 @SpringBootApplication
 public class LibraryApplication implements CommandLineRunner {
@@ -38,9 +31,7 @@ public class LibraryApplication implements CommandLineRunner {
     }
 
 
-
-
-   // @Bean
+    // @Bean
   /*  public BCryptPasswordEncoder getBCPE() {
         return new BCryptPasswordEncoder();
     }
@@ -80,7 +71,6 @@ public class LibraryApplication implements CommandLineRunner {
         accountService.addRoleToUtilisateur("admin", "USER");
         accountService.addRoleToUtilisateur("user", "USER");
 */
-
 
 
     }
