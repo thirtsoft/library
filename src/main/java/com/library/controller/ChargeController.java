@@ -57,14 +57,6 @@ public class ChargeController {
         return chargeService.findAllChargesByPageable(PageRequest.of(page, size));
     }
 
-    @GetMapping("/searchListChargesByKeyword")
-    public Page<Charge> getAllChargesByKeyword(@RequestParam(name = "mc") String mc,
-                                                 @RequestParam(name = "page") int page,
-                                                 @RequestParam(name = "size") int size) {
-        return chargeService.findChargesByKeyWord("%"+mc+"%", PageRequest.of(page, size));
-
-    }
-
     @PostMapping("/charges")
     public ResponseEntity<Charge> createCharge(@RequestBody Charge charge) {
         if (chargeService.findChargeByCodeCharge(charge.getCodeCharge()) != null) {

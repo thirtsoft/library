@@ -24,7 +24,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-//@RequestMapping("/alAmine")
 @RequestMapping("/prodApi")
 public class CommandeClientController {
 
@@ -36,13 +35,6 @@ public class CommandeClientController {
 
     @Autowired
     private ClientService clientService;
-/*
-	@Autowired
-	private CommandeClientRepository commandeClientRepository;
-	
-	@Autowired
-	private LigneCmdClientRepository ligneCmdClientRepository;
-*/
 
     @Autowired
     private ReportService reportCommande;
@@ -59,13 +51,13 @@ public class CommandeClientController {
     public ResponseEntity<CommandeClient> getCommandeClientById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         CommandeClient commandeClient = commandeClientService.findCommandeClientById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Commande that id is" + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Commande not found"));
         return ResponseEntity.ok().body(commandeClient);
 
     }
 
     @GetMapping("/searchCommandeByNumeroCommande")
-    public CommandeClient getCommandeClientByNumeroCommande(@RequestParam("num") int numeroCommande) {
+    public CommandeClient getCommandeClientByNumeroCommande(@RequestParam("num") long numeroCommande) {
         return commandeClientService.findByNumeroCommande(numeroCommande);
     }
 

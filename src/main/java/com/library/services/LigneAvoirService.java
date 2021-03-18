@@ -20,6 +20,6 @@ public interface LigneAvoirService {
 
     List<LigneAvoir> findLigneAvoirByProduitId(Long prodId);
     List<LigneAvoir> findLigneAvoirByAvoirId(Long comId);
-    List<LigneAvoir> findAllLavoirByNumero(int numero);
+    List<LigneAvoir> findAllLavoirByNumero(long numero);
 
 }

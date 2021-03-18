@@ -27,16 +27,16 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 	BigDecimal countNumbersOfCommandes();
 	
 	@Query("select p from CommandeClient p where p.numeroCommande like :num")
-	CommandeClient findByNumeroCommande(@Param("num") int numeroCommande);
+	CommandeClient findByNumeroCommande(@Param("num") long numeroCommande);
 	
 
 	@Query("select p from CommandeClient p where p.status like :status")
 	CommandeClient findByStatus(@Param("status") String status);
 	
 	@Query("select c from CommandeClient c where c.status like :status") 
-	public List<CommandeClient> ListCommandeClientByStatus(@Param("status") String status);
+	List<CommandeClient> ListCommandeClientByStatus(@Param("status") String status);
 
-	public List<CommandeClient> findAllByDateCommande(Date dateCommande);
+	List<CommandeClient> findAllByDateCommande(Date dateCommande);
 
 	@Query("select EXTRACT(month from(c.dateCommande)), count(c) from CommandeClient c group by EXTRACT(month from(c.dateCommande))")
 	List<?> countNumberOfCommandeByMonth();
@@ -45,13 +45,13 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 	List<?> sumTotalOfCommandeByMonth();
 
 	@Query("select p from CommandeClient p where p.client.id =:id")
-	public Page<CommandeClient> findCommandeClientByClientId(@Param("id") Long clientId, Pageable pageable);
+	Page<CommandeClient> findCommandeClientByClientId(@Param("id") Long clientId, Pageable pageable);
 	
 	@Query("select p from CommandeClient p where p.client.id =:cl")
-	public List<CommandeClient> ListCommandeClientByClientId(@Param("cl") Long clientId);
+	List<CommandeClient> ListCommandeClientByClientId(@Param("cl") Long clientId);
 		
 	@Query("select p from CommandeClient p")
-	public Page<CommandeClient> findAllCommandeClientByPageable(Pageable pageable);
+	Page<CommandeClient> findAllCommandeClientByPageable(Pageable pageable);
 
 
 }

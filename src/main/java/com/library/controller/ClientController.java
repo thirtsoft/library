@@ -15,7 +15,6 @@ import com.library.services.ClientService;
 
 @RestController
 @CrossOrigin
-//@RequestMapping("/alAmine")
 @RequestMapping("/prodApi")
 public class ClientController {
 	
@@ -32,7 +31,7 @@ public class ClientController {
 	public ResponseEntity<Client> getClientById(@PathVariable(value = "id") Long id)
 			throws ResourceNotFoundException{
 		Client client = clientService.findClientById(id)
-				.orElseThrow(()-> new ResourceNotFoundException("Client that id is" + id + "not found"));
+				.orElseThrow(()-> new ResourceNotFoundException("Client not found"));
 		return ResponseEntity.ok().body(client);
 		
 	}

@@ -51,7 +51,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public Optional<CommandeClient> findCommandeClientById(Long comId) {
         if (!commandeClientRepository.existsById(comId)) {
-            throw new ResourceNotFoundException("CommandeClient that id is" + comId + "not found");
+            throw new ResourceNotFoundException("CommandeClient not found");
         }
 
         return commandeClientRepository.findById(comId);
@@ -137,7 +137,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         commande.setTotalCommande(total);
         commande.setStatus("valider");
-        // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
         commande.setDateCommande(new Date());
 
         return commandeClientRepository.save(commande);
@@ -215,7 +214,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         Optional<CommandeClient> cmdClient = commandeClientRepository.findById(comId);
 
         if (!cmdClient.isPresent()) {
-            throw new ResourceNotFoundException("Commande that id is" + comId + "not found");
+            throw new ResourceNotFoundException("Commande not found");
         }
 
         CommandeClient cmdClientResult = cmdClient.get();
@@ -232,7 +231,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public ResponseEntity<Object> deleteCommandeClient(Long id) {
         if (!commandeClientRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Commande that id is" + id + "not found");
+            throw new ResourceNotFoundException("Commande not found");
         }
 
         commandeClientRepository.deleteById(id);
@@ -257,7 +256,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
-    public CommandeClient findByNumeroCommande(int numeroCommande) {
+    public CommandeClient findByNumeroCommande(long numeroCommande) {
         return commandeClientRepository.findByNumeroCommande(numeroCommande);
     }
 

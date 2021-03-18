@@ -1,17 +1,13 @@
 package com.library.controller;
 
 import com.library.entities.Avoir;
-import com.library.entities.Creance;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AvoirService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -30,7 +26,7 @@ public class AvoirController {
     public ResponseEntity<Avoir> getAvoirById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Avoir avoir = avoirService.findAvoirById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Avoir that id is" + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Avoir that id is" + id + "not found"));
         return ResponseEntity.ok().body(avoir);
 
     }
@@ -52,7 +48,7 @@ public class AvoirController {
 
     @GetMapping("/searchListAvoirsByLibelle")
     public List<Avoir> getAllAvoirsByLibelle(@RequestParam(name = "lib") String libelle) {
-        return avoirService.findListAvoirByLibelle("%"+libelle+"%");
+        return avoirService.findListAvoirByLibelle("%" + libelle + "%");
     }
 
     @GetMapping("/searchListAvoirsByFournisseurId")
@@ -84,7 +80,7 @@ public class AvoirController {
     }
 
     @DeleteMapping("/avoirs/{id}")
-    public void deleteAvoir(@PathVariable(value = "id")Long id) {
+    public void deleteAvoir(@PathVariable(value = "id") Long id) {
         avoirService.deleteAvoir(id);
     }
 

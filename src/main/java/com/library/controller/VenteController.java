@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
-//@RequestMapping("/alAmine")
 @RequestMapping("/apiSeller")
 public class VenteController {
     @Autowired
@@ -33,7 +31,7 @@ public class VenteController {
     @GetMapping("/ventes/{id}")
     public ResponseEntity<Vente> getVenteById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
         Vente vente = venteService.findVenteById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Vente N ° " + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Vente Not found"));
         return ResponseEntity.ok().body(vente);
 
     }
@@ -95,14 +93,9 @@ public class VenteController {
         return new ResponseEntity<>(venteService.saveVente(vente), HttpStatus.OK);
 
     }
-/*
+
     @DeleteMapping("/ventes/{id}")
-    public ResponseEntity<Object> deleteVente(@PathVariable(value = "id") Long id) {
-        return venteService.deleteVenteClient(id);
-    }
-*/
-    @DeleteMapping("/ventes/{id}")
-    public void deleteVente(@PathVariable(value = "id")Long id) {
+    public void deleteVente(@PathVariable(value = "id") Long id) {
         venteService.deleteVente(id);
         //return new ResponseEntity<>(HttpStatus.OK);
     }

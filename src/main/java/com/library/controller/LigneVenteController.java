@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-//@RequestMapping("/alAmine")
 @RequestMapping("/apiSeller")
 public class LigneVenteController {
 
@@ -32,13 +31,13 @@ public class LigneVenteController {
     public ResponseEntity<LigneVente> getLigneVenteById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         LigneVente ligneVente = ligneVenteService.findLigneVenteById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Ligne Vente N° " + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Ligne Vente Not found"));
         return ResponseEntity.ok().body(ligneVente);
 
     }
 
     @GetMapping("/lventes/{id}")
-    public List<LigneVente> getAllByNumero(@PathVariable(value = "id") int numero) {
+    public List<LigneVente> getAllByNumero(@PathVariable(value = "id") long numero) {
         System.out.println("Get all Lventes...");
 
         List<LigneVente> Lventes = new ArrayList<>();
@@ -47,16 +46,15 @@ public class LigneVenteController {
         return Lventes;
     }
 
-
     @GetMapping("/searchListLigneVentestByProduitId")
     public List<LigneVente> getAllLigneVenteByProduitId(@RequestParam("prodId") Long prodId) {
         return ligneVenteService.findLigneVenteByProduitId(prodId);
     }
 
     @GetMapping("/searchListLigneVentesByProduitPageable")
-    public Page<LigneVente> getAllProduitsByPageable(@RequestParam(name = "prod")Long prodId,
-                                                         @RequestParam(name = "page") int page,
-                                                         @RequestParam(name = "size") int size) {
+    public Page<LigneVente> getAllProduitsByPageable(@RequestParam(name = "prod") Long prodId,
+                                                     @RequestParam(name = "page") int page,
+                                                     @RequestParam(name = "size") int size) {
         return ligneVenteService.findAllLigneVenteByProduit(prodId, PageRequest.of(page, size));
     }
 
@@ -66,24 +64,25 @@ public class LigneVenteController {
     }
 
     @GetMapping("/searchListLigneVentesByVentePageable")
-    public Page<LigneVente> getAllLigneVenteByPageable(@RequestParam(name = "prod")Long comId,
-                                                         @RequestParam(name = "page") int page,
-                                                         @RequestParam(name = "size") int size) {
+    public Page<LigneVente> getAllLigneVenteByPageable(@RequestParam(name = "prod") Long comId,
+                                                       @RequestParam(name = "page") int page,
+                                                       @RequestParam(name = "size") int size) {
         return ligneVenteService.findAllLigneVenteByVente(comId, PageRequest.of(page, size));
     }
 
     @PostMapping("/ligneVentes")
     public ResponseEntity<LigneVente> createLigneVente(@RequestBody LigneVente ligneVente) {
-    //    return ligneVenteService.saveLigneVente(ligneVente);
+        //    return ligneVenteService.saveLigneVente(ligneVente);
         return new ResponseEntity<LigneVente>(ligneVenteService.saveLigneVente(ligneVente), HttpStatus.CREATED);
     }
 
     @PutMapping("/ligneVentes/{lcId}")
-    public ResponseEntity<LigneVente>  updateLigneVente(@PathVariable(value = "lventeId") Long lventeId, @RequestBody LigneVente ligneVente) {
+    public ResponseEntity<LigneVente> updateLigneVente(@PathVariable(value = "lventeId") Long lventeId, @RequestBody LigneVente ligneVente) {
         ligneVente.setId(lventeId);
         return new ResponseEntity<>(ligneVenteService.saveLigneVente(ligneVente), HttpStatus.OK);
 
     }
+
     @DeleteMapping("/ligneVentes/{id}")
     public ResponseEntity<Object> deleteLigneVente(@PathVariable(value = "id") Long id) {
         return ligneVenteService.deleteLigneVente(id);

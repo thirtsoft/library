@@ -11,8 +11,6 @@ import com.library.utils.ExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,34 +59,9 @@ public class CategoryController {
 
     }
 
-    /*@GetMapping("/searchCategoryByCode")
-    public CategoryModel getCategoryByCode(@RequestParam(value = "code") String code) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.findByCode(code));
-    }
-
-    @GetMapping("/searchListCategoryByCode")
-    public List<CategoryModel> getAllCategoryByCode(@RequestParam(value = "c") String code) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.ListCategoryByDesignation("%" + code + "%"));
-    }
-
-    @GetMapping("/searchCategoryByDesignation")
-    public CategoryModel getCategoryByDesignation(@RequestParam(value = "des") String designation) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.findByDesignation(designation));
-    }*/
-
-    /*@GetMapping("/searchListCategoryByDesignation")
-    public List<CategoryModel> getAllCategoryByDesignation(@RequestParam(value = "des") String designation) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.ListCategoryByDesignation("%" + designation + "%"));
-    }
-
-    @GetMapping("/searchListCategoryByPageable")
-    public Page<Category> getAllCategoryByPageable(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        return categoryService.findAllCategoryByPage(PageRequest.of(page, size));
-    }*/
-
     @PostMapping("/categories")
     //@PostMapping
-    public ResponseEntity<CategoryModel>  createCategory(@RequestBody Category category) {
+    public ResponseEntity<CategoryModel> createCategory(@RequestBody Category category) {
         return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category)), HttpStatus.OK);
 
     }

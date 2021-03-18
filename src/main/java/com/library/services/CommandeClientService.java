@@ -30,7 +30,7 @@ public interface CommandeClientService {
 
     BigDecimal countNumbersOfCommandes();
 
-    CommandeClient findByNumeroCommande(int numeroCommande);
+    CommandeClient findByNumeroCommande(long numeroCommande);
 
     CommandeClient findByStatus(String status);
 

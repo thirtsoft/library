@@ -5,7 +5,6 @@ import com.library.message.ResponseMessage;
 import com.library.services.ExcelService;
 import com.library.services.ProduitService;
 import com.library.utils.ExcelUtils;
-import org.apache.poi.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
@@ -73,12 +72,7 @@ public class ProduitController {
     public List<Produit> getAllProduitsByDesignation(@RequestParam(name = "des") String designation) {
         return produitService.findListProduitByDesignation("%" + designation + "%");
     }
-/*
-    @GetMapping("/searchListProduitsByCategoryId")
-    public List<Produit> getAllProduitsByCategoryId(@RequestParam("caId") Long catId) {
-        return produitService.findProductByCateoryId(catId);
-    }
-*/
+
     @GetMapping("/searchListProduitsByScategoryId")
     public List<Produit> getAllProduitsByScategoryId(@RequestParam("scaId") Long scatId) {
         return produitService.findProductByScateoryId(scatId);
@@ -107,10 +101,9 @@ public class ProduitController {
         return produitService.countNumberOfProduitWithStoc();
     }
 
-
     @PostMapping("/produits")
     public ResponseEntity<Produit> saveProduit(@RequestBody Produit produit) {
-        if (produitService.findByReference(produit.getReference()) !=null) {
+        if (produitService.findByReference(produit.getReference()) != null) {
             return new ResponseEntity<Produit>(produit, HttpStatus.BAD_REQUEST);
         }
         produitService.saveProduit(produit);
@@ -118,7 +111,7 @@ public class ProduitController {
     }
 
     @PutMapping("/produits/{prodId}")
-    public ResponseEntity<Produit>  updateProduit(@PathVariable Long prodId, @RequestBody Produit produit) {
+    public ResponseEntity<Produit> updateProduit(@PathVariable Long prodId, @RequestBody Produit produit) {
         produit.setId(prodId);
         return new ResponseEntity<>(produitService.updateProduit(prodId, produit), HttpStatus.OK);
     }
@@ -194,7 +187,6 @@ public class ProduitController {
         }
 
     }
-
 
     @GetMapping(value = "/download/articles.xlsx")
     public ResponseEntity<InputStreamResource> excelProduitsReport() throws IOException {

@@ -27,7 +27,6 @@ import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
-//@RequestMapping("/alAmine")
 @RequestMapping("/prodApi")
 public class LigneCmdClientController {
 	
@@ -56,7 +55,6 @@ public class LigneCmdClientController {
 		List<LigneCmdClient> Lcomms = new ArrayList<>();
 		ligneCmdClientService.findAllLcomByNumero(numero).forEach(Lcomms::add);
 
-
 		return Lcomms;
 	}
 	
@@ -77,7 +75,6 @@ public class LigneCmdClientController {
 		return ligneCmdClientService.findLigneCmdClientByCommandeClientId(comId);
 	}
 
-
 	@GetMapping("/searchListLigneCmdClientByCommandePageable")
 	public Page<LigneCmdClient> getAllCommandeByPageable(@RequestParam(name = "prod")Long comId,
 			@RequestParam(name = "page") int page,
@@ -97,6 +94,7 @@ public class LigneCmdClientController {
 		return new ResponseEntity<>(ligneCmdClientService.saveLigneCmdClient(ligneCmdClient), HttpStatus.OK);
 		
 	}
+
 	@DeleteMapping("/ligneCommandes/{id}")
 	public ResponseEntity<Object> deleteLigneCmdClient(@PathVariable(value = "id") Long id) {
 		return ligneCmdClientService.deleteLigneCmdClient(id);
