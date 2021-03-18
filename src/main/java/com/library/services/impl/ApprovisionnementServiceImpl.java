@@ -8,6 +8,8 @@ import com.library.repository.ApprovisionnementRepository;
 import com.library.services.ApprovisionnementService;
 import com.library.services.LigneApprovisionnementService;
 import com.library.services.ProduitService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,14 +43,14 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     @Override
     public Optional<Approvisionnement> findApprovisionnementById(Long approId) {
         if (!approvisionnementRepository.existsById(approId)) {
-            throw new ResourceNotFoundException("Approvisionnement N° " + approId + "not found");
+            throw new ResourceNotFoundException("Approvisionnement Not found");
         }
 
         return approvisionnementRepository.findById(approId);
     }
 
     @Override
-    public Approvisionnement findApprovisionnementByCode(int code) {
+    public Approvisionnement findApprovisionnementByCode(long code) {
         return approvisionnementRepository.findByCode(code);
     }
 
@@ -146,11 +148,11 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     @Override
     public Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement) {
         if (!approvisionnementRepository.existsById(approId)) {
-            throw new ResourceNotFoundException("Approvisionnement N° " + approId + "not found");
+            throw new ResourceNotFoundException("Approvisionnement Not found");
         }
         Optional<Approvisionnement> Appro = approvisionnementRepository.findById(approId);
         if (!Appro.isPresent()) {
-            throw new ResourceNotFoundException("Approvisionnement N ° " + approId + "not found");
+            throw new ResourceNotFoundException("Approvisionnement Not found");
         }
 
         Approvisionnement ApproResult = Appro.get();
@@ -180,6 +182,12 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
             ligneApprovisionnementService.deleteLApproByNumero(approvisionnement.getCode());
             approvisionnementRepository.delete(approvisionnement);
         }
+    }
+
+    @Override
+    public long generateCodeApprovisionnement() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
     }
 
 }

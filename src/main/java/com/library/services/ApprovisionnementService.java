@@ -17,7 +17,7 @@ public interface ApprovisionnementService {
     public Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement);
     public ResponseEntity<Object> deleteApprovisionnement(Long id);
 
-    Approvisionnement findApprovisionnementByCode(int code);
+    Approvisionnement findApprovisionnementByCode(long code);
 
    // public List<Approvisionnement> findListApprovisionnementByCode(String code);
     public List<Approvisionnement> findListApprovisionnementByFournisseurId(Long fourId);
@@ -28,5 +28,7 @@ public interface ApprovisionnementService {
     public Page<Approvisionnement> findApprovisionnementByKeyWord(String mc, Pageable pageable);
 
     void deleteAppro(Long id);
+
+    long generateCodeApprovisionnement();
 
 }

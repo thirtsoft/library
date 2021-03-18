@@ -30,7 +30,7 @@ public class Approvisionnement implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int code;
+    private long code;
     private double montantAvance;
     private double totalAppro;
 
@@ -52,7 +52,7 @@ public class Approvisionnement implements Serializable {
     public Approvisionnement() {
     }
 
-    public Approvisionnement(Long id, int code, double montantAvance, double totalAppro, Date dateApprovisionnement, String status, String observation, Fournisseur fournisseur, @Valid List<LigneApprovisionnement> ligneApprovisionnements) {
+    public Approvisionnement(Long id, long code, double montantAvance, double totalAppro, Date dateApprovisionnement, String status, String observation, Fournisseur fournisseur, @Valid List<LigneApprovisionnement> ligneApprovisionnements) {
         this.id = id;
         this.code = code;
         this.montantAvance = montantAvance;
@@ -72,11 +72,11 @@ public class Approvisionnement implements Serializable {
         this.id = id;
     }
 
-    public Integer getCode() {
+    public long getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(long code) {
         this.code = code;
     }
 

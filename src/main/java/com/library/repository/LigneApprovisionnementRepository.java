@@ -15,24 +15,24 @@ import java.util.List;
 @Repository
 public interface LigneApprovisionnementRepository extends JpaRepository<LigneApprovisionnement, Long> {
 
-    List<LigneApprovisionnement> findAllByNumero(int numero);
+    List<LigneApprovisionnement> findAllByNumero(long numero);
 
     @Modifying
     @Query("delete from LigneApprovisionnement where numero = :numero")
-    void deleteByNumero(@Param("numero") int numero);
+    void deleteByNumero(@Param("numero") long numero);
 
     @Query("select p from LigneApprovisionnement p where p.produit.id =:prod")
-    public List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(@Param("prod") Long prodId);
+    List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(@Param("prod") Long prodId);
 
     @Query("select p from LigneApprovisionnement p where p.approvisionnement.id =:num")
-    public List<LigneApprovisionnement> findListLigneApprovisionnementByApprovisionnementId(@Param("num") Long approId);
+    List<LigneApprovisionnement> findListLigneApprovisionnementByApprovisionnementId(@Param("num") Long approId);
 
     @Query("select p from LigneApprovisionnement p where p.approvisionnement.id =:id")
-    public Page<LigneApprovisionnement> findLigneApprovisionnementByApprovisionnementPageable(@Param("id") Long approId, Pageable pageable);
+    Page<LigneApprovisionnement> findLigneApprovisionnementByApprovisionnementPageable(@Param("id") Long approId, Pageable pageable);
 
     @Query("select p from LigneApprovisionnement p where p.produit.id =:id")
-    public Page<LigneApprovisionnement> findLigneApprovisionnementByProduitPageable(@Param("id") Long prodId, Pageable pageable);
+    Page<LigneApprovisionnement> findLigneApprovisionnementByProduitPageable(@Param("id") Long prodId, Pageable pageable);
 
     @Query("select p from LigneApprovisionnement p")
-    public Page<LigneApprovisionnement> findAllLigneApprovisionnementByPageable(Pageable pageable);
+    Page<LigneApprovisionnement> findAllLigneApprovisionnementByPageable(Pageable pageable);
 }

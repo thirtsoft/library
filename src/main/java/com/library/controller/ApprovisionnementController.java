@@ -111,4 +111,9 @@ public class ApprovisionnementController {
         return approvisionnementService.deleteApprovisionnement(ApproId);
     }
     */
+
+    @GetMapping("/generateCodeAppro")
+    public long generateCodeApprovisionnement() {
+        return approvisionnementService.generateCodeApprovisionnement();
+    }
 }

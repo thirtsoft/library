@@ -30,7 +30,7 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
     @Override
     public Optional<LigneApprovisionnement> findLigneApprovisionnementById(Long lApproId) {
         if (!ligneApprovisionnementRepository.existsById(lApproId)) {
-            throw new ResourceNotFoundException("Ligne Approvisionement N° " + lApproId + "not found");
+            throw new ResourceNotFoundException("Ligne Approvisionement Not found");
         }
         return ligneApprovisionnementRepository.findById(lApproId);
     }
@@ -96,12 +96,12 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
     }
 
     @Override
-    public void deleteLApproByNumero(int numero) {
+    public void deleteLApproByNumero(long numero) {
         ligneApprovisionnementRepository.deleteByNumero(numero);
     }
 
     @Override
-    public List<LigneApprovisionnement> findAllLApproByNumero(int numero) {
+    public List<LigneApprovisionnement> findAllLApproByNumero(long numero) {
         return ligneApprovisionnementRepository.findAllByNumero(numero);
     }
 }
