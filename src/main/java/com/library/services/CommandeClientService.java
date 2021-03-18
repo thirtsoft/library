@@ -60,4 +60,5 @@ public interface CommandeClientService {
      * @return
      */
     long generateCodeCommand();
+
 }

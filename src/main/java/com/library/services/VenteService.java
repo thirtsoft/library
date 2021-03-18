@@ -8,19 +8,22 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface VenteService {
 
     List<Vente> findAllVentes();
+
     Optional<Vente> findVenteById(Long venteId);
+
     Vente saveVente(Vente vente);
 
     Vente updateVente(Long venteId, Vente vente);
+
     ResponseEntity<Object> deleteVenteClient(Long id);
 
     int getNombreVentes(Date d1, Date d2);
+
     int getNumberOfVente();
 
     long generateNumeroVente();
@@ -28,6 +31,7 @@ public interface VenteService {
     BigDecimal countSumsOfVentess();
 
     Vente findVenteByNumeroVente(long numeroVente);
+
     Vente findByStatus(String status);
 
     Page<Vente> findAllVenteByPageable(Pageable pageable);
@@ -43,7 +47,9 @@ public interface VenteService {
     Integer countNumberOfVenteByDay();
 
     List<?> countNumberTotalOfVenteByMonth();
+
     List<?> sumTotalOfVenteByMonth();
+
     List<?> sumTotalOfVenteByYears();
 
 }

@@ -10,5 +10,4 @@ public interface SMSService {
 
     Message sendSMSToClient(Client client);
 
-
 }
