@@ -1,7 +1,6 @@
 package com.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonGetter;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -120,4 +119,5 @@ public class Devis implements Serializable {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

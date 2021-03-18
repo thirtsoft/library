@@ -7,12 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneAvoir")
-/*@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString*/
 public class LigneAvoir implements Serializable {
 	/**
 	 *

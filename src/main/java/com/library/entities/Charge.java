@@ -36,4 +36,5 @@ public class Charge implements Serializable {
 	@JoinColumn(name="catCharge_id")
 	private CategorieCharge categorieCharge;
 
+
 }

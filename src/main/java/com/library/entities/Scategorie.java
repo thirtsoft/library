@@ -16,7 +16,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Scategorie implements Serializable {
-	
 	/**
 	 * 
 	 */
@@ -31,4 +30,5 @@ public class Scategorie implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="cat_id")
 	private Category categorie;
+
 }

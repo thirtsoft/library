@@ -39,5 +39,6 @@ public class Versement implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="empId", nullable = false)
 	private Employe employe;
+
 }
 

@@ -12,12 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "commandeClient")
-/*@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString */
 public class CommandeClient implements Serializable {
     /**
      *
@@ -28,9 +22,6 @@ public class CommandeClient implements Serializable {
     private Long id;
     private long numeroCommande;
 
-    /*@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd") */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateCommande;
 
@@ -132,4 +123,5 @@ public class CommandeClient implements Serializable {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

@@ -1,22 +1,12 @@
 package com.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneApprovisionnement")
-
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@ToString
 public class LigneApprovisionnement implements Serializable {
     /**
      *
@@ -30,18 +20,18 @@ public class LigneApprovisionnement implements Serializable {
     private double prix;
     private double prixAppro;
 
-   // @ManyToOne
+    // @ManyToOne
     //@JoinColumn(name="Appro_id")
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name="Appro_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Appro_id")
     @JsonIgnoreProperties(value = {"ligneApprovisionnements"})
     private Approvisionnement approvisionnement;
 
     @ManyToOne
-    @JoinColumn(name="prod_id")
-  //  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name = "prod_id")
+    //  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Produit produit;
 
     public LigneApprovisionnement() {
@@ -112,4 +102,5 @@ public class LigneApprovisionnement implements Serializable {
     public void setProduit(Produit produit) {
         this.produit = produit;
     }
+
 }

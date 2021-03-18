@@ -87,4 +87,5 @@ public class Email implements Serializable {
                 ", message='" + message + '\'' +
                 '}';
     }
+
 }

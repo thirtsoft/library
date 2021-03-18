@@ -31,5 +31,6 @@ public class Stock implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="prod_id", nullable = false)
 	private Produit produit;
+
 }
 

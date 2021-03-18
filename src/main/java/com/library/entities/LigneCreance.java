@@ -7,12 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneCreance")
-/*@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString*/
 public class LigneCreance implements Serializable {
 	/**
 	 *
@@ -94,5 +88,7 @@ public class LigneCreance implements Serializable {
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
+
 }
+
 

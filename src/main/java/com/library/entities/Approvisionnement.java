@@ -1,11 +1,6 @@
 package com.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -16,11 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "approvisionnement")
-
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@ToString
 public class Approvisionnement implements Serializable {
     /**
      *
@@ -34,7 +24,7 @@ public class Approvisionnement implements Serializable {
     private double montantAvance;
     private double totalAppro;
 
-   // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    // @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
     private Date dateApprovisionnement;
 
@@ -42,7 +32,7 @@ public class Approvisionnement implements Serializable {
     private String observation;
 
     @ManyToOne
-    @JoinColumn(name="four_id")
+    @JoinColumn(name = "four_id")
     private Fournisseur fournisseur;
 
     @OneToMany(mappedBy = "approvisionnement", fetch = FetchType.LAZY)

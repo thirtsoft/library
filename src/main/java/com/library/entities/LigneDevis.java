@@ -112,4 +112,5 @@ public class LigneDevis implements Serializable {
                 ", produit=" + produit +
                 '}';
     }
+
 }
