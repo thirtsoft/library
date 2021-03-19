@@ -17,38 +17,38 @@ import java.util.Optional;
 
 public interface ContratService {
 
-    List<Contrat> findAllContrats();
+	List<Contrat> findAllContrats();
 
-    Optional<Contrat> findContrattById(Long id);
+	Optional<Contrat> findContratById(Long id);
 
-    Contrat findByReference(String reference);
+	Contrat findByReference(String reference);
 
-    List<Contrat> findListContratByReference(String reference);
+	List<Contrat> findListContratByReference(String reference);
 
-    Contrat findByNature(String nature);
+	Contrat findByNature(String nature);
 
-    List<Contrat> findListContratByNature(String nature);
+	List<Contrat> findListContratByNature(String nature);
 
-    List<Contrat> findContratByClientId(Long clientId);
+	List<Contrat> findContratByClientId(Long clientId);
 
-    Contrat saveContrat(Contrat contrat);
+	Contrat saveContrat(Contrat contrat);
+	Contrat updateContrat(Long id, Contrat contrat);
+	void deleteContrat(Long id);
 
-    Contrat updateContrat(Long id, Contrat contrat);
+	Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException;
 
-    void deleteContrat(Long id);
+	Resource loadFileAsResource(String fileName) throws Exception;
+	
+	
+	Page<Contrat> findAllContratsByPageable(Pageable page);
+	Page<Contrat>findAllContratsByClient(Long clientId, Pageable pageable);
+	
+	Page<Contrat> findContratByKeyWord(String mc, Pageable pageable);
+	
+	boolean createPdf(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+	
+	boolean createExcel(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
-    Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException;
 
-    Resource loadFileAsResource(String fileName) throws Exception;
-
-    Page<Contrat> findAllContratsByPageable(Pageable page);
-
-    Page<Contrat> findAllContratsByClient(Long clientId, Pageable pageable);
-
-    Page<Contrat> findContratByKeyWord(String mc, Pageable pageable);
-
-    boolean createPdf(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
-
-    boolean createExcel(List<Contrat> contrats, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
 }

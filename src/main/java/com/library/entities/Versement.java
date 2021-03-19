@@ -33,6 +33,7 @@ public class Versement implements Serializable {
 	private String nomBank;
 	private Double montantVersement;
 	private String motif;
+	private String fileVersement;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
 	private Date dateVersement;
 

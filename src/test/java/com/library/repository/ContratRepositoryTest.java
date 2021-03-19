@@ -1,15 +1,7 @@
 package com.library.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
+import com.library.entities.Client;
+import com.library.entities.Contrat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -17,8 +9,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
-import com.library.entities.Client;
-import com.library.entities.Contrat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -33,14 +30,14 @@ public class ContratRepositoryTest {
 	@Test
 	@Rollback(false)
 	public void testCreateContrat() {
-		
+
 		Long clientId = (long) 1;
 		Optional<Client> client = clientRepository.findById(clientId);
 
-		Contrat contrat = new Contrat(null, "Cont1", "Prestation",1200, "Logiciel", new Date(), new Date(), "fileName", "file", client.get());
-		
+		Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", "file", new byte[250], client.get());
+
 		Contrat saveContrat = contratRepository.save(contrat);
-		
+
 		assertNotNull(saveContrat);
 	}
 	
@@ -73,9 +70,9 @@ public class ContratRepositoryTest {
 		Long clientId = (long) 2;
 		Optional<Client> client = clientRepository.findById(clientId);
 		Client emp = client.get();
-		
+
 		Contrat contrat = new Contrat(null, contratReference, contratNature, montantContrat,
-				contratDescription, new Date(), new Date(), fileName, contratfile, emp);
+				contratDescription, new Date(), new Date(), fileName, contratfile, new byte[100], emp);
 		
 		contrat.setId((long) 3);
 		contratRepository.save(contrat);
