@@ -1,9 +1,7 @@
 package com.library.controller;
 
 import com.library.entities.Stock;
-import com.library.entities.Versement;
 import com.library.services.StockService;
-import com.library.services.VersementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,22 +39,21 @@ public class StockController {
         return stockService.findStockByProductId(prodId);
     }
 
-
     @GetMapping("/searchListStocksByProduitId")
     public List<Stock> getListStocksByProduitId(@RequestParam("id") Long prodId) {
         return stockService.findListStockByProductId(prodId);
     }
 
     @GetMapping("/searchListVStocksByProduitPageable")
-    public Page<Stock> getAllStocksByProduitIdByPageable(@RequestParam(name = "prod")Long prodId,
-                                                      @RequestParam(name = "page") int page,
-                                                      @RequestParam(name = "size") int size) {
+    public Page<Stock> getAllStocksByProduitIdByPageable(@RequestParam(name = "prod") Long prodId,
+                                                         @RequestParam(name = "page") int page,
+                                                         @RequestParam(name = "size") int size) {
         return stockService.findAllStocksByProduitIdByPageable(prodId, PageRequest.of(page, size));
     }
 
     @GetMapping("/searchListStocksByPageable")
     public Page<Stock> getAllStocksByPageable(@RequestParam(name = "page") int page,
-                                                      @RequestParam(name = "size") int size) {
+                                              @RequestParam(name = "size") int size) {
         return stockService.findAllStocksByPageable(PageRequest.of(page, size));
     }
 
@@ -72,7 +69,7 @@ public class StockController {
     }
 
     @DeleteMapping("/stocks/{id}")
-    public ResponseEntity<Object> deleteStock(@PathVariable(value="id") Long stockId) {
+    public ResponseEntity<Object> deleteStock(@PathVariable(value = "id") Long stockId) {
         return stockService.deleteStock(stockId);
     }
 

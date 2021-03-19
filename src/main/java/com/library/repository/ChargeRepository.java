@@ -18,7 +18,6 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
     @Query("select p from Charge p where p.codeCharge like :code")
     List<Charge> findListCodeCharge(@Param("code") String codeCharge);
 
-
     @Query("select p from Charge p where p.nature like :nat")
     Charge findByNature(@Param("nat") String nature);
 

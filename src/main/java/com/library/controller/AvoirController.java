@@ -1,17 +1,13 @@
 package com.library.controller;
 
 import com.library.entities.Avoir;
-import com.library.entities.Creance;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AvoirService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -30,18 +26,18 @@ public class AvoirController {
     public ResponseEntity<Avoir> getAvoirById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Avoir avoir = avoirService.findAvoirById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Avoir that id is" + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Avoir Not found"));
         return ResponseEntity.ok().body(avoir);
 
     }
 
     @GetMapping("/searchAvoirByReference")
-    public Avoir getAvoirByReference(@RequestParam(name = "ref") int reference) {
+    public Avoir getAvoirByReference(@RequestParam(name = "ref") long reference) {
         return avoirService.findAvoirByReference(reference);
     }
 
     @GetMapping("/searchListAvoirsByReference")
-    public List<Avoir> getAllAvoirsByReference(@RequestParam(name = "ref") int reference) {
+    public List<Avoir> getAllAvoirsByReference(@RequestParam(name = "ref") long reference) {
         return avoirService.findListAvoirByReference(reference);
     }
 
@@ -52,7 +48,7 @@ public class AvoirController {
 
     @GetMapping("/searchListAvoirsByLibelle")
     public List<Avoir> getAllAvoirsByLibelle(@RequestParam(name = "lib") String libelle) {
-        return avoirService.findListAvoirByLibelle("%"+libelle+"%");
+        return avoirService.findListAvoirByLibelle("%" + libelle + "%");
     }
 
     @GetMapping("/searchListAvoirsByFournisseurId")
@@ -84,8 +80,13 @@ public class AvoirController {
     }
 
     @DeleteMapping("/avoirs/{id}")
-    public void deleteAvoir(@PathVariable(value = "id")Long id) {
+    public void deleteAvoir(@PathVariable(value = "id") Long id) {
         avoirService.deleteAvoir(id);
+    }
+
+    @GetMapping("/generateReferneceAvoir")
+    public long generateReferneceAvoir() {
+        return avoirService.generateRefereceAvoir();
     }
 
 }

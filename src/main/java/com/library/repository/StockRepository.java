@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.Produit;
 import com.library.entities.Stock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,18 +14,18 @@ import java.util.List;
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
     @Query("select p from Stock p where p.quantite like :qte")
-    public Stock findByQuantite(@Param("qte") int quantite);
+    Stock findByQuantite(@Param("qte") int quantite);
 
     @Query("select p from Stock p where p.produit.id =:prod")
     Stock findStockByProductId(@Param("prod") Long prodId);
 
     @Query("select p from Stock p where p.produit.id =:prod")
-    public List<Stock> findListStockByProductId(@Param("prod") Long prodId);
+    List<Stock> findListStockByProductId(@Param("prod") Long prodId);
 
     @Query("select p from Stock p where p.produit.id =:id")
-    public Page<Stock> findStockByProduitIdByPageable(@Param("id") Long prodId, Pageable pageable);
+    Page<Stock> findStockByProduitIdByPageable(@Param("id") Long prodId, Pageable pageable);
 
     @Query("select p from Stock p")
-    public Page<Stock> findAllStocksByPageable(Pageable pageable);
+    Page<Stock> findAllStocksByPageable(Pageable pageable);
 
 }

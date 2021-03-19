@@ -8,6 +8,8 @@ import com.library.repository.VenteRepository;
 import com.library.services.LigneVenteService;
 import com.library.services.ProduitService;
 import com.library.services.VenteService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,11 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -43,7 +43,7 @@ public class VenteServiceImpl implements VenteService {
     @Override
     public Optional<Vente> findVenteById(Long venteId) {
         if (!venteRepository.existsById(venteId)) {
-            throw new ResourceNotFoundException("Vente N ° " + venteId + "not found");
+            throw new ResourceNotFoundException("Vente Not found");
         }
 
         return venteRepository.findById(venteId);
@@ -55,7 +55,7 @@ public class VenteServiceImpl implements VenteService {
         if (ligneVente == null || ligneVente.size() == 0) {
             throw new IllegalArgumentException("Vous devez au moins ajouter un produit");
         }
-        for (LigneVente ligneV: ligneVente) {
+        for (LigneVente ligneV : ligneVente) {
             Produit produitInitial = produitService.findProduitById(ligneV.getProduit().getId()).get();
             if (ligneV.getQuantite() > produitInitial.getQtestock()) {
                 throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
@@ -91,7 +91,6 @@ public class VenteServiceImpl implements VenteService {
 
         vente.setTotalVente(total);
         vente.setStatus("valider");
-        // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
         vente.setDateVente(new Date());
 
         return venteRepository.save(vente);
@@ -100,37 +99,34 @@ public class VenteServiceImpl implements VenteService {
 
     /**
      * Commenté le 19/10/2020
+     *
      * @param vente
      * @return
-
-
-    @Override
-    public Vente saveVente(Vente vente) {
-        venteRepository.save(vente);
-
-        List<LigneVente> ligneVentes = vente.getLigneVentes();
-
-        double total = 0;
-        for (LigneVente lvente : ligneVentes) {
-            lvente.setVente(vente);
-            Produit produit = produitService.findProduitById(lvente.getProduit().getId()).get();
-            lvente.setProduit(produit);
-            lvente.setPrixVente(lvente.getProduit().getPrixDetail());
-            ligneVenteService.saveLigneVente(lvente);
-
-            total += lvente.getQuantite() * lvente.getProduit().getPrixDetail();
-
-        }
-
-        vente.setTotalVente(total);
-       // vente.setNumeroVente("Vente " + 20 + (int) (Math.random() * 100));
-        vente.setDateVente(new Date());
-
-
-        return venteRepository.save(vente);
-
-    }
-
+     * @Override public Vente saveVente(Vente vente) {
+     * venteRepository.save(vente);
+     * <p>
+     * List<LigneVente> ligneVentes = vente.getLigneVentes();
+     * <p>
+     * double total = 0;
+     * for (LigneVente lvente : ligneVentes) {
+     * lvente.setVente(vente);
+     * Produit produit = produitService.findProduitById(lvente.getProduit().getId()).get();
+     * lvente.setProduit(produit);
+     * lvente.setPrixVente(lvente.getProduit().getPrixDetail());
+     * ligneVenteService.saveLigneVente(lvente);
+     * <p>
+     * total += lvente.getQuantite() * lvente.getProduit().getPrixDetail();
+     * <p>
+     * }
+     * <p>
+     * vente.setTotalVente(total);
+     * // vente.setNumeroVente("Vente " + 20 + (int) (Math.random() * 100));
+     * vente.setDateVente(new Date());
+     * <p>
+     * <p>
+     * return venteRepository.save(vente);
+     * <p>
+     * }
      */
 
     @Override
@@ -162,12 +158,18 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    public long generateNumeroVente() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
+    }
+
+    @Override
     public BigDecimal countSumsOfVentess() {
         return venteRepository.sumTotalOfVentes();
     }
 
     @Override
-    public Vente findVenteByNumeroVente(int numeroVente) {
+    public Vente findVenteByNumeroVente(long numeroVente) {
         return venteRepository.findByNumeroVente(numeroVente);
     }
 
@@ -179,7 +181,7 @@ public class VenteServiceImpl implements VenteService {
     @Override
     public ResponseEntity<Object> deleteVenteClient(Long id) {
         if (!venteRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Vente N ° " + id + "not found");
+            throw new ResourceNotFoundException("Vente Not found");
         }
         venteRepository.deleteById(id);
 

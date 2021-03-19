@@ -1,45 +1,36 @@
 package com.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneVente")
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@ToString
 public class LigneVente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int numero;
+    private long numero;
     private int quantite;
     private double prixVente;
 
     @ManyToOne
-    @JoinColumn(name="vente_id")
+    @JoinColumn(name = "vente_id")
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @JsonIgnoreProperties(value = {"ligneVentes"})
     private Vente vente;
 
     @ManyToOne
-    @JoinColumn(name="prod_id")
-   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name = "prod_id")
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Produit produit;
 
     public LigneVente() {
     }
 
-    public LigneVente(Long id, int numero, int quantite, double prixVente, Vente vente, Produit produit) {
+    public LigneVente(Long id, long numero, int quantite, double prixVente, Vente vente, Produit produit) {
         this.id = id;
         this.numero = numero;
         this.quantite = quantite;
@@ -56,11 +47,11 @@ public class LigneVente implements Serializable {
         this.id = id;
     }
 
-    public int getNumero() {
+    public long getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(long numero) {
         this.numero = numero;
     }
 

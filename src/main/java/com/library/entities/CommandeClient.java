@@ -1,25 +1,17 @@
 package com.library.entities;
 
-import java.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonGetter;
 
+import javax.persistence.*;
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
-import javax.validation.Valid;
-
-import com.fasterxml.jackson.annotation.*;
-
 @Entity
 @Table(name = "commandeClient")
-/*@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString */
 public class CommandeClient implements Serializable {
     /**
      *
@@ -28,11 +20,8 @@ public class CommandeClient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int numeroCommande;
+    private long numeroCommande;
 
-    /*@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern="yyyy-MM-dd") */
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateCommande;
 
@@ -55,7 +44,7 @@ public class CommandeClient implements Serializable {
         super();
     }
 
-    public CommandeClient(Long id, int numeroCommande, Date dateCommande, Client client, @Valid List<LigneCmdClient> lcomms, double totalCommande, String status) {
+    public CommandeClient(Long id, long numeroCommande, Date dateCommande, Client client, @Valid List<LigneCmdClient> lcomms, double totalCommande, String status) {
         this.id = id;
         this.numeroCommande = numeroCommande;
         this.dateCommande = dateCommande;
@@ -73,11 +62,11 @@ public class CommandeClient implements Serializable {
         this.id = id;
     }
 
-    public int getNumeroCommande() {
+    public long getNumeroCommande() {
         return numeroCommande;
     }
 
-    public void setNumeroCommande(int numeroCommande) {
+    public void setNumeroCommande(long numeroCommande) {
         this.numeroCommande = numeroCommande;
     }
 
@@ -134,4 +123,5 @@ public class CommandeClient implements Serializable {
                 ", status='" + status + '\'' +
                 '}';
     }
+
 }

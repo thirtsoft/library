@@ -71,7 +71,7 @@ public class CategorieChargeController {
 
     @DeleteMapping("/categorieCharges/{id}")
     public ResponseEntity<Object> deleteCategorieCharge(@PathVariable(value = "id") Long id) {
-         catChargeService.deleteCategorieCharge(id);
+        catChargeService.deleteCategorieCharge(id);
         return ResponseEntity.ok().build();
     }
 

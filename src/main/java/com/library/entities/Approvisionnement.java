@@ -1,11 +1,6 @@
 package com.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -16,11 +11,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "approvisionnement")
-
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@ToString
 public class Approvisionnement implements Serializable {
     /**
      *
@@ -30,11 +20,11 @@ public class Approvisionnement implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int code;
+    private long code;
     private double montantAvance;
     private double totalAppro;
 
-   // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    // @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
     private Date dateApprovisionnement;
 
@@ -42,7 +32,7 @@ public class Approvisionnement implements Serializable {
     private String observation;
 
     @ManyToOne
-    @JoinColumn(name="four_id")
+    @JoinColumn(name = "four_id")
     private Fournisseur fournisseur;
 
     @OneToMany(mappedBy = "approvisionnement", fetch = FetchType.LAZY)
@@ -52,7 +42,7 @@ public class Approvisionnement implements Serializable {
     public Approvisionnement() {
     }
 
-    public Approvisionnement(Long id, int code, double montantAvance, double totalAppro, Date dateApprovisionnement, String status, String observation, Fournisseur fournisseur, @Valid List<LigneApprovisionnement> ligneApprovisionnements) {
+    public Approvisionnement(Long id, long code, double montantAvance, double totalAppro, Date dateApprovisionnement, String status, String observation, Fournisseur fournisseur, @Valid List<LigneApprovisionnement> ligneApprovisionnements) {
         this.id = id;
         this.code = code;
         this.montantAvance = montantAvance;
@@ -72,11 +62,11 @@ public class Approvisionnement implements Serializable {
         this.id = id;
     }
 
-    public Integer getCode() {
+    public long getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(long code) {
         this.code = code;
     }
 

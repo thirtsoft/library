@@ -7,12 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneCreance")
-/*@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString*/
 public class LigneCreance implements Serializable {
 	/**
 	 *
@@ -21,7 +15,7 @@ public class LigneCreance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private int numero;
+	private long numero;
 	private int quantite;
 	private double prix;
 
@@ -38,7 +32,7 @@ public class LigneCreance implements Serializable {
 		super();
 	}
 
-	public LigneCreance(Long id, int numero, int quantite, double prix, Creance creance, Produit produit) {
+	public LigneCreance(Long id, long numero, int quantite, double prix, Creance creance, Produit produit) {
 		this.id = id;
 		this.numero = numero;
 		this.quantite = quantite;
@@ -55,11 +49,11 @@ public class LigneCreance implements Serializable {
 		this.id = id;
 	}
 
-	public int getNumero() {
+	public long getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(long numero) {
 		this.numero = numero;
 	}
 
@@ -94,5 +88,7 @@ public class LigneCreance implements Serializable {
 	public void setProduit(Produit produit) {
 		this.produit = produit;
 	}
+
 }
+
 

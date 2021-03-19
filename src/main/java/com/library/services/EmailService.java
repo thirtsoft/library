@@ -11,4 +11,5 @@ public interface EmailService {
     void sendMail(Fournisseur fournisseur);
 
     void sendMailToClient(Client client);
+
 }

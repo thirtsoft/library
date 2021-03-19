@@ -29,7 +29,6 @@ public class ReportServiceImpl implements ReportService {
         Optional<CommandeClient> commandeClient = (commandeClientService.findCommandeClientById(id));
 
 
-
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("chefService", commandeClient.get().getClient().getChefService());
         /*

@@ -20,7 +20,7 @@ public class SMSServiceImpl implements SMSService {
 
 //    public static final String TO_PHONE_NUMBER = "00221773959921";
 
- //   public static final String TEXT = "Bonjour ceci est test de twilio";
+    //   public static final String TEXT = "Bonjour ceci est test de twilio";
 
     @Override
     public Message sendSMSToFournisseur(Fournisseur fournisseur) {

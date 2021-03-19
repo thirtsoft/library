@@ -14,11 +14,11 @@ import java.util.List;
 @Repository
 public interface LigneVenteRepository extends JpaRepository<LigneVente, Long> {
 
-    List<LigneVente> findAllByNumero(int numero);
+    List<LigneVente> findAllByNumero(long numero);
 
     @Modifying
     @Query("delete from LigneVente where numero = :numero")
-    void deleteByNumero(@Param("numero") int numero);
+    void deleteByNumero(@Param("numero") long numero);
 
     @Query("select p from LigneVente p where p.produit.id =:prod")
     List<LigneVente> ListLigneVenteByProduitId(@Param("prod") Long prodId);
@@ -34,5 +34,6 @@ public interface LigneVenteRepository extends JpaRepository<LigneVente, Long> {
 
     @Query("select p from LigneVente p")
     Page<LigneVente> findAllLigneVenteByPageable(Pageable pageable);
+
 
 }

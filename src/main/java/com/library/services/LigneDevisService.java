@@ -8,17 +8,23 @@ import java.util.Optional;
 public interface LigneDevisService {
 
     List<LigneDevis> findAllLigneDevis();
+
     Optional<LigneDevis> findLigneDevisById(Long ldevId);
+
     LigneDevis saveLigneDevis(LigneDevis ligneDevis);
+
     LigneDevis updateLigneDevis(Long ldevId, LigneDevis ligneDevis);
+
     void deleteLigneDevis(Long id);
 
-    void deleteLigneDevisByNumero(int numero);
+    void deleteLigneDevisByNumero(long numero);
 
     List<LigneDevis> findLigneDevisByProduitId(Long prodId);
+
     List<LigneDevis> findLigneDevisByDevId(Long devId);
-    List<LigneDevis> findAllLigneDevisByNumero(int numero);
+
+    List<LigneDevis> findAllLigneDevisByNumero(long numero);
 
 
-    public List<LigneDevis> saveListLigneDevis(List<LigneDevis> ligneDevis);
+    List<LigneDevis> saveListLigneDevis(List<LigneDevis> ligneDevis);
 }

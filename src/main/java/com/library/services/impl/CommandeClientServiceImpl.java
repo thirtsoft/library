@@ -1,34 +1,31 @@
 package com.library.services.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.library.services.*;
+import com.library.entities.CommandeClient;
+import com.library.entities.LigneCmdClient;
+import com.library.entities.Produit;
+import com.library.exceptions.ResourceNotFoundException;
+import com.library.repository.CommandeClientRepository;
+import com.library.services.CommandeClientService;
+import com.library.services.LigneCmdClientService;
+import com.library.services.ProduitService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParseException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.library.entities.Client;
-import com.library.entities.CommandeClient;
-import com.library.entities.LigneCmdClient;
-import com.library.entities.Produit;
-import com.library.exceptions.ResourceNotFoundException;
-import com.library.repository.ClientRepository;
-import com.library.repository.CommandeClientRepository;
-import com.library.repository.LigneCmdClientRepository;
-import com.library.repository.ProduitRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -54,7 +51,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public Optional<CommandeClient> findCommandeClientById(Long comId) {
         if (!commandeClientRepository.existsById(comId)) {
-            throw new ResourceNotFoundException("CommandeClient that id is" + comId + "not found");
+            throw new ResourceNotFoundException("CommandeClient not found");
         }
 
         return commandeClientRepository.findById(comId);
@@ -65,10 +62,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         List<LigneCmdClient> lcmdClient = commandeClient.getLcomms();
         ligneCmdClientService.saveListLigneCmd(lcmdClient);
-        // ligneCmdClientRepository.saveAll(lcmdClient);
-
-//        CommandeClient saveCom = commandeClientRepository.save(commandeClient);
-
 
         double total = 0;
         for (int i = 0; i < lcmdClient.size(); i++) {
@@ -78,7 +71,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             lcdClient.setProduit(produit);
 //			lcdClient.setPrix(produit.getPrixVente());
             ligneCmdClientService.saveLigneCmdClient(lcdClient);
-            // ligneCmdClientRepository.save(lcdClient);
 
             total += lcdClient.getQuantite() * lcdClient.getProduit().getPrixVente();
         }
@@ -87,7 +79,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         commandeClient.setLcomms(lcmdClient);
         return commandeClientRepository.save(commandeClient);
     }
-
 
     /**
      * @param commande
@@ -107,7 +98,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             throw new IllegalArgumentException("Vous devez selectionner un client");
         }
 
-        for (LigneCmdClient lcom :ligneCmd) {
+        for (LigneCmdClient lcom : ligneCmd) {
             Produit produitInitial = produitService.findProduitById(lcom.getProduit().getId()).get();
             if (lcom.getQuantite() > produitInitial.getQtestock()) {
                 throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
@@ -118,7 +109,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         List<LigneCmdClient> ligneCmdClients = commande.getLcomms();
         double total = 0;
-        for (LigneCmdClient lcmdClt: ligneCmdClients) {
+        for (LigneCmdClient lcmdClt : ligneCmdClients) {
             lcmdClt.setCommande(commande);
             lcmdClt.setNumero(commande.getNumeroCommande());
             ligneCmdClientService.saveLigneCmdClient(lcmdClt);
@@ -140,7 +131,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
 
         commande.setTotalCommande(total);
         commande.setStatus("valider");
-        // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
         commande.setDateCommande(new Date());
 
         return commandeClientRepository.save(commande);
@@ -218,7 +208,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         Optional<CommandeClient> cmdClient = commandeClientRepository.findById(comId);
 
         if (!cmdClient.isPresent()) {
-            throw new ResourceNotFoundException("Commande that id is" + comId + "not found");
+            throw new ResourceNotFoundException("Commande not found");
         }
 
         CommandeClient cmdClientResult = cmdClient.get();
@@ -235,7 +225,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public ResponseEntity<Object> deleteCommandeClient(Long id) {
         if (!commandeClientRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Commande that id is" + id + "not found");
+            throw new ResourceNotFoundException("Commande not found");
         }
 
         commandeClientRepository.deleteById(id);
@@ -260,7 +250,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
-    public CommandeClient findByNumeroCommande(int numeroCommande) {
+    public CommandeClient findByNumeroCommande(long numeroCommande) {
         return commandeClientRepository.findByNumeroCommande(numeroCommande);
     }
 
@@ -295,5 +285,9 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         return commandeClientRepository.findCommandeClientByClientId(clientId, pageable);
     }
 
-
+    @Override
+    public long generateCodeCommand() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
+    }
 }

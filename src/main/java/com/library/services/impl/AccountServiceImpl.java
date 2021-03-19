@@ -1,6 +1,7 @@
 package com.library.services.impl;
 
 import com.library.entities.Role;
+import com.library.entities.Utilisateur;
 import com.library.repository.RoleRepository;
 import com.library.repository.UtilisateurRepository;
 import com.library.services.AccountService;
@@ -11,20 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
-/*
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-*/
+    /*
+        @Autowired
+        private BCryptPasswordEncoder bCryptPasswordEncoder;
+    */
     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
     @Autowired
     private RoleRepository roleRepository;
-
-    public AccountServiceImpl(UtilisateurRepository utilisateurRepository, RoleRepository roleRepository) {
-        this.utilisateurRepository = utilisateurRepository;
-        this.roleRepository = roleRepository;
-    }
 
     /*
         @Override
@@ -38,14 +34,14 @@ public class AccountServiceImpl implements AccountService {
     public Role saveRole(Role role) {
         return roleRepository.save(role);
     }
-/*
+
     @Override
     public void addRoleToUtilisateur(String username, String roleName) {
-        Role role = roleRepository.findByRoleName(roleName);
-        Utilisateur utilisateur = utilisateurRepository.findByUsername(username);
-        utilisateur.getRoles().add(role);
 
     }
-*/
 
+    @Override
+    public Utilisateur findUtilisateurByUsername(String username) {
+        return null;
+    }
 }

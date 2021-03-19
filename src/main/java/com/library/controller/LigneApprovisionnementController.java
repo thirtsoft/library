@@ -31,18 +31,17 @@ public class LigneApprovisionnementController {
     public ResponseEntity<LigneApprovisionnement> getLigneApprovisionnementById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         LigneApprovisionnement ligneApprovisionnement = ligneApprovisionnementService.findLigneApprovisionnementById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("LigneCmdClient that id is" + id + "not found"));
+                .orElseThrow(()-> new ResourceNotFoundException("LigneCmdClient not found"));
         return ResponseEntity.ok().body(ligneApprovisionnement);
 
     }
 
     @GetMapping("/lappros/{id}")
-    public List<LigneApprovisionnement> getAllByNumero(@PathVariable(value = "id") int numero) {
+    public List<LigneApprovisionnement> getAllByNumero(@PathVariable(value = "id") long numero) {
         System.out.println("Get all Lappros...");
 
         List<LigneApprovisionnement> lappros = new ArrayList<>();
         ligneApprovisionnementService.findAllLApproByNumero(numero).forEach(lappros::add);
-
 
         return lappros;
     }
@@ -51,13 +50,6 @@ public class LigneApprovisionnementController {
     @GetMapping("/searchListLigneApprovisionnementByProduitId")
     public List<LigneApprovisionnement> getListLigneApprovisionnementByProduitId(@RequestParam("prodId") Long prodId) {
         return ligneApprovisionnementService.findListLigneApprovisionnementByProduitId(prodId);
-    }
-
-    @GetMapping("/searchListLigneApprovisionnementByProduitPageable")
-    public Page<LigneApprovisionnement> getAllLigneApprovisionnementByProduitsByPageable(@RequestParam(name = "prod")Long prodId,
-                                                         @RequestParam(name = "page") int page,
-                                                         @RequestParam(name = "size") int size) {
-        return ligneApprovisionnementService.findAllLigneApprovisionnementByProduit(prodId, PageRequest.of(page, size));
     }
 
     @GetMapping("/searchListLigneApproByApprovisionnementId/{approId}")

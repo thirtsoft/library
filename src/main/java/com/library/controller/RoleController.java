@@ -28,8 +28,21 @@ public class RoleController {
 	public ResponseEntity<Role> getRoleById(@PathVariable(value = "id") Long idRole)
 			throws ResourceNotFoundException{
 		Role role = roleService.findRoleById(idRole)
-				.orElseThrow(()-> new ResourceNotFoundException("Role that id is" + idRole + "not found"));
+				.orElseThrow(()-> new ResourceNotFoundException("Role Not found"));
 		return ResponseEntity.ok().body(role);
+
+	}
+
+	@GetMapping("/searchRoleByNom")
+	public Role getRoleByRoleName(@RequestParam(value = "name") String roleName) {
+		return roleService.findRoleByRoleName(roleName);
+
+	}
+
+	@GetMapping("/searchListRoleByNom")
+	public List<Role> getListRoleByRoleName(@RequestParam(value = "name") String roleName) {
+
+		return roleService.findListRoleByRoleName("%"+roleName+"%");
 
 	}
 
@@ -46,6 +59,7 @@ public class RoleController {
 		return new ResponseEntity<>(roleService.saveRole(role), HttpStatus.OK);
 
 	}
+
 	@DeleteMapping("/roles/{idRole}")
 	public ResponseEntity<Object> deleteRole(@PathVariable(value = "idRole") Long idRole) {
 		roleService.deleteRole(idRole);

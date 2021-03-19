@@ -111,23 +111,12 @@ public class EmployeController {
 		return employeService.findAllEmployeByPage(PageRequest.of(page, size));
 	}
 	
-	@GetMapping(value = "/searchListEmployeByPageableParMotCle")
-	public Page<Employe> getAllEmployesByKeyWord(@RequestParam(name="mc", defaultValue="") String mc, 
-			@RequestParam(name = "page") int page,
-			@RequestParam(name = "size") int size) {
-		return employeService.findEmployeByKeyWord("%"+mc+"%", PageRequest.of(page, size));
-	}
-	
 	@PostMapping("/employes") 
 	public ResponseEntity<Employe> createEmploye(@RequestBody Employe employe) {
 		if (employeService.findByEmail(employe.getEmail()) != null) {
 			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
 		}
-		/*
-		if (employeService.findByCni(employe.getCni()) !=null) {
-			return new ResponseEntity<Employe>(employe, HttpStatus.BAD_REQUEST);
-		}
-		*/
+
 		employeService.saveEmploye(employe);
 		return new ResponseEntity<Employe>(employe, HttpStatus.CREATED);
 	}

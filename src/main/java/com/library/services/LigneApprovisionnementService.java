@@ -11,19 +11,27 @@ import java.util.Optional;
 public interface LigneApprovisionnementService {
 
     List<LigneApprovisionnement> findAllLigneApprovisionnements();
+
     Optional<LigneApprovisionnement> findLigneApprovisionnementById(Long lApproId);
+
     LigneApprovisionnement saveLigneApprovisionnement(LigneApprovisionnement ligneApprovisionnement);
+
     LigneApprovisionnement updateLigneApprovisionnement(Long lApproId, LigneApprovisionnement ligneApprovisionnement);
+
     ResponseEntity<Object> deleteLigneApprovisionnement(Long lApproid);
 
-    void deleteLApproByNumero(int numero);
-    List<LigneApprovisionnement> findAllLApproByNumero(int numero);
+    void deleteLApproByNumero(long numero);
+
+    List<LigneApprovisionnement> findAllLApproByNumero(long numero);
 
     List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(Long prodId);
+
     List<LigneApprovisionnement> findListLigneApprovisionnementByApprovisionnementId(Long approId);
 
     Page<LigneApprovisionnement> findAllLigneApprovisionnementByPageable(Pageable pageable);
+
     Page<LigneApprovisionnement> findAllLigneApprovisionnementByApproviosionnement(Long approId, Pageable pageable);
+
     Page<LigneApprovisionnement> findAllLigneApprovisionnementByProduit(Long prodId, Pageable pageable);
 
 }

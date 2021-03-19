@@ -1,22 +1,12 @@
 package com.library.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneApprovisionnement")
-
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@ToString
 public class LigneApprovisionnement implements Serializable {
     /**
      *
@@ -25,30 +15,30 @@ public class LigneApprovisionnement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int numero;
+    private long numero;
     private int quantite;
     private double prix;
     private double prixAppro;
 
-   // @ManyToOne
+    // @ManyToOne
     //@JoinColumn(name="Appro_id")
     //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name="Appro_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "Appro_id")
     @JsonIgnoreProperties(value = {"ligneApprovisionnements"})
     private Approvisionnement approvisionnement;
 
     @ManyToOne
-    @JoinColumn(name="prod_id")
-  //  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name = "prod_id")
+    //  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Produit produit;
 
     public LigneApprovisionnement() {
         super();
     }
 
-    public LigneApprovisionnement(Long id, int numero, int quantite, double prix, double prixAppro, Approvisionnement approvisionnement, Produit produit) {
+    public LigneApprovisionnement(Long id, long numero, int quantite, double prix, double prixAppro, Approvisionnement approvisionnement, Produit produit) {
         this.id = id;
         this.numero = numero;
         this.quantite = quantite;
@@ -65,11 +55,11 @@ public class LigneApprovisionnement implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumero() {
+    public long getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(long numero) {
         this.numero = numero;
     }
 
@@ -112,4 +102,5 @@ public class LigneApprovisionnement implements Serializable {
     public void setProduit(Produit produit) {
         this.produit = produit;
     }
+
 }

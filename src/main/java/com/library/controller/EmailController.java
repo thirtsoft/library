@@ -51,24 +51,7 @@ public class EmailController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-
     }
 
-    /*
-    @PostMapping("/sendEmail")
-    public ResponseEntity<?> sendEmail(@RequestBody Email email) {
-        Email emailResult;
 
-        System.out.println(email);
-        Email result = this.emailService.sendEmail(email);
-
-        if (result) {
-            return ResponseEntity.ok("Email is Send successfully");
-
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Email Not sent");
-        }
-
-    }
-    */
 }

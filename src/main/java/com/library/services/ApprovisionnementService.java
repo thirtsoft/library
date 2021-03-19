@@ -10,23 +10,29 @@ import java.util.Optional;
 
 public interface ApprovisionnementService {
 
-    public List<Approvisionnement> findAllApprovisionnements();
-    public Optional<Approvisionnement> findApprovisionnementById(Long approId);
-    public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement);
+    List<Approvisionnement> findAllApprovisionnements();
 
-    public Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement);
-    public ResponseEntity<Object> deleteApprovisionnement(Long id);
+    Optional<Approvisionnement> findApprovisionnementById(Long approId);
 
-    Approvisionnement findApprovisionnementByCode(int code);
+    Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement);
 
-   // public List<Approvisionnement> findListApprovisionnementByCode(String code);
-    public List<Approvisionnement> findListApprovisionnementByFournisseurId(Long fourId);
+    Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement);
 
-    public Page<Approvisionnement> findAllApprovisionnementByPageable(Pageable pageable);
-    public Page<Approvisionnement> findAllApprovisionnementByFournisseur(Long fourId, Pageable pageable);
+    ResponseEntity<Object> deleteApprovisionnement(Long id);
 
-    public Page<Approvisionnement> findApprovisionnementByKeyWord(String mc, Pageable pageable);
+    Approvisionnement findApprovisionnementByCode(long code);
+
+    // List<Approvisionnement> findListApprovisionnementByCode(String code);
+    List<Approvisionnement> findListApprovisionnementByFournisseurId(Long fourId);
+
+    Page<Approvisionnement> findAllApprovisionnementByPageable(Pageable pageable);
+
+    Page<Approvisionnement> findAllApprovisionnementByFournisseur(Long fourId, Pageable pageable);
+
+    Page<Approvisionnement> findApprovisionnementByKeyWord(String mc, Pageable pageable);
 
     void deleteAppro(Long id);
+
+    long generateCodeApprovisionnement();
 
 }

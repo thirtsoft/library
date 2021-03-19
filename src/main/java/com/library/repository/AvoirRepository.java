@@ -1,9 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Avoir;
-import com.library.entities.Creance;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,11 +12,10 @@ import java.util.List;
 public interface AvoirRepository extends JpaRepository<Avoir, Long> {
 
     @Query("select p from Avoir p where p.reference like :ref")
-    Avoir findByReference(@Param("ref") int reference);
+    Avoir findByReference(@Param("ref") long reference);
 
     @Query("select p from Avoir p where p.reference like :ref")
-    List<Avoir> findListAvoirByReference(@Param("ref") int reference);
-
+    List<Avoir> findListAvoirByReference(@Param("ref") long reference);
 
     @Query("select p from Avoir p where p.libelle like :lib")
     Avoir findByLibelle(@Param("lib") String libelle);
@@ -30,11 +26,10 @@ public interface AvoirRepository extends JpaRepository<Avoir, Long> {
     @Query("select p from Avoir p where p.fournisseur.id =:four")
     List<Avoir> findLitAvoirByFournisseurId(@Param("four") Long fourId);
 
-
     @Query("select p from Avoir p where p.status like :status")
     Avoir findByStatus(@Param("status") String status);
 
     @Query("select c from Avoir c where c.status like :status")
-    public List<Avoir> ListAvoirByStatus(@Param("status") String status);
+    List<Avoir> ListAvoirByStatus(@Param("status") String status);
 
 }

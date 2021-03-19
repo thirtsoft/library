@@ -8,6 +8,8 @@ import com.library.repository.ApprovisionnementRepository;
 import com.library.services.ApprovisionnementService;
 import com.library.services.LigneApprovisionnementService;
 import com.library.services.ProduitService;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,14 +43,14 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     @Override
     public Optional<Approvisionnement> findApprovisionnementById(Long approId) {
         if (!approvisionnementRepository.existsById(approId)) {
-            throw new ResourceNotFoundException("Approvisionnement N° " + approId + "not found");
+            throw new ResourceNotFoundException("Approvisionnement Not found");
         }
 
         return approvisionnementRepository.findById(approId);
     }
 
     @Override
-    public Approvisionnement findApprovisionnementByCode(int code) {
+    public Approvisionnement findApprovisionnementByCode(long code) {
         return approvisionnementRepository.findByCode(code);
     }
 
@@ -80,7 +82,7 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
 
         double total = 0;
 
-        for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
+        for (LigneApprovisionnement lAppro : ligneApprovisionnements) {
             lAppro.setApprovisionnement(approvisionnement);
             lAppro.setNumero(approvisionnement.getCode());
 
@@ -98,7 +100,7 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
             System.out.println(lAppro.getQuantite());
             System.out.println(lAppro.getQuantite() * produit.getPrixAchat());
 
-         //   total += (lAppro.getQuantite() * produit.getPrixAchat());
+            //   total += (lAppro.getQuantite() * produit.getPrixAchat());
             total += (lAppro.getQuantite() * lAppro.getPrixAppro());
 
         }
@@ -114,43 +116,41 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
 
     /**
      * Commenté le 18/10/2020
+     *
      * @param
      * @return
-     *
-
-    @Override
-    public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement) {
-        approvisionnementRepository.save(approvisionnement);
-        List<LigneApprovisionnement> ligneApprovisionnements = approvisionnement.getLigneApprovisionnements();
-        double total = 0;
-        for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
-            lAppro.setApprovisionnement(approvisionnement);
-            //Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
-            //lAppro.setProduit(produit);
-            lAppro.setPrix(lAppro.getProduit().getPrixAchat());
-
-            ligneApprovisionnementService.saveLigneApprovisionnement(lAppro);
-
-            total += lAppro.getQuantite() * lAppro.getProduit().getPrixAchat();
-        }
-
-        approvisionnement.setTotalAppro(total);
-        approvisionnement.setCode("Appro " + 20 + (int) (Math.random() * 100));
-        approvisionnement.setStatus("complète");
-        approvisionnement.setDateApprovisionnement(new Date());
-
-        return approvisionnementRepository.save(approvisionnement);
-    }
-    */
+     * @Override public Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement) {
+     * approvisionnementRepository.save(approvisionnement);
+     * List<LigneApprovisionnement> ligneApprovisionnements = approvisionnement.getLigneApprovisionnements();
+     * double total = 0;
+     * for (LigneApprovisionnement lAppro: ligneApprovisionnements) {
+     * lAppro.setApprovisionnement(approvisionnement);
+     * //Produit produit = produitService.findProduitById(lAppro.getProduit().getId()).get();
+     * //lAppro.setProduit(produit);
+     * lAppro.setPrix(lAppro.getProduit().getPrixAchat());
+     * <p>
+     * ligneApprovisionnementService.saveLigneApprovisionnement(lAppro);
+     * <p>
+     * total += lAppro.getQuantite() * lAppro.getProduit().getPrixAchat();
+     * }
+     * <p>
+     * approvisionnement.setTotalAppro(total);
+     * approvisionnement.setCode("Appro " + 20 + (int) (Math.random() * 100));
+     * approvisionnement.setStatus("complète");
+     * approvisionnement.setDateApprovisionnement(new Date());
+     * <p>
+     * return approvisionnementRepository.save(approvisionnement);
+     * }
+     */
 
     @Override
     public Approvisionnement updateApprovisionnement(Long approId, Approvisionnement approvisionnement) {
         if (!approvisionnementRepository.existsById(approId)) {
-            throw new ResourceNotFoundException("Approvisionnement N° " + approId + "not found");
+            throw new ResourceNotFoundException("Approvisionnement Not found");
         }
         Optional<Approvisionnement> Appro = approvisionnementRepository.findById(approId);
         if (!Appro.isPresent()) {
-            throw new ResourceNotFoundException("Approvisionnement N ° " + approId + "not found");
+            throw new ResourceNotFoundException("Approvisionnement Not found");
         }
 
         Approvisionnement ApproResult = Appro.get();
@@ -180,6 +180,12 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
             ligneApprovisionnementService.deleteLApproByNumero(approvisionnement.getCode());
             approvisionnementRepository.delete(approvisionnement);
         }
+    }
+
+    @Override
+    public long generateCodeApprovisionnement() {
+        final String FORMAT = "yyyyMMddHHmmss";
+        return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
     }
 
 }

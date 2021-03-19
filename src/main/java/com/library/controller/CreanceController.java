@@ -40,18 +40,18 @@ public class CreanceController {
     public ResponseEntity<Creance> getCreanceById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Creance creance = creanceService.findCreanceById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Commande that id is" + id + "not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Commande not found"));
         return ResponseEntity.ok().body(creance);
 
     }
 
     @GetMapping("/searchCreanceByReference")
-    public Optional<Creance> getCreanceByReference(@RequestParam("num") int reference) {
+    public Optional<Creance> getCreanceByReference(@RequestParam("num") long reference) {
         return creanceService.findByReference(reference);
     }
 
-    @PostMapping(path="/updateStatus")
-    public ResponseEntity<Boolean> updateStatus(@RequestBody ObjectNode json){
+    @PostMapping(path = "/updateStatus")
+    public ResponseEntity<Boolean> updateStatus(@RequestBody ObjectNode json) {
         int reference;
         String ref;
         String status;
@@ -60,39 +60,39 @@ public class CreanceController {
             reference = Integer.parseInt(ref);
             status = new ObjectMapper().treeToValue(json.get("status"), String.class);
             boolean test = this.creanceService.updateStatus(reference, status);
-            if(test)
-                return new ResponseEntity<Boolean>(test,HttpStatus.OK);
+            if (test)
+                return new ResponseEntity<Boolean>(test, HttpStatus.OK);
 
         } catch (JsonProcessingException e) {
             System.out.println("Parsing Exception!!");
             e.printStackTrace();
-            return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
 
         }
 
-        return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
 
     }
 
-    @PostMapping(path="/updateStatusCreance")
-    public ResponseEntity<Boolean> updateStatusCreance(@RequestBody ObjectNode json){
+    @PostMapping(path = "/updateStatusCreance")
+    public ResponseEntity<Boolean> updateStatusCreance(@RequestBody ObjectNode json) {
         String codeCreance;
         String status;
         try {
             codeCreance = new ObjectMapper().treeToValue(json.get("codeCreance"), String.class);
             status = new ObjectMapper().treeToValue(json.get("status"), String.class);
             boolean test = this.creanceService.updateStatusCreance(codeCreance, status);
-            if(test)
-                return new ResponseEntity<Boolean>(test,HttpStatus.OK);
+            if (test)
+                return new ResponseEntity<Boolean>(test, HttpStatus.OK);
 
         } catch (JsonProcessingException e) {
             System.out.println("Parsing Exception!!");
             e.printStackTrace();
-            return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
 
         }
 
-        return new ResponseEntity<Boolean>(false,HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
 
     }
 
@@ -124,10 +124,6 @@ public class CreanceController {
 
     @PostMapping("/creances")
     public ResponseEntity<Creance> createCreance(@RequestBody Creance creance) {
-       /*
-        Creance Resultat = creanceService.saveCreance(creance);
-        return ResponseEntity.ok(Resultat);
-        */
         return new ResponseEntity<Creance>(creanceService.saveCreance(creance), HttpStatus.CREATED);
     }
 
@@ -159,5 +155,10 @@ public class CreanceController {
     @DeleteMapping("/creances/{id}")
     public void deleteCreance(@PathVariable(value = "id") Long id) {
         creanceService.deleteCreance(id);
+    }
+
+    @GetMapping("/generateReferenceCreance")
+    public long generateReferenceCreance() {
+        return creanceService.generateReferenceCreance();
     }
 }

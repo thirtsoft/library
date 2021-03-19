@@ -33,6 +33,7 @@ public class Employe implements Serializable {
 	private String telephone2;
 	@Column(length = 100, unique = true)
 	private String email;
-	
+
+
 }
 

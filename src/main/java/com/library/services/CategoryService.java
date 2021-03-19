@@ -3,7 +3,6 @@ package com.library.services;
 import com.library.entities.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

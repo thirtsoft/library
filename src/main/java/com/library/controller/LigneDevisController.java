@@ -4,8 +4,6 @@ import com.library.entities.LigneDevis;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneDevisService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +29,13 @@ public class LigneDevisController {
     public ResponseEntity<LigneDevis> getLigneDevisById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         LigneDevis LigneDevis = ligneDevisService.findLigneDevisById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("LigneDevis not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("LigneDevis not found"));
         return ResponseEntity.ok().body(LigneDevis);
 
     }
 
     @GetMapping("/ldeviss/{id}")
-    public List<LigneDevis> getAllByNumero(@PathVariable(value = "id") int numero) {
+    public List<LigneDevis> getAllByNumero(@PathVariable(value = "id") long numero) {
         System.out.println("Get all Lcomms...");
 
         List<LigneDevis> Ldevis = new ArrayList<>();
@@ -56,7 +54,6 @@ public class LigneDevisController {
         return ligneDevisService.findLigneDevisByDevId(comId);
     }
 
-
     @PostMapping("/ligneDevis")
     public ResponseEntity<LigneDevis> createLigneDevis(@RequestBody LigneDevis LigneDevis) {
         //	return LigneDevisService.saveLigneDevis(LigneDevis);
@@ -64,11 +61,12 @@ public class LigneDevisController {
     }
 
     @PutMapping("/ligneDevis/{lcId}")
-    public ResponseEntity<LigneDevis>  updateLigneDevis(@PathVariable(value = "lcId") Long lcId, @RequestBody LigneDevis LigneDevis) {
+    public ResponseEntity<LigneDevis> updateLigneDevis(@PathVariable(value = "lcId") Long lcId, @RequestBody LigneDevis LigneDevis) {
         LigneDevis.setId(lcId);
         return new ResponseEntity<>(ligneDevisService.saveLigneDevis(LigneDevis), HttpStatus.OK);
 
     }
+
     @DeleteMapping("/ligneDevis/{id}")
     public ResponseEntity<Object> deleteLigneDevis(@PathVariable(value = "id") Long id) {
         ligneDevisService.deleteLigneDevis(id);

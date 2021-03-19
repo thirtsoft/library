@@ -22,4 +22,5 @@ public class CategorieCharge implements Serializable {
     @Column(length = 100, unique = true)
     private String codeCategorieCharge;
     private String nomCategorieCharge;
+
 }

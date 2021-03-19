@@ -27,8 +27,5 @@ public class Category implements Serializable {
 	private String code;
 	@Column(length = 100)
 	private String designation;
-	
-	
-	
-	
+
 }

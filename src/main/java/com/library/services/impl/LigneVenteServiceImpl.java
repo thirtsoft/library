@@ -29,7 +29,7 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     @Override
     public Optional<LigneVente> findLigneVenteById(Long lventeId) {
         if (!ligneVenteRepository.existsById(lventeId)) {
-            throw new ResourceNotFoundException("Ligne Vente N° " + lventeId + "not found");
+            throw new ResourceNotFoundException("Ligne Vente Not found");
         }
         return ligneVenteRepository.findById(lventeId);
     }
@@ -42,11 +42,11 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     @Override
     public LigneVente updateLigneVente(Long lventeId, LigneVente ligneVente) {
         if (!ligneVenteRepository.existsById(lventeId)) {
-            throw new ResourceNotFoundException("Ligne Vente N° " + lventeId + "not found");
+            throw new ResourceNotFoundException("Ligne Vente Not found");
         }
         Optional<LigneVente> lignevente = ligneVenteRepository.findById(lventeId);
         if (!lignevente.isPresent()) {
-            throw new ResourceNotFoundException("Ligne Vente N°" + lventeId + "not found");
+            throw new ResourceNotFoundException("Ligne Vente Not found");
         }
 
         LigneVente ligneVenteResultat = lignevente.get();
@@ -63,7 +63,7 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     @Override
     public ResponseEntity<Object> deleteLigneVente(Long ligneVenteId) {
         if (!ligneVenteRepository.existsById(ligneVenteId)) {
-            throw new ResourceNotFoundException("Linge Vente N ° " + ligneVenteId + "not found");
+            throw new ResourceNotFoundException("Linge Vente Not found");
         }
         ligneVenteRepository.deleteById(ligneVenteId);
 
@@ -71,18 +71,18 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     }
 
     @Override
-    public void deleteLventeByNumero(int numero) {
+    public void deleteLventeByNumero(long numero) {
         ligneVenteRepository.deleteByNumero(numero);
     }
 
     @Override
-    public List<LigneVente> findAllLventeByNumero(int numero) {
+    public List<LigneVente> findAllLventeByNumero(long numero) {
         return ligneVenteRepository.findAllByNumero(numero);
     }
 
     @Override
     public List<LigneVente> findLigneVenteByProduitId(Long prodId) {
-        return null ;
+        return null;
     }
 
     @Override

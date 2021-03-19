@@ -11,8 +11,6 @@ import com.library.utils.ExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +27,7 @@ import java.util.Locale;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api")
+//@RequestMapping("/alAmine")
 public class CategoryController {
 
     @Autowired
@@ -45,11 +44,13 @@ public class CategoryController {
     private ServletContext context;
 
     @GetMapping("/categories")
+    //@GetMapping
     public List<CategoryModel> getAllCategory() {
         return categoryRestAssembler.assembledEntityToModel(categoryService.findAllCategory());
     }
 
     @GetMapping("/categories/{id}")
+    //@GetMapping("/{id}")
     public ResponseEntity<CategoryModel> getCategoryById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Category category = categoryService.findCategoryById(id)
@@ -58,57 +59,28 @@ public class CategoryController {
 
     }
 
-    @GetMapping("/searchCategoryByCode")
-    public CategoryModel getCategoryByCode(@RequestParam(value = "code") String code) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.findByCode(code));
-    }
-
-    @GetMapping("/searchListCategoryByCode")
-    public List<CategoryModel> getAllCategoryByCode(@RequestParam(value = "c") String code) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.ListCategoryByDesignation("%" + code + "%"));
-    }
-
-    @GetMapping("/searchCategoryByDesignation")
-    public CategoryModel getCategoryByDesignation(@RequestParam(value = "des") String designation) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.findByDesignation(designation));
-    }
-
-    @GetMapping("/searchListCategoryByDesignation")
-    public List<CategoryModel> getAllCategoryByDesignation(@RequestParam(value = "des") String designation) {
-        return categoryRestAssembler.assembledEntityToModel(categoryService.ListCategoryByDesignation("%" + designation + "%"));
-    }
-
-    @GetMapping("/searchListCategoryByPageable")
-    public Page<Category> getAllCategoryByPageable(@RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        return categoryService.findAllCategoryByPage(PageRequest.of(page, size));
-    }
-
-    @GetMapping(value = "/searchListCategoryByPageableParMotCle")
-    public Page<Category> findCategoryByKeyWord(@RequestParam(name = "mc", defaultValue = "") String mc,
-                                                @RequestParam(name = "page") int page,
-                                                @RequestParam(name = "size") int size) {
-        return categoryService.findCategoryByKeyWord("%" + mc + "%", PageRequest.of(page, size));
-    }
-
     @PostMapping("/categories")
-    public ResponseEntity<CategoryModel>  createCategory(@RequestBody Category category) {
+    //@PostMapping
+    public ResponseEntity<CategoryModel> createCategory(@RequestBody Category category) {
         return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category)), HttpStatus.OK);
 
     }
 
     @PutMapping("/categories/{catId}")
+    //@PutMapping("/{catId}")
     public ResponseEntity<CategoryModel> updateCategory(@PathVariable(value = "catId") Long catId, @RequestBody Category category) {
         category.setId(catId);
         return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.updateCategory(catId, category)), HttpStatus.OK);
     }
 
     @DeleteMapping("/categories/{id}")
+    //@DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Long id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/createCategoriePdf")
+    @GetMapping(value = "/categories/createCategoriePdf")
     public void createCategoriePdf(HttpServletRequest request, HttpServletResponse response) {
         List<Category> categories = categoryService.findAllCategory();
         boolean isFlag = categoryService.createCategoriePdf(categories, context, request, response);
@@ -145,7 +117,7 @@ public class CategoryController {
 
     }
 
-    @PostMapping(value = "/uploadCategorie")
+    @PostMapping(value = "/categories/uploadCategorie")
     public ResponseEntity<ResponseMessage> uploadExcelCategorie(@RequestParam("file") MultipartFile file) {
         String message;
         if (ExcelUtils.isExcelFile(file)) {
@@ -162,7 +134,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
     }
 
-    @GetMapping(value = "/download/categories.xlsx")
+    @GetMapping(value = "/categories/download/categories.xlsx")
     public ResponseEntity<InputStreamResource> excelCategoriesReport() throws IOException {
         List<Category> categories = categoryService.findAllCategory();
 

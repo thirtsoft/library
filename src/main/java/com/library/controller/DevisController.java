@@ -1,23 +1,14 @@
 package com.library.controller;
 
 import com.library.entities.Devis;
-import com.library.entities.LigneCmdClient;
 import com.library.exceptions.ResourceNotFoundException;
-import com.library.services.ClientService;
 import com.library.services.DevisService;
-import com.library.services.LigneCmdClientService;
-import com.library.services.ReportService;
-import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -42,13 +33,13 @@ public class DevisController {
     public ResponseEntity<Devis> getDevisById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Devis devis = devisService.findDevisById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Devis not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Devis not found"));
         return ResponseEntity.ok().body(devis);
 
     }
 
     @GetMapping("/searchDevisByNumeroDevis")
-    public Devis getDevisByNumeroDevis(@RequestParam("num") int numeroDevis) {
+    public Devis getDevisByNumeroDevis(@RequestParam("num") long numeroDevis) {
         return devisService.findByNumeroDevis(numeroDevis);
     }
 
@@ -69,7 +60,7 @@ public class DevisController {
     }
 
     @GetMapping("/getAllDeviswithdate")
-    public List<Devis> getAlldevisWithDatet(@RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") Date dateCommande){
+    public List<Devis> getAlldevisWithDatet(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateCommande) {
 
         return devisService.findDevisByDate(dateCommande);
     }
@@ -82,14 +73,14 @@ public class DevisController {
     }
 
     @PutMapping("/devis/{id}")
-    public ResponseEntity<Devis>  updateDevis(@PathVariable(value = "id") Long id, @RequestBody Devis devis) throws Exception {
+    public ResponseEntity<Devis> updateDevis(@PathVariable(value = "id") Long id, @RequestBody Devis devis) throws Exception {
         devis.setId(id);
         return new ResponseEntity<>(devisService.saveDevis(devis), HttpStatus.OK);
 
     }
 
     @DeleteMapping("/devis/{id}")
-    public void deleteDevis(@PathVariable(value = "id")Long id) {
+    public void deleteDevis(@PathVariable(value = "id") Long id) {
         devisService.deleteDevis(id);
     }
 
@@ -102,6 +93,11 @@ public class DevisController {
     public List<?> getSumTotalOfDevisByMonth() {
         return devisService.sumTotalOfDevisByMonth();
 
+    }
+
+    @GetMapping("/generateNumeroDevis")
+    public long generateNumeroDevis() {
+        return devisService.generateNumeroDevis();
     }
 
 
