@@ -33,20 +33,6 @@ public class RoleController {
 
 	}
 
-	@GetMapping("/searchRoleByNom")
-	public Role getRoleByRoleName(@RequestParam(value = "name") String roleName) {
-		return roleService.findRoleByRoleName(roleName);
-
-	}
-
-	@GetMapping("/searchListRoleByNom")
-	public List<Role> getListRoleByRoleName(@RequestParam(value = "name") String roleName) {
-
-		return roleService.findListRoleByRoleName("%"+roleName+"%");
-
-	}
-
-
 	@PostMapping("/roles")
 	public ResponseEntity<Role> createRole(@RequestBody Role role) {
 

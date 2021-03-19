@@ -20,8 +20,6 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Autowired
     private ProduitService produitService;
-    @Autowired
-    private ExcelUtils utils;
 
     @Autowired
     private CategoryService categoryService;
