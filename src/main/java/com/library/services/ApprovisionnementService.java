@@ -22,7 +22,6 @@ public interface ApprovisionnementService {
 
     Approvisionnement findApprovisionnementByCode(long code);
 
-    // List<Approvisionnement> findListApprovisionnementByCode(String code);
     List<Approvisionnement> findListApprovisionnementByFournisseurId(Long fourId);
 
     Page<Approvisionnement> findAllApprovisionnementByPageable(Pageable pageable);
@@ -34,5 +33,9 @@ public interface ApprovisionnementService {
     void deleteAppro(Long id);
 
     long generateCodeApprovisionnement();
+
+    Approvisionnement updateStatusAppro(String status, String id);
+
+    Approvisionnement updateMontantAvanceAppro(double montantAvance, String id);
 
 }

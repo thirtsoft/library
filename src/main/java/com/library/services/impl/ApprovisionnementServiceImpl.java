@@ -188,4 +188,22 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
         return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
     }
 
+    @Override
+    public Approvisionnement updateStatusAppro(String status, String id) {
+        Optional<Approvisionnement> originalAppro = approvisionnementRepository.findById(Long.valueOf(id));
+        Approvisionnement approvisionnement = originalAppro.get();
+        approvisionnement.setStatus(status);
+        return approvisionnementRepository.save(approvisionnement);
+
+    }
+
+    @Override
+    public Approvisionnement updateMontantAvanceAppro(double montantAvance, String id) {
+        Optional<Approvisionnement> originalAppro = approvisionnementRepository.findById(Long.valueOf(id));
+        Approvisionnement approvisionnement = originalAppro.get();
+        approvisionnement.setMontantAvance(montantAvance);
+        return approvisionnementRepository.save(approvisionnement);
+
+    }
+
 }

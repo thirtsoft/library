@@ -104,4 +104,17 @@ public class ApprovisionnementController {
     public long generateCodeApprovisionnement() {
         return approvisionnementService.generateCodeApprovisionnement();
     }
+
+    @PatchMapping("/updateStatusApproById/{id}")
+    public ResponseEntity<?> updateStatusAppro(@RequestParam("status") String status, @PathVariable("id") String id) {
+        Approvisionnement newApprovisionnement = approvisionnementService.updateStatusAppro(status, id);
+        return new ResponseEntity<>(newApprovisionnement, HttpStatus.OK);
+    }
+
+    @PatchMapping("/updateMontantAvanceApproById/{id}")
+    public ResponseEntity<?> updateMontantAvanceAppro(@RequestParam("montantAvance") double montantAvance, @PathVariable("id") String id) {
+        Approvisionnement newApprovisionnement = approvisionnementService.updateMontantAvanceAppro(montantAvance, id);
+        return new ResponseEntity<>(newApprovisionnement, HttpStatus.OK);
+    }
+
 }
