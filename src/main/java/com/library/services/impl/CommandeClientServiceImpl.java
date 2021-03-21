@@ -250,6 +250,16 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
+    public BigDecimal sumTotalOfCommandesByMonth() {
+        return commandeClientRepository.sumTotalOfCommandesByMonth();
+    }
+
+    @Override
+    public BigDecimal sumTotalOfCommandesByYear() {
+        return commandeClientRepository.sumTotalOfCommandesByYear();
+    }
+
+    @Override
     public CommandeClient findByNumeroCommande(long numeroCommande) {
         return commandeClientRepository.findByNumeroCommande(numeroCommande);
     }

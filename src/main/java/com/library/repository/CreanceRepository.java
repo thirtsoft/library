@@ -15,8 +15,15 @@ import java.util.Optional;
 @Repository
 public interface CreanceRepository extends JpaRepository<Creance, Long> {
 
-    @Query("select count(p) from Creance p ")
-    Integer countNumberOfCreance();
+    Optional<Creance> findByReference(long reference);
+
+    Optional<Creance> findByCodeCreance(String CodeCreance);
+
+    @Query("select p from Creance p where p.reference like :num")
+    Creance findByNumeroCreance(@Param("num") long reference);
+
+    @Query("select p from Creance p where p.status like :status")
+    Creance findByStatus(@Param("status") String status);
 
     @Modifying()
     @Query("update Creance c set c.status = :status where c.id = :id")
@@ -26,19 +33,14 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
     @Query("update Creance c set c.status = :status where c.id = :id")
     void setCreanceStatusById(@Param("status") String status, @Param("id") Long id);
 
-    Optional<Creance> findByReference(long reference);
+    @Query("select count(p) from Creance p ")
+    Integer countNumberOfCreance();
 
-    Optional<Creance> findByCodeCreance(String CodeCreance);
-
-    //	@Query("select count(*) from CommandeClient group by (dateCommande)")
     @Query("select sum(c.totalCreance) from Creance c")
     BigDecimal countNumbersOfCommandes();
 
-    @Query("select p from Creance p where p.reference like :num")
-    Creance findByNumeroCreance(@Param("num") long reference);
-
-    @Query("select p from Creance p where p.status like :status")
-    Creance findByStatus(@Param("status") String status);
+    @Query("select EXTRACT(month from(c.dateCreance)), sum(c.totalCreance) from Creance c group by EXTRACT(month from(c.dateCreance))")
+    List<?> sumTotalOfCreancesByMonth();
 
     @Query("select c from Creance c where c.status like :status")
     List<Creance> ListCreanceByStatus(@Param("status") String status);

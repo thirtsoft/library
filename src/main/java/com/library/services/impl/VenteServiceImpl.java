@@ -209,6 +209,16 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    public BigDecimal sumTotalOfVentesByMonth() {
+        return venteRepository.sumTotalOfVentesByMonth();
+    }
+
+    @Override
+    public BigDecimal sumTotalOfVentesByYear() {
+        return venteRepository.sumTotalOfVentesByYear();
+    }
+
+    @Override
     public Integer countNumberOfVenteByDay() {
         return venteRepository.countNumberOfVenteByDay();
     }

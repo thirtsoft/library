@@ -40,11 +40,15 @@ public interface VenteService {
 
     void deleteVente(Long id);
 
-    List<Vente> findVenteWithParticularDayAndMonth();
-
     BigDecimal sumTotalOfVenteByDay();
 
+    BigDecimal sumTotalOfVentesByMonth();
+
+    BigDecimal sumTotalOfVentesByYear();
+
     Integer countNumberOfVenteByDay();
+
+    List<Vente> findVenteWithParticularDayAndMonth();
 
     List<?> countNumberTotalOfVenteByMonth();
 

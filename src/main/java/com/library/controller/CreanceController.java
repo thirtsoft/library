@@ -122,6 +122,11 @@ public class CreanceController {
         return creanceService.findCreanceByClientId(clientId);
     }
 
+    @GetMapping("/sumTotalOfCreanceByMonth")
+    public List<?> sumTotalOfCreancesByMonth() {
+        return creanceService.sumTotalOfCreancesByMonth();
+    }
+
     @PostMapping("/creances")
     public ResponseEntity<Creance> createCreance(@RequestBody Creance creance) {
         return new ResponseEntity<Creance>(creanceService.saveCreance(creance), HttpStatus.CREATED);

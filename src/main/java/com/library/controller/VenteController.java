@@ -57,6 +57,16 @@ public class VenteController {
         return venteService.countSumsOfVentess();
     }
 
+    @GetMapping("/SumsOfVentesByMonth")
+    public BigDecimal sumTotalOfVentesByMonth() {
+        return venteService.sumTotalOfVentesByMonth();
+    }
+
+    @GetMapping("/SumsOfVentesByYear")
+    public BigDecimal sumTotalOfVentesByYear() {
+        return venteService.sumTotalOfVentesByYear();
+    }
+
     @GetMapping("/generateNumeroVente")
     public long generateNumeroVente() {
         return venteService.generateNumeroVente();

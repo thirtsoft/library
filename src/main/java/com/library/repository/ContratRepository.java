@@ -15,11 +15,11 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
 
     Contrat findByReference(String reference);
 
-    @Query("select p from Contrat p where p.reference like :ref")
-    List<Contrat> findListContratByReference(@Param("ref") String reference);
-
     @Query("select p from Contrat p where p.nature like :nat")
     Contrat findByNature(@Param("nat") String nature);
+
+    @Query("select p from Contrat p where p.reference like :ref")
+    List<Contrat> findListContratByReference(@Param("ref") String reference);
 
     @Query("select p from Contrat p where p.nature like :nat")
     List<Contrat> findListContratByNature(@Param("nat") String nature);

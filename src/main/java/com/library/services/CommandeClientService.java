@@ -22,13 +22,17 @@ public interface CommandeClientService {
 
     ResponseEntity<Object> deleteCommandeClient(Long id);
 
-    //public CommandeClient saveCommandeClient(Long num, Date date, boolean valide, Client clt);
 
     int getNombreCommandes(Date d1, Date d2);
 
     int getNumberOfCommande();
 
     BigDecimal countNumbersOfCommandes();
+
+    BigDecimal sumTotalOfCommandesByMonth();
+
+    BigDecimal sumTotalOfCommandesByYear();
+
 
     CommandeClient findByNumeroCommande(long numeroCommande);
 

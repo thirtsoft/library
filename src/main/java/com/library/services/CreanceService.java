@@ -12,8 +12,6 @@ public interface CreanceService {
 
     Optional<Creance> findCreanceById(Long creanceId);
 
-    // Creance findByReferences(long reference);
-    //  List<Creance> findListCreanceByReference(int reference);
     Creance findByStatus(String status);
 
     List<Creance> findListCreanceByStatus(String status);
@@ -49,5 +47,7 @@ public interface CreanceService {
     Creance setCreanceOnlySolde(double soldeCreance, String id);
 
     long generateReferenceCreance();
+
+    List<?> sumTotalOfCreancesByMonth();
 
 }

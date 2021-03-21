@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,15 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
     @Query("select (p.scategorie.libelle), count(p) from Produit p where (p.qtestock > p.stockInitial) group by(p.scategorie)")
     List<?> countNumberOfProduitWithStoc();
+
+    @Query("select count(p) from Produit p where (p.qtestock  > p.stockInitial) ")
+    Integer countNumbersOfProductsByStock();
+
+    @Query("select count(p) from Produit p where (p.qtestock = p.stockInitial) ")
+    Integer countNumbersOfProductsWhenQStockEqualStockInit();
+
+    @Query("select count(p) from Produit p where (p.stockInitial > p.qtestock) ")
+    Integer countNumbersOfProductsWhenQStockInfStockInit();
 
     @Query("select p from Produit p where p.designation like :des")
     List<Produit> findListProduitByDesignation(@Param("des") String designation);

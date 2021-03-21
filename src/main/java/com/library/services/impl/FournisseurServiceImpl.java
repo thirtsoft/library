@@ -93,6 +93,11 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
+    public Integer countNumberOfFournisseurs() {
+        return fournisseurRepository.countNumberOfFournisseurs();
+    }
+
+    @Override
     public List<Fournisseur> findListFournisseurByCode(String code) {
         return fournisseurRepository.ListFournisseurByCode(code);
     }

@@ -20,6 +20,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -99,6 +100,27 @@ public class ProduitController {
     @GetMapping("/searchCountProduitsByStock")
     public List<?> countNumberOfProduitWithStoc() {
         return produitService.countNumberOfProduitWithStoc();
+    }
+
+    @GetMapping("/countProduitsByStock")
+    public Integer countNumbersOfProductsByStock() {
+        int prod = produitService.countNumbersOfProductsByStock();
+        System.out.println(prod);
+        return prod;
+    }
+
+    @GetMapping("/countProduitsWhenQStockEqualStockInit")
+    public Integer countNumbersOfProductsWhenQStockEqualStockInit() {
+        int prodQtstockEqualStockInit = produitService.countNumbersOfProductsWhenQStockEqualStockInit();
+        System.out.println(prodQtstockEqualStockInit);
+        return prodQtstockEqualStockInit;
+    }
+
+    @GetMapping("/countProduitsWhenQStockInfStockInit")
+    public Integer countNumbersOfProductsWhenQStockInfStockInit() {
+        int prodQtstockInfStockInit = produitService.countNumbersOfProductsWhenQStockInfStockInit();
+        System.out.println(prodQtstockInfStockInit);
+        return prodQtstockInfStockInit;
     }
 
     @PostMapping("/produits")

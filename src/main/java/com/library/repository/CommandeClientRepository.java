@@ -21,9 +21,15 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
     @Query("select count(p) from CommandeClient p ")
     Integer countNumberOfCommande();
 
-    //	@Query("select count(*) from CommandeClient group by (dateCommande)")
     @Query("select sum(c.totalCommande) from CommandeClient c")
     BigDecimal countNumbersOfCommandes();
+
+    @Query("select sum(c.totalCommande) from CommandeClient c where month(c.dateCommande) = month(current_date)")
+    BigDecimal sumTotalOfCommandesByMonth();
+
+    @Query("select sum(c.totalCommande) from CommandeClient c where year(c.dateCommande) = year(current_date)")
+    BigDecimal sumTotalOfCommandesByYear();
+
 
     @Query("select p from CommandeClient p where p.numeroCommande like :num")
     CommandeClient findByNumeroCommande(@Param("num") long numeroCommande);

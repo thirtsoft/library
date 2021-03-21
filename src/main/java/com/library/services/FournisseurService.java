@@ -28,6 +28,8 @@ public interface FournisseurService {
 
     Fournisseur findByEmail(String email);
 
+    Integer countNumberOfFournisseurs();
+
     List<Fournisseur> findAllFournisseurs();
 
     List<Fournisseur> findListFournisseurByCode(String code);

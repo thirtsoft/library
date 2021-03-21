@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,6 @@ public interface ProduitService {
 
     Optional<Produit> findProduitById(Long prodId);
 
-    //public Produit saveProduit(Long catId, Produit produit);
     Produit saveProduit(Produit produit);
 
     Produit updateProduit(Long prodId, Produit produit);
@@ -52,6 +52,12 @@ public interface ProduitService {
     ResponseEntity<List<Produit>> importExcelFile(MultipartFile files);
 
     List<?> countNumberOfProduitWithStoc();
+
+    Integer countNumbersOfProductsByStock();
+
+    Integer countNumbersOfProductsWhenQStockEqualStockInit();
+
+    Integer countNumbersOfProductsWhenQStockInfStockInit();
 
 
 }

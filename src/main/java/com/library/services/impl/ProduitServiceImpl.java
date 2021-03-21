@@ -488,5 +488,20 @@ public class ProduitServiceImpl implements ProduitService {
         return produitRepository.countNumberOfProduitWithStoc();
     }
 
+    @Override
+    public Integer countNumbersOfProductsByStock() {
+        return produitRepository.countNumbersOfProductsByStock();
+    }
+
+    @Override
+    public  Integer countNumbersOfProductsWhenQStockEqualStockInit() {
+        return produitRepository.countNumbersOfProductsWhenQStockEqualStockInit();
+    }
+
+    @Override
+    public Integer countNumbersOfProductsWhenQStockInfStockInit() {
+        return produitRepository.countNumbersOfProductsWhenQStockInfStockInit();
+    }
+
 
 }

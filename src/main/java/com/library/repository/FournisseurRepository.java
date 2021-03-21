@@ -19,6 +19,9 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
 
     Fournisseur findByNomBank(String nomBank);
 
+    @Query("select count(f) from Fournisseur f ")
+    Integer countNumberOfFournisseurs();
+
     @Query("select c from Fournisseur c where c.raisonSociale like :raison")
     Fournisseur findByRaisonSociale(@Param("raison") String raisonSociale);
 

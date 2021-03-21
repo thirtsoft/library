@@ -45,6 +45,11 @@ public class FournisseurController {
 
     }
 
+    @GetMapping("/countFournisseurs")
+    public Integer countNumberOfFournisseurs() {
+        return fournisseurService.countNumberOfFournisseurs();
+    }
+
     @GetMapping("/searchListFournisseurByCode")
     public List<Fournisseur> getAllFournisseurByCode(@RequestParam(value = "c") String code) {
         return fournisseurService.findListFournisseurByCode("%" + code + "%");

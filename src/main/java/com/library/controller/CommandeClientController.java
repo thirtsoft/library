@@ -71,6 +71,16 @@ public class CommandeClientController {
         return commandeClientService.countNumbersOfCommandes();
     }
 
+    @GetMapping("/SumsOfCommandesByMonth")
+    public BigDecimal sumTotalOfCommandesByMonth() {
+        return commandeClientService.sumTotalOfCommandesByMonth();
+    }
+
+    @GetMapping("/SumsOfCommandesByYear")
+    public BigDecimal sumTotalOfCommandesByYear() {
+        return commandeClientService.sumTotalOfCommandesByYear();
+    }
+
 
     @GetMapping("/searchCommandeClientByStatus")
     public CommandeClient getCommandeClientByStatus(@RequestParam("status") String status) {

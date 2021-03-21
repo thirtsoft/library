@@ -220,6 +220,11 @@ public class CreanceServiceImpl implements CreanceService {
     }
 
     @Override
+    public List<?> sumTotalOfCreancesByMonth() {
+        return creanceRepository.sumTotalOfCreancesByMonth();
+    }
+
+    @Override
     public boolean updateStatusCreance(String codeCreance, String status) {
         Optional<Creance> creance = this.creanceRepository.findByCodeCreance(codeCreance);
         Creance creanceResult;
