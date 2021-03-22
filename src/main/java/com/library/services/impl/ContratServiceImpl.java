@@ -39,18 +39,18 @@ public class ContratServiceImpl implements ContratService {
 
 	private final Path fileStorageLocation = Paths.get("C:\\Folio9470m\\AlAmine\\Contrat");
 
-/*
+
 	@Override
 	public List<Contrat> findAllContrats() {
 		List<Contrat> contrats = contratRepository.findAll();
 		return contrats;
 	}
-*/
-	public List<Contrat> findAllContrats() {
+
+	/*public List<Contrat> findAllContrats() {
 		List<Contrat> contrats = contratRepository.findAll();
 		contrats.stream().map(Contrat::getContent).forEach(FileHelper::decompressBytes);
 		return contrats;
-	}
+	}*/
 
 	@Override
 	public Optional<Contrat> findContratById(Long id) {

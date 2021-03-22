@@ -53,7 +53,9 @@ public class ContratController {
     @Autowired
     private ExcelService excelService;
 
-    private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
+  //  private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
+
+    private String contratsDir = "../resources/Contrat//";
 
 
     @GetMapping("/contrats")
