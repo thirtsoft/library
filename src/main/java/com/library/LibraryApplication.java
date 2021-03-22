@@ -1,23 +1,26 @@
 package com.library;
 
-import com.library.entities.*;
-import com.library.enumeration.RoleName;
 import com.library.repository.*;
 import com.library.services.AccountService;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
-import java.util.Date;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @SpringBootApplication
 public class LibraryApplication implements CommandLineRunner {
 
+    private static final Logger LOG = LoggerFactory.getLogger(LibraryApplication.class);
+
+    @Autowired
+    RoleRepository roleRepository;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -29,20 +32,25 @@ public class LibraryApplication implements CommandLineRunner {
     @Autowired
     private AccountService accountService;
 
-    @Autowired
-    RoleRepository roleRepository;
-
-
-
     public static void main(String[] args) {
         SpringApplication.run(LibraryApplication.class, args);
+        createDirectoryIfItDoesntExist();
+    }
 
+    private static void createDirectoryIfItDoesntExist() {
+        Path path = Paths.get(System.getProperty("user.home") + "/users/photos/");
+
+        if (Files.notExists(path)) {
+            try {
+                Files.createDirectories(path);
+            } catch (IOException ie) {
+                LOG.error(String.format("Problem creating directory %s", path));
+            }
+        }
     }
 
 
-
-
-   // @Bean
+    // @Bean
   /*  public BCryptPasswordEncoder getBCPE() {
         return new BCryptPasswordEncoder();
     }
