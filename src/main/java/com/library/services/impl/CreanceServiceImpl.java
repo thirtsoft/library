@@ -206,10 +206,10 @@ public class CreanceServiceImpl implements CreanceService {
     }
 
     @Override
-    public Creance setCreanceOnlySolde(double soldeCreance, String id) {
+    public Creance setCreanceOnlyAvanceCreance(double avanceCreance, String id) {
         Optional<Creance> originalCreance = creanceRepository.findById(Long.valueOf(id));
         Creance creance = originalCreance.get();
-        creance.setSoldeCreance(soldeCreance);
+        creance.setAvanceCreance(avanceCreance);
         return creanceRepository.save(creance);
     }
 

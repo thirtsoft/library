@@ -44,7 +44,7 @@ public interface CreanceService {
 
     Creance setCreanceOnlyStatus(String status, String id);
 
-    Creance setCreanceOnlySolde(double soldeCreance, String id);
+    Creance setCreanceOnlyAvanceCreance(double avanceCreance, String id);
 
     long generateReferenceCreance();
 
