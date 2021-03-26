@@ -37,7 +37,7 @@ public class VenteController {
     }
 
     @GetMapping("/searchVenteByNumeroVente")
-    public Vente getVenteByNumeroVente(@RequestParam("num") long numeroVente) {
+    public Vente getVenteByNumeroVente(@RequestParam("num") Long numeroVente) {
         return venteService.findVenteByNumeroVente(numeroVente);
     }
 

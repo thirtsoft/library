@@ -89,6 +89,8 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public CommandeClient saveCommandeClient(CommandeClient commande) {
 
+        System.out.println("Initial Numero Commande " +commande.getNumeroCommande());
+
         logger.info("Commande {}", commande);
         List<LigneCmdClient> ligneCmd = commande.getLcomms();
         if (ligneCmd == null || ligneCmd.size() == 0) {
@@ -106,6 +108,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
 
         commandeClientRepository.save(commande);
+        System.out.println("1er Numero Commande " +commande.getNumeroCommande());
 
         List<LigneCmdClient> ligneCmdClients = commande.getLcomms();
         double total = 0;
@@ -133,7 +136,10 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         commande.setStatus("valider");
         commande.setDateCommande(new Date());
 
+        System.out.println("Dernier Numero Commande " +commande.getNumeroCommande());
+
         return commandeClientRepository.save(commande);
+
 
     }
 
@@ -260,7 +266,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
-    public CommandeClient findByNumeroCommande(long numeroCommande) {
+    public CommandeClient findByNumeroCommande(Long numeroCommande) {
         return commandeClientRepository.findByNumeroCommande(numeroCommande);
     }
 

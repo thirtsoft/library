@@ -12,9 +12,9 @@ public interface AvoirService {
 
     Optional<Avoir> findAvoirById(Long id);
 
-    Avoir findAvoirByReference(long reference);
+    Avoir findAvoirByReference(Long reference);
 
-    List<Avoir> findListAvoirByReference(long reference);
+    List<Avoir> findListAvoirByReference(Long reference);
 
     Avoir findAvoirByLibelle(String libelle);
 
@@ -27,7 +27,7 @@ public interface AvoirService {
 
     Avoir updateAvoir(Long id, Avoir avoir);
 
-    Avoir findByReference(long reference);
+    Avoir findByReference(Long reference);
 
     Avoir findByStatus(String status);
 

@@ -15,7 +15,8 @@ public class LigneApprovisionnement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numero;
+  //  private long numero;
+    private Long numero;
     private int quantite;
     private double prix;
     private double prixAppro;
@@ -38,7 +39,7 @@ public class LigneApprovisionnement implements Serializable {
         super();
     }
 
-    public LigneApprovisionnement(Long id, long numero, int quantite, double prix, double prixAppro, Approvisionnement approvisionnement, Produit produit) {
+    public LigneApprovisionnement(Long id, Long numero, int quantite, double prix, double prixAppro, Approvisionnement approvisionnement, Produit produit) {
         this.id = id;
         this.numero = numero;
         this.quantite = quantite;
@@ -55,11 +56,11 @@ public class LigneApprovisionnement implements Serializable {
         this.id = id;
     }
 
-    public long getNumero() {
+    public Long getNumero() {
         return numero;
     }
 
-    public void setNumero(long numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
 

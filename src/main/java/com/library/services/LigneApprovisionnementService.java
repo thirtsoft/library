@@ -20,9 +20,9 @@ public interface LigneApprovisionnementService {
 
     ResponseEntity<Object> deleteLigneApprovisionnement(Long lApproid);
 
-    void deleteLApproByNumero(long numero);
+    void deleteLApproByNumero(Long numero);
 
-    List<LigneApprovisionnement> findAllLApproByNumero(long numero);
+    List<LigneApprovisionnement> findAllLApproByNumero(Long numero);
 
     List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(Long prodId);
 

@@ -20,7 +20,8 @@ public class Devis implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numeroDevis;
+   // private long numeroDevis;
+    private Long numeroDevis;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateDevis;

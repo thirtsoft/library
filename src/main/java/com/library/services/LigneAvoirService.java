@@ -15,12 +15,12 @@ public interface LigneAvoirService {
 
     LigneAvoir updateLigneAvoir(Long lAvoirId, LigneAvoir ligneAvoir);
 
-    void deleteLavoirByNumero(long numero);
+    void deleteLavoirByNumero(Long numero);
 
     List<LigneAvoir> findLigneAvoirByProduitId(Long prodId);
 
     List<LigneAvoir> findLigneAvoirByAvoirId(Long comId);
 
-    List<LigneAvoir> findAllLavoirByNumero(long numero);
+    List<LigneAvoir> findAllLavoirByNumero(Long numero);
 
 }

@@ -16,7 +16,8 @@ public class LigneDevis implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numero;
+   // private long numero;
+    private Long numero;
     private int quantite;
     private double prix;
     private double prixDevis;
@@ -34,7 +35,7 @@ public class LigneDevis implements Serializable {
     public LigneDevis() {
     }
 
-    public LigneDevis(Long id, long numero, int quantite, double prix, double prixDevis, Devis devis, Produit produit) {
+    public LigneDevis(Long id, Long numero, int quantite, double prix, double prixDevis, Devis devis, Produit produit) {
         this.id = id;
         this.numero = numero;
         this.quantite = quantite;
@@ -52,11 +53,11 @@ public class LigneDevis implements Serializable {
         this.id = id;
     }
 
-    public long getNumero() {
+    public Long getNumero() {
         return numero;
     }
 
-    public void setNumero(long numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
 

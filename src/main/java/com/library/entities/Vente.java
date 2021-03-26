@@ -19,7 +19,8 @@ public class Vente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numeroVente;
+   // private long numeroVente;
+    private Long numeroVente;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
@@ -37,7 +38,7 @@ public class Vente implements Serializable {
     public Vente() {
     }
 
-    public Vente(Long id, long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes, double totalVente, String status) {
+    public Vente(Long id, Long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes, double totalVente, String status) {
         this.id = id;
         this.numeroVente = numeroVente;
         this.dateVente = dateVente;
@@ -54,11 +55,11 @@ public class Vente implements Serializable {
         this.id = id;
     }
 
-    public long getNumeroVente() {
+    public Long getNumeroVente() {
         return numeroVente;
     }
 
-    public void setNumeroVente(long numeroVente) {
+    public void setNumeroVente(Long numeroVente) {
         this.numeroVente = numeroVente;
     }
 

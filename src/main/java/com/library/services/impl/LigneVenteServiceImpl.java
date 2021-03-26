@@ -71,12 +71,12 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     }
 
     @Override
-    public void deleteLventeByNumero(long numero) {
+    public void deleteLventeByNumero(Long numero) {
         ligneVenteRepository.deleteByNumero(numero);
     }
 
     @Override
-    public List<LigneVente> findAllLventeByNumero(long numero) {
+    public List<LigneVente> findAllLventeByNumero(Long numero) {
         return ligneVenteRepository.findAllByNumero(numero);
     }
 

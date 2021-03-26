@@ -20,7 +20,7 @@ public interface ApprovisionnementService {
 
     ResponseEntity<Object> deleteApprovisionnement(Long id);
 
-    Approvisionnement findApprovisionnementByCode(long code);
+    Approvisionnement findApprovisionnementByCode(Long code);
 
     List<Approvisionnement> findListApprovisionnementByFournisseurId(Long fourId);
 

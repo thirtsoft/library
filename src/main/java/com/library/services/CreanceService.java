@@ -34,9 +34,9 @@ public interface CreanceService {
 
     void deleteCreance(Long id);
 
-    Optional<Creance> findByReference(long reference);
+    Optional<Creance> findByReference(Long reference);
 
-    boolean updateStatus(long reference, String status);
+    boolean updateStatus(Long reference, String status);
 
     Optional<Creance> findByCodeCreance(String codeCreance);
 

@@ -32,7 +32,8 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 
 
     @Query("select p from CommandeClient p where p.numeroCommande like :num")
-    CommandeClient findByNumeroCommande(@Param("num") long numeroCommande);
+    CommandeClient findByNumeroCommande(@Param("num") Long numeroCommande);
+ //   CommandeClient findByNumeroCommande(@Param("num") long numeroCommande);
 
     @Query("select p from CommandeClient p where p.status like :status")
     CommandeClient findByStatus(@Param("status") String status);

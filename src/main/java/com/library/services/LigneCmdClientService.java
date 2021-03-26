@@ -20,7 +20,7 @@ public interface LigneCmdClientService {
 
     ResponseEntity<Object> deleteLigneCmdClient(Long id);
 
-    void deleteLcomByNumero(long numero);
+    void deleteLcomByNumero(Long numero);
     //public LigneCmdClient findByQuantite(int quantite);
 
     //public List<LigneCmdClient> findListLigneCmdClientByQuantite(int quantite);
@@ -28,7 +28,7 @@ public interface LigneCmdClientService {
 
     List<LigneCmdClient> findLigneCmdClientByCommandeClientId(Long comId);
 
-    List<LigneCmdClient> findAllLcomByNumero(long numero);
+    List<LigneCmdClient> findAllLcomByNumero(Long numero);
 
     Page<LigneCmdClient> findAllLigneCmdClientByPageable(Pageable pageable);
 

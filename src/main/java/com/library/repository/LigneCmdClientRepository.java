@@ -14,11 +14,13 @@ import java.util.List;
 @Repository
 public interface LigneCmdClientRepository extends JpaRepository<LigneCmdClient, Long> {
 
-    List<LigneCmdClient> findAllByNumero(long numero);
+    List<LigneCmdClient> findAllByNumero(Long numero);
+  //  List<LigneCmdClient> findAllByNumero(long numero);
 
     @Modifying
     @Query("delete from LigneCmdClient where numero = :numero")
-    void deleteByNumero(@Param("numero") long numero);
+    void deleteByNumero(@Param("numero") Long numero);
+   // void deleteByNumero(@Param("numero") long numero);
 
     @Query("select p from LigneCmdClient p where p.produit.id =:prod")
     List<LigneCmdClient> ListLigneCmdClientByProduitId(@Param("prod") Long prodId);

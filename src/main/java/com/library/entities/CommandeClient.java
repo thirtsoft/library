@@ -20,7 +20,8 @@ public class CommandeClient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numeroCommande;
+   // private long numeroCommande;
+    private Long numeroCommande;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateCommande;
@@ -44,7 +45,7 @@ public class CommandeClient implements Serializable {
         super();
     }
 
-    public CommandeClient(Long id, long numeroCommande, Date dateCommande, Client client, @Valid List<LigneCmdClient> lcomms, double totalCommande, String status) {
+    public CommandeClient(Long id, Long numeroCommande, Date dateCommande, Client client, @Valid List<LigneCmdClient> lcomms, double totalCommande, String status) {
         this.id = id;
         this.numeroCommande = numeroCommande;
         this.dateCommande = dateCommande;
@@ -62,11 +63,11 @@ public class CommandeClient implements Serializable {
         this.id = id;
     }
 
-    public long getNumeroCommande() {
+    public Long getNumeroCommande() {
         return numeroCommande;
     }
 
-    public void setNumeroCommande(long numeroCommande) {
+    public void setNumeroCommande(Long numeroCommande) {
         this.numeroCommande = numeroCommande;
     }
 

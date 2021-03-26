@@ -30,7 +30,8 @@ public interface VenteService {
 
     BigDecimal countSumsOfVentess();
 
-    Vente findVenteByNumeroVente(long numeroVente);
+//   .. Vente findVenteByNumeroVente(long numeroVente);
+    Vente findVenteByNumeroVente(Long numeroVente);
 
     Vente findByStatus(String status);
 

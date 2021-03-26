@@ -175,12 +175,12 @@ public class CreanceServiceImpl implements CreanceService {
 
 
     @Override
-    public Optional<Creance> findByReference(long reference) {
+    public Optional<Creance> findByReference(Long reference) {
         return creanceRepository.findByReference(reference);
     }
 
     @Override
-    public boolean updateStatus(long reference, String status) {
+    public boolean updateStatus(Long reference, String status) {
         Optional<Creance> creance = this.creanceRepository.findByReference(reference);
         Creance creanceResult;
         if (creance.isPresent()) {

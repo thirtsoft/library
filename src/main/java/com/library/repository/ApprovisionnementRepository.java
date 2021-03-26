@@ -14,7 +14,8 @@ import java.util.List;
 public interface ApprovisionnementRepository extends JpaRepository<Approvisionnement, Long> {
 
     @Query("select p from Approvisionnement p where p.code like :num")
-    Approvisionnement findByCode(@Param("num") long code);
+    Approvisionnement findByCode(@Param("num") Long code);
+   // Approvisionnement findByCode(@Param("num") long code);
 
     @Query("select p from Approvisionnement p where p.fournisseur.id =:cl")
     List<Approvisionnement> findListApprovisionnementByFournisseurId(@Param("cl") Long fourId);
