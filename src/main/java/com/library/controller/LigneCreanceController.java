@@ -35,7 +35,7 @@ public class LigneCreanceController {
     }
 
     @GetMapping("/lcreances/{id}")
-    public List<LigneCreance> getAllByNumero(@PathVariable(value = "id") int numero) {
+    public List<LigneCreance> getAllByNumero(@PathVariable(value = "id") long numero) {
         System.out.println("Get all Lcreances...");
 
         List<LigneCreance> Lcreances = new ArrayList<>();

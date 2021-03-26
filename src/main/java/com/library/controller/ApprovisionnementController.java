@@ -37,7 +37,7 @@ public class ApprovisionnementController {
     }
 
     @GetMapping("/searchApprovisionnementByCode")
-    public Approvisionnement getApprovisionnementByCode(@RequestParam("code") int code) {
+    public Approvisionnement getApprovisionnementByCode(@RequestParam("code") long code) {
         return approvisionnementService.findApprovisionnementByCode(code);
     }
 
