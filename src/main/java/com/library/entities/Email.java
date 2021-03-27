@@ -2,7 +2,6 @@ package com.library.entities;
 
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "email")
@@ -11,15 +10,12 @@ public class Email extends AbstractEntity {
      *
      */
     private static final long serialVersionUID = 1L;
+    //  private String name;
+    private static final String name = "Librairie Al-AMINE";
+    private static final String from = "thirdiallo@gmail.com";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-  //  private String name;
-    private static final String name = "Librairie Al-AMINE";
-
-    private static final String from = "thirdiallo@gmail.com";
-
     private String recever;
 
     private String subject;

@@ -3,7 +3,6 @@ package com.library.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneDevis")
@@ -17,7 +16,7 @@ public class LigneDevis extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   // private long numero;
+    // private long numero;
     private Long numero;
 
     private int quantite;
@@ -26,13 +25,13 @@ public class LigneDevis extends AbstractEntity {
 
     private double prixDevis;
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn(name="dev_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dev_id")
     @JsonIgnoreProperties(value = {"ldevis"})
     private Devis devis;
 
     @ManyToOne
-    @JoinColumn(name="prod_id")
+    @JoinColumn(name = "prod_id")
     private Produit produit;
 
     public LigneDevis() {

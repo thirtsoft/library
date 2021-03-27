@@ -1,13 +1,11 @@
 package com.library.entities;
 
-import java.io.Serializable;
-
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "employe")
@@ -16,30 +14,30 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Employe extends AbstractEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String prenom;
+    private String prenom;
 
-	private String nom;
+    private String nom;
 
-	@Column(length = 100, unique = true)
-	private String cni;
+    @Column(length = 100, unique = true)
+    private String cni;
 
-	private String adresse;
+    private String adresse;
 
-	@Column(length = 100, unique = true)
-	private String telephone;
+    @Column(length = 100, unique = true)
+    private String telephone;
 
-	private String telephone2;
+    private String telephone2;
 
-	@Column(length = 100, unique = true)
-	private String email;
+    @Column(length = 100, unique = true)
+    private String email;
 
 
 }

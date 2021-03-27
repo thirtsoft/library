@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -17,39 +16,39 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 public class Contrat extends AbstractEntity {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(length = 100, unique = true)
-	private String reference;
+    @Column(length = 100, unique = true)
+    private String reference;
 
-	private String nature;
+    private String nature;
 
-	private double montantContrat;
+    private double montantContrat;
 
-	private String description;
+    private String description;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
-	private Date dateDebutContrat;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
+    private Date dateDebutContrat;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
-	private Date dateFinContrat;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
+    private Date dateFinContrat;
 
-	private String fileName;
+    private String fileName;
 
-	private String fileContrat;
+    private String fileContrat;
 
-	@Lob
-	private byte[] content;
+    @Lob
+    private byte[] content;
 
-	@ManyToOne
-	@JoinColumn(name = "client_id", nullable = false)
-	private Client client;
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 
 }

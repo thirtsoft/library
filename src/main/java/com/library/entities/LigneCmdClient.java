@@ -3,7 +3,6 @@ package com.library.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneCmdClient")
@@ -16,7 +15,7 @@ public class LigneCmdClient extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-   // private long numero;
+    // private long numero;
     private Long numero;
 
     private int quantite;
