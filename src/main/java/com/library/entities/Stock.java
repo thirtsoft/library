@@ -16,7 +16,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Stock implements Serializable {
+public class Stock extends AbstractEntity {
 	/**
 	 * 
 	 */
@@ -24,6 +24,7 @@ public class Stock implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private int quantite;
 
 	private Date dateMiseAJour;

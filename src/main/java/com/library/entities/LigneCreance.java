@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneCreance")
-public class LigneCreance implements Serializable {
+public class LigneCreance extends AbstractEntity {
 	/**
 	 *
 	 */
@@ -15,9 +15,12 @@ public class LigneCreance implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 //	private long numero;
 	private Long numero;
+
 	private int quantite;
+
 	private double prix;
 
 	@ManyToOne (fetch = FetchType.LAZY)

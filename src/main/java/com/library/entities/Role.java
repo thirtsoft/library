@@ -13,11 +13,12 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "roles")
-public class Role implements Serializable {
+public class Role extends AbstractEntity {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,16 +32,16 @@ public class Role implements Serializable {
 
 	public Role() {}
 
-	public Role(RoleName name) {
-		this.name = name;
-	}
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Role(RoleName name) {
+		this.name = name;
 	}
 
 	public RoleName getName() {

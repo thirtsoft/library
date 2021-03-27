@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Versement implements Serializable {
+public class Versement extends AbstractEntity {
 	/**
 	 * 
 	 */
@@ -25,15 +25,23 @@ public class Versement implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Column(length = 100, unique = true)
 	private String numVersement;
+
 	private String nature;
+
 	@Column(length = 100, unique = true)
 	private String numeroRecu;
+
 	private String nomBank;
+
 	private Double montantVersement;
+
 	private String motif;
+
 	private String fileVersement;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
 	private Date dateVersement;
 

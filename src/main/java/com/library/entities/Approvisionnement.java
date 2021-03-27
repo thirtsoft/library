@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "approvisionnement")
-public class Approvisionnement implements Serializable {
+public class Approvisionnement extends AbstractEntity {
     /**
      *
      */
@@ -22,7 +22,9 @@ public class Approvisionnement implements Serializable {
 
    // private long code;
     private Long code;
+
     private double montantAvance;
+
     private double totalAppro;
 
     // @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -30,6 +32,7 @@ public class Approvisionnement implements Serializable {
     private Date dateApprovisionnement;
 
     private String status;
+
     private String observation;
 
     @ManyToOne

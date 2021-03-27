@@ -14,23 +14,34 @@ import java.util.List;
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "codeCreance")
         })
-public class Creance implements Serializable {
+public class Creance extends AbstractEntity {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-   // private long reference;
+
+
+    // private long reference;
     private Long reference;
+
     private String codeCreance;
+
     private String libelle;
+
     private double soldeCreance;
+
     private double avanceCreance;
+
     private int nbreJours;
+
     private double totalCreance;
+
     private String status;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateCreance;
 

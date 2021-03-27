@@ -42,9 +42,6 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     @Query("select p from Produit p where p.designation like :des")
     List<Produit> findListProduitByDesignation(@Param("des") String designation);
 
-    @Query("select p from Produit p where p.add_date like :date")
-    List<Produit> findByAdd_date(@DateTimeFormat(pattern = "yyyy-MM-dd") @Param("date") Date add_date);
-
     @Query("select p from Produit p")
     Page<Produit> findAllProduitsByPageable(Pageable pageable);
 

@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "email")
-public class Email implements Serializable {
+public class Email extends AbstractEntity {
     /**
      *
      */
@@ -14,11 +14,16 @@ public class Email implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
   //  private String name;
     private static final String name = "Librairie Al-AMINE";
+
     private static final String from = "thirdiallo@gmail.com";
+
     private String recever;
+
     private String subject;
+
     private String message;
 
     @ManyToOne
@@ -32,14 +37,6 @@ public class Email implements Serializable {
 
     public Email() {
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getRecever() {

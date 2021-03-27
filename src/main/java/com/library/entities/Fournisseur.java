@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Fournisseur implements Serializable {
+public class Fournisseur extends AbstractEntity {
     /**
      *
      */
@@ -20,21 +20,32 @@ public class Fournisseur implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 100, unique = true)
     private String code;
+
     private String raisonSociale;
+
     private String prenom;
+
     private String nom;
+
     @Column(length = 100, unique = true)
     private String nomBank;
+
     private String numeroCompte;
+
     private String adresse;
+
     private String telephone;
+
     private String fax;
+
     @Column(length = 100, unique = true)
     private String email;
 
     private String subject;
+
     private String message;
 
     public Fournisseur(Long id, String code, String raisonSociale, String prenom, String nom, String nomBank, String numeroCompte, String adresse, String telephone, String fax, String email) {

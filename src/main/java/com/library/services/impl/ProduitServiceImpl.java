@@ -77,11 +77,6 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public List<Produit> findListProduitByAddDate(Date add_date) {
-        return produitRepository.findByAdd_date(add_date);
-    }
-
-    @Override
     public Page<Produit> findAllProduitsByPageable(Pageable page) {
         return produitRepository.findAllProduitsByPageable(page);
     }
@@ -147,7 +142,6 @@ public class ProduitServiceImpl implements ProduitService {
         product.setStockInitial(produit.getStockInitial());
         product.setTva(produit.getTva());
         product.setPromo(produit.isPromo());
-        product.setAdd_date(produit.getAdd_date());
         product.setPhoto(produit.getPhoto());
         product.setScategorie(produit.getScategorie());
 

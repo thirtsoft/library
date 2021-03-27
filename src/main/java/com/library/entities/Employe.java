@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Employe implements Serializable {
+public class Employe extends AbstractEntity {
 	/**
 	 * 
 	 */
@@ -23,14 +23,21 @@ public class Employe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String prenom;
+
 	private String nom;
+
 	@Column(length = 100, unique = true)
 	private String cni;
+
 	private String adresse;
+
 	@Column(length = 100, unique = true)
 	private String telephone;
+
 	private String telephone2;
+
 	@Column(length = 100, unique = true)
 	private String email;
 

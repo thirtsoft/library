@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneDevis")
-public class LigneDevis implements Serializable {
+public class LigneDevis extends AbstractEntity {
 
     /**
      *
@@ -16,15 +16,18 @@ public class LigneDevis implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
    // private long numero;
     private Long numero;
+
     private int quantite;
+
     private double prix;
+
     private double prixDevis;
 
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name="dev_id")
-
     @JsonIgnoreProperties(value = {"ldevis"})
     private Devis devis;
 
@@ -104,8 +107,7 @@ public class LigneDevis implements Serializable {
     @Override
     public String toString() {
         return "LigneDevis{" +
-                "id=" + id +
-                ", numero=" + numero +
+                "numero=" + numero +
                 ", quantite=" + quantite +
                 ", prix=" + prix +
                 ", prixDevis=" + prixDevis +

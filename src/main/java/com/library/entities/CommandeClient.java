@@ -12,14 +12,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "commandeClient")
-public class CommandeClient implements Serializable {
+public class CommandeClient extends AbstractEntity {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
    // private long numeroCommande;
     private Long numeroCommande;
 
@@ -115,8 +117,7 @@ public class CommandeClient implements Serializable {
     @Override
     public String toString() {
         return "CommandeClient{" +
-                "id=" + id +
-                ", numeroCommande=" + numeroCommande +
+                "numeroCommande=" + numeroCommande +
                 ", dateCommande=" + dateCommande +
                 ", client=" + client +
                 ", lcomms=" + lcomms +

@@ -15,7 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Scategorie implements Serializable {
+public class Scategorie extends AbstractEntity {
 	/**
 	 * 
 	 */
@@ -23,8 +23,10 @@ public class Scategorie implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Column(length = 100, unique = true)
 	private String code;
+
 	private String libelle;
 	
 	@ManyToOne

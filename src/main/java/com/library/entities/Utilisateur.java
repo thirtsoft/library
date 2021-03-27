@@ -26,7 +26,7 @@ import lombok.ToString;
 				"email"
 		})
 })
-public class Utilisateur implements Serializable {
+public class Utilisateur extends AbstractEntity {
 	/**
 	 * 
 	 */

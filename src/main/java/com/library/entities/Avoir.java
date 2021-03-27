@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "avoir")
-public class Avoir implements Serializable {
+public class Avoir extends AbstractEntity {
     /**
      *
      */
@@ -20,13 +20,20 @@ public class Avoir implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
    // private long reference;
     private Long reference;
+
     private String libelle;
+
     private double soldeAvoir;
+
     private int nbreJours;
+
     private double totalAvoir;
+
     private String status;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateAvoir;
 

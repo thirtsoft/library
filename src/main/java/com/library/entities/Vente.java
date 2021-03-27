@@ -11,14 +11,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "vente")
-public class Vente implements Serializable {
+public class Vente extends AbstractEntity {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
    // private long numeroVente;
     private Long numeroVente;
 

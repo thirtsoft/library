@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneCmdClient")
-public class LigneCmdClient implements Serializable {
+public class LigneCmdClient extends AbstractEntity {
     /**
      *
      */
@@ -15,10 +15,14 @@ public class LigneCmdClient implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
    // private long numero;
     private Long numero;
+
     private int quantite;
+
     private double prix;
+
     private double prixCommande;
 
     @ManyToOne(fetch = FetchType.LAZY)

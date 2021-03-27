@@ -79,11 +79,6 @@ public class ProduitController {
         return produitService.findProductByScateoryId(scatId);
     }
 
-    @GetMapping("/searchListProduitsByDate")
-    public List<Produit> getAllProduitsByAddDate(@RequestParam("date") Date add_date) {
-        return produitService.findListProduitByAddDate(add_date);
-    }
-
     @GetMapping("/searchListProduitsByPageable")
     public Page<Produit> getAllProduitsByPageable(@RequestParam(name = "page") int page,
                                                   @RequestParam(name = "size") int size) {

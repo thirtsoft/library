@@ -7,26 +7,36 @@ import java.util.Date;
 
 @Entity
 @Table(name = "produit")
-public class Produit implements Serializable {
+public class Produit extends AbstractEntity {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String reference;
+
     private String designation;
+
     private Double prixAchat;
+
     private Double prixVente;
+
     private Double prixDetail;
+
     private Double tva;
+
     private int qtestock;
+
     private int stockInitial;
+
     private boolean promo;
+
     private String photo;
-    private Date add_date;
 
     @ManyToOne
     @JoinColumn(name = "scat_id")
@@ -41,7 +51,7 @@ public class Produit implements Serializable {
     }
 
 
-    public Produit(Long id, String reference, String designation, Double prixAchat, Double prixVente, Double prixDetail, Double tva, int qtestock, int stockInitial, boolean promo, String photo, Date add_date, Scategorie scategorie) {
+    public Produit(Long id, String reference, String designation, Double prixAchat, Double prixVente, Double prixDetail, Double tva, int qtestock, int stockInitial, boolean promo, String photo, Scategorie scategorie) {
         this.id = id;
         this.reference = reference;
         this.designation = designation;
@@ -53,7 +63,6 @@ public class Produit implements Serializable {
         this.stockInitial = stockInitial;
         this.promo = promo;
         this.photo = photo;
-        this.add_date = add_date;
         this.scategorie = scategorie;
 
     }
@@ -144,14 +153,6 @@ public class Produit implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public Date getAdd_date() {
-        return add_date;
-    }
-
-    public void setAdd_date(Date add_date) {
-        this.add_date = add_date;
     }
 
     public Scategorie getScategorie() {

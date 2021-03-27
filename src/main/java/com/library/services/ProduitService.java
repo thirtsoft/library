@@ -38,9 +38,6 @@ public interface ProduitService {
 
     List<Produit> findProductByScateoryId(Long scatId);
 
-    List<Produit> findListProduitByAddDate(Date add_date);
-
-
     Page<Produit> findAllProduitsByPageable(Pageable page);
 
     Page<Produit> findProduitByKeyWord(String mc, Pageable pageable);
