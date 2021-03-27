@@ -32,6 +32,10 @@ public class Vente extends AbstractEntity {
     @Valid
     private List<LigneVente> ligneVentes = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private Utilisateur utilisateur;
+
     private double totalVente;
 
     private String status;
@@ -39,13 +43,15 @@ public class Vente extends AbstractEntity {
     public Vente() {
     }
 
-    public Vente(Long id, Long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes, double totalVente, String status) {
+    public Vente(Long id, Long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes,
+                 double totalVente, String status, Utilisateur utilisateur) {
         this.id = id;
         this.numeroVente = numeroVente;
         this.dateVente = dateVente;
         this.ligneVentes = ligneVentes;
         this.totalVente = totalVente;
         this.status = status;
+        this.utilisateur = utilisateur;
     }
 
     public Long getId() {
@@ -94,6 +100,14 @@ public class Vente extends AbstractEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 }
 

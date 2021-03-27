@@ -244,6 +244,11 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    public List<Vente> findListVenteByEmployeId(Long empId) {
+        return venteRepository.findAllVenteByEmployeId(empId);
+    }
+
+    @Override
     public Page<Vente> findAllVenteByPageable(Pageable pageable) {
         return venteRepository.findAllVenteByPageable(pageable);
     }

@@ -59,6 +59,9 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
     @Query("select c from Vente c where c.status like :status")
     List<Vente> ListCommandeClientByStatus(@Param("status") String status);
 
+    @Query("select v from Vente v where v.utilisateur.id =:emp")
+    List<Vente> findAllVenteByEmployeId(@Param("emp") Long empId);
+
     List<Vente> findAllByDateVente(Date dateVente);
 
     @Query("select p from Vente p")

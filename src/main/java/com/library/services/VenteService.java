@@ -57,4 +57,6 @@ public interface VenteService {
 
     List<?> sumTotalOfVenteByYears();
 
+    List<Vente> findListVenteByEmployeId(Long empId);
+
 }
