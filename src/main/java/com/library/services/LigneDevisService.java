@@ -17,13 +17,15 @@ public interface LigneDevisService {
 
     void deleteLigneDevis(Long id);
 
-    void deleteLigneDevisByNumero(long numero);
+    //void deleteLigneDevisByNumero(long numero);
+    void deleteLigneDevisByNumero(Long numero);
 
     List<LigneDevis> findLigneDevisByProduitId(Long prodId);
 
     List<LigneDevis> findLigneDevisByDevId(Long devId);
 
-    List<LigneDevis> findAllLigneDevisByNumero(long numero);
+   // List<LigneDevis> findAllLigneDevisByNumero(long numero);
+    List<LigneDevis> findAllLigneDevisByNumero(Long numero);
 
 
     List<LigneDevis> saveListLigneDevis(List<LigneDevis> ligneDevis);

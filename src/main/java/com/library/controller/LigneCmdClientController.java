@@ -49,7 +49,7 @@ public class LigneCmdClientController {
 	}
 
 	@GetMapping("/lcomms/{id}")
-	public List<LigneCmdClient> getAllByNumero(@PathVariable(value = "id") int numero) {
+	public List<LigneCmdClient> getAllByNumero(@PathVariable(value = "id") long numero) {
 		System.out.println("Get all Lcomms...");
 
 		List<LigneCmdClient> Lcomms = new ArrayList<>();

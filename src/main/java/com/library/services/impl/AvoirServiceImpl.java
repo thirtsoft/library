@@ -137,18 +137,18 @@ public class AvoirServiceImpl implements AvoirService {
     }
 
     @Override
-    public Avoir findByReference(long reference) {
+    public Avoir findByReference(Long reference) {
         return avoirRepository.findByReference(reference);
     }
 
 
     @Override
-    public Avoir findAvoirByReference(long reference) {
+    public Avoir findAvoirByReference(Long reference) {
         return avoirRepository.findByReference(reference);
     }
 
     @Override
-    public List<Avoir> findListAvoirByReference(long reference) {
+    public List<Avoir> findListAvoirByReference(Long reference) {
         return avoirRepository.findListAvoirByReference(reference);
     }
 

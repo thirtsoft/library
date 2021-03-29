@@ -50,6 +50,7 @@ public class VenteServiceImpl implements VenteService {
     }
 
     public Vente saveVente(Vente vente) {
+        System.out.println("Initial Numero Vente " +vente.getNumeroVente());
         List<LigneVente> ligneVente = vente.getLigneVentes();
 
         if (ligneVente == null || ligneVente.size() == 0) {
@@ -63,6 +64,7 @@ public class VenteServiceImpl implements VenteService {
         }
 
         venteRepository.save(vente);
+        System.out.println("Milieu Numero Vente " +vente.getNumeroVente());
 
         List<LigneVente> ligneVentes = vente.getLigneVentes();
 
@@ -92,6 +94,8 @@ public class VenteServiceImpl implements VenteService {
         vente.setTotalVente(total);
         vente.setStatus("valider");
         vente.setDateVente(new Date());
+
+        System.out.println("Fin Numero Vente " +vente.getNumeroVente());
 
         return venteRepository.save(vente);
 
@@ -169,7 +173,7 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
-    public Vente findVenteByNumeroVente(long numeroVente) {
+    public Vente findVenteByNumeroVente(Long numeroVente) {
         return venteRepository.findByNumeroVente(numeroVente);
     }
 
@@ -237,6 +241,11 @@ public class VenteServiceImpl implements VenteService {
     @Override
     public List<?> sumTotalOfVenteByYears() {
         return venteRepository.sumTotalOfVenteByYears();
+    }
+
+    @Override
+    public List<Vente> findListVenteByEmployeId(Long empId) {
+        return venteRepository.findAllVenteByEmployeId(empId);
     }
 
     @Override

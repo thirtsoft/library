@@ -52,12 +52,12 @@ public class CreanceController {
 
     @PostMapping(path = "/updateStatus")
     public ResponseEntity<Boolean> updateStatus(@RequestBody ObjectNode json) {
-        int reference;
+        Long reference;
         String ref;
         String status;
         try {
             ref = new ObjectMapper().treeToValue(json.get("ref"), String.class);
-            reference = Integer.parseInt(ref);
+            reference = Long.parseLong(ref);
             status = new ObjectMapper().treeToValue(json.get("status"), String.class);
             boolean test = this.creanceService.updateStatus(reference, status);
             if (test)
@@ -151,9 +151,9 @@ public class CreanceController {
         return new ResponseEntity<>(newCreance, HttpStatus.OK);
     }
 
-    @PatchMapping("/setCreanceOnlySolde/{id}")
-    public ResponseEntity<?> setCreanceOnlySolde(@RequestParam("soldeCreance") double soldeCreance, @PathVariable("id") String id) {
-        Creance newCreance = creanceService.setCreanceOnlySolde(soldeCreance, id);
+    @PatchMapping("/setCreanceOnlyAvanceCreance/{id}")
+    public ResponseEntity<?> setCreanceOnlyAvanceCreance(@RequestParam("avanceCreance") double avanceCreance, @PathVariable("id") String id) {
+        Creance newCreance = creanceService.setCreanceOnlyAvanceCreance(avanceCreance, id);
         return new ResponseEntity<>(newCreance, HttpStatus.OK);
     }
 

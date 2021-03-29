@@ -24,7 +24,8 @@ public interface DevisRepository extends JpaRepository<Devis, Long> {
     BigDecimal countNumbersOfDevis();
 
     @Query("select p from Devis p where p.numeroDevis like :num")
-    Devis findByNumeroDevis(@Param("num") long numeroDevis);
+    Devis findByNumeroDevis(@Param("num") Long numeroDevis);
+   // Devis findByNumeroDevis(@Param("num") long numeroDevis);
 
     List<Devis> findAllByDateDevis(Date dateDevis);
 

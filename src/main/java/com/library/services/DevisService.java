@@ -26,7 +26,8 @@ public interface DevisService {
 
     BigDecimal countNumbersOfDevis();
 
-    Devis findByNumeroDevis(long numeroDevis);
+  //  Devis findByNumeroDevis(long numeroDevis);
+    Devis findByNumeroDevis(Long numeroDevis);
 
     List<Devis> findDevisByClientId(Long clientId);
 

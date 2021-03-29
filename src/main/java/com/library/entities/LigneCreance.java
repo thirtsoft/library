@@ -3,91 +3,94 @@ package com.library.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneCreance")
-public class LigneCreance implements Serializable {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private long numero;
-	private int quantite;
-	private double prix;
+public class LigneCreance extends AbstractEntity {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinColumn(name="creance_id")
-	@JsonIgnoreProperties(value = {"lcreances"})
-	private Creance creance;
+    //	private long numero;
+    private Long numero;
 
-	@ManyToOne
-	@JoinColumn(name="prod_id")
-	private Produit produit;
+    private int quantite;
 
-	public LigneCreance() {
-		super();
-	}
+    private double prix;
 
-	public LigneCreance(Long id, long numero, int quantite, double prix, Creance creance, Produit produit) {
-		this.id = id;
-		this.numero = numero;
-		this.quantite = quantite;
-		this.prix = prix;
-		this.creance = creance;
-		this.produit = produit;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creance_id")
+    @JsonIgnoreProperties(value = {"lcreances"})
+    private Creance creance;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "prod_id")
+    private Produit produit;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public LigneCreance() {
+        super();
+    }
 
-	public long getNumero() {
-		return numero;
-	}
+    public LigneCreance(Long id, Long numero, int quantite, double prix, Creance creance, Produit produit) {
+        this.id = id;
+        this.numero = numero;
+        this.quantite = quantite;
+        this.prix = prix;
+        this.creance = creance;
+        this.produit = produit;
+    }
 
-	public void setNumero(long numero) {
-		this.numero = numero;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public int getQuantite() {
-		return quantite;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
-	}
+    public Long getNumero() {
+        return numero;
+    }
 
-	public double getPrix() {
-		return prix;
-	}
+    public void setNumero(Long numero) {
+        this.numero = numero;
+    }
 
-	public void setPrix(double prix) {
-		this.prix = prix;
-	}
+    public int getQuantite() {
+        return quantite;
+    }
 
-	public Creance getCreance() {
-		return creance;
-	}
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
 
-	public void setCreance(Creance creance) {
-		this.creance = creance;
-	}
+    public double getPrix() {
+        return prix;
+    }
 
-	public Produit getProduit() {
-		return produit;
-	}
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
 
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
+    public Creance getCreance() {
+        return creance;
+    }
+
+    public void setCreance(Creance creance) {
+        this.creance = creance;
+    }
+
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public void setProduit(Produit produit) {
+        this.produit = produit;
+    }
 
 }
 

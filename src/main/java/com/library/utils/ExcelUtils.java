@@ -71,9 +71,6 @@ public class ExcelUtils {
                             boolean isPromo = (int) currentCell.getNumericCellValue() == 1;
                             produit.setPromo(isPromo);
                             break;
-                        case 5:
-                            produit.setAdd_date(currentCell.getDateCellValue());
-                            break;
                         case 6:
                             produit.setPrixVente(currentCell.getNumericCellValue());
                             break;
@@ -230,9 +227,9 @@ public class ExcelUtils {
                 row.createCell(5).setCellValue(produit.getQtestock());
                 row.createCell(6).setCellValue(produit.getStockInitial());
 
-                Cell dateCell = row.createCell(7);
+             /*   Cell dateCell = row.createCell(7);
                 dateCell.setCellValue(produit.getAdd_date());
-                dateCell.setCellStyle(dateCellStyle);
+                dateCell.setCellStyle(dateCellStyle);*/
 
                 row.createCell(8).setCellValue(produit.getScategorie().getLibelle());
               //  row.createCell(9).setCellValue(produit.getCategorie().getDesignation());

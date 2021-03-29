@@ -1,14 +1,12 @@
 package com.library.entities;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "stock")
@@ -16,21 +14,22 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Stock implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private int quantite;
+public class Stock extends AbstractEntity {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private Date dateMiseAJour;
+    private int quantite;
 
-	@ManyToOne
-	@JoinColumn(name="prod_id", nullable = false)
-	private Produit produit;
+    private Date dateMiseAJour;
+
+    @ManyToOne
+    @JoinColumn(name = "prod_id", nullable = false)
+    private Produit produit;
 
 }
 

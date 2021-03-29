@@ -4,14 +4,13 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "devis")
-public class Devis implements Serializable {
+public class Devis extends AbstractEntity {
 
     /**
      *
@@ -20,7 +19,9 @@ public class Devis implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numeroDevis;
+
+    // private long numeroDevis;
+    private Long numeroDevis;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateDevis;
@@ -41,7 +42,7 @@ public class Devis implements Serializable {
 
     }
 
-    public Devis(Long id, long numeroDevis, Date dateDevis, Client client, @Valid List<LigneDevis> ldevis, double totalDevis, String status) {
+    public Devis(Long id, Long numeroDevis, Date dateDevis, Client client, @Valid List<LigneDevis> ldevis, double totalDevis, String status) {
         this.id = id;
         this.numeroDevis = numeroDevis;
         this.dateDevis = dateDevis;
@@ -59,11 +60,11 @@ public class Devis implements Serializable {
         this.id = id;
     }
 
-    public long getNumeroDevis() {
+    public Long getNumeroDevis() {
         return numeroDevis;
     }
 
-    public void setNumeroDevis(long numeroDevis) {
+    public void setNumeroDevis(Long numeroDevis) {
         this.numeroDevis = numeroDevis;
     }
 
@@ -110,8 +111,7 @@ public class Devis implements Serializable {
     @Override
     public String toString() {
         return "Devis{" +
-                "id=" + id +
-                ", numeroDevis=" + numeroDevis +
+                "numeroDevis=" + numeroDevis +
                 ", dateDevis=" + dateDevis +
                 ", client=" + client +
                 ", ldevis=" + ldevis +

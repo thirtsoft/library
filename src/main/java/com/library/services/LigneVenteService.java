@@ -20,9 +20,11 @@ public interface LigneVenteService {
 
     ResponseEntity<Object> deleteLigneVente(Long ligneVenteId);
 
-    void deleteLventeByNumero(long numero);
+   // void deleteLventeByNumero(long numero);
+    void deleteLventeByNumero(Long numero);
 
-    List<LigneVente> findAllLventeByNumero(long numero);
+   // List<LigneVente> findAllLventeByNumero(long numero);
+    List<LigneVente> findAllLventeByNumero(Long numero);
 
     List<LigneVente> findLigneVenteByProduitId(Long prodId);
 

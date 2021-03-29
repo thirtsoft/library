@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "avoir")
-public class Avoir implements Serializable {
+public class Avoir extends AbstractEntity {
     /**
      *
      */
@@ -20,12 +19,20 @@ public class Avoir implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long reference;
+
+    // private long reference;
+    private Long reference;
+
     private String libelle;
+
     private double soldeAvoir;
+
     private int nbreJours;
+
     private double totalAvoir;
+
     private String status;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateAvoir;
 
@@ -40,7 +47,7 @@ public class Avoir implements Serializable {
     public Avoir() {
     }
 
-    public Avoir(Long id, long reference, String libelle, double soldeAvoir, int nbreJours, double totalAvoir, String status, Date dateAvoir, Fournisseur fournisseur, @Valid List<LigneAvoir> lavoirs) {
+    public Avoir(Long id, Long reference, String libelle, double soldeAvoir, int nbreJours, double totalAvoir, String status, Date dateAvoir, Fournisseur fournisseur, @Valid List<LigneAvoir> lavoirs) {
         this.id = id;
         this.reference = reference;
         this.libelle = libelle;
@@ -61,11 +68,11 @@ public class Avoir implements Serializable {
         this.id = id;
     }
 
-    public long getReference() {
+    public Long getReference() {
         return reference;
     }
 
-    public void setReference(long reference) {
+    public void setReference(Long reference) {
         this.reference = reference;
     }
 

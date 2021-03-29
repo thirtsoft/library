@@ -25,7 +25,6 @@ public class VenteController {
     @GetMapping("/ventes")
     public List<Vente> getAllVentes() {
         return venteService.findAllVentes();
-
     }
 
     @GetMapping("/ventes/{id}")
@@ -37,7 +36,7 @@ public class VenteController {
     }
 
     @GetMapping("/searchVenteByNumeroVente")
-    public Vente getVenteByNumeroVente(@RequestParam("num") int numeroVente) {
+    public Vente getVenteByNumeroVente(@RequestParam("num") Long numeroVente) {
         return venteService.findVenteByNumeroVente(numeroVente);
     }
 
@@ -134,6 +133,11 @@ public class VenteController {
     @GetMapping("/searchSumsOfVenteByDay")
     public BigDecimal getSumsOfVenteByDay() {
         return venteService.sumTotalOfVenteByDay();
+    }
+
+    @GetMapping("/searchListVenteByEmpId")
+    public List<Vente> findListVenteByEmployeId(Long empId) {
+        return venteService.findListVenteByEmployeId(empId);
     }
 
 }

@@ -18,12 +18,12 @@ public interface LigneCreanceService {
 
     ResponseEntity<Object> deleteLigneCreance(Long creanceId);
 
-    void deleteLcreanceByNumero(long numero);
+    void deleteLcreanceByNumero(Long numero);
 
     List<LigneCreance> findLigneCreanceByProduitId(Long prodId);
 
     List<LigneCreance> findLigneCreanceByCreanceId(Long creanceId);
 
-    List<LigneCreance> findAllLcreanceByNumero(long numero);
+    List<LigneCreance> findAllLcreanceByNumero(Long numero);
 
 }

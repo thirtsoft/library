@@ -34,7 +34,7 @@ public interface CommandeClientService {
     BigDecimal sumTotalOfCommandesByYear();
 
 
-    CommandeClient findByNumeroCommande(long numeroCommande);
+    CommandeClient findByNumeroCommande(Long numeroCommande);
 
     CommandeClient findByStatus(String status);
 

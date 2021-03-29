@@ -4,22 +4,24 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "vente")
-public class Vente implements Serializable {
+public class Vente extends AbstractEntity {
     /**
      *
      */
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numeroVente;
+
+    // private long numeroVente;
+    private Long numeroVente;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
@@ -30,6 +32,10 @@ public class Vente implements Serializable {
     @Valid
     private List<LigneVente> ligneVentes = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private Utilisateur utilisateur;
+
     private double totalVente;
 
     private String status;
@@ -37,13 +43,15 @@ public class Vente implements Serializable {
     public Vente() {
     }
 
-    public Vente(Long id, long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes, double totalVente, String status) {
+    public Vente(Long id, Long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes,
+                 double totalVente, String status, Utilisateur utilisateur) {
         this.id = id;
         this.numeroVente = numeroVente;
         this.dateVente = dateVente;
         this.ligneVentes = ligneVentes;
         this.totalVente = totalVente;
         this.status = status;
+        this.utilisateur = utilisateur;
     }
 
     public Long getId() {
@@ -54,11 +62,11 @@ public class Vente implements Serializable {
         this.id = id;
     }
 
-    public long getNumeroVente() {
+    public Long getNumeroVente() {
         return numeroVente;
     }
 
-    public void setNumeroVente(long numeroVente) {
+    public void setNumeroVente(Long numeroVente) {
         this.numeroVente = numeroVente;
     }
 
@@ -92,6 +100,14 @@ public class Vente implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 }
 

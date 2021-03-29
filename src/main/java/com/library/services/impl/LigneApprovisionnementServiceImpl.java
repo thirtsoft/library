@@ -96,12 +96,12 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
     }
 
     @Override
-    public void deleteLApproByNumero(long numero) {
+    public void deleteLApproByNumero(Long numero) {
         ligneApprovisionnementRepository.deleteByNumero(numero);
     }
 
     @Override
-    public List<LigneApprovisionnement> findAllLApproByNumero(long numero) {
+    public List<LigneApprovisionnement> findAllLApproByNumero(Long numero) {
         return ligneApprovisionnementRepository.findAllByNumero(numero);
     }
 }

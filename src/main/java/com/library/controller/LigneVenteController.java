@@ -37,7 +37,7 @@ public class LigneVenteController {
     }
 
     @GetMapping("/lventes/{id}")
-    public List<LigneVente> getAllByNumero(@PathVariable(value = "id") long numero) {
+    public List<LigneVente> getAllByNumero(@PathVariable(value = "id") Long numero) {
         System.out.println("Get all Lventes...");
 
         List<LigneVente> Lventes = new ArrayList<>();

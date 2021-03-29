@@ -47,7 +47,7 @@ public class ProduitRepositoryTest {
 		Long scatId = (long) 2;
 		Optional<Scategorie> scat = scategoryRepository.findById(scatId);
 		
-		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0,25000.0,26000.0, 20.0, 20, 10, true, "photo", new Date(), scat.get());
+		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0,25000.0,26000.0, 20.0, 20, 10, true, "photo", scat.get());
 		
 		Produit saveProduit = produitRepository.save(produit);
 		
@@ -116,7 +116,7 @@ public class ProduitRepositoryTest {
 		Scategorie scat = scategory.get();
 		
 		Produit produit = new Produit(null,prodReference, prodDesignation, prodprixAchat, 
-				prodprixVente,prixDetail, prodtva, 300, 15, true, "photoUpdate", new Date(), scat);
+				prodprixVente,prixDetail, prodtva, 300, 15, true, "photoUpdate", scat);
 		
 		produit.setId((long) 7);
 		produitRepository.save(produit);

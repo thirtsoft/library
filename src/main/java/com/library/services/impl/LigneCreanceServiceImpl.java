@@ -64,7 +64,7 @@ public class LigneCreanceServiceImpl implements LigneCreanceService {
     }
 
     @Override
-    public void deleteLcreanceByNumero(long numero) {
+    public void deleteLcreanceByNumero(Long numero) {
         ligneCreanceRepository.deleteByNumero(numero);
     }
 
@@ -79,7 +79,7 @@ public class LigneCreanceServiceImpl implements LigneCreanceService {
     }
 
     @Override
-    public List<LigneCreance> findAllLcreanceByNumero(long numero) {
+    public List<LigneCreance> findAllLcreanceByNumero(Long numero) {
         return ligneCreanceRepository.findAllByNumero(numero);
     }
 }

@@ -39,7 +39,7 @@ public class DevisController {
     }
 
     @GetMapping("/searchDevisByNumeroDevis")
-    public Devis getDevisByNumeroDevis(@RequestParam("num") long numeroDevis) {
+    public Devis getDevisByNumeroDevis(@RequestParam("num") Long numeroDevis) {
         return devisService.findByNumeroDevis(numeroDevis);
     }
 

@@ -12,10 +12,12 @@ import java.util.List;
 public interface AvoirRepository extends JpaRepository<Avoir, Long> {
 
     @Query("select p from Avoir p where p.reference like :ref")
-    Avoir findByReference(@Param("ref") long reference);
+    Avoir findByReference(@Param("ref") Long reference);
+  //  Avoir findByReference(@Param("ref") long reference);
 
     @Query("select p from Avoir p where p.reference like :ref")
-    List<Avoir> findListAvoirByReference(@Param("ref") long reference);
+    List<Avoir> findListAvoirByReference(@Param("ref") Long reference);
+  //  List<Avoir> findListAvoirByReference(@Param("ref") long reference);
 
     @Query("select p from Avoir p where p.libelle like :lib")
     Avoir findByLibelle(@Param("lib") String libelle);

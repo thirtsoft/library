@@ -50,7 +50,7 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     }
 
     @Override
-    public Approvisionnement findApprovisionnementByCode(long code) {
+    public Approvisionnement findApprovisionnementByCode(Long code) {
         return approvisionnementRepository.findByCode(code);
     }
 

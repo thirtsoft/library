@@ -175,12 +175,12 @@ public class CreanceServiceImpl implements CreanceService {
 
 
     @Override
-    public Optional<Creance> findByReference(long reference) {
+    public Optional<Creance> findByReference(Long reference) {
         return creanceRepository.findByReference(reference);
     }
 
     @Override
-    public boolean updateStatus(long reference, String status) {
+    public boolean updateStatus(Long reference, String status) {
         Optional<Creance> creance = this.creanceRepository.findByReference(reference);
         Creance creanceResult;
         if (creance.isPresent()) {
@@ -206,10 +206,10 @@ public class CreanceServiceImpl implements CreanceService {
     }
 
     @Override
-    public Creance setCreanceOnlySolde(double soldeCreance, String id) {
+    public Creance setCreanceOnlyAvanceCreance(double avanceCreance, String id) {
         Optional<Creance> originalCreance = creanceRepository.findById(Long.valueOf(id));
         Creance creance = originalCreance.get();
-        creance.setSoldeCreance(soldeCreance);
+        creance.setAvanceCreance(avanceCreance);
         return creanceRepository.save(creance);
     }
 

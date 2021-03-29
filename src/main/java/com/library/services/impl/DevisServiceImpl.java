@@ -148,7 +148,7 @@ public class DevisServiceImpl implements DevisService {
     }
 
     @Override
-    public Devis findByNumeroDevis(long numeroDevis) {
+    public Devis findByNumeroDevis(Long numeroDevis) {
         return devisRepository.findByNumeroDevis(numeroDevis);
     }
 

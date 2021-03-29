@@ -3,17 +3,21 @@ package com.library.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneVente")
-public class LigneVente implements Serializable {
+public class LigneVente extends AbstractEntity {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long numero;
+
+    // private long numero;
+    private Long numero;
+
     private int quantite;
+
     private double prixVente;
 
     @ManyToOne
@@ -30,7 +34,7 @@ public class LigneVente implements Serializable {
     public LigneVente() {
     }
 
-    public LigneVente(Long id, long numero, int quantite, double prixVente, Vente vente, Produit produit) {
+    public LigneVente(Long id, Long numero, int quantite, double prixVente, Vente vente, Produit produit) {
         this.id = id;
         this.numero = numero;
         this.quantite = quantite;
@@ -47,11 +51,11 @@ public class LigneVente implements Serializable {
         this.id = id;
     }
 
-    public long getNumero() {
+    public Long getNumero() {
         return numero;
     }
 
-    public void setNumero(long numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
 

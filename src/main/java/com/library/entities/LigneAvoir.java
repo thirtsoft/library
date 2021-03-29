@@ -3,90 +3,93 @@ package com.library.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
 @Table(name = "ligneAvoir")
-public class LigneAvoir implements Serializable {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private long numero;
-	private int quantite;
-	private double prix;
+public class LigneAvoir extends AbstractEntity {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@ManyToOne (fetch = FetchType.LAZY)
-	@JoinColumn(name="avoir_id")
-	@JsonIgnoreProperties(value = {"lavoirs"})
-	private Avoir avoir;
+    //private long numero;
+    private Long numero;
 
-	@ManyToOne
-	@JoinColumn(name="prod_id")
-	private Produit produit;
+    private int quantite;
 
-	public LigneAvoir() {
-		super();
-	}
+    private double prix;
 
-	public LigneAvoir(Long id, long numero, int quantite, double prix, Avoir avoir, Produit produit) {
-		this.id = id;
-		this.numero = numero;
-		this.quantite = quantite;
-		this.prix = prix;
-		this.avoir = avoir;
-		this.produit = produit;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "avoir_id")
+    @JsonIgnoreProperties(value = {"lavoirs"})
+    private Avoir avoir;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "prod_id")
+    private Produit produit;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public LigneAvoir() {
+        super();
+    }
 
-	public long getNumero() {
-		return numero;
-	}
+    public LigneAvoir(Long id, Long numero, int quantite, double prix, Avoir avoir, Produit produit) {
+        this.id = id;
+        this.numero = numero;
+        this.quantite = quantite;
+        this.prix = prix;
+        this.avoir = avoir;
+        this.produit = produit;
+    }
 
-	public void setNumero(long numero) {
-		this.numero = numero;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public int getQuantite() {
-		return quantite;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
-	}
+    public Long getNumero() {
+        return numero;
+    }
 
-	public double getPrix() {
-		return prix;
-	}
+    public void setNumero(Long numero) {
+        this.numero = numero;
+    }
 
-	public void setPrix(double prix) {
-		this.prix = prix;
-	}
+    public int getQuantite() {
+        return quantite;
+    }
 
-	public Avoir getAvoir() {
-		return avoir;
-	}
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
 
-	public void setAvoir(Avoir avoir) {
-		this.avoir = avoir;
-	}
+    public double getPrix() {
+        return prix;
+    }
 
-	public Produit getProduit() {
-		return produit;
-	}
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
 
-	public void setProduit(Produit produit) {
-		this.produit = produit;
-	}
+    public Avoir getAvoir() {
+        return avoir;
+    }
+
+    public void setAvoir(Avoir avoir) {
+        this.avoir = avoir;
+    }
+
+    public Produit getProduit() {
+        return produit;
+    }
+
+    public void setProduit(Produit produit) {
+        this.produit = produit;
+    }
 }
 
