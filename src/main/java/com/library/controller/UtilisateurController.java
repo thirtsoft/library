@@ -135,7 +135,7 @@ public class UtilisateurController {
     /**
      * Enregistre la photo dans le dossier utilisateur
      */
-    @PostMapping(path = "uploadUserPhoto/{id}", produces = IMAGE_PNG_VALUE)
+    @PostMapping(path = "/uploadUserPhoto/{id}", produces = IMAGE_PNG_VALUE)
     public void uploadUserPhoto(MultipartFile file, @PathVariable("id") Long id) throws IOException {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));

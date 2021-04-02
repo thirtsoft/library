@@ -1,8 +1,10 @@
 package com.library.controller;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import com.library.entities.Role;
@@ -15,6 +17,7 @@ import com.library.message.request.SignUpForm;
 import com.library.message.response.JwtResponse;
 import com.library.repository.UtilisateurRepository;
 import com.library.security.jwt.JwtProvider;
+import com.library.security.services.UserPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,9 +59,18 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+    //    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+        UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles));
     }
 
     @PostMapping("/signup")
