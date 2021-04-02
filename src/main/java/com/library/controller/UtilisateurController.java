@@ -129,7 +129,7 @@ public class UtilisateurController {
     public byte[] getPhotoUser(@PathVariable("id") Long id) throws Exception {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));
-        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/users/" + utilisateur.getPhoto()));
+        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/users/photos/" + utilisateur.getPhoto()));
     }
 
     /**
@@ -140,7 +140,7 @@ public class UtilisateurController {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));
         utilisateur.setPhoto(file.getOriginalFilename());
-        Files.write(Paths.get(System.getProperty("user.home") + "/users/photo/" + utilisateur.getPhoto()), file.getBytes());
+        Files.write(Paths.get(System.getProperty("user.home") + "/users/photos/" + utilisateur.getPhoto()), file.getBytes());
         utilisateurService.saveUtilisateur(utilisateur);
     }
 
