@@ -1,13 +1,18 @@
 package com.library.controller;
 
+import com.library.entities.Utilisateur;
 import com.library.entities.Vente;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.security.services.UserPrinciple;
+import com.library.services.UtilisateurService;
 import com.library.services.VenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -17,8 +22,12 @@ import java.util.List;
 @CrossOrigin
 @RequestMapping("/apiSeller")
 public class VenteController {
+
     @Autowired
     private VenteService venteService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     private Double total = 0.0;
 
@@ -89,11 +98,17 @@ public class VenteController {
     }
 
     @PostMapping("/ventes")
-    public ResponseEntity<Vente> createVente(@RequestBody Vente vente) {
+    public ResponseEntity<Vente> createVente(@RequestBody Vente vente, @RequestParam Long id) {
 
+
+        /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();*/
+        Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
+
+        vente.setUtilisateur(userInfo);
         venteService.saveVente(vente);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/ventes/{id}")

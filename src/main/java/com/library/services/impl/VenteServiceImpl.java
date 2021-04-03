@@ -94,6 +94,7 @@ public class VenteServiceImpl implements VenteService {
         vente.setTotalVente(total);
         vente.setStatus("valider");
         vente.setDateVente(new Date());
+        vente.setUtilisateur(vente.getUtilisateur());
 
         System.out.println("Fin Numero Vente " +vente.getNumeroVente());
 

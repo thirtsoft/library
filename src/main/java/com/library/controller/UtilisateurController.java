@@ -36,8 +36,10 @@ public class UtilisateurController {
 
     @Autowired
     ServletContext context;
+
     @Autowired
     private UtilisateurService utilisateurService;
+
     @Autowired
     private AccountService accountService;
 
@@ -125,7 +127,7 @@ public class UtilisateurController {
         }
     }
 
-    @GetMapping(path = "photoUser/{id}", produces = IMAGE_PNG_VALUE)
+    @GetMapping(path = "/photoUser/{id}", produces = IMAGE_PNG_VALUE)
     public byte[] getPhotoUser(@PathVariable("id") Long id) throws Exception {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));

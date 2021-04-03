@@ -1,9 +1,16 @@
 package com.library.entities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,7 +22,7 @@ import java.util.Set;
                 "email"
         })
 })
-public class Utilisateur extends AbstractEntity {
+public class Utilisateur extends AbstractEntity implements Serializable {
     /**
      *
      */
@@ -47,11 +54,16 @@ public class Utilisateur extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    /*@JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "utilisateur")
+    private List<Vente> vente;*/
+
     /*
         @ManyToMany(fetch = FetchType.EAGER)
         private Collection<Role> roles = new ArrayList<>();
     */
     public Utilisateur() {
+        super();
     }
 
     public Utilisateur(String name, String username, String email, String password) {
@@ -60,6 +72,11 @@ public class Utilisateur extends AbstractEntity {
         this.email = email;
         this.password = password;
 
+    }
+
+    @JsonCreator
+    public Utilisateur (@JsonProperty("id") Long id ) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -129,5 +146,7 @@ public class Utilisateur extends AbstractEntity {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
 }
 

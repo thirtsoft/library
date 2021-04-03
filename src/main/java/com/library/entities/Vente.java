@@ -1,16 +1,21 @@
 package com.library.entities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import jdk.nashorn.internal.objects.annotations.Property;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "vente")
-public class Vente extends AbstractEntity {
+public class Vente extends AbstractEntity implements Serializable {
     /**
      *
      */
@@ -41,6 +46,11 @@ public class Vente extends AbstractEntity {
     private String status;
 
     public Vente() {
+        super();
+    }
+
+    public Vente(Long id) {
+        this.id = id;
     }
 
     public Vente(Long id, Long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes,
