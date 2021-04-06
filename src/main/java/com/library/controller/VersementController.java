@@ -75,8 +75,11 @@ public class VersementController {
 	}
 	
 	@GetMapping("/searchListVersementsByEmployeId")
-	public List<Versement> getAllVersementsByEmployeId(@RequestParam("id") Long empId) {
-		return versementService.findVersementByEmployeId(empId);
+	public List<Versement> getAllVersementsByEmployeId(Long empId) {
+		List<Versement> verResult = versementService.findVersementByEmployeId(empId);
+		System.out.println(verResult);
+	//	return versementService.findVersementByEmployeId(empId);
+		return verResult;
 	}
 
 	@GetMapping("/searchListVersementsByKeyword")

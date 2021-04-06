@@ -26,7 +26,7 @@ public interface VersementRepository extends JpaRepository<Versement, Long> {
     @Query("select p from Versement p where p.nature like :nat")
     List<Versement> findListVersementNature(@Param("nat") String nature);
 
-    @Query("select p from Versement p where p.employe.id =:emp")
+    @Query("select v from Versement v where v.employe.id =:emp")
     List<Versement> findVersementByEmployeId(@Param("emp") Long empId);
 
     @Query("select p from Versement p where p.employe.id =:id")
