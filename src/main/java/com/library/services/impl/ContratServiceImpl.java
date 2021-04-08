@@ -87,9 +87,6 @@ public class ContratServiceImpl implements ContratService {
 
 	@Override
 	public Contrat saveContrat(Contrat contrat) {
-		if (contratRepository.findByReference(contrat.getReference()) != null) {
-			throw new IllegalArgumentException("Ce Contrat existe");
-		}
 		return contratRepository.save(contrat);
 	}
 

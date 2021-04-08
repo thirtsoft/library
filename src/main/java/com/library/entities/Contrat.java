@@ -40,12 +40,11 @@ public class Contrat extends AbstractEntity {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
     private Date dateFinContrat;
 
-    private String fileName;
 
     private String fileContrat;
 
-    @Lob
-    private byte[] content;
+   // @Lob
+   // private byte[] content;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)

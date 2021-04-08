@@ -36,7 +36,7 @@ public class ContratServiceTest {
         contrat.setReference("CONT11");
         contrat.setNature("NatCONT");
         contrat.setDescription("DESCCONT");
-        contrat.setContent(new byte[100]);
+      //  contrat.setContent(new byte[100]);
 
         when(contratRepository.save(contrat)).thenReturn(contrat);
 
@@ -51,7 +51,9 @@ public class ContratServiceTest {
 
         Client client = new Client(null, "BIC103", "CL", "CL", "CL", "CL", "CL");
 
-        Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", "file", new byte[100], client);
+       // Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", "file", new byte[100], client);
+
+        Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", client);
 
         when(contratRepository.findByReference(contrat.getReference())).thenReturn(contrat);
 
@@ -67,7 +69,9 @@ public class ContratServiceTest {
 
         Client client = new Client(null, "BIC103", "CL", "CL", "CL", "CL", "CL");
 
-        Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", "file", new byte[100], client);
+       // Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", "file", new byte[100], client);
+
+        Contrat contrat = new Contrat(null, "Cont1", "Prestation", 1200, "Logiciel", new Date(), new Date(), "fileName", client);
 
         when(contratRepository.findByNature(contrat.getNature())).thenReturn(contrat);
 
@@ -83,9 +87,21 @@ public class ContratServiceTest {
     public void testfindAllContrats() {
         Client client = new Client(null, "BIC103", "CL", "CL", "CL", "CL", "CL");
         when(contratRepository.findAll()).thenReturn(Stream
+                .of(new Contrat(null, "CONT22", "CONT22", 1200, "CONT22", new Date(), new Date(), "fileName", client),
+                        new Contrat(null, "CONT33", "CONT33", 1200, "CONT33", new Date(), new Date(), "fileName", client)).collect(Collectors.toList()));
+        assertEquals(2, contratService.findAllContrats().size());
+    }
+/*
+    @Test
+    public void testfindAllContrats() {
+        Client client = new Client(null, "BIC103", "CL", "CL", "CL", "CL", "CL");
+        when(contratRepository.findAll()).thenReturn(Stream
                 .of(new Contrat(null, "CONT22", "CONT22", 1200, "CONT22", new Date(), new Date(), "fileName", "file", new byte[100], client),
                         new Contrat(null, "CONT33", "CONT33", 1200, "CONT33", new Date(), new Date(), "fileName", "file", new byte[100], client)).collect(Collectors.toList()));
         assertEquals(2, contratService.findAllContrats().size());
     }
+
+    */
+
 
 }

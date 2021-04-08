@@ -67,10 +67,8 @@ public class VersementServiceImpl implements VersementService {
 
     @Override
     public Versement saveVersement(Versement versement) {
-        if (versementRepository.findByNumVersement(versement.getNumVersement()) != null) {
-            throw new IllegalArgumentException("Ce Versement existe");
-        }
         versement.setDateVersement(new Date());
+
         return versementRepository.save(versement);
     }
 

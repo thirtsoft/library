@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.entities.Contrat;
+import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.ContratService;
 import com.library.services.ExcelService;
 import com.library.utils.FileHelper;
@@ -53,9 +54,9 @@ public class ContratController {
     @Autowired
     private ExcelService excelService;
 
-  //  private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
+    private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
 
-    private String contratsDir = "../resources/Contrat//";
+  //  private String contratsDir = "../resources/Contrat//";
 
 
     @GetMapping("/contrats")
@@ -103,9 +104,20 @@ public class ContratController {
         }
 
         contratService.saveContrat(contrat);
+
         return ResponseEntity.status(HttpStatus.CREATED).body("Contrat is created");
-      //  return new ResponseEntity<>("Contrat with file is create successfull", HttpStatus.CREATED);
     }
+
+    @PostMapping(path = "/uploadFilePdf/{id}")
+    public void uploadContratFile(MultipartFile file, @PathVariable("id") Long id) throws IOException {
+        Contrat contrat = contratService.findContratById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Contrat not found"));
+        contrat.setFileContrat(file.getOriginalFilename());
+        Files.write(Paths.get(System.getProperty("user.home") + "/AlAmine/Contrat/" + contrat.getFileContrat()), file.getBytes());
+
+        contratService.saveContrat(contrat);
+    }
+    /*
 
     @PostMapping("/saveContrats")
     public BodyBuilder saveContrats(@RequestParam(name = "contrat") String cont,
@@ -117,7 +129,7 @@ public class ContratController {
         contratService.saveContrat(contrat);
         return ResponseEntity.status(HttpStatus.CREATED);
     }
-
+*/
 
     @PutMapping("/contrats/{id}")
     public ResponseEntity<Contrat> updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
