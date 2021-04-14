@@ -28,10 +28,17 @@ public class Vente extends AbstractEntity implements Serializable {
     // private long numeroVente;
     private Long numeroVente;
 
+    private double totalVente;
+
+    private String status;
+
+    private String typeReglement;
+
+    private double montantReglement;
+
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
     private Date dateVente;
-
 
     @OneToMany(mappedBy = "vente", fetch = FetchType.LAZY)
     @Valid
@@ -41,9 +48,6 @@ public class Vente extends AbstractEntity implements Serializable {
     @JoinColumn(name = "userId", nullable = false)
     private Utilisateur utilisateur;
 
-    private double totalVente;
-
-    private String status;
 
     public Vente() {
         super();
@@ -54,12 +58,14 @@ public class Vente extends AbstractEntity implements Serializable {
     }
 
     public Vente(Long id, Long numeroVente, Date dateVente, @Valid List<LigneVente> ligneVentes,
-                 double totalVente, String status, Utilisateur utilisateur) {
+                 double totalVente, String typeReglement, double montantReglement, String status, Utilisateur utilisateur) {
         this.id = id;
         this.numeroVente = numeroVente;
         this.dateVente = dateVente;
         this.ligneVentes = ligneVentes;
         this.totalVente = totalVente;
+        this.typeReglement = typeReglement;
+        this.montantReglement = montantReglement;
         this.status = status;
         this.utilisateur = utilisateur;
     }
@@ -102,6 +108,22 @@ public class Vente extends AbstractEntity implements Serializable {
 
     public void setTotalVente(double totalVente) {
         this.totalVente = totalVente;
+    }
+
+    public String getTypeReglement() {
+        return typeReglement;
+    }
+
+    public void setTypeReglement(String typeReglement) {
+        this.typeReglement = typeReglement;
+    }
+
+    public double getMontantReglement() {
+        return montantReglement;
+    }
+
+    public void setMontantReglement(double montantReglement) {
+        this.montantReglement = montantReglement;
     }
 
     public String getStatus() {
