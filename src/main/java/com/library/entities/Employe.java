@@ -1,14 +1,19 @@
 package com.library.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "employe")
+//@EqualsAndHashCode(callSuper = false)
+//@Getter
+//@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Employe extends AbstractEntity {
     /**
      *
@@ -35,6 +40,7 @@ public class Employe extends AbstractEntity {
     @Column(length = 100, unique = true)
     private String email;
 
+    /*
     public Employe() {
     }
 
@@ -112,5 +118,6 @@ public class Employe extends AbstractEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+    */
 }
 

@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().
                 authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/alAmine/utilisateurs/authorities").permitAll()
                 .antMatchers("/alAmine/photoUser/{id}").permitAll()
                 .antMatchers("/alAmine/uploadFilePdf/{id}").permitAll()
                 .antMatchers("/alAmine/downloadContratFile/**").permitAll()

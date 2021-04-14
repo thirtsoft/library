@@ -30,4 +30,6 @@ public interface UtilisateurService {
 
     boolean updatePasswordofUtilisateur(String username, String oldPass, String newPass);
 
+    List<String> findAuthorities();
+
 }

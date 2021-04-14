@@ -219,5 +219,13 @@ public class UtilisateurController {
         return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
     }
 
+    /**
+     * @return a string list of the all of the roles
+     */
+    @GetMapping("/utilisateurs/authorities")
+    public List<String> getAuthorities() {
+        return utilisateurService.findAuthorities();
+    }
+
 
 }

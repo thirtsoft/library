@@ -1,20 +1,13 @@
 package com.library.controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javax.validation.Valid;
-
 import com.library.entities.Role;
 import com.library.entities.Utilisateur;
 import com.library.enumeration.RoleName;
-import com.library.message.response.ResponseMessage;
-import com.library.repository.RoleRepository;
 import com.library.message.request.LoginForm;
 import com.library.message.request.SignUpForm;
 import com.library.message.response.JwtResponse;
+import com.library.message.response.ResponseMessage;
+import com.library.repository.RoleRepository;
 import com.library.repository.UtilisateurRepository;
 import com.library.security.jwt.JwtProvider;
 import com.library.security.services.UserPrinciple;
@@ -25,12 +18,19 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "http://localhost:4200")
+
+//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -59,10 +59,11 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateJwtToken(authentication);
-    //    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //    UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
+        List<String> roles = userDetails.getAuthorities()
+                .stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
@@ -86,14 +87,47 @@ public class AuthController {
         }
 
         // Creating user's account
-        Utilisateur user = new Utilisateur(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),
+        Utilisateur user = new Utilisateur(signUpRequest.getName(),
+                signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
+       // Set<String> strRoles = signUpRequest.getRole();
+        String[] roleArr = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
-        strRoles.forEach(role -> {
-            switch (role) {
+        if (roleArr == null) {
+            roles.add(roleRepository.findByName(RoleName.ROLE_USER).get());
+        }
+
+        for (String role: roleArr) {
+            switch (role.toLowerCase()) {
+                case "admin":
+                    roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).get());
+                    break;
+/*
+                case "vendeur":
+                    roles.add(roleRepository.findByName(RoleName.ROLE_VENDEUR).get());
+                    break;
+                */
+                case "user":
+                    roles.add(roleRepository.findByName(RoleName.ROLE_USER).get());
+                    break;
+
+                default:
+                    return ResponseEntity.badRequest().body("Specified role not found");
+
+            }
+        }
+
+        user.setRoles(roles);
+        userRepository.save(user);
+
+        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.CREATED);
+
+/*
+        roles.forEach(role -> {
+            switch (roleArr.toLowerCase()) {
                 case "admin":
                     Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN)
                             .orElseThrow(() -> new RuntimeException("Fail! -> Cause: Admin Role not find."));
@@ -116,7 +150,9 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.CREATED);
+
+        */
     }
 
     @GetMapping("/getUserByUsername/{username}")

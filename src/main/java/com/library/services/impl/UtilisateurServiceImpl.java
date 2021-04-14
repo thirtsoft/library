@@ -1,7 +1,9 @@
 package com.library.services.impl;
 
+import com.library.entities.Role;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.repository.RoleRepository;
 import com.library.repository.UtilisateurRepository;
 import com.library.services.RoleService;
 import com.library.services.UtilisateurService;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -21,10 +24,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     private UtilisateurRepository utilisateurRepository;
 
     @Autowired
-    private RoleService roleService;
+    private RoleRepository roleRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository repository;
 
 
     @Override
@@ -110,5 +116,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             }
         }
         return false;
+    }
+
+    /**
+     * @return a list of all the authorities
+     */
+    public List<String> findAuthorities() {
+      //  return roleRepository.findAll().stream().map(Role::getName).collect(Collectors.toList());
+        return null;
     }
 }

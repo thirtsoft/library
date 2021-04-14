@@ -19,7 +19,9 @@ public class SignUpForm {
     @Email
     private String email;
 
-    private Set<String> role;
+    //private Set<String> role;
+
+    private String[] roles;
 
     @Size(min = 6, max = 40)
     private String password;
@@ -49,13 +51,13 @@ public class SignUpForm {
         this.email = email;
     }
 
-    public Set<String> getRole() {
-        return role;
-    }
+   public String[] getRoles() {
+        return roles;
+   }
 
-    public void setRole(Set<String> role) {
-        this.role = role;
-    }
+   public void setRoles(String[] roles) {
+        this.roles = roles;
+   }
 
     public String getPassword() {
         return password;

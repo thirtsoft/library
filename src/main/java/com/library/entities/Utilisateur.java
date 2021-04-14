@@ -22,7 +22,7 @@ import java.util.Set;
                 "email"
         })
 })
-public class Utilisateur extends AbstractEntity implements Serializable {
+public class Utilisateur implements Serializable {
     /**
      *
      */
