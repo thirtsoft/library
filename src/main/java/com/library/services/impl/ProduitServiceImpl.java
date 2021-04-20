@@ -378,8 +378,6 @@ public class ProduitServiceImpl implements ProduitService {
             workSheet.setDefaultColumnWidth(30);
 
             HSSFCellStyle headerCellStyle = workbook.createCellStyle();
-            //headerCellStyle.setFillForegroundColor(HSSFColor.BLUE.index);
-            //headerCellStyle.setFillPattern();
 
             HSSFRow headerRow = workSheet.createRow(0);
 
@@ -406,7 +404,6 @@ public class ProduitServiceImpl implements ProduitService {
                 HSSFRow bodyRow = workSheet.createRow(i);
 
                 HSSFCellStyle bodyCellStyle = workbook.createCellStyle();
-                //bodyCellStyle.setFillBackgroundColor(HSSFColor.);
 
                 HSSFCell referenceValue = bodyRow.createCell(0);
                 referenceValue.setCellValue(prod.getReference());

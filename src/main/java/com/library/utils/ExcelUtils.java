@@ -184,7 +184,7 @@ public class ExcelUtils {
 
     public static ByteArrayInputStream produitsToExcel(List<Produit> produits) throws IOException {
 
-        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Date_Ajout", "Scategorie"};
+        String[] COLUMNs = {"Reference", "Designation", "Prix_Achat", "Prix_Vente","Prix_Detail","Stock", "StockInitial", "Scategorie"};
 
         try(
                 Workbook workbook = new XSSFWorkbook();
@@ -227,12 +227,8 @@ public class ExcelUtils {
                 row.createCell(5).setCellValue(produit.getQtestock());
                 row.createCell(6).setCellValue(produit.getStockInitial());
 
-             /*   Cell dateCell = row.createCell(7);
-                dateCell.setCellValue(produit.getAdd_date());
-                dateCell.setCellStyle(dateCellStyle);*/
-
                 row.createCell(8).setCellValue(produit.getScategorie().getLibelle());
-              //  row.createCell(9).setCellValue(produit.getCategorie().getDesignation());
+
             }
 
             workbook.write(out);

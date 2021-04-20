@@ -1,5 +1,6 @@
 package com.library.services.impl;
 
+import ch.qos.logback.core.pattern.color.WhiteCompositeConverter;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -9,6 +10,11 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.CategoryRepository;
 import com.library.services.CategoryService;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Color;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,7 +86,6 @@ public class CategoryServiceImpl implements CategoryService {
             throw new ResourceNotFoundException("Category not found");
         }
         categoryRepository.deleteById(catId);
-        //	return ResponseEntity.ok().build();
     }
 
     @Override
@@ -238,8 +243,8 @@ public class CategoryServiceImpl implements CategoryService {
             workSheet.setDefaultColumnWidth(30);
 
             HSSFCellStyle headerCellStyle = workbook.createCellStyle();
-            //headerCellStyle.setFillForegroundColor(HSSFColor.BLUE.index);
-            //headerCellStyle.setFillPattern();
+            headerCellStyle.setFillForegroundColor(IndexedColors.AQUA.getIndex());
+            headerCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
             HSSFRow headerRow = workSheet.createRow(0);
 
@@ -256,7 +261,6 @@ public class CategoryServiceImpl implements CategoryService {
                 HSSFRow bodyRow = workSheet.createRow(i);
 
                 HSSFCellStyle bodyCellStyle = workbook.createCellStyle();
-                //bodyCellStyle.setFillBackgroundColor(HSSFColor.);
 
                 HSSFCell codeValue = bodyRow.createCell(0);
                 codeValue.setCellValue(category.getCode());
