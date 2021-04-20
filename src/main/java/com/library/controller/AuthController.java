@@ -105,11 +105,11 @@ public class AuthController {
                 case "admin":
                     roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).get());
                     break;
-/*
+
                 case "vendeur":
                     roles.add(roleRepository.findByName(RoleName.ROLE_VENDEUR).get());
                     break;
-                */
+
                 case "user":
                     roles.add(roleRepository.findByName(RoleName.ROLE_USER).get());
                     break;

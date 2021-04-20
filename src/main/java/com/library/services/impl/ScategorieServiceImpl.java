@@ -135,13 +135,39 @@ public class ScategorieServiceImpl implements ScategorieService {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file + "/" + "scategories" + ".pdf"));
             document.open();
 
-            Font mainFont = FontFactory.getFont("Arial", 14, BaseColor.BLACK);
+            Font mainFontEntete = FontFactory.getFont(FontFactory.COURIER, 30, BaseColor.BLACK);
+            mainFontEntete.setStyle(Font.BOLD);
+            mainFontEntete.setColor(BaseColor.BLUE);
+            mainFontEntete.setStyle(Font.UNDERLINE);
 
-            Paragraph paragraph = new Paragraph("LISTE DES SCATEGORIES", mainFont);
+            Paragraph paragraphEntete = new Paragraph("AL AMINE", mainFontEntete);
+            paragraphEntete.setAlignment(Element.ALIGN_CENTER);
+            paragraphEntete.setIndentationLeft(90);
+            paragraphEntete.setIndentationRight(90);
+            paragraphEntete.setSpacingAfter(6);
+            document.add(paragraphEntete);
+
+            Font mainFontTitle = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
+
+            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Commerce GeneralRC SN ZGR 2016 C233 / NINEA 00058166762P6\n" +
+                    "N°Compte CNCAS SN 048 03001 000108318801 J/40N° Compte BNDE SN 169 03001 001000519301/30\n" +
+                    "Tél: 77109 18 18 / Email: papeteriealamine@gmail.com\n", mainFontTitle);
+
+            paragraphTitle.setAlignment(Element.ALIGN_CENTER);
+            paragraphTitle.setIndentationLeft(50);
+            paragraphTitle.setIndentationRight(50);
+            paragraphTitle.setSpacingAfter(10);
+            document.add(paragraphTitle);
+
+            Font mainFont = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
+            mainFont.setStyle(Font.UNDERLINE);
+
+            Paragraph paragraph = new Paragraph("LA LISTE DES SCATEGORIES", mainFont);
             paragraph.setAlignment(Element.ALIGN_CENTER);
             paragraph.setIndentationLeft(50);
             paragraph.setIndentationRight(50);
-            paragraph.setSpacingAfter(10);
+            paragraph.setSpacingAfter(10f);
+            paragraph.setSpacingBefore(5f);
             document.add(paragraph);
 
             PdfPTable table = new PdfPTable(3);
@@ -149,24 +175,24 @@ public class ScategorieServiceImpl implements ScategorieService {
             table.setSpacingBefore(10f);
             table.setSpacingAfter(10);
 
-            Font tableHeader = FontFactory.getFont("Arial", 10, BaseColor.BLACK);
-            Font tableBody = FontFactory.getFont("Arial", 9, BaseColor.BLACK);
+            Font tableHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);
+            Font tableBody = FontFactory.getFont("Arial", 12, BaseColor.BLACK);
 
             PdfPCell code = new PdfPCell(new Paragraph("Code", tableHeader));
             code.setBorderColor(BaseColor.BLACK);
             code.setPaddingLeft(10);
             code.setHorizontalAlignment(Element.ALIGN_CENTER);
             code.setVerticalAlignment(Element.ALIGN_CENTER);
-            code.setBackgroundColor(BaseColor.GRAY);
+            code.setBackgroundColor(BaseColor.LIGHT_GRAY);
             code.setExtraParagraphSpace(5f);
             table.addCell(code);
 
-            PdfPCell libelle = new PdfPCell(new Paragraph("Libelle", tableHeader));
+            PdfPCell libelle = new PdfPCell(new Paragraph("Désignation", tableHeader));
             libelle.setBorderColor(BaseColor.BLACK);
             libelle.setPaddingLeft(10);
             libelle.setHorizontalAlignment(Element.ALIGN_CENTER);
             libelle.setVerticalAlignment(Element.ALIGN_CENTER);
-            libelle.setBackgroundColor(BaseColor.GRAY);
+            libelle.setBackgroundColor(BaseColor.LIGHT_GRAY);
             libelle.setExtraParagraphSpace(5f);
             table.addCell(libelle);
 
@@ -175,16 +201,16 @@ public class ScategorieServiceImpl implements ScategorieService {
             categorie.setPaddingLeft(10);
             categorie.setHorizontalAlignment(Element.ALIGN_CENTER);
             categorie.setVerticalAlignment(Element.ALIGN_CENTER);
-            categorie.setBackgroundColor(BaseColor.GRAY);
+            categorie.setBackgroundColor(BaseColor.LIGHT_GRAY);
             categorie.setExtraParagraphSpace(5f);
             table.addCell(categorie);
 
             for (Scategorie scategorie : scategories) {
                 PdfPCell codeValue = new PdfPCell(new Paragraph(scategorie.getCode(), tableBody));
                 codeValue.setBorderColor(BaseColor.BLACK);
-                codeValue.setPaddingLeft(10);
+                codeValue.setPaddingLeft(4);
                 codeValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-                codeValue.setVerticalAlignment(Element.ALIGN_CENTER);
+                codeValue.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 codeValue.setBackgroundColor(BaseColor.WHITE);
                 codeValue.setExtraParagraphSpace(5f);
                 table.addCell(codeValue);
