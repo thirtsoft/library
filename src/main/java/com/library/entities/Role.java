@@ -21,9 +21,7 @@ public class Role extends AbstractEntity {
     @NaturalId
     @Column(length = 60)
     private RoleName name;
-
-//	private String roleName;
-
+    
     public Role() {
     }
 

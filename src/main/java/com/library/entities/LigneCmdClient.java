@@ -15,7 +15,6 @@ public class LigneCmdClient extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // private long numero;
     private Long numero;
 
     private int quantite;
@@ -34,7 +33,6 @@ public class LigneCmdClient extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "prod_id")
-    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Produit produit;
 
     public LigneCmdClient() {

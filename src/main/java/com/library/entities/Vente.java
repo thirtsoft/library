@@ -25,7 +25,6 @@ public class Vente extends AbstractEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // private long numeroVente;
     private Long numeroVente;
 
     private double totalVente;

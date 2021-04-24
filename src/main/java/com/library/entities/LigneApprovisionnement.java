@@ -15,7 +15,6 @@ public class LigneApprovisionnement extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //  private long numero;
     private Long numero;
 
     private int quantite;

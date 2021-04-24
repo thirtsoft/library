@@ -25,8 +25,7 @@ public class Approvisionnement extends AbstractEntity {
     private double montantAvance;
 
     private double totalAppro;
-
-    // @DateTimeFormat(pattern = "yyyy-MM-dd")
+    
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
     private Date dateApprovisionnement;
 

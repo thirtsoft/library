@@ -40,10 +40,6 @@ public class Produit extends AbstractEntity {
     @JoinColumn(name = "scat_id")
     private Scategorie scategorie;
 
-/*	@OneToMany(mappedBy = "produit", fetch=FetchType.LAZY)
-	private Collection<LigneCmdClient> lcomms;
-	*/
-
     public Produit() {
         super();
     }
