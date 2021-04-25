@@ -42,7 +42,7 @@ public interface ProduitService {
 
     Page<Produit> findProduitByKeyWord(String mc, Pageable pageable);
 
-    boolean createPdf(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+  //  boolean createPdf(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
     boolean createExcel(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 

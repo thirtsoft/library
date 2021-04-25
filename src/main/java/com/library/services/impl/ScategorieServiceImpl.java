@@ -120,7 +120,7 @@ public class ScategorieServiceImpl implements ScategorieService {
     public Page<Scategorie> findScategorieByKeyWord(String mc, Pageable pageable) {
         return scategorieRepository.findScategorieByKeyWord(mc, pageable);
     }
-
+/*
     @Override
     public boolean createScategoriePdf(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response) {
         Document document = new Document(PageSize.A4, 15, 15, 45, 30);
@@ -245,6 +245,7 @@ public class ScategorieServiceImpl implements ScategorieService {
         }
 
     }
+    */
 
     @Override
     public boolean createScategorieExcel(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response) {

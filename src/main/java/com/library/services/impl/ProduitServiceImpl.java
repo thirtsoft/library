@@ -85,28 +85,6 @@ public class ProduitServiceImpl implements ProduitService {
         return produitRepository.findProduitByKeyWord(mc, pageable);
     }
 
-	/*
-	@Override
-	public Produit saveProduit(Long catId, Produit produit) {
-		Set<Produit> products = new HashSet<Produit>();
-
-		Category cat = new Category();
-
-		Optional<Category> catbyId = categoryRepository.findById(catId);
-
-		if(!catbyId.isPresent()) { throw new ResourceNotFoundException("Category" +catId + "not found");
-
-		}
-
-		Category category = catbyId.get();
-
-		Produit prod = produitRepository.save(produit); products.add(prod);
-		//cat.setProducts(products);
-
-		return prod;
-	}
-
-	*/
 
     @Override
     public Produit saveProduit(Produit produit) {
@@ -160,7 +138,7 @@ public class ProduitServiceImpl implements ProduitService {
         }
         produitRepository.deleteById(prodId);
     }
-
+/*
     @Override
     public boolean createPdf(List<Produit> produits, ServletContext context,
                              HttpServletRequest request,
@@ -361,7 +339,7 @@ public class ProduitServiceImpl implements ProduitService {
         }
 
     }
-
+*/
 
     public boolean createExcel(List<Produit> produitList, ServletContext context, HttpServletRequest request,
                                HttpServletResponse response) {

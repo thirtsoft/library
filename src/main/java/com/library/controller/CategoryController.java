@@ -8,6 +8,7 @@ import com.library.message.response.ResponseMessage;
 import com.library.services.CategoryService;
 import com.library.services.ExcelService;
 import com.library.utils.ExcelUtils;
+import com.library.services.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
@@ -32,11 +33,16 @@ public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
     @Autowired
     private CategoryRestAssembler categoryRestAssembler;
 
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    private PdfService pdfService;
+
     @Autowired
     private MessageSource messageSource;
 
@@ -44,13 +50,11 @@ public class CategoryController {
     private ServletContext context;
 
     @GetMapping("/categories")
-    //@GetMapping
     public List<CategoryModel> getAllCategory() {
         return categoryRestAssembler.assembledEntityToModel(categoryService.findAllCategory());
     }
 
     @GetMapping("/categories/{id}")
-    //@GetMapping("/{id}")
     public ResponseEntity<CategoryModel> getCategoryById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         Category category = categoryService.findCategoryById(id)
@@ -60,21 +64,18 @@ public class CategoryController {
     }
 
     @PostMapping("/categories")
-    //@PostMapping
     public ResponseEntity<CategoryModel> createCategory(@RequestBody Category category) {
         return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category)), HttpStatus.OK);
 
     }
 
     @PutMapping("/categories/{catId}")
-    //@PutMapping("/{catId}")
     public ResponseEntity<CategoryModel> updateCategory(@PathVariable(value = "catId") Long catId, @RequestBody Category category) {
         category.setId(catId);
         return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.updateCategory(catId, category)), HttpStatus.OK);
     }
 
     @DeleteMapping("/categories/{id}")
-    //@DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable(value = "id") Long id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.ok().build();
@@ -83,7 +84,8 @@ public class CategoryController {
     @GetMapping(value = "/categories/createCategoriePdf")
     public void createCategoriePdf(HttpServletRequest request, HttpServletResponse response) {
         List<Category> categories = categoryService.findAllCategory();
-        boolean isFlag = categoryService.createCategoriePdf(categories, context, request, response);
+        boolean isFlag = pdfService.createCategoriesPdf(categories, context, request, response);
+        //  boolean isFlag = categoryService.createCategoriePdf(categories, context, request, response);
 
         if (isFlag) {
             String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "categories" + ".pdf");

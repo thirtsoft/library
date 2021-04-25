@@ -5,6 +5,7 @@ import com.library.message.response.ResponseMessage;
 import com.library.services.ExcelService;
 import com.library.services.ProduitService;
 import com.library.utils.ExcelUtils;
+import com.library.services.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
@@ -20,8 +21,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -34,10 +33,16 @@ public class ProduitController {
 
     @Autowired
     private ProduitService produitService;
+
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    private PdfService pdfService;
+
     @Autowired
     private MessageSource messageSource;
+
     @Autowired
     private ExcelUtils utils;
 
@@ -143,29 +148,19 @@ public class ProduitController {
     @GetMapping(value = "/createPdf")
     public void createPdf(HttpServletRequest request, HttpServletResponse response) {
         List<Produit> produitList = produitService.findAllProduits();
-        boolean isFlag = produitService.createPdf(produitList, context, request, response);
+        boolean isFlag = pdfService.createPdfProduits(produitList, context, request, response);
+        // boolean isFlag = produitService.createPdf(produitList, context, request, response);
 
         if (isFlag) {
             String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "articles" + ".pdf");
             filedownload(fullPath, response, "articles.pdf");
         }
     }
-/*
-    @GetMapping(value = "/createExcel")
-    public void createExcel(HttpServletRequest request, HttpServletResponse response) {
-        List<Produit> produitList = produitService.findAllProduits();
-        boolean isFlag = produitService.createExcel(produitList, context, request, response);
-
-        if (isFlag) {
-            String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "articles" + ".xlsx");
-            filedownload(fullPath, response, "articles.xlsx");
-        }
-    }*/
 
     @PostMapping(value = "/upload")
     public ResponseEntity<ResponseMessage> uploadExcel(@RequestParam("file") MultipartFile file) {
         String message;
-        if (utils.isExcelFile(file)) {
+        if (ExcelUtils.isExcelFile(file)) {
             try {
                 excelService.store(file);
                 message = messageSource.getMessage("message.upload.success", null, Locale.getDefault()) + file.getOriginalFilename();
@@ -207,9 +202,9 @@ public class ProduitController {
 
     @GetMapping(value = "/download/articles.xlsx")
     public ResponseEntity<InputStreamResource> excelProduitsReport() throws IOException {
-        List<Produit> produits = (List<Produit>) produitService.findAllProduits();
+        List<Produit> produits = produitService.findAllProduits();
 
-        ByteArrayInputStream in = utils.produitsToExcel(produits);
+        ByteArrayInputStream in = ExcelUtils.produitsToExcel(produits);
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "attachment; filename=articles.xlsx");

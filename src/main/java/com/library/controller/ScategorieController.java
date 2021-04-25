@@ -5,6 +5,7 @@ import com.library.message.response.ResponseMessage;
 import com.library.services.ExcelService;
 import com.library.services.ScategorieService;
 import com.library.utils.ExcelUtils;
+import com.library.services.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
@@ -34,12 +35,15 @@ public class ScategorieController {
 
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    private PdfService pdfService;
+
     @Autowired
     private MessageSource messageSource;
 
     @Autowired
     private ServletContext context;
-
 
     @GetMapping("/scategories")
     public List<Scategorie> getAllScategories() {
@@ -126,7 +130,8 @@ public class ScategorieController {
     @GetMapping(value = "/createScategoriePdf")
     public void createScategoriePdf(HttpServletRequest request, HttpServletResponse response) {
         List<Scategorie> scategories = scategorieService.findAllScategories();
-        boolean isFlag = scategorieService.createScategoriePdf(scategories, context, request, response);
+        boolean isFlag = pdfService.createScategoriesPdf(scategories, context, request, response);
+        // boolean isFlag = scategorieService.createScategoriePdf(scategories, context, request, response);
 
         if (isFlag) {
             String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "scategories" + ".pdf");
@@ -179,7 +184,7 @@ public class ScategorieController {
 
     @GetMapping(value = "/download/scategories.xlsx")
     public ResponseEntity<InputStreamResource> excelScategoriesReport() throws IOException {
-        List<Scategorie> scategories = (List<Scategorie>) scategorieService.findAllScategories();
+        List<Scategorie> scategories = scategorieService.findAllScategories();
 
         ByteArrayInputStream in = ExcelUtils.ScategoriesToExcel(scategories);
 

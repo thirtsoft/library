@@ -35,7 +35,7 @@ public interface CategoryService {
 
     Page<Category> findCategoryByKeyWord(String mc, Pageable pageable);
 
-    boolean createCategoriePdf(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+   // boolean createCategoriePdf(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
     boolean createCategorieExcel(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 

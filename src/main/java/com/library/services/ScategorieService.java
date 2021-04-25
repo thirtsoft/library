@@ -38,7 +38,7 @@ public interface ScategorieService {
 
     Page<Scategorie> findScategorieByKeyWord(String mc, Pageable pageable);
 
-    boolean createScategoriePdf(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+  //  boolean createScategoriePdf(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
     boolean createScategorieExcel(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 

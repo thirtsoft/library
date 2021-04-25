@@ -120,7 +120,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findCategoryByKeyWord(mc, pageable);
 
     }
-
+/*
     @Override
     public boolean createCategoriePdf(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response) {
         Document document = new Document(PageSize.A4, 15, 15, 45, 30);
@@ -227,7 +227,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
 
     }
-
+*/
     @Override
     public boolean createCategorieExcel(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response) {
         String filePath = context.getRealPath("/resources/reports");
