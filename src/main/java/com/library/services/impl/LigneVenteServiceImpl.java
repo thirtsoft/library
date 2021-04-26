@@ -5,8 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.LigneVenteRepository;
 import com.library.services.LigneVenteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,18 +88,5 @@ public class LigneVenteServiceImpl implements LigneVenteService {
         return ligneVenteRepository.ListLigneVenteByVenteId(venteId);
     }
 
-    @Override
-    public Page<LigneVente> findAllLigneVenteByPageable(Pageable pageable) {
-        return ligneVenteRepository.findAllLigneVenteByPageable(pageable);
-    }
 
-    @Override
-    public Page<LigneVente> findAllLigneVenteByVente(Long venteId, Pageable pageable) {
-        return ligneVenteRepository.findLigneVenteByVentePageable(venteId, pageable);
-    }
-
-    @Override
-    public Page<LigneVente> findAllLigneVenteByProduit(Long prodId, Pageable pageable) {
-        return ligneVenteRepository.findLigneVenteByProduitPageable(prodId, pageable);
-    }
 }

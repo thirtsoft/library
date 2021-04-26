@@ -35,6 +35,6 @@ public interface AvoirService {
 
     void deleteAvoir(Long id);
 
-    long generateRefereceAvoir();
+    long generateReferenceAvoir();
 
 }

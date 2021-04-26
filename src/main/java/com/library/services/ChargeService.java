@@ -1,8 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Charge;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +24,5 @@ public interface ChargeService {
     Charge updateCharge(Long id, Charge charge);
 
     void deleteCharge(Long id);
-
-    Page<Charge> findAllChargesByPageable(Pageable page);
-
-    Page<Charge> findChargesByKeyWord(String mc, Pageable pageable);
 
 }

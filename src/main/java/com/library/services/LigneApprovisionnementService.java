@@ -1,9 +1,6 @@
 package com.library.services;
 
 import com.library.entities.LigneApprovisionnement;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +15,7 @@ public interface LigneApprovisionnementService {
 
     LigneApprovisionnement updateLigneApprovisionnement(Long lApproId, LigneApprovisionnement ligneApprovisionnement);
 
-    ResponseEntity<Object> deleteLigneApprovisionnement(Long lApproid);
+    //  ResponseEntity<Object> deleteLigneApprovisionnement(Long lApproid);
 
     void deleteLApproByNumero(Long numero);
 
@@ -28,10 +25,5 @@ public interface LigneApprovisionnementService {
 
     List<LigneApprovisionnement> findListLigneApprovisionnementByApprovisionnementId(Long approId);
 
-    Page<LigneApprovisionnement> findAllLigneApprovisionnementByPageable(Pageable pageable);
-
-    Page<LigneApprovisionnement> findAllLigneApprovisionnementByApproviosionnement(Long approId, Pageable pageable);
-
-    Page<LigneApprovisionnement> findAllLigneApprovisionnementByProduit(Long prodId, Pageable pageable);
 
 }

@@ -44,7 +44,7 @@ public class AvoirServiceImpl implements AvoirService {
     @Override
     public Optional<Avoir> findAvoirById(Long comId) {
         if (!avoirRepository.existsById(comId)) {
-            throw new ResourceNotFoundException("CommandeClient that id is" + comId + "not found");
+            throw new ResourceNotFoundException("Avoir that id is" + comId + "not found");
         }
 
         return avoirRepository.findById(comId);
@@ -52,8 +52,8 @@ public class AvoirServiceImpl implements AvoirService {
 
     /**
      * @param avoir
-     * @return methode permettant d'ajouter d'abord une commande
-     * puis les lignes de commandes correspondantes
+     * @return methode permettant d'ajouter d'abord un avoir
+     * puis les lignes d'avoir correspondantes
      */
 
     @Override
@@ -72,12 +72,7 @@ public class AvoirServiceImpl implements AvoirService {
             ligneAvoirService.saveLigneAvoir(lavoir);
 
             Produit produit = produitService.findProduitById(lavoir.getProduit().getId()).get();
-            /*
-            if (produit != null) {
-                produit.setQtestock(produit.getQtestock() + lavoir.getQuantite());
-                produitService.saveProduit(produit);
-            }
-            */
+
             lavoir.setPrix(produit.getPrixVente());
 
             System.out.println(produit.getPrixVente());
@@ -107,7 +102,7 @@ public class AvoirServiceImpl implements AvoirService {
     }
 
     @Override
-    public long generateRefereceAvoir() {
+    public long generateReferenceAvoir() {
         final String FORMAT = "yyyyMMddHHmmss";
         return Long.parseLong(DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
     }
@@ -128,7 +123,6 @@ public class AvoirServiceImpl implements AvoirService {
         Avoir avoirResult = avoirInfo.get();
 
         avoirResult.setReference(avoir.getReference());
-        // cmdClientResult.setDateCommande(commande.getDateCommande());
         avoirResult.setFournisseur(avoir.getFournisseur());
         avoirResult.setTotalAvoir(avoir.getTotalAvoir());
         avoirResult.setStatus(avoir.getStatus());

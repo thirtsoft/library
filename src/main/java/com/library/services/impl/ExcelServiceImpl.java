@@ -43,7 +43,7 @@ public class ExcelServiceImpl implements ExcelService {
     @Override
     public void storeCategorieFile(MultipartFile file) {
         try {
-            List<Category> categories = utils.parseCategorieExcelFile(file.getInputStream());
+            List<Category> categories = ExcelUtils.parseCategorieExcelFile(file.getInputStream());
             categories.forEach(cat -> categoryService.saveCategory(cat));
 
         } catch (IOException e) {

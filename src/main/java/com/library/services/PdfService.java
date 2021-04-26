@@ -24,5 +24,4 @@ public interface PdfService {
     boolean createExcelProduits(List<Produit> produits, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
 
-
 }

@@ -1,8 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Client;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,10 +32,6 @@ public interface ClientService {
     List<Client> ListClientByChefService(String chefService);
 
     List<Object[]> ListClientGroupByRaisonSocial();
-
-    Page<Client> findAllClientByPage(Pageable page);
-
-    Page<Client> findClientByKeyWord(String mc, Pageable pageable);
 
     Long countNumberOfClient();
 

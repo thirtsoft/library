@@ -1,8 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Category;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +29,7 @@ public interface CategoryService {
 
     List<Category> ListCategoryByDesignation(String designation);
 
-    Page<Category> findAllCategoryByPage(Pageable page);
-
-    Page<Category> findCategoryByKeyWord(String mc, Pageable pageable);
-
-   // boolean createCategoriePdf(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+    // boolean createCategoriePdf(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
     boolean createCategorieExcel(List<Category> categories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 

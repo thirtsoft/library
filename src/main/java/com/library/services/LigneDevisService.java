@@ -24,7 +24,7 @@ public interface LigneDevisService {
 
     List<LigneDevis> findLigneDevisByDevId(Long devId);
 
-   // List<LigneDevis> findAllLigneDevisByNumero(long numero);
+    // List<LigneDevis> findAllLigneDevisByNumero(long numero);
     List<LigneDevis> findAllLigneDevisByNumero(Long numero);
 
 

@@ -5,9 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.StockRepository;
 import com.library.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,16 +48,6 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Page<Stock> findAllStocksByPageable(Pageable page) {
-        return stockRepository.findAllStocksByPageable(page);
-    }
-
-    @Override
-    public Page<Stock> findAllStocksByProduitIdByPageable(Long prodId, Pageable pageable) {
-        return stockRepository.findStockByProduitIdByPageable(prodId, pageable);
-    }
-
-    @Override
     public Stock saveStock(Stock stock) {
         return stockRepository.save(stock);
     }
@@ -82,13 +69,5 @@ public class StockServiceImpl implements StockService {
         return stockRepository.save(stockResultat);
     }
 
-    @Override
-    public ResponseEntity<Object> deleteStock(Long stockId) {
-        if (!stockRepository.existsById(stockId)) {
-            throw new ResourceNotFoundException("Stock N° " + stockId + "not found");
-        }
-        stockRepository.deleteById(stockId);
 
-        return ResponseEntity.ok().build();
-    }
 }

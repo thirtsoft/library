@@ -5,8 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.VersementRepository;
 import com.library.services.VersementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,22 +96,8 @@ public class VersementServiceImpl implements VersementService {
         if (!versementRepository.existsById(id)) {
             throw new ResourceNotFoundException("Versement not found");
         }
+
         versementRepository.deleteById(id);
-    }
-
-    @Override
-    public Page<Versement> findAllVersementsByPageable(Pageable page) {
-        return versementRepository.findAllVersementsByPageable(page);
-    }
-
-    @Override
-    public Page<Versement> findAllVersementsByEmploye(Long empId, Pageable pageable) {
-        return versementRepository.findVersementByEmployeId(empId, pageable);
-    }
-
-    @Override
-    public Page<Versement> findVersementByKeyWord(String mc, Pageable pageable) {
-        return versementRepository.findVersementByKeyWord(mc, pageable);
     }
 
 

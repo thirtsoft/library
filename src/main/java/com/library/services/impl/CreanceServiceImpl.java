@@ -46,7 +46,7 @@ public class CreanceServiceImpl implements CreanceService {
     @Override
     public Optional<Creance> findCreanceById(Long creanceId) {
         if (!creanceRepository.existsById(creanceId)) {
-            throw new ResourceNotFoundException("CommandeClient that id is" + creanceId + "not found");
+            throw new ResourceNotFoundException("Creance that id is" + creanceId + "not found");
         }
 
         return creanceRepository.findById(creanceId);
@@ -61,18 +61,23 @@ public class CreanceServiceImpl implements CreanceService {
 
     @Override
     public Creance saveCreance(Creance creance) {
+
         logger.info("Creance {}", creance);
+
         List<LigneCreance> lignecreances = creance.getLcreances();
+
         if (lignecreances == null || lignecreances.size() == 0) {
-            throw new IllegalArgumentException("Vous devez au moins selectionner un produit");
+            throw new IllegalArgumentException("Vous devez au moins selectionner un article");
         }
+
         if ((creance.getClient().getId() == null)) {
             throw new IllegalArgumentException("Vous devez selectionner un client");
         }
+
         for (LigneCreance lc : lignecreances) {
             Produit produitInitial = produitService.findProduitById(lc.getProduit().getId()).get();
             if (lc.getQuantite() > produitInitial.getQtestock()) {
-                throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
+                throw new IllegalArgumentException("La Quantity de stock du article est insuffusante");
             }
         }
 
@@ -82,7 +87,7 @@ public class CreanceServiceImpl implements CreanceService {
 
         double total = 0;
         double total1 = 0;
-        double soldeCreance = 0;
+
         for (LigneCreance lcreance : lcreances) {
             lcreance.setCreance(creance);
             lcreance.setNumero(creance.getReference());
@@ -136,7 +141,7 @@ public class CreanceServiceImpl implements CreanceService {
         Optional<Creance> creanceClient = creanceRepository.findById(creanceId);
 
         if (!creanceClient.isPresent()) {
-            throw new ResourceNotFoundException("Commande that id is" + creanceId + "not found");
+            throw new ResourceNotFoundException("Creance that id is" + creanceId + "not found");
         }
 
         Creance creanceResult = creanceClient.get();
@@ -242,7 +247,6 @@ public class CreanceServiceImpl implements CreanceService {
     public Creance findByStatus(String status) {
         return creanceRepository.findByStatus(status);
     }
-
 
     @Override
     public List<Creance> findListCreanceByStatus(String status) {

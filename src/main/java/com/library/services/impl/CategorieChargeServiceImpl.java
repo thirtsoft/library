@@ -27,7 +27,7 @@ public class CategorieChargeServiceImpl implements CategorieChargeService {
     @Override
     public Optional<CategorieCharge> findCategorieChargeById(Long catId) {
         if (!catChargeRepository.existsById(catId)) {
-            throw new ResourceNotFoundException("This CategorieCharge is not found");
+            throw new ResourceNotFoundException("This CategoryCharge is not found");
         }
 
         return catChargeRepository.findById(catId);
@@ -36,7 +36,7 @@ public class CategorieChargeServiceImpl implements CategorieChargeService {
     @Override
     public CategorieCharge saveCategorieCharge(CategorieCharge categorieCharge) {
         if (catChargeRepository.findByCodeCategorieCharge(categorieCharge.getCodeCategorieCharge()) != null) {
-            throw new IllegalArgumentException("Categorie de charge existe");
+            throw new IllegalArgumentException("Category de charge existe");
         }
         return catChargeRepository.save(categorieCharge);
     }
@@ -44,11 +44,11 @@ public class CategorieChargeServiceImpl implements CategorieChargeService {
     @Override
     public CategorieCharge updateCategorieCharge(Long catId, CategorieCharge categorieCharge) {
         if (!catChargeRepository.existsById(catId)) {
-            throw new ResourceNotFoundException("This CategorieCharge is not found");
+            throw new ResourceNotFoundException("This CategoryCharge is not found");
         }
         Optional<CategorieCharge> categorieChargeInfo = catChargeRepository.findById(catId);
         if (!categorieChargeInfo.isPresent()) {
-            throw new ResourceNotFoundException("This CategorieCharge is not found");
+            throw new ResourceNotFoundException("This CategoryCharge is not found");
         }
 
         CategorieCharge catCharge = categorieChargeInfo.get();
@@ -61,7 +61,7 @@ public class CategorieChargeServiceImpl implements CategorieChargeService {
     @Override
     public void deleteCategorieCharge(Long catId) {
         if (!catChargeRepository.existsById(catId)) {
-            throw new ResourceNotFoundException("This CategorieCharge is not found");
+            throw new ResourceNotFoundException("This CategoryCharge is not found");
         }
 
         catChargeRepository.deleteById(catId);

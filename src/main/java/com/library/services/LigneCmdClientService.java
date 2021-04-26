@@ -1,8 +1,6 @@
 package com.library.services;
 
 import com.library.entities.LigneCmdClient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -29,14 +27,6 @@ public interface LigneCmdClientService {
     List<LigneCmdClient> findLigneCmdClientByCommandeClientId(Long comId);
 
     List<LigneCmdClient> findAllLcomByNumero(Long numero);
-
-    Page<LigneCmdClient> findAllLigneCmdClientByPageable(Pageable pageable);
-
-    Page<LigneCmdClient> findAllLigneCmdClientByCommandeClient(Long comId, Pageable pageable);
-
-    Page<LigneCmdClient> findAllLigneCmdClientByProduit(Long prodId, Pageable pageable);
-
-    boolean isValideQuantiteStock(int qtesSaisie, int qtitesStock);
 
     List<LigneCmdClient> saveListLigneCmd(List<LigneCmdClient> lcmdClients);
 }

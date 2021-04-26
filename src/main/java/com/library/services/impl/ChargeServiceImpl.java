@@ -5,8 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.ChargeRepository;
 import com.library.services.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,7 +55,7 @@ public class ChargeServiceImpl implements ChargeService {
     @Override
     public Charge saveCharge(Charge charge) {
         if (chargeRepository.findByCodeCharge(charge.getCodeCharge()) != null) {
-            throw new IllegalArgumentException("Charge existe");
+            throw new IllegalArgumentException("Charge exist");
         }
         charge.setDate(new Date());
         return chargeRepository.save(charge);
@@ -82,16 +80,6 @@ public class ChargeServiceImpl implements ChargeService {
 
         return chargeRepository.save(chargeResult);
 
-    }
-
-    @Override
-    public Page<Charge> findAllChargesByPageable(Pageable page) {
-        return chargeRepository.findAllChargesByPageable(page);
-    }
-
-    @Override
-    public Page<Charge> findChargesByKeyWord(String mc, Pageable pageable) {
-        return chargeRepository.findChargesByKeyWord(mc, pageable);
     }
 
     @Override

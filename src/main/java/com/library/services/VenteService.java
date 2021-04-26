@@ -1,8 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Vente;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
@@ -30,14 +28,10 @@ public interface VenteService {
 
     BigDecimal countSumsOfVentess();
 
-//   .. Vente findVenteByNumeroVente(long numeroVente);
+    //   .. Vente findVenteByNumeroVente(long numeroVente);
     Vente findVenteByNumeroVente(Long numeroVente);
 
     Vente findByStatus(String status);
-
-    Page<Vente> findAllVenteByPageable(Pageable pageable);
-
-    Page<Vente> findVenteByKeyWord(String mc, Pageable pageable);
 
     void deleteVente(Long id);
 

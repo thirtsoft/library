@@ -13,8 +13,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -89,7 +87,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public CommandeClient saveCommandeClient(CommandeClient commande) {
 
-        System.out.println("Initial Numero Commande " +commande.getNumeroCommande());
+        System.out.println("Initial Numero Commande " + commande.getNumeroCommande());
 
         logger.info("Commande {}", commande);
         List<LigneCmdClient> ligneCmd = commande.getLcomms();
@@ -108,7 +106,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
 
         commandeClientRepository.save(commande);
-        System.out.println("1er Numero Commande " +commande.getNumeroCommande());
+        System.out.println("1er Numero Commande " + commande.getNumeroCommande());
 
         List<LigneCmdClient> ligneCmdClients = commande.getLcomms();
         double total = 0;
@@ -136,7 +134,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         commande.setStatus("valider");
         commande.setDateCommande(new Date());
 
-        System.out.println("Dernier Numero Commande " +commande.getNumeroCommande());
+        System.out.println("Dernier Numero Commande " + commande.getNumeroCommande());
 
         return commandeClientRepository.save(commande);
 
@@ -274,8 +272,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     public CommandeClient findByStatus(String status) {
         return commandeClientRepository.findByStatus(status);
     }
-
-
+    
     @Override
     public List<CommandeClient> findListCommandeClientByStatus(String status) {
         return commandeClientRepository.ListCommandeClientByStatus(status);
@@ -289,16 +286,6 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     @Override
     public List<CommandeClient> findCommandeByDate(Date dateCommande) {
         return commandeClientRepository.findAllByDateCommande(dateCommande);
-    }
-
-    @Override
-    public Page<CommandeClient> findAllCommandeClientByPageable(Pageable pageable) {
-        return commandeClientRepository.findAllCommandeClientByPageable(pageable);
-    }
-
-    @Override
-    public Page<CommandeClient> findAllCommandeClientByClient(Long clientId, Pageable pageable) {
-        return commandeClientRepository.findCommandeClientByClientId(clientId, pageable);
     }
 
     @Override

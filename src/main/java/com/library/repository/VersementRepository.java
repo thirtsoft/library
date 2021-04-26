@@ -26,5 +26,5 @@ public interface VersementRepository extends JpaRepository<Versement, Long> {
 
     @Query("select v from Versement v where v.employe.id =:emp")
     List<Versement> findVersementByEmployeId(@Param("emp") Long empId);
-    
+
 }

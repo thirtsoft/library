@@ -5,9 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.LigneApprovisionnementRepository;
 import com.library.services.LigneApprovisionnementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,21 +43,6 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
     }
 
     @Override
-    public Page<LigneApprovisionnement> findAllLigneApprovisionnementByPageable(Pageable pageable) {
-        return ligneApprovisionnementRepository.findAllLigneApprovisionnementByPageable(pageable);
-    }
-
-    @Override
-    public Page<LigneApprovisionnement> findAllLigneApprovisionnementByApproviosionnement(Long approId, Pageable pageable) {
-        return ligneApprovisionnementRepository.findLigneApprovisionnementByApprovisionnementPageable(approId, pageable);
-    }
-
-    @Override
-    public Page<LigneApprovisionnement> findAllLigneApprovisionnementByProduit(Long prodId, Pageable pageable) {
-        return ligneApprovisionnementRepository.findLigneApprovisionnementByProduitPageable(prodId, pageable);
-    }
-
-    @Override
     public LigneApprovisionnement saveLigneApprovisionnement(LigneApprovisionnement ligneApprovisionnement) {
         return ligneApprovisionnementRepository.save(ligneApprovisionnement);
     }
@@ -83,16 +65,6 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
         lApproResultat.setProduit(ligneApprovisionnement.getProduit());
 
         return ligneApprovisionnementRepository.save(lApproResultat);
-    }
-
-    @Override
-    public ResponseEntity<Object> deleteLigneApprovisionnement(Long lApproid) {
-        if (!ligneApprovisionnementRepository.existsById(lApproid)) {
-            throw new ResourceNotFoundException("Ligne Approvisionnement N° " + lApproid + "not found");
-        }
-        ligneApprovisionnementRepository.deleteById(lApproid);
-
-        return ResponseEntity.ok().build();
     }
 
     @Override

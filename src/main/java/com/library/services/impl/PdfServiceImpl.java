@@ -7,12 +7,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.library.entities.Category;
 import com.library.entities.Produit;
 import com.library.entities.Scategorie;
-import com.library.repository.CategoryRepository;
 import com.library.services.PdfService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletContext;

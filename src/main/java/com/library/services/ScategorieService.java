@@ -1,8 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Scategorie;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -32,13 +30,7 @@ public interface ScategorieService {
 
     void deleteScategorie(Long sCatId);
 
-    Page<Scategorie> findAllScategorietsByPageable(Pageable page);
-
-    Page<Scategorie> findAllScategoriesByCategory(Long catId, Pageable pageable);
-
-    Page<Scategorie> findScategorieByKeyWord(String mc, Pageable pageable);
-
-  //  boolean createScategoriePdf(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+    //  boolean createScategoriePdf(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 
     boolean createScategorieExcel(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response);
 

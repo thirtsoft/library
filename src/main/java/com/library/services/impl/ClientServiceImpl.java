@@ -5,8 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.ClientRepository;
 import com.library.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,16 +72,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Page<Client> findAllClientByPage(Pageable page) {
-        return clientRepository.findClientByPageable(page);
-    }
-
-    @Override
-    public Page<Client> findClientByKeyWord(String mc, Pageable pageable) {
-        return clientRepository.findClientByKeyWord(mc, pageable);
-    }
-
-    @Override
     public Long countNumberOfClient() {
         return clientRepository.count();
     }
@@ -99,7 +87,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client saveClient(Client client) {
         if ((clientRepository.findByCodeClient(client.getCodeClient()) != null)) {
-            throw new IllegalArgumentException("Ce Client existe");
+            throw new IllegalArgumentException("Ce Client exist");
         }
         return clientRepository.save(client);
     }
@@ -107,7 +95,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client updateClient(Long id, Client client) {
         if (!clientRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Client N° nout found");
+            throw new ResourceNotFoundException("Client N° not found");
         }
         Optional<Client> clt = clientRepository.findById(id);
         if (!clt.isPresent()) {

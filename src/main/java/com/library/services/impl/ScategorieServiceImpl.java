@@ -1,17 +1,11 @@
 package com.library.services.impl;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.library.entities.Scategorie;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.ScategorieRepository;
 import com.library.services.ScategorieService;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -105,147 +99,6 @@ public class ScategorieServiceImpl implements ScategorieService {
         }
         scategorieRepository.deleteById(sCatId);
     }
-
-    @Override
-    public Page<Scategorie> findAllScategorietsByPageable(Pageable page) {
-        return scategorieRepository.findAllScategoriesByPageable(page);
-    }
-
-    @Override
-    public Page<Scategorie> findAllScategoriesByCategory(Long catId, Pageable pageable) {
-        return scategorieRepository.findScategorieByCateoryPageable(catId, pageable);
-    }
-
-    @Override
-    public Page<Scategorie> findScategorieByKeyWord(String mc, Pageable pageable) {
-        return scategorieRepository.findScategorieByKeyWord(mc, pageable);
-    }
-/*
-    @Override
-    public boolean createScategoriePdf(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response) {
-        Document document = new Document(PageSize.A4, 15, 15, 45, 30);
-        try {
-            String filePath = context.getRealPath("/resources/reports");
-            File file = new File(filePath);
-            boolean exist = new File(filePath).exists();
-            if (!exist) {
-                new File(filePath).mkdirs();
-            }
-
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file + "/" + "scategories" + ".pdf"));
-            document.open();
-
-            Font mainFontEntete = FontFactory.getFont(FontFactory.COURIER, 30, BaseColor.BLACK);
-            mainFontEntete.setStyle(Font.BOLD);
-            mainFontEntete.setColor(BaseColor.BLUE);
-            mainFontEntete.setStyle(Font.UNDERLINE);
-
-            Paragraph paragraphEntete = new Paragraph("AL AMINE", mainFontEntete);
-            paragraphEntete.setAlignment(Element.ALIGN_CENTER);
-            paragraphEntete.setIndentationLeft(90);
-            paragraphEntete.setIndentationRight(90);
-            paragraphEntete.setSpacingAfter(6);
-            document.add(paragraphEntete);
-
-            Font mainFontTitle = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
-
-            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Commerce GeneralRC SN ZGR 2016 C233 / NINEA 00058166762P6\n" +
-                    "N°Compte CNCAS SN 048 03001 000108318801 J/40N° Compte BNDE SN 169 03001 001000519301/30\n" +
-                    "Tél: 77109 18 18 / Email: papeteriealamine@gmail.com\n", mainFontTitle);
-
-            paragraphTitle.setAlignment(Element.ALIGN_CENTER);
-            paragraphTitle.setIndentationLeft(50);
-            paragraphTitle.setIndentationRight(50);
-            paragraphTitle.setSpacingAfter(10);
-            document.add(paragraphTitle);
-
-            Font mainFont = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
-            mainFont.setStyle(Font.UNDERLINE);
-
-            Paragraph paragraph = new Paragraph("LA LISTE DES SCATEGORIES", mainFont);
-            paragraph.setAlignment(Element.ALIGN_CENTER);
-            paragraph.setIndentationLeft(50);
-            paragraph.setIndentationRight(50);
-            paragraph.setSpacingAfter(10f);
-            paragraph.setSpacingBefore(5f);
-            document.add(paragraph);
-
-            PdfPTable table = new PdfPTable(3);
-            table.setWidthPercentage(100);
-            table.setSpacingBefore(10f);
-            table.setSpacingAfter(10);
-
-            Font tableHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);
-            Font tableBody = FontFactory.getFont("Arial", 12, BaseColor.BLACK);
-
-            PdfPCell code = new PdfPCell(new Paragraph("Code", tableHeader));
-            code.setBorderColor(BaseColor.BLACK);
-            code.setPaddingLeft(10);
-            code.setHorizontalAlignment(Element.ALIGN_CENTER);
-            code.setVerticalAlignment(Element.ALIGN_CENTER);
-            code.setBackgroundColor(BaseColor.LIGHT_GRAY);
-            code.setExtraParagraphSpace(5f);
-            table.addCell(code);
-
-            PdfPCell libelle = new PdfPCell(new Paragraph("Désignation", tableHeader));
-            libelle.setBorderColor(BaseColor.BLACK);
-            libelle.setPaddingLeft(10);
-            libelle.setHorizontalAlignment(Element.ALIGN_CENTER);
-            libelle.setVerticalAlignment(Element.ALIGN_CENTER);
-            libelle.setBackgroundColor(BaseColor.LIGHT_GRAY);
-            libelle.setExtraParagraphSpace(5f);
-            table.addCell(libelle);
-
-            PdfPCell categorie = new PdfPCell(new Paragraph("Categorie", tableHeader));
-            categorie.setBorderColor(BaseColor.BLACK);
-            categorie.setPaddingLeft(10);
-            categorie.setHorizontalAlignment(Element.ALIGN_CENTER);
-            categorie.setVerticalAlignment(Element.ALIGN_CENTER);
-            categorie.setBackgroundColor(BaseColor.LIGHT_GRAY);
-            categorie.setExtraParagraphSpace(5f);
-            table.addCell(categorie);
-
-            for (Scategorie scategorie : scategories) {
-                PdfPCell codeValue = new PdfPCell(new Paragraph(scategorie.getCode(), tableBody));
-                codeValue.setBorderColor(BaseColor.BLACK);
-                codeValue.setPaddingLeft(4);
-                codeValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-                codeValue.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                codeValue.setBackgroundColor(BaseColor.WHITE);
-                codeValue.setExtraParagraphSpace(5f);
-                table.addCell(codeValue);
-
-                PdfPCell libelleValue = new PdfPCell(new Paragraph(scategorie.getLibelle(), tableBody));
-                libelleValue.setBorderColor(BaseColor.BLACK);
-                libelleValue.setPaddingLeft(10);
-                libelleValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-                libelleValue.setVerticalAlignment(Element.ALIGN_CENTER);
-                libelleValue.setBackgroundColor(BaseColor.WHITE);
-                libelleValue.setExtraParagraphSpace(5f);
-                table.addCell(libelleValue);
-
-                PdfPCell categorieValue = new PdfPCell(new Paragraph(scategorie.getCategorie().getDesignation(), tableBody));
-                categorieValue.setBorderColor(BaseColor.BLACK);
-                categorieValue.setPaddingLeft(10);
-                categorieValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-                categorieValue.setVerticalAlignment(Element.ALIGN_CENTER);
-                categorieValue.setBackgroundColor(BaseColor.WHITE);
-                categorieValue.setExtraParagraphSpace(5f);
-                table.addCell(categorieValue);
-
-            }
-
-            document.add(table);
-            document.close();
-            writer.close();
-            return true;
-
-        } catch (Exception e) {
-            return false;
-        }
-
-    }
-    */
 
     @Override
     public boolean createScategorieExcel(List<Scategorie> scategories, ServletContext context, HttpServletRequest request, HttpServletResponse response) {

@@ -1,8 +1,6 @@
 package com.library.services;
 
 import com.library.entities.CommandeClient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
@@ -43,10 +41,6 @@ public interface CommandeClientService {
     List<CommandeClient> findCommandeClientByClientId(Long clientId);
 
     List<CommandeClient> findCommandeByDate(Date dateCommande);
-
-    Page<CommandeClient> findAllCommandeClientByPageable(Pageable pageable);
-
-    Page<CommandeClient> findAllCommandeClientByClient(Long clientId, Pageable pageable);
 
     CommandeClient createCommande(CommandeClient commandeClient);
 

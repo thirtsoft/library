@@ -5,8 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.LigneCmdClientRepository;
 import com.library.services.LigneCmdClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,27 +86,6 @@ public class LigneCmdClientServiceImpl implements LigneCmdClientService {
     @Override
     public List<LigneCmdClient> findAllLcomByNumero(Long numero) {
         return ligneCmdClientRepository.findAllByNumero(numero);
-    }
-
-    @Override
-    public Page<LigneCmdClient> findAllLigneCmdClientByPageable(Pageable pageable) {
-        return ligneCmdClientRepository.findAllLigneCmdClientByPageable(pageable);
-    }
-
-    @Override
-    public Page<LigneCmdClient> findAllLigneCmdClientByCommandeClient(Long comId, Pageable pageable) {
-        return ligneCmdClientRepository.findLigneCmdClientByProduitPageable(comId, pageable);
-    }
-
-    @Override
-    public Page<LigneCmdClient> findAllLigneCmdClientByProduit(Long prodId, Pageable pageable) {
-        return ligneCmdClientRepository.findLigneCmdClientByProduitPageable(prodId, pageable);
-    }
-
-    @Override
-    public boolean isValideQuantiteStock(int qtesSaisie, int qtitesStock) {
-
-        return qtitesStock > 0 && qtesSaisie < qtitesStock;
     }
 
     @Override

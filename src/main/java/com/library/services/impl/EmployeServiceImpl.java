@@ -5,8 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.EmployeRepository;
 import com.library.services.EmployeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -131,14 +129,5 @@ public class EmployeServiceImpl implements EmployeService {
         return employeRepository.ListEmployeByTelephone(telephone);
     }
 
-    @Override
-    public Page<Employe> findAllEmployeByPage(Pageable page) {
-        return employeRepository.findEmployeByPageable(page);
-    }
-
-    @Override
-    public Page<Employe> findEmployeByKeyWord(String mc, Pageable pageable) {
-        return employeRepository.findEmployeByKeyWord(mc, pageable);
-    }
 
 }

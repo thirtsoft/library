@@ -5,8 +5,6 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.FournisseurRepository;
 import com.library.services.FournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -110,17 +108,6 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     public List<Fournisseur> findListFournisseurByRaisonSociale(String raisonSociale) {
         return fournisseurRepository.ListFournisseurByNom(raisonSociale);
-    }
-
-
-    @Override
-    public Page<Fournisseur> findAllFournisseursByPageable(Pageable page) {
-        return fournisseurRepository.findAll(page);
-    }
-
-    @Override
-    public Page<Fournisseur> findFournisseurByKeyWord(String mc, Pageable pageable) {
-        return fournisseurRepository.findFournisseurByKeyWord(mc, pageable);
     }
 
     @Override

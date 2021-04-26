@@ -11,8 +11,6 @@ import com.library.services.VenteService;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,12 +48,14 @@ public class VenteServiceImpl implements VenteService {
     }
 
     public Vente saveVente(Vente vente) {
-        System.out.println("Initial Numero Vente " +vente.getNumeroVente());
+        System.out.println("Initial Numero Vente " + vente.getNumeroVente());
+
         List<LigneVente> ligneVente = vente.getLigneVentes();
 
         if (ligneVente == null || ligneVente.size() == 0) {
             throw new IllegalArgumentException("Vous devez au moins ajouter un produit");
         }
+
         for (LigneVente ligneV : ligneVente) {
             Produit produitInitial = produitService.findProduitById(ligneV.getProduit().getId()).get();
             if (ligneV.getQuantite() > produitInitial.getQtestock()) {
@@ -64,11 +64,13 @@ public class VenteServiceImpl implements VenteService {
         }
 
         venteRepository.save(vente);
-        System.out.println("Milieu Numero Vente " +vente.getNumeroVente());
+
+        System.out.println("Milieu Numero Vente " + vente.getNumeroVente());
 
         List<LigneVente> ligneVentes = vente.getLigneVentes();
 
         double total = 0;
+
         for (LigneVente lvente : ligneVentes) {
             lvente.setVente(vente);
             lvente.setNumero(vente.getNumeroVente());
@@ -76,6 +78,7 @@ public class VenteServiceImpl implements VenteService {
             ligneVenteService.saveLigneVente(lvente);
 
             Produit produit = produitService.findProduitById(lvente.getProduit().getId()).get();
+
             if (produit != null) {
                 produit.setQtestock(produit.getQtestock() - lvente.getQuantite());
                 produitService.updateProduit(produit.getId(), produit);
@@ -96,43 +99,11 @@ public class VenteServiceImpl implements VenteService {
         vente.setDateVente(new Date());
         vente.setUtilisateur(vente.getUtilisateur());
 
-        System.out.println("Fin Numero Vente " +vente.getNumeroVente());
+        System.out.println("Fin Numero Vente " + vente.getNumeroVente());
 
         return venteRepository.save(vente);
 
     }
-
-    /**
-     * Commenté le 19/10/2020
-     *
-     * @param vente
-     * @return
-     * @Override public Vente saveVente(Vente vente) {
-     * venteRepository.save(vente);
-     * <p>
-     * List<LigneVente> ligneVentes = vente.getLigneVentes();
-     * <p>
-     * double total = 0;
-     * for (LigneVente lvente : ligneVentes) {
-     * lvente.setVente(vente);
-     * Produit produit = produitService.findProduitById(lvente.getProduit().getId()).get();
-     * lvente.setProduit(produit);
-     * lvente.setPrixVente(lvente.getProduit().getPrixDetail());
-     * ligneVenteService.saveLigneVente(lvente);
-     * <p>
-     * total += lvente.getQuantite() * lvente.getProduit().getPrixDetail();
-     * <p>
-     * }
-     * <p>
-     * vente.setTotalVente(total);
-     * // vente.setNumeroVente("Vente " + 20 + (int) (Math.random() * 100));
-     * vente.setDateVente(new Date());
-     * <p>
-     * <p>
-     * return venteRepository.save(vente);
-     * <p>
-     * }
-     */
 
     @Override
     public Vente updateVente(Long venteId, Vente vente) {
@@ -249,14 +220,5 @@ public class VenteServiceImpl implements VenteService {
         return venteRepository.findAllVenteByEmployeId(empId);
     }
 
-    @Override
-    public Page<Vente> findAllVenteByPageable(Pageable pageable) {
-        return venteRepository.findAllVenteByPageable(pageable);
-    }
-
-    @Override
-    public Page<Vente> findVenteByKeyWord(String mc, Pageable pageable) {
-        return venteRepository.findVenteByKeyWord(mc, pageable);
-    }
 
 }

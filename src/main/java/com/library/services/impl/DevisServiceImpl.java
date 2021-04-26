@@ -55,7 +55,7 @@ public class DevisServiceImpl implements DevisService {
         logger.info("Devis {}", devis);
         List<LigneDevis> ligneDevis = devis.getLdevis();
         if (ligneDevis == null || ligneDevis.size() == 0) {
-            throw new IllegalArgumentException("Vous devez au moins commander un produit");
+            throw new IllegalArgumentException("Vous devez au moins commander un article");
         }
         if ((devis.getClient().getId() == null)) {
             throw new IllegalArgumentException("Vous devez selectionner un client");
@@ -64,7 +64,7 @@ public class DevisServiceImpl implements DevisService {
         for (LigneDevis ldevis : ligneDevis) {
             Produit produitInitial = produitService.findProduitById(ldevis.getProduit().getId()).get();
             if (ldevis.getQuantite() > produitInitial.getQtestock()) {
-                throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
+                throw new IllegalArgumentException("La Quantité de stock du article est insuffusante");
             }
         }
 
@@ -94,7 +94,6 @@ public class DevisServiceImpl implements DevisService {
         devis.setDateDevis(new Date());
 
         return devisRepository.save(devis);
-
 
     }
 
