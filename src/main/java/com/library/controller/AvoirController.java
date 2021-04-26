@@ -4,6 +4,7 @@ import com.library.entities.Avoir;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AvoirService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,25 +69,29 @@ public class AvoirController {
 
 
     @PostMapping("/avoirs")
-    public Avoir createAvoir(@RequestBody Avoir avoir) {
-        return avoirService.saveAvoir(avoir);
+    public ResponseEntity<Avoir> createAvoir(@RequestBody Avoir avoir) {
+
+        Avoir avoirResultat = avoirService.saveAvoir(avoir);
+
+        return new ResponseEntity<>(avoirResultat, HttpStatus.CREATED);
+
     }
 
-
     @PutMapping("/avoirs/{id}")
-    public Avoir updateAvoir(@PathVariable Long id, @RequestBody Avoir avoir) {
+    public ResponseEntity<Avoir> updateAvoir(@PathVariable Long id, @RequestBody Avoir avoir) {
         avoir.setId(id);
-        return avoirService.saveAvoir(avoir);
+        return new ResponseEntity<>(avoirService.saveAvoir(avoir), HttpStatus.OK);
     }
 
     @DeleteMapping("/avoirs/{id}")
-    public void deleteAvoir(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> deleteAvoir(@PathVariable(value = "id") Long id) {
         avoirService.deleteAvoir(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/generateReferneceAvoir")
     public long generateReferneceAvoir() {
-        return avoirService.generateRefereceAvoir();
+        return avoirService.generateReferenceAvoir();
     }
 
 }

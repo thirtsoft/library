@@ -3,14 +3,12 @@ package com.library.controller;
 import com.library.entities.Produit;
 import com.library.message.response.ResponseMessage;
 import com.library.services.ExcelService;
+import com.library.services.PdfService;
 import com.library.services.ProduitService;
 import com.library.utils.ExcelUtils;
-import com.library.services.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,19 +82,6 @@ public class ProduitController {
         return produitService.findProductByScateoryId(scatId);
     }
 
-    @GetMapping("/searchListProduitsByPageable")
-    public Page<Produit> getAllProduitsByPageable(@RequestParam(name = "page") int page,
-                                                  @RequestParam(name = "size") int size) {
-        return produitService.findAllProduitsByPageable(PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListProduitsByKeyword")
-    public Page<Produit> getAllProduitsByKeyword(@RequestParam(name = "mc") String mc,
-                                                 @RequestParam(name = "page") int page,
-                                                 @RequestParam(name = "size") int size) {
-        return produitService.findProduitByKeyWord("%" + mc + "%", PageRequest.of(page, size));
-    }
-
     @GetMapping("/searchCountProduitsByStock")
     public List<?> countNumberOfProduitWithStoc() {
         return produitService.countNumberOfProduitWithStoc();
@@ -126,10 +111,10 @@ public class ProduitController {
     @PostMapping("/produits")
     public ResponseEntity<Produit> saveProduit(@RequestBody Produit produit) {
         if (produitService.findByReference(produit.getReference()) != null) {
-            return new ResponseEntity<Produit>(produit, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(produit, HttpStatus.BAD_REQUEST);
         }
         produitService.saveProduit(produit);
-        return new ResponseEntity<Produit>(produit, HttpStatus.CREATED);
+        return new ResponseEntity<>(produit, HttpStatus.CREATED);
     }
 
     @PutMapping("/produits/{prodId}")

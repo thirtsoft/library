@@ -4,8 +4,6 @@ import com.library.entities.Fournisseur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.FournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,30 +74,17 @@ public class FournisseurController {
         return fournisseurService.findListFournisseurByRaisonSociale("%" + raisonSocial + "%");
     }
 
-    @GetMapping("/searchListFournisseurByPageable")
-    public Page<Fournisseur> getAllFournisseurByPageable(@RequestParam(name = "page") int page,
-                                                         @RequestParam(name = "size") int size) {
-        return fournisseurService.findAllFournisseursByPageable(PageRequest.of(page, size));
-    }
-
-    @GetMapping(value = "/searchListFournisseurByPageableParMotCle")
-    public Page<Fournisseur> getFournisseurByKeyWord(@RequestParam(name = "mc", defaultValue = "") String mc,
-                                                     @RequestParam(name = "page") int page,
-                                                     @RequestParam(name = "size") int size) {
-        return fournisseurService.findFournisseurByKeyWord("%" + mc + "%", PageRequest.of(page, size));
-    }
-
 
     @PostMapping("/fournisseurs")
     public ResponseEntity<Fournisseur> createFournisseur(@RequestBody Fournisseur fournisseur) {
         if (fournisseurService.findByCode(fournisseur.getCode()) != null) {
-            return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(fournisseur, HttpStatus.BAD_REQUEST);
         }
         if (fournisseurService.findByEmail(fournisseur.getEmail()) != null) {
-            return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(fournisseur, HttpStatus.BAD_REQUEST);
         }
         fournisseurService.saveFournisseur(fournisseur);
-        return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.CREATED);
+        return new ResponseEntity<>(fournisseur, HttpStatus.CREATED);
     }
 
     @PutMapping("/fournisseurs/{id}")

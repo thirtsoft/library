@@ -4,8 +4,6 @@ import com.library.entities.LigneVente;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneVenteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,29 +49,15 @@ public class LigneVenteController {
         return ligneVenteService.findLigneVenteByProduitId(prodId);
     }
 
-    @GetMapping("/searchListLigneVentesByProduitPageable")
-    public Page<LigneVente> getAllProduitsByPageable(@RequestParam(name = "prod") Long prodId,
-                                                     @RequestParam(name = "page") int page,
-                                                     @RequestParam(name = "size") int size) {
-        return ligneVenteService.findAllLigneVenteByProduit(prodId, PageRequest.of(page, size));
-    }
-
     @GetMapping("/searchListLigneVentesByVenteId/{venteId}")
     public List<LigneVente> getAllLigneVenteByVenteId(@PathVariable("venteId") Long venteId) {
         return ligneVenteService.findLigneVenteByVenteId(venteId);
     }
 
-    @GetMapping("/searchListLigneVentesByVentePageable")
-    public Page<LigneVente> getAllLigneVenteByPageable(@RequestParam(name = "prod") Long comId,
-                                                       @RequestParam(name = "page") int page,
-                                                       @RequestParam(name = "size") int size) {
-        return ligneVenteService.findAllLigneVenteByVente(comId, PageRequest.of(page, size));
-    }
-
     @PostMapping("/ligneVentes")
     public ResponseEntity<LigneVente> createLigneVente(@RequestBody LigneVente ligneVente) {
         //    return ligneVenteService.saveLigneVente(ligneVente);
-        return new ResponseEntity<LigneVente>(ligneVenteService.saveLigneVente(ligneVente), HttpStatus.CREATED);
+        return new ResponseEntity<>(ligneVenteService.saveLigneVente(ligneVente), HttpStatus.CREATED);
     }
 
     @PutMapping("/ligneVentes/{lcId}")
@@ -84,8 +68,9 @@ public class LigneVenteController {
     }
 
     @DeleteMapping("/ligneVentes/{id}")
-    public ResponseEntity<Object> deleteLigneVente(@PathVariable(value = "id") Long id) {
-        return ligneVenteService.deleteLigneVente(id);
+    public ResponseEntity<?> deleteLigneVente(@PathVariable(value = "id") Long id) {
+        ligneVenteService.deleteLigneVente(id);
+        return ResponseEntity.ok().build();
 
     }
 }

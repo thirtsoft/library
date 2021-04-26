@@ -3,14 +3,12 @@ package com.library.controller;
 import com.library.entities.Scategorie;
 import com.library.message.response.ResponseMessage;
 import com.library.services.ExcelService;
+import com.library.services.PdfService;
 import com.library.services.ScategorieService;
 import com.library.utils.ExcelUtils;
-import com.library.services.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -85,34 +83,14 @@ public class ScategorieController {
         return scategorieService.findScategorieByCateoryId(catId);
     }
 
-    @GetMapping("/searchListScategoriesByCategoryPageable")
-    public Page<Scategorie> getAllScategoriesByPageable(@RequestParam(name = "cat") Long catId,
-                                                        @RequestParam(name = "page") int page,
-                                                        @RequestParam(name = "size") int size) {
-        return scategorieService.findAllScategoriesByCategory(catId, PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListScategoriesByPageable")
-    public Page<Scategorie> getAllScategoriesByPageable(@RequestParam(name = "page") int page,
-                                                        @RequestParam(name = "size") int size) {
-        return scategorieService.findAllScategorietsByPageable(PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListScategoriesByKeyword")
-    public Page<Scategorie> getAllScategoriesByKeyword(@RequestParam(name = "mc") String mc,
-                                                       @RequestParam(name = "page") int page,
-                                                       @RequestParam(name = "size") int size) {
-        return scategorieService.findScategorieByKeyWord("%" + mc + "%", PageRequest.of(page, size));
-
-    }
 
     @PostMapping("/scategories")
     public ResponseEntity<Scategorie> saveScategorie(@RequestBody Scategorie scategorie) {
         if (scategorieService.findByCode(scategorie.getCode()) != null) {
-            return new ResponseEntity<Scategorie>(scategorie, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(scategorie, HttpStatus.BAD_REQUEST);
         }
         scategorieService.saveScategorie(scategorie);
-        return new ResponseEntity<Scategorie>(scategorie, HttpStatus.CREATED);
+        return new ResponseEntity<>(scategorie, HttpStatus.CREATED);
     }
 
     @PutMapping("/scategories/{ScatId}")
@@ -131,7 +109,6 @@ public class ScategorieController {
     public void createScategoriePdf(HttpServletRequest request, HttpServletResponse response) {
         List<Scategorie> scategories = scategorieService.findAllScategories();
         boolean isFlag = pdfService.createScategoriesPdf(scategories, context, request, response);
-        // boolean isFlag = scategorieService.createScategoriePdf(scategories, context, request, response);
 
         if (isFlag) {
             String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "scategories" + ".pdf");

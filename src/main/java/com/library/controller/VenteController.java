@@ -3,16 +3,11 @@ package com.library.controller;
 import com.library.entities.Utilisateur;
 import com.library.entities.Vente;
 import com.library.exceptions.ResourceNotFoundException;
-import com.library.security.services.UserPrinciple;
 import com.library.services.UtilisateurService;
 import com.library.services.VenteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -28,8 +23,6 @@ public class VenteController {
 
     @Autowired
     private UtilisateurService utilisateurService;
-
-    private Double total = 0.0;
 
     @GetMapping("/ventes")
     public List<Vente> getAllVentes() {
@@ -85,21 +78,9 @@ public class VenteController {
         return venteService.findByStatus(status);
     }
 
-    @GetMapping("/searchListVenteByPageable")
-    public Page<Vente> getVenteByPageable(
-            @RequestParam(name = "page") int page,
-            @RequestParam(name = "size") int size) {
-        return venteService.findAllVenteByPageable(PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListVenteByKeyword")
-    public Page<Vente> getAllVenteByPageable(@RequestParam(name = "mc") String mc, @RequestParam(name = "page") int page, @RequestParam(name = "size") int size) {
-        return venteService.findVenteByKeyWord(mc, PageRequest.of(page, size));
-    }
 
     @PostMapping("/ventes")
     public ResponseEntity<Vente> createVente(@RequestBody Vente vente, @RequestParam Long id) {
-
 
         /*Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();*/
@@ -119,8 +100,9 @@ public class VenteController {
     }
 
     @DeleteMapping("/ventes/{id}")
-    public void deleteVente(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> deleteVente(@PathVariable(value = "id") Long id) {
         venteService.deleteVente(id);
+        return ResponseEntity.ok().build();
         //return new ResponseEntity<>(HttpStatus.OK);
     }
 

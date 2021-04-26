@@ -69,5 +69,13 @@ public class StockServiceImpl implements StockService {
         return stockRepository.save(stockResultat);
     }
 
+    @Override
+    public void deleteStock(Long id) {
+        if (!stockRepository.existsById(id)) {
+            throw new ResourceNotFoundException("stock not found");
+        }
+        stockRepository.deleteById(id);
+    }
+
 
 }

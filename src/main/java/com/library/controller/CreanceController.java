@@ -27,9 +27,6 @@ public class CreanceController {
     @Autowired
     private LigneCreanceService ligneCreanceService;
 
-
-    private Double total = 0.0;
-
     @GetMapping("/creances")
     public List<Creance> getAllCreances() {
         return creanceService.findAllCreances();
@@ -61,16 +58,16 @@ public class CreanceController {
             status = new ObjectMapper().treeToValue(json.get("status"), String.class);
             boolean test = this.creanceService.updateStatus(reference, status);
             if (test)
-                return new ResponseEntity<Boolean>(test, HttpStatus.OK);
+                return new ResponseEntity<>(test, HttpStatus.OK);
 
         } catch (JsonProcessingException e) {
             System.out.println("Parsing Exception!!");
             e.printStackTrace();
-            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
 
         }
 
-        return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
 
     }
 
@@ -83,16 +80,16 @@ public class CreanceController {
             status = new ObjectMapper().treeToValue(json.get("status"), String.class);
             boolean test = this.creanceService.updateStatusCreance(codeCreance, status);
             if (test)
-                return new ResponseEntity<Boolean>(test, HttpStatus.OK);
+                return new ResponseEntity<>(test, HttpStatus.OK);
 
         } catch (JsonProcessingException e) {
             System.out.println("Parsing Exception!!");
             e.printStackTrace();
-            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
 
         }
 
-        return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
 
     }
 
@@ -129,7 +126,7 @@ public class CreanceController {
 
     @PostMapping("/creances")
     public ResponseEntity<Creance> createCreance(@RequestBody Creance creance) {
-        return new ResponseEntity<Creance>(creanceService.saveCreance(creance), HttpStatus.CREATED);
+        return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.CREATED);
     }
 
     @PutMapping("/creances/{id}")
@@ -158,8 +155,11 @@ public class CreanceController {
     }
 
     @DeleteMapping("/creances/{id}")
-    public void deleteCreance(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> deleteCreance(@PathVariable(value = "id") Long id) {
+
         creanceService.deleteCreance(id);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/generateReferenceCreance")

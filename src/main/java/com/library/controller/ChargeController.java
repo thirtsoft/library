@@ -3,8 +3,6 @@ package com.library.controller;
 import com.library.entities.Charge;
 import com.library.services.ChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +35,7 @@ public class ChargeController {
 
     @GetMapping("/searchListChargesByCodeCharge")
     public List<Charge> getAllChargesByReference(@RequestParam(name = "ref") String codeCharge) {
-        return chargeService.findListChargeByCodeCharge("%"+codeCharge+"%");
+        return chargeService.findListChargeByCodeCharge("%" + codeCharge + "%");
     }
 
     @GetMapping("/searchChargeByNature")
@@ -47,23 +45,17 @@ public class ChargeController {
 
     @GetMapping("/searchListChargesByNature")
     public List<Charge> getAllChargesByNature(@RequestParam(name = "nat") String nature) {
-        return chargeService.findListChargeByNature("%"+nature+"%");
+        return chargeService.findListChargeByNature("%" + nature + "%");
     }
 
-
-    @GetMapping("/searchListChargesByPageable")
-    public Page<Charge> getAllChargesByPageable(@RequestParam(name = "page") int page,
-                                                  @RequestParam(name = "size") int size) {
-        return chargeService.findAllChargesByPageable(PageRequest.of(page, size));
-    }
 
     @PostMapping("/charges")
     public ResponseEntity<Charge> createCharge(@RequestBody Charge charge) {
         if (chargeService.findChargeByCodeCharge(charge.getCodeCharge()) != null) {
-            return new ResponseEntity<Charge>(charge, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(charge, HttpStatus.BAD_REQUEST);
         }
         chargeService.saveCharge(charge);
-        return new ResponseEntity<Charge>(charge, HttpStatus.CREATED);
+        return new ResponseEntity<>(charge, HttpStatus.CREATED);
     }
 
     @PutMapping("/charges/{id}")
@@ -74,7 +66,7 @@ public class ChargeController {
     }
 
     @DeleteMapping("/charges/{id}")
-    public ResponseEntity<?> deleteCharge(@PathVariable(value="id") Long id) {
+    public ResponseEntity<?> deleteCharge(@PathVariable(value = "id") Long id) {
         chargeService.deleteCharge(id);
         return ResponseEntity.ok().build();
     }

@@ -22,8 +22,8 @@ public class EmailController {
     public ResponseEntity<Email> sendEmail(@RequestBody Email email) {
         try {
             emailService.sendEmail(email);
-            return new ResponseEntity<Email>(email, HttpStatus.OK);
-        }catch(MailException e) {
+            return new ResponseEntity<>(email, HttpStatus.OK);
+        } catch (MailException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -34,8 +34,8 @@ public class EmailController {
     public ResponseEntity<Fournisseur> sendMail(@RequestBody Fournisseur fournisseur) {
         try {
             emailService.sendMail(fournisseur);
-            return new ResponseEntity<Fournisseur>(fournisseur, HttpStatus.OK);
-        }catch(MailException e) {
+            return new ResponseEntity<>(fournisseur, HttpStatus.OK);
+        } catch (MailException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -47,7 +47,7 @@ public class EmailController {
         try {
             emailService.sendMailToClient(client);
             return new ResponseEntity<Client>(client, HttpStatus.OK);
-        }catch(MailException e) {
+        } catch (MailException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

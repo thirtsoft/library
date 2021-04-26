@@ -7,8 +7,8 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.message.response.ResponseMessage;
 import com.library.services.CategoryService;
 import com.library.services.ExcelService;
-import com.library.utils.ExcelUtils;
 import com.library.services.PdfService;
+import com.library.utils.ExcelUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
@@ -65,7 +65,7 @@ public class CategoryController {
 
     @PostMapping("/categories")
     public ResponseEntity<CategoryModel> createCategory(@RequestBody Category category) {
-        return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category)), HttpStatus.OK);
+        return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.saveCategory(category)), HttpStatus.CREATED);
 
     }
 
@@ -85,7 +85,6 @@ public class CategoryController {
     public void createCategoriePdf(HttpServletRequest request, HttpServletResponse response) {
         List<Category> categories = categoryService.findAllCategory();
         boolean isFlag = pdfService.createCategoriesPdf(categories, context, request, response);
-        //  boolean isFlag = categoryService.createCategoriePdf(categories, context, request, response);
 
         if (isFlag) {
             String fullPath = request.getServletContext().getRealPath("/resources/reports/" + "categories" + ".pdf");

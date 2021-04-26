@@ -92,7 +92,7 @@ public class AuthController {
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-       // Set<String> strRoles = signUpRequest.getRole();
+        // Set<String> strRoles = signUpRequest.getRole();
         String[] roleArr = signUpRequest.getRoles();
         Set<Role> roles = new HashSet<>();
 
@@ -100,7 +100,7 @@ public class AuthController {
             roles.add(roleRepository.findByName(RoleName.ROLE_USER).get());
         }
 
-        for (String role: roleArr) {
+        for (String role : roleArr) {
             switch (role.toLowerCase()) {
                 case "admin":
                     roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).get());
@@ -121,6 +121,7 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+
         userRepository.save(user);
 
         return new ResponseEntity<>(new ResponseMessage("User registered successfully!"), HttpStatus.CREATED);
@@ -159,11 +160,5 @@ public class AuthController {
     public Optional<Utilisateur> getUserByUsername(@PathVariable("username") String username) {
         return userRepository.findByUsername(username);
     }
-/*
-    @GetMapping("/searchUtilisateurByUsername")
-    public Utilisateur getUtilisateurByUsername(@RequestParam(value = "username") String username) {
-        return utilisateurService.findUtilisateurByUsername(username);
 
-    }
-  */
 }

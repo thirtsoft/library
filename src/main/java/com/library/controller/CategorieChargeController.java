@@ -27,9 +27,9 @@ public class CategorieChargeController {
     public ResponseEntity<CategorieCharge> getCategorieChargeById(@PathVariable(value = "id") Long id) {
         Optional<CategorieCharge> catCharge = catChargeService.findCategorieChargeById(id);
         if (catCharge.isPresent())
-            return new ResponseEntity<CategorieCharge>(catCharge.get(), HttpStatus.OK);
+            return new ResponseEntity<>(catCharge.get(), HttpStatus.OK);
         else
-            return new ResponseEntity<CategorieCharge>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
@@ -56,10 +56,10 @@ public class CategorieChargeController {
     @PostMapping("/categorieCharges")
     public ResponseEntity<CategorieCharge> createCategorieCharge(@RequestBody CategorieCharge categorieCharge) {
         if (catChargeService.findByCodeCategorieCharge(categorieCharge.getCodeCategorieCharge()) != null) {
-            return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(categorieCharge, HttpStatus.BAD_REQUEST);
         }
         catChargeService.saveCategorieCharge(categorieCharge);
-        return new ResponseEntity<CategorieCharge>(categorieCharge, HttpStatus.CREATED);
+        return new ResponseEntity<>(categorieCharge, HttpStatus.CREATED);
 
     }
 

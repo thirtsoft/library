@@ -57,7 +57,7 @@ public class LigneDevisController {
     @PostMapping("/ligneDevis")
     public ResponseEntity<LigneDevis> createLigneDevis(@RequestBody LigneDevis LigneDevis) {
         //	return LigneDevisService.saveLigneDevis(LigneDevis);
-        return new ResponseEntity<LigneDevis>(ligneDevisService.saveLigneDevis(LigneDevis), HttpStatus.CREATED);
+        return new ResponseEntity<>(ligneDevisService.saveLigneDevis(LigneDevis), HttpStatus.CREATED);
     }
 
     @PutMapping("/ligneDevis/{lcId}")

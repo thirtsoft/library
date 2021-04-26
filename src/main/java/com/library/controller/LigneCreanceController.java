@@ -57,7 +57,7 @@ public class LigneCreanceController {
     @PostMapping("/ligneCreances")
     public ResponseEntity<LigneCreance> createLigneCreance(@RequestBody LigneCreance ligneCreance) {
         //	return ligneCreanceService.saveLigneCreance(ligneCreance);
-        return new ResponseEntity<LigneCreance>(ligneCreanceService.saveLigneCreance(ligneCreance), HttpStatus.CREATED);
+        return new ResponseEntity<>(ligneCreanceService.saveLigneCreance(ligneCreance), HttpStatus.CREATED);
     }
 
     @PutMapping("/ligneCreance/{lcId}")
@@ -68,8 +68,9 @@ public class LigneCreanceController {
     }
 
     @DeleteMapping("/ligneCreance/{id}")
-    public ResponseEntity<Object> deleteLigneCreance(@PathVariable(value = "id") Long id) {
-        return ligneCreanceService.deleteLigneCreance(id);
+    public ResponseEntity<?> deleteLigneCreance(@PathVariable(value = "id") Long id) {
+        ligneCreanceService.deleteLigneCreance(id);
+        return ResponseEntity.ok().build();
 
     }
 

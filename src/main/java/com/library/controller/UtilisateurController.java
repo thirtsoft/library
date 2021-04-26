@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -79,7 +80,7 @@ public class UtilisateurController {
 
     @PutMapping("/photo")
     public void editPhoto(@RequestParam("image") MultipartFile file, @RequestParam("id") String id)
-            throws JsonParseException, JsonMappingException, Exception {
+            throws Exception {
 
         String filename = file.getOriginalFilename();
         String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
@@ -96,7 +97,7 @@ public class UtilisateurController {
 
     @PutMapping("/user")
     public ResponseEntity<Response> editUser(@RequestParam("image") MultipartFile file, @RequestParam("user") String user)
-            throws JsonParseException, JsonMappingException, Exception {
+            throws Exception {
 
         Utilisateur userIm = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(user, Utilisateur.class);
 
@@ -152,10 +153,10 @@ public class UtilisateurController {
     @PostMapping(path = "uploadUserPhoto/{id}/uploadUserPhoto", produces = IMAGE_PNG_VALUE)
     public void uploadUserPhotoToDB(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) throws IOException {
         byte[] bytes = file.getBytes();
-        String encodedFile = new String(Base64.encodeBase64(bytes), "UTF-8");
+        String encodedFile = new String(Base64.encodeBase64(bytes), StandardCharsets.UTF_8);
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));
-        utilisateur.setPhoto("data:image/jpeg;base64;" + encodedFile.toString());
+        utilisateur.setPhoto("data:image/jpeg;base64;" + encodedFile);
         utilisateurService.saveUtilisateur(utilisateur);
     }
 
@@ -164,10 +165,10 @@ public class UtilisateurController {
         utilisateur.setId(idUser);
         Utilisateur savingUser = utilisateurService.saveUtilisateur(utilisateur);
         if (savingUser != null) {
-            return new ResponseEntity<Utilisateur>(savingUser, HttpStatus.OK);
+            return new ResponseEntity<>(savingUser, HttpStatus.OK);
         }
         //	return new ResponseEntity<>(utilisateurService.saveUtilisateur(utilisateur), HttpStatus.OK);
-        return new ResponseEntity<Utilisateur>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 
@@ -187,14 +188,14 @@ public class UtilisateurController {
             newUsername = new ObjectMapper().treeToValue(json.get("newUsername"), String.class);
             boolean existsUser = this.utilisateurService.updateUsernameOfUtilisateur(username, newUsername);
             if (existsUser)
-                return new ResponseEntity<Boolean>(existsUser, HttpStatus.OK);
+                return new ResponseEntity<>(existsUser, HttpStatus.OK);
 
         } catch (JsonProcessingException e) {
             System.out.println("Parsing Exception");
             e.printStackTrace();
-            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
         }
-        return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
     }
 
     @PatchMapping("/updatePassword")
@@ -210,13 +211,13 @@ public class UtilisateurController {
 
             boolean existUser = this.utilisateurService.updatePasswordofUtilisateur(username, oldPassword, newPassword);
             if (existUser)
-                return new ResponseEntity<Boolean>(existUser, HttpStatus.OK);
+                return new ResponseEntity<>(existUser, HttpStatus.OK);
         } catch (JsonProcessingException e) {
             System.out.println("Parsing Exception");
             e.printStackTrace();
-            return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
         }
-        return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
     }
 
     /**

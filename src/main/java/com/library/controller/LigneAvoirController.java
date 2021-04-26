@@ -29,7 +29,7 @@ public class LigneAvoirController {
     public ResponseEntity<LigneAvoir> getLigneAvoirById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         LigneAvoir ligneAvoir = ligneAvoirService.findLigneAvoirById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("LigneCmdClient Not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("ligneAvoir Not found"));
         return ResponseEntity.ok().body(ligneAvoir);
 
     }
@@ -57,7 +57,7 @@ public class LigneAvoirController {
     @PostMapping("/ligneAvoirs")
     public ResponseEntity<LigneAvoir> createLigneAvoir(@RequestBody LigneAvoir ligneAvoir) {
         //	return ligneAvoirService.saveLigneAvoir(ligneAvoir);
-        return new ResponseEntity<LigneAvoir>(ligneAvoirService.saveLigneAvoir(ligneAvoir), HttpStatus.CREATED);
+        return new ResponseEntity<>(ligneAvoirService.saveLigneAvoir(ligneAvoir), HttpStatus.CREATED);
     }
 
     @PutMapping("/ligneAvoirs/{lcId}")
@@ -68,8 +68,9 @@ public class LigneAvoirController {
     }
 
     @DeleteMapping("/ligneAvoirs/{id}")
-    public void deleteLigneAvoir(@PathVariable(value = "id") long numero) {
+    public ResponseEntity<?> deleteLigneAvoir(@PathVariable(value = "id") long numero) {
         ligneAvoirService.deleteLavoirByNumero(numero);
+        return ResponseEntity.ok().build();
 
     }
 

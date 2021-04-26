@@ -65,11 +65,10 @@ public class DevisController {
         return devisService.findDevisByDate(dateCommande);
     }
 
-
     @PostMapping("/devis")
     public ResponseEntity<Devis> createDevis(@RequestBody Devis Devis) {
 
-        return new ResponseEntity<Devis>(devisService.saveDevis(Devis), HttpStatus.CREATED);
+        return new ResponseEntity<>(devisService.saveDevis(Devis), HttpStatus.CREATED);
     }
 
     @PutMapping("/devis/{id}")
@@ -80,8 +79,9 @@ public class DevisController {
     }
 
     @DeleteMapping("/devis/{id}")
-    public void deleteDevis(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> deleteDevis(@PathVariable(value = "id") Long id) {
         devisService.deleteDevis(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/searchNumberOfDevisByMonth")

@@ -3,8 +3,7 @@ package com.library.controller;
 import com.library.entities.Stock;
 import com.library.services.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,33 +43,23 @@ public class StockController {
         return stockService.findListStockByProductId(prodId);
     }
 
-    @GetMapping("/searchListVStocksByProduitPageable")
-    public Page<Stock> getAllStocksByProduitIdByPageable(@RequestParam(name = "prod") Long prodId,
-                                                         @RequestParam(name = "page") int page,
-                                                         @RequestParam(name = "size") int size) {
-        return stockService.findAllStocksByProduitIdByPageable(prodId, PageRequest.of(page, size));
-    }
-
-    @GetMapping("/searchListStocksByPageable")
-    public Page<Stock> getAllStocksByPageable(@RequestParam(name = "page") int page,
-                                              @RequestParam(name = "size") int size) {
-        return stockService.findAllStocksByPageable(PageRequest.of(page, size));
-    }
 
     @PostMapping("/stocks")
-    public Stock createStock(@RequestBody Stock stock) {
-        return stockService.saveStock(stock);
+    public ResponseEntity<Stock> createStock(@RequestBody Stock stock) {
+        return new ResponseEntity<>(stockService.saveStock(stock), HttpStatus.CREATED);
     }
 
     @PutMapping("/stocks/{id}")
-    public Stock updateStock(@PathVariable Long stockId, @RequestBody Stock stock) {
+    public ResponseEntity<Stock> updateStock(@PathVariable Long stockId, @RequestBody Stock stock) {
         stock.setId(stockId);
-        return stockService.saveStock(stock);
+        return new ResponseEntity<>(stockService.saveStock(stock), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/stocks/{id}")
-    public ResponseEntity<Object> deleteStock(@PathVariable(value = "id") Long stockId) {
-        return stockService.deleteStock(stockId);
+    public ResponseEntity<?> deleteStock(@PathVariable(value = "id") Long stockId) {
+        stockService.deleteStock(stockId);
+        return ResponseEntity.ok().build();
     }
 
 }
