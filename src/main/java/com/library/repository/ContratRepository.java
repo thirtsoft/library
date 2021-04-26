@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Contrat;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,13 +25,5 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
     @Query("select p from Contrat p where p.client.id =:client")
     List<Contrat> findLitContratByClientId(@Param("client") Long clientId);
 
-    @Query("select p from Contrat p where p.client.id =:id")
-    Page<Contrat> findContratByClientPageable(@Param("id") Long clientId, Pageable pageable);
-
-    @Query("select p from Contrat p")
-    Page<Contrat> findAllContratsByPageable(Pageable pageable);
-
-    @Query("select p from Contrat p where p.nature like :mc")
-    Page<Contrat> findContratsByKeyWord(@Param("mc") String mc, Pageable pageable);
 
 }

@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Client;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,10 +32,5 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("select c.raisonSocial, count(c) as countClient from Client c group by c.raisonSocial")
     List<Object[]> ListClientGroupByRaisonSocial();
 
-    @Query("select p from Client p")
-    Page<Client> findClientByPageable(Pageable pageable);
-
-    @Query("select p from Client p where p.raisonSocial like :x")
-    Page<Client> findClientByKeyWord(@Param("x") String mc, Pageable pageable);
 
 }

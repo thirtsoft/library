@@ -13,12 +13,12 @@ import java.util.List;
 public interface LigneCreanceRepository extends JpaRepository<LigneCreance, Long> {
 
     List<LigneCreance> findAllByNumero(Long numero);
-  //  List<LigneCreance> findAllByNumero(long numero);
+    //  List<LigneCreance> findAllByNumero(long numero);
 
     @Modifying
     @Query("delete from LigneCreance where numero = :numero")
     void deleteByNumero(@Param("numero") Long numero);
-   // void deleteByNumero(@Param("numero") long numero);
+    // void deleteByNumero(@Param("numero") long numero);
 
     @Query("select p from LigneCreance p where p.produit.id =:prod")
     List<LigneCreance> ListLigneCreanceByProduitId(@Param("prod") Long prodId);

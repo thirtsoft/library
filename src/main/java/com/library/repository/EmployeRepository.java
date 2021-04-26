@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Employe;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -41,10 +39,5 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
     @Query("select c from Employe c where c.telephone like :tel")
     List<Employe> ListEmployeByTelephone(@Param("tel") String telephone);
 
-    @Query("select p from Employe p")
-    Page<Employe> findEmployeByPageable(Pageable pageable);
-
-    @Query("select p from Employe p where p.nom like :x")
-    Page<Employe> findEmployeByKeyWord(@Param("x") String mc, Pageable pageable);
 
 }

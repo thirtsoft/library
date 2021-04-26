@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Charge;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,10 +22,5 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
     @Query("select p from Charge p where p.nature like :nat")
     List<Charge> findListNature(@Param("nat") String nature);
 
-    @Query("select p from Charge p")
-    Page<Charge> findAllChargesByPageable(Pageable pageable);
-
-    @Query("select p from Charge p where p.nature like :mc")
-    Page<Charge> findChargesByKeyWord(@Param("mc") String mc, Pageable pageable);
 
 }

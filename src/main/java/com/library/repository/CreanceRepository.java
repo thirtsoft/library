@@ -21,7 +21,6 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
 
     @Query("select p from Creance p where p.reference like :num")
     Creance findByNumeroCreance(@Param("num") Long reference);
- //   Creance findByNumeroCreance(@Param("num") long reference);
 
     @Query("select p from Creance p where p.status like :status")
     Creance findByStatus(@Param("status") String status);

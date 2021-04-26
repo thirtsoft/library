@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.CommandeClient;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,10 +28,8 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
     @Query("select sum(c.totalCommande) from CommandeClient c where year(c.dateCommande) = year(current_date)")
     BigDecimal sumTotalOfCommandesByYear();
 
-
     @Query("select p from CommandeClient p where p.numeroCommande like :num")
     CommandeClient findByNumeroCommande(@Param("num") Long numeroCommande);
- //   CommandeClient findByNumeroCommande(@Param("num") long numeroCommande);
 
     @Query("select p from CommandeClient p where p.status like :status")
     CommandeClient findByStatus(@Param("status") String status);
@@ -49,13 +45,8 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
     @Query("select EXTRACT(month from(c.dateCommande)), sum(c.totalCommande) from CommandeClient c group by EXTRACT(month from(c.dateCommande))")
     List<?> sumTotalOfCommandeByMonth();
 
-    @Query("select p from CommandeClient p where p.client.id =:id")
-    Page<CommandeClient> findCommandeClientByClientId(@Param("id") Long clientId, Pageable pageable);
-
     @Query("select p from CommandeClient p where p.client.id =:cl")
     List<CommandeClient> ListCommandeClientByClientId(@Param("cl") Long clientId);
 
-    @Query("select p from CommandeClient p")
-    Page<CommandeClient> findAllCommandeClientByPageable(Pageable pageable);
 
 }

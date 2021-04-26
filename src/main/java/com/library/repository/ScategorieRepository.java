@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Scategorie;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,14 +24,5 @@ public interface ScategorieRepository extends JpaRepository<Scategorie, Long> {
 
     @Query("select p from Scategorie p where p.categorie.id =:cat")
     List<Scategorie> findScategorieByCateoryId(@Param("cat") Long catId);
-
-    @Query("select p from Scategorie p where p.categorie.id =:id")
-    Page<Scategorie> findScategorieByCateoryPageable(@Param("id") Long catId, Pageable pageable);
-
-    @Query("select p from Scategorie p")
-    Page<Scategorie> findAllScategoriesByPageable(Pageable pageable);
-
-    @Query("select p from Scategorie p where p.libelle like :mc")
-    Page<Scategorie> findScategorieByKeyWord(@Param("mc") String mc, Pageable pageable);
 
 }

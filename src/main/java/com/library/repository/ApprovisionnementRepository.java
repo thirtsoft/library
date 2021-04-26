@@ -15,17 +15,8 @@ public interface ApprovisionnementRepository extends JpaRepository<Approvisionne
 
     @Query("select p from Approvisionnement p where p.code like :num")
     Approvisionnement findByCode(@Param("num") Long code);
-   // Approvisionnement findByCode(@Param("num") long code);
 
     @Query("select p from Approvisionnement p where p.fournisseur.id =:cl")
     List<Approvisionnement> findListApprovisionnementByFournisseurId(@Param("cl") Long fourId);
 
-    @Query("select p from Approvisionnement p where p.fournisseur.id =:id")
-    Page<Approvisionnement> findApprovisionnementByFournisseurId(@Param("id") Long fourId, Pageable pageable);
-
-    @Query("select p from Approvisionnement p")
-    Page<Approvisionnement> findAllApprovisionnementByPageable(Pageable pageable);
-
-    @Query("select p from Approvisionnement p where p.code like :mc")
-    Page<Approvisionnement> findApprovisionnementByKeyWord(@Param("mc") String mc, Pageable pageable);
 }

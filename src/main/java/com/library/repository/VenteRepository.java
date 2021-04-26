@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Vente;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -27,7 +25,6 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
     @Query("select sum(c.totalVente) from Vente c")
     BigDecimal sumTotalOfVentes();
 
-
     @Query("select v from Vente v where v.dateVente > current_date")
     List<Vente> findVenteWithParticularDayAndMonth();
 
@@ -51,7 +48,7 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
 
     @Query("select p from Vente p where p.numeroVente like :num")
     Vente findByNumeroVente(@Param("num") Long numeroVente);
-   // Vente findByNumeroVente(@Param("num") long numeroVente);
+    // Vente findByNumeroVente(@Param("num") long numeroVente);
 
     @Query("select p from CommandeClient p where p.status like :status")
     Vente findByStatus(@Param("status") String status);
@@ -64,9 +61,4 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
 
     List<Vente> findAllByDateVente(Date dateVente);
 
-    @Query("select p from Vente p")
-    Page<Vente> findAllVenteByPageable(Pageable pageable);
-
-    @Query("select p from Vente p where p.numeroVente like :mc")
-    Page<Vente> findVenteByKeyWord(@Param("mc") String mc, Pageable pageable);
 }

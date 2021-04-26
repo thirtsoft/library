@@ -13,7 +13,7 @@ import java.util.List;
 public interface LigneAvoirRepository extends JpaRepository<LigneAvoir, Long> {
 
     List<LigneAvoir> findAllByNumero(Long numero);
-  //  List<LigneAvoir> findAllByNumero(long numero);
+    //  List<LigneAvoir> findAllByNumero(long numero);
 
     @Modifying
     @Query("delete from LigneAvoir where numero = :numero")

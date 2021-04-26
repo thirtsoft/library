@@ -1,8 +1,6 @@
 package com.library.repository;
 
 import com.library.entities.Versement;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,14 +26,5 @@ public interface VersementRepository extends JpaRepository<Versement, Long> {
 
     @Query("select v from Versement v where v.employe.id =:emp")
     List<Versement> findVersementByEmployeId(@Param("emp") Long empId);
-
-    @Query("select p from Versement p where p.employe.id =:id")
-    Page<Versement> findVersementByEmployeId(@Param("id") Long empId, Pageable pageable);
-
-    @Query("select p from Versement p")
-    Page<Versement> findAllVersementsByPageable(Pageable pageable);
-
-    @Query("select p from Versement p where p.nature like :mc")
-    Page<Versement> findVersementByKeyWord(@Param("mc") String mc, Pageable pageable);
-
+    
 }

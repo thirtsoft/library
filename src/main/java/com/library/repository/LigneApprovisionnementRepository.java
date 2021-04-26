@@ -15,13 +15,11 @@ import java.util.List;
 public interface LigneApprovisionnementRepository extends JpaRepository<LigneApprovisionnement, Long> {
 
     List<LigneApprovisionnement> findAllByNumero(Long numero);
-   // List<LigneApprovisionnement> findAllByNumero(long numero);
 
     @Modifying
     @Query("delete from LigneApprovisionnement where numero = :numero")
     void deleteByNumero(@Param("numero") Long numero);
- //   void deleteByNumero(@Param("numero") long numero);
-
+ 
     @Query("select p from LigneApprovisionnement p where p.produit.id =:prod")
     List<LigneApprovisionnement> findListLigneApprovisionnementByProduitId(@Param("prod") Long prodId);
 

@@ -37,10 +37,4 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
     @Query("select c from Fournisseur c where c.nom like :nom")
     List<Fournisseur> ListFournisseurByNom(@Param("nom") String nom);
 
-    @Query("select p from Fournisseur p")
-    Page<Fournisseur> findFournisseurByPageable(Pageable pageable);
-
-    @Query("select p from Fournisseur p where p.nom like :x")
-    Page<Fournisseur> findFournisseurByKeyWord(@Param("x") String mc, Pageable pageable);
-
 }
