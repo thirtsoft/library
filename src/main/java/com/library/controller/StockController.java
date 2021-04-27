@@ -2,8 +2,12 @@ package com.library.controller;
 
 import com.library.entities.Stock;
 import com.library.services.StockService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,45 +22,98 @@ public class StockController {
     @Autowired
     private StockService stockService;
 
-    @GetMapping("/stocks")
+    @GetMapping(value = "/stocks", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Stock",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Stock", responseContainer = "List<Stock>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Stock / une liste vide")
+    })
     public List<Stock> getAllStocks() {
         return stockService.findListStocks();
     }
 
-    @GetMapping("/stocks/{id}")
+    @GetMapping(value = "/stocks/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Stock par id",
+            notes = "Cette méthode permet de chercher une Stock par id", response = Stock.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Stock avec l'id a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Stock n'existe avec cet id pas dans la BD")
+
+    })
     public Optional<Stock> getStockById(@PathVariable(value = "id") Long id) {
         return stockService.findStockById(id);
     }
 
-    @GetMapping("/searchStockByQuantite")
+    @GetMapping(value = "/searchStockByQuantite", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Stock par quantite",
+            notes = "Cette méthode permet de chercher une Stock par quantite", response = Stock.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Stock avec la quantité indiquée a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Stock n'existe avec cette quantite pas dans la BD")
+
+    })
     public Stock getStockByQuantite(@RequestParam(name = "qte") int quantite) {
         return stockService.findStockByQuantite(quantite);
     }
 
-    @GetMapping("/searchStockByProduct")
+    @GetMapping(value = "/searchStockByProduct", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Stock par produit",
+            notes = "Cette méthode permet de chercher une Stock par son produit", response = Stock.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Stock a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Stock n'existe avec ce produit pas dans la BD")
+
+    })
     public Stock getStockByProduct(@RequestParam("id") Long prodId) {
         return stockService.findStockByProductId(prodId);
     }
 
-    @GetMapping("/searchListStocksByProduitId")
+    @GetMapping(value = "/searchListStocksByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Stock par produit",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Stock par produit", responseContainer = "List<Stock>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Charge par produit / une liste vide")
+    })
     public List<Stock> getListStocksByProduitId(@RequestParam("id") Long prodId) {
         return stockService.findListStockByProductId(prodId);
     }
 
 
-    @PostMapping("/stocks")
+    @PostMapping(value = "/stocks", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Enregistrer un Stock",
+            notes = "Cette méthode permet d'enregistrer un Stock", response = Stock.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Le Stock a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Stock  crée / modifié")
+
+    })
     public ResponseEntity<Stock> createStock(@RequestBody Stock stock) {
         return new ResponseEntity<>(stockService.saveStock(stock), HttpStatus.CREATED);
     }
 
-    @PutMapping("/stocks/{id}")
+    @PutMapping(value = "/stocks/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modifier un Stock par son ID",
+            notes = "Cette méthode permet de modifier un Stock par son ID", response = Stock.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Stock avec cet ID a été modifié"),
+            @ApiResponse(code = 400, message = "Aucun Stock  modifié avec cet ID")
+
+    })
     public ResponseEntity<Stock> updateStock(@PathVariable Long stockId, @RequestBody Stock stock) {
         stock.setId(stockId);
         return new ResponseEntity<>(stockService.saveStock(stock), HttpStatus.OK);
 
     }
 
-    @DeleteMapping("/stocks/{id}")
+    @DeleteMapping(value = "/stocks/{id}")
+    @ApiOperation(value = "Supprimer un Stock par son ID",
+            notes = "Cette méthode permet de supprimer un Stock par son ID", response = Stock.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Stock a été supprimé")
+    })
     public ResponseEntity<?> deleteStock(@PathVariable(value = "id") Long stockId) {
         stockService.deleteStock(stockId);
         return ResponseEntity.ok().build();

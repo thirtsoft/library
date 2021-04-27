@@ -6,11 +6,15 @@ import com.library.services.ExcelService;
 import com.library.services.PdfService;
 import com.library.services.ScategorieService;
 import com.library.utils.ExcelUtils;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,37 +47,81 @@ public class ScategorieController {
     @Autowired
     private ServletContext context;
 
-    @GetMapping("/scategories")
+    @GetMapping(value = "/scategories", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Scategorie",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Scategorie", responseContainer = "List<Scategorie>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Scategorie / une liste vide")
+    })
     public List<Scategorie> getAllScategories() {
         return scategorieService.findAllScategories();
     }
 
-    @GetMapping("/scategories/{id}")
+    @GetMapping(value = "/scategories/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher une Scategorie par ID",
+            notes = "Cette méthode permet de chercher une Scategorie par son ID", response = Scategorie.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Scategorie a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Scategorie n'existe avec cette ID pas dans la BD")
+
+    })
     public Optional<Scategorie> getScategorieById(@PathVariable(value = "id") Long scatId) {
         return scategorieService.findScategorieById(scatId);
     }
 
-    @GetMapping("/searchScategorieByCode")
+    @GetMapping(value = "/searchScategorieByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher une Scategorie par CODE",
+            notes = "Cette méthode permet de chercher une Scategorie par son CODE", response = Scategorie.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Scategorie avec ce code a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Scategorie n'existe avec cette CODE pas dans la BD")
+
+    })
     public Scategorie getScategorieByCode(@RequestParam(name = "code") String code) {
         return scategorieService.findByCode(code);
     }
 
-    @GetMapping("/searchListScategoriesByCode")
+    @GetMapping(value = "/searchListScategoriesByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Scategorie par code",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Scategories par code", responseContainer = "List<Scategorie>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Scategorie par code / une liste vide")
+    })
     public List<Scategorie> getListScategoriesByCode(@RequestParam(name = "code") String code) {
         return scategorieService.findListScategorieByCode("%" + code + "%");
     }
 
-    @GetMapping("/searchProduitByLibelle")
+    @GetMapping(value = "/searchProduitByLibelle", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher une Scategorie par libelle",
+            notes = "Cette méthode permet de chercher une Scategorie par son libelle", response = Scategorie.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Scategorie avec ce libelle a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Scategorie n'existe avec ce libelle pas dans la BD")
+
+    })
     public Scategorie getScategorieByLibelle(@RequestParam(name = "libelle") String libelle) {
         return scategorieService.findByLibelle(libelle);
     }
 
-    @GetMapping("/searchListScategoriesByLibelle")
+    @GetMapping(value = "/searchListScategoriesByLibelle", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Scategorie par libelle",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Scategories par libelle", responseContainer = "List<Scategorie>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Scategorie par libelle / une liste vide")
+    })
     public List<Scategorie> getListScategoriesByLibelle(@RequestParam(name = "libelle") String libelle) {
         return scategorieService.findListScategorieByLibelle("%" + libelle + "%");
     }
 
-    @GetMapping("/searchListScategoriesByCategoryId/{catId}")
+    @GetMapping(value = "/searchListScategoriesByCategoryId/{catId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Scategorie par categorie",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Scategories par categorie", responseContainer = "List<Scategorie>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Scategorie par categorie / une liste vide")
+    })
     public List<Scategorie> getListScategoriesByCategoryId(@PathVariable(name = "catId") Long catId) {
         return scategorieService.findScategorieByCateoryId(catId);
     }
@@ -84,7 +132,14 @@ public class ScategorieController {
     }
 
 
-    @PostMapping("/scategories")
+    @PostMapping(value = "/scategories", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Enregistrer une Scategorie",
+            notes = "Cette méthode permet d'enregistrer et modifier une Scategorie", response = Scategorie.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "La Scategorie a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Scategorie  crée / modifié")
+
+    })
     public ResponseEntity<Scategorie> saveScategorie(@RequestBody Scategorie scategorie) {
         if (scategorieService.findByCode(scategorie.getCode()) != null) {
             return new ResponseEntity<>(scategorie, HttpStatus.BAD_REQUEST);
@@ -93,19 +148,36 @@ public class ScategorieController {
         return new ResponseEntity<>(scategorie, HttpStatus.CREATED);
     }
 
-    @PutMapping("/scategories/{ScatId}")
+    @PutMapping(value = "/scategories/{ScatId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modifier un Scategorie par son ID",
+            notes = "Cette méthode permet de modifier un Scategorie par son ID", response = Scategorie.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Scategorie avec cet ID a été modifié"),
+            @ApiResponse(code = 400, message = "Aucun Scategorie a été modifié avec ID")
+
+    })
     public Scategorie updateScategorie(@PathVariable Long ScatId, @RequestBody Scategorie sCategorie) {
         sCategorie.setId(ScatId);
         return scategorieService.updateScategorie(ScatId, sCategorie);
     }
 
-    @DeleteMapping("/scategories/{id}")
+    @DeleteMapping(value = "/scategories/{id}")
+    @ApiOperation(value = "Supprimer une Scategorie par son ID",
+            notes = "Cette méthode permet de supprimer une Scategorie par son ID", response = Scategorie.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Scategorie a été supprimé")
+    })
     public ResponseEntity<?> deleteScategorie(@PathVariable(value = "id") Long ScatId) {
         scategorieService.deleteScategorie(ScatId);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/createScategoriePdf")
+    @ApiOperation(value = "Générer un PDF",
+            notes = "Cette méthode permet de générer la liste des scategories sous format pdf")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Pdf a été généré")
+    })
     public void createScategoriePdf(HttpServletRequest request, HttpServletResponse response) {
         List<Scategorie> scategories = scategorieService.findAllScategories();
         boolean isFlag = pdfService.createScategoriesPdf(scategories, context, request, response);
@@ -143,6 +215,11 @@ public class ScategorieController {
     }
 
     @PostMapping(value = "/uploadScategorie")
+    @ApiOperation(value = "Importer un fichier excel",
+            notes = "Cette méthode permet d'importer le contenu d'un fichier Excel vers la BD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Fichier a été importé avec succès")
+    })
     public ResponseEntity<ResponseMessage> uploadExcelScategorie(@RequestParam("file") MultipartFile file) {
         String message;
         if (ExcelUtils.isExcelFile(file)) {
@@ -160,6 +237,11 @@ public class ScategorieController {
     }
 
     @GetMapping(value = "/download/scategories.xlsx")
+    @ApiOperation(value = "Exporter un fichier excel",
+            notes = "Cette méthode permet d'exporter le contenu d'une BD vers un fichier Excel")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Fichier a été exporté avec succès")
+    })
     public ResponseEntity<InputStreamResource> excelScategoriesReport() throws IOException {
         List<Scategorie> scategories = scategorieService.findAllScategories();
 

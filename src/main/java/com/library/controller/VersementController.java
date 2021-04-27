@@ -4,8 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.entities.Versement;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.VersementService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -31,37 +35,81 @@ public class VersementController {
     @Autowired
     private VersementService versementService;
 
-    @GetMapping("/versements")
+    @GetMapping(value = "/versements", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Versement",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Versement", responseContainer = "List<Versement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Charge / une liste vide")
+    })
     public List<Versement> getAllVersements() {
         return versementService.findAllVersements();
     }
 
-    @GetMapping("/versements/{id}")
+    @GetMapping(value = "/versements/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Versement par ID",
+            notes = "Cette méthode permet de chercher un Versement par son ID", response = Versement.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Versement a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Versement n'existe avec cette ID pas dans la BD")
+
+    })
     public Optional<Versement> getVersementById(@PathVariable(value = "id") Long id) {
         return versementService.findVersementById(id);
     }
 
-    @GetMapping("/searchVersementByNumVersement")
+    @GetMapping(value = "/searchVersementByNumVersement", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Versement par numVersement",
+            notes = "Cette méthode permet de chercher une Versement par sa numVersement", response = Versement.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Versement avec cette numVersement a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Charge n'existe avec cet numVersement pas dans la BD")
+
+    })
     public Versement getVersementByNumVersement(@RequestParam(name = "num") String numVersement) {
         return versementService.findByNumVersement(numVersement);
     }
 
-    @GetMapping("/searchListVersementsByNumVersement")
+    @GetMapping(value = "/searchListVersementsByNumVersement", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Versement par numVersement",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par numVersement", responseContainer = "List<Versement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Versement par numVersement / une liste vide")
+    })
     public List<Versement> getListVersementsByNumVersement(@RequestParam(name = "num") String numVersement) {
         return versementService.findListVersementByNumVersement("%" + numVersement + "%");
     }
 
-    @GetMapping("/searchVersementByNature")
+    @GetMapping(value = "/searchVersementByNature", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Versement par nature",
+            notes = "Cette méthode permet de chercher une Versement par sa nature", response = Versement.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Versement avec cette nature a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Charge n'existe avec cet nature pas dans la BD")
+
+    })
     public Versement getVersementByNature(@RequestParam(name = "nat") String nature) {
         return versementService.findByNature(nature);
     }
 
-    @GetMapping("/searchListVersementsByNature")
+    @GetMapping(value = "/searchListVersementsByNature", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Versement par nature",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par nature", responseContainer = "List<Versement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Versement par nature / une liste vide")
+    })
     public List<Versement> getListVersementsByNature(@RequestParam(name = "nat") String nature) {
         return versementService.findListVersementByNature("%" + nature + "%");
     }
 
-    @GetMapping("/searchListVersementsByEmployeId")
+    @GetMapping(value = "/searchListVersementsByEmployeId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Versement par Employe",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par employe", responseContainer = "List<Versement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Versement par employe / une liste vide")
+    })
     public List<Versement> getAllVersementsByEmployeId(Long empId) {
         List<Versement> verResult = versementService.findVersementByEmployeId(empId);
         System.out.println(verResult);
@@ -70,7 +118,14 @@ public class VersementController {
     }
 
 
-    @PostMapping("/versements")
+    @PostMapping(value = "/versements", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Enregistrer un Versement",
+            notes = "Cette méthode permet d'enregistrer un Versement", response = Versement.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Le Versement a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Versement n'a pas été  crée / modifié")
+
+    })
     public ResponseEntity<Versement> saveVersement(@RequestBody Versement versement) {
         if (versementService.findByNumVersement(versement.getNumVersement()) != null) {
             return new ResponseEntity<>(versement, HttpStatus.BAD_REQUEST);
@@ -79,13 +134,20 @@ public class VersementController {
         return new ResponseEntity<>(versement, HttpStatus.CREATED);
     }
 
-    @PutMapping("/versements/{id}")
+    @PutMapping(value = "/versements/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modifier un Versement",
+            notes = "Cette méthode permet de modifier un Versement", response = Versement.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Versement a été modifié"),
+            @ApiResponse(code = 400, message = "Aucun Versement n'a été modifié")
+
+    })
     public ResponseEntity<Versement> updateVersement(@PathVariable Long id, @RequestBody Versement versement) {
         versement.setId(id);
         return new ResponseEntity<>(versementService.updateVersement(id, versement), HttpStatus.OK);
     }
 
-    @PostMapping("/createVersement")
+    @PostMapping(value = "/createVersement")
     public ResponseEntity<?> createVersement(@RequestPart(name = "versement") String vers,
                                              @RequestParam(name = "file") MultipartFile file) throws IOException {
         Versement versement = new ObjectMapper().readValue(vers, Versement.class);
@@ -100,6 +162,11 @@ public class VersementController {
     }
 
     @PostMapping(path = "/uploadPdfFile/{id}")
+    @ApiOperation(value = "Importer un PDF",
+            notes = "Cette méthode permet d'importer un fichier PDf d'un dossier externe vers la BD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'importation du fichier  s'est passé avec succès")
+    })
     public void uploadVersementFile(MultipartFile file, @PathVariable("id") Long id) throws IOException {
         Versement versement = versementService.findVersementById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Versement not found"));
@@ -109,7 +176,12 @@ public class VersementController {
         versementService.saveVersement(versement);
     }
 
-    @RequestMapping("/downloadVersementFile/{fileName:.+}")
+    @RequestMapping(value = "/downloadVersementFile/{fileName:.+}")
+    @ApiOperation(value = "Télécharger un PDF",
+            notes = "Cette méthode permet de télécharger un le reçu d'un  Versement")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Versement a été téléchargé")
+    })
     public void downloadVersementFile(HttpServletRequest request, HttpServletResponse response,
                                       @PathVariable("fileName") String fileName) throws IOException {
         File file = new File(EXTERNAL_FILE_PATH + fileName);
@@ -129,7 +201,12 @@ public class VersementController {
     }
 
 
-    @DeleteMapping("/versements/{id}")
+    @DeleteMapping(value = "/versements/{id}")
+    @ApiOperation(value = "Supprimer un Versement par son ID",
+            notes = "Cette méthode permet de supprimer un Versement par son ID", response = Versement.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Versement a été supprimé")
+    })
     public ResponseEntity<?> deleteVersement(@PathVariable(value = "id") Long id) {
         versementService.deleteVersement(id);
         return ResponseEntity.ok().build();

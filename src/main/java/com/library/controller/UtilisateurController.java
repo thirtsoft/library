@@ -1,8 +1,6 @@
 package com.library.controller;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -11,11 +9,15 @@ import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AccountService;
 import com.library.services.UtilisateurService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,13 +46,26 @@ public class UtilisateurController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/utilisateurs")
+    @GetMapping(value = "/utilisateurs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Utilisateur",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Utilisateur", responseContainer = "List<Utilisateur>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Utilisateur / une liste vide")
+    })
     public List<Utilisateur> getListUtulisateurs() {
         return utilisateurService.findAllUtilisateurs();
 
     }
 
-    @GetMapping("/utilisateurs/{id}")
+    @GetMapping(value = "/utilisateurs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Utilisateur par ID",
+            notes = "Cette méthode permet de chercher une Utilisateur par son ID", response = Utilisateur.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'Utilisateur a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Utilisateur n'existe avec cette ID pas dans la BD")
+
+    })
     public ResponseEntity<Utilisateur> getUtilisateurById(@PathVariable(value = "id") Long idUser)
             throws ResourceNotFoundException {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(idUser)
@@ -58,7 +73,15 @@ public class UtilisateurController {
         return ResponseEntity.ok().body(utilisateur);
     }
 
-    @GetMapping("/avatar/{id}")
+    @GetMapping(value = "/avatar/{id}")
+    @ApiOperation(value = "Afficher une photo",
+            notes = "Cette méthode permet de chercher et d'afficher la photo d'un Utilisateur par son ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La photo de l'utilisateur a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Photo n'existe avec cette ID pas dans la BD")
+
+    })
     public byte[] getPhoto(@PathVariable("id") Long id) throws Exception {
 
         Utilisateur user = utilisateurService.findUtilisateurById(id).get();
@@ -66,19 +89,39 @@ public class UtilisateurController {
 
     }
 
-    @GetMapping("/searchUtilisateurByUsername")
+    @GetMapping(value = "/searchUtilisateurByUsername", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher une utilisateur par son username",
+            notes = "Cette méthode permet de chercher un utilisateur par son nom d'utilisateur", response = Utilisateur.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'utilisateur a été trouver avec cet identifiant fourni"),
+            @ApiResponse(code = 404, message = "Aucun Utilisateur n'existe avec ce username pas dans la BD")
+
+    })
     public Utilisateur getUtilisateurByUsername(@RequestParam(value = "username") String username) {
         return utilisateurService.findUtilisateurByUsername(username);
     }
 
-    @GetMapping("/searchListUtilisateurByUsername")
+    @GetMapping(value = "/searchListUtilisateurByUsername", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Utilisateur par username",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Utilisateur par le nom d'utilisateur", responseContainer = "List<Utilisateur>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Utilisateur par nom d'utilisateur / une liste vide")
+    })
     public List<Utilisateur> getListUtilisateurByUsername(@RequestParam(value = "username") String username) {
 
         return utilisateurService.findListUtilisateurByUsername("%" + username + "%");
 
     }
 
-    @PutMapping("/photo")
+    @PutMapping(value = "/photo")
+    @ApiOperation(value = "Modifier une photo par ID",
+            notes = "Cette méthode permet de modifier la photo d'un utilisateur par son ID"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La photo a été modifié avec cet ID")
+
+    })
     public void editPhoto(@RequestParam("image") MultipartFile file, @RequestParam("id") String id)
             throws Exception {
 
@@ -95,7 +138,7 @@ public class UtilisateurController {
 
     }
 
-    @PutMapping("/user")
+    @PutMapping(value = "/user")
     public ResponseEntity<Response> editUser(@RequestParam("image") MultipartFile file, @RequestParam("user") String user)
             throws Exception {
 
@@ -129,16 +172,25 @@ public class UtilisateurController {
     }
 
     @GetMapping(path = "/photoUser/{id}", produces = IMAGE_PNG_VALUE)
+    @ApiOperation(value = "Recupérer une photo par ID",
+            notes = "Cette méthode permet de récupérer la photo d'un utilisateur par son ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La photo est affiché")
+
+    })
     public byte[] getPhotoUser(@PathVariable("id") Long id) throws Exception {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));
         return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/users/photos/" + utilisateur.getPhoto()));
     }
 
-    /**
-     * Enregistre la photo dans le dossier utilisateur
-     */
     @PostMapping(path = "/uploadUserPhoto/{id}", produces = IMAGE_PNG_VALUE)
+    @ApiOperation(value = "Enregistrer une photo dans un dossier",
+            notes = "Cette méthode permet d'enregistrer la photo d'un utilisateur dans un dossier externe utilisateur")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La photo a été enregistré dans le dossier utilisateur")
+
+    })
     public void uploadUserPhoto(MultipartFile file, @PathVariable("id") Long id) throws IOException {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));
@@ -147,10 +199,14 @@ public class UtilisateurController {
         utilisateurService.saveUtilisateur(utilisateur);
     }
 
-    /**
-     * Enregistre la photo dans la base de donnée
-     */
+
     @PostMapping(path = "uploadUserPhoto/{id}/uploadUserPhoto", produces = IMAGE_PNG_VALUE)
+    @ApiOperation(value = "Enregistrer une photo en BD",
+            notes = "Cette méthode permet d'enregistrer la photo d'un utilisateur dans la base de données")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La photo a été enregistré dans la BD avec succès")
+
+    })
     public void uploadUserPhotoToDB(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) throws IOException {
         byte[] bytes = file.getBytes();
         String encodedFile = new String(Base64.encodeBase64(bytes), StandardCharsets.UTF_8);
@@ -160,7 +216,14 @@ public class UtilisateurController {
         utilisateurService.saveUtilisateur(utilisateur);
     }
 
-    @PutMapping("/utilisateurs/{idUser}")
+    @PutMapping(value = "/utilisateurs/{idUser}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modifier un utilisateur par son ID",
+            notes = "Cette méthode permet de modifier un utilisateur par son ID", response = Utilisateur.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'utilisateur a été été modifié"),
+            @ApiResponse(code = 400, message = "Aucun utiisateur n'a été modifié")
+
+    })
     public ResponseEntity<Utilisateur> updateUtilisateur(@PathVariable(value = "idUser") Long idUser, @RequestBody Utilisateur utilisateur) {
         utilisateur.setId(idUser);
         Utilisateur savingUser = utilisateurService.saveUtilisateur(utilisateur);
@@ -172,14 +235,26 @@ public class UtilisateurController {
 
     }
 
-    @DeleteMapping("/utilisateurs/{id}")
+    @DeleteMapping(value = "/utilisateurs/{id}")
+    @ApiOperation(value = "Supprimer un Utilisateur par son ID",
+            notes = "Cette méthode permet de supprimer un Utilisateur par son ID", response = Utilisateur.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'Utilisateur a été supprimé")
+    })
     public ResponseEntity<Object> deleteUtilisateur(@PathVariable(value = "id") Long idUser) {
         utilisateurService.deleteUtilisateur(idUser);
         return ResponseEntity.ok().build();
 
     }
 
-    @PatchMapping("/updateUsername")
+    @PatchMapping(value = "/updateUsername")
+    @ApiOperation(value = "Modifier le username",
+            notes = "Cette méthode permet de modifier le nom d'utilisateur d'un utilisateur", response = Utilisateur.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le nom d'utlisateur a été été modifié"),
+            @ApiResponse(code = 400, message = "Aucun username n'a été modifié")
+
+    })
     public ResponseEntity<Boolean> updateUsername(@RequestBody ObjectNode json) {
         String username;
         String newUsername;
@@ -198,7 +273,14 @@ public class UtilisateurController {
         return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @PatchMapping("/updatePassword")
+    @PatchMapping(value = "/updatePassword")
+    @ApiOperation(value = "Modifier le mot de passe ",
+            notes = "Cette méthode permet de modifier le mot de passe d'un", response = Utilisateur.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le mot de passe a été été modifié"),
+            @ApiResponse(code = 400, message = "Aucun mot de passe n'a été modifié avec ce username")
+
+    })
     ResponseEntity<Boolean> updatePassword(@RequestBody ObjectNode jsonNodes) {
         String username;
         String oldPassword;
@@ -220,10 +302,13 @@ public class UtilisateurController {
         return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    /**
-     * @return a string list of the all of the roles
-     */
-    @GetMapping("/utilisateurs/authorities")
+
+    @GetMapping(value = "/utilisateurs/authorities")
+    @ApiOperation(value = "Renvoi la liste de string des roles",
+            notes = "Cette méthode permet de chercher et renvoyer la liste de string des roles", responseContainer = "List<String>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste de string des roles / une liste vide")
+    })
     public List<String> getAuthorities() {
         return utilisateurService.findAuthorities();
     }

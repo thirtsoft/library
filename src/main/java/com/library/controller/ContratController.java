@@ -1,16 +1,18 @@
 package com.library.controller;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.library.entities.Contrat;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.ContratService;
 import com.library.services.ExcelService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -49,42 +51,75 @@ public class ContratController {
     private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
 
 
-    @GetMapping("/contrats")
+    @GetMapping(value = "/contrats", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Contrat",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Contrats", responseContainer = "List<Contrat>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Contrat / une liste vide")
+    })
     public List<Contrat> getAllContrats() {
         return contratService.findAllContrats();
     }
 
-    @GetMapping("/contrats/{id}")
+    @GetMapping(value = "/contrats/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Contrat par ID",
+            notes = "Cette méthode permet de chercher un Contrat par son ID", response = Contrat.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Contrat a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Contrat n'existe avec cette ID pas dans la BD")
+
+    })
     public Optional<Contrat> getContratById(@PathVariable(value = "id") Long id) {
         return contratService.findContratById(id);
     }
 
-    @GetMapping("/searchContratByReference")
+    @GetMapping(value = "/searchContratByReference", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Contrat par son REFERENCE",
+            notes = "Cette méthode permet de chercher un Contrat par son REFERENCE", response = Contrat.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Contrat a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Contrat n'existe avec cette REFERENCE pas dans la BD")
+
+    })
     public Contrat getContratByReference(@RequestParam(name = "ref") String reference) {
         return contratService.findByReference(reference);
     }
 
-    @GetMapping("/searchListContratsByReference")
+    @GetMapping(value = "/searchListContratsByReference")
+    @ApiOperation(value = "Renvoi la liste des Contrat par REFERENCE",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Contrats par REFERENCE", responseContainer = "List<Contrat>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Contrat / une liste vide")
+    })
     public List<Contrat> getAllContratsByReference(@RequestParam(name = "ref") String reference) {
         return contratService.findListContratByReference("%" + reference + "%");
     }
 
-    @GetMapping("/searchContratByNature")
+    @GetMapping(value = "/searchContratByNature")
     public Contrat getContratByNature(@RequestParam(name = "nat") String nature) {
         return contratService.findByNature(nature);
     }
 
-    @GetMapping("/searchListContratsByNature")
+    @GetMapping(value = "/searchListContratsByNature")
     public List<Contrat> getAllContratsByNature(@RequestParam(name = "nat") String nature) {
         return contratService.findListContratByNature("%" + nature + "%");
     }
 
-    @GetMapping("/searchListContratsByClientId")
+    @GetMapping(value = "/searchListContratsByClientId")
     public List<Contrat> getAllContratsByClientId(@RequestParam("client") Long clientId) {
         return contratService.findContratByClientId(clientId);
     }
 
-    @PostMapping("/createContrats")
+    @PostMapping(value = "/createContrats", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Enregistrer un Contrat",
+            notes = "Cette méthode permet d'enregistrer et modifier un Contrat", response = Contrat.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Le Contrat a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Contrat crée / modifié")
+
+    })
     public ResponseEntity<?> createContrat(@RequestPart(name = "contrat") String cont,
                                            @RequestParam(name = "file") MultipartFile file) throws IOException {
         Contrat contrat = new ObjectMapper().readValue(cont, Contrat.class);
@@ -99,6 +134,11 @@ public class ContratController {
     }
 
     @PostMapping(path = "/uploadFilePdf/{id}")
+    @ApiOperation(value = "importer un Contrat",
+            notes = "Cette méthode permet d'importer un contrat pdf depuis le disque vers la BD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Contrat a été importé")
+    })
     public void uploadContratFile(MultipartFile file, @PathVariable("id") Long id) throws IOException {
         Contrat contrat = contratService.findContratById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contrat not found"));
@@ -108,19 +148,36 @@ public class ContratController {
         contratService.saveContrat(contrat);
     }
 
-    @PutMapping("/contrats/{id}")
+    @PutMapping(value = "/contrats/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modifier un Contrat",
+            notes = "Cette méthode permet de modifier un Contrat", response = Contrat.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Contrat a été modifié"),
+            @ApiResponse(code = 400, message = "Aucun Contrat modifié")
+
+    })
     public ResponseEntity<Contrat> updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
         contrat.setId(id);
         return new ResponseEntity<>(contratService.updateContrat(id, contrat), HttpStatus.OK);
     }
 
-    @DeleteMapping("/contrats/{id}")
+    @DeleteMapping(value = "/contrats/{id}")
+    @ApiOperation(value = "Supprimer un Contrat par son ID",
+            notes = "Cette méthode permet de supprimer un Contrat par son ID", response = Contrat.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Contrat a été supprimé")
+    })
     public ResponseEntity<?> deleteContrat(@PathVariable(value = "id") Long id) {
         contratService.deleteContrat(id);
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping("/downloadContratFile/{fileName:.+}")
+    @RequestMapping(value = "/downloadContratFile/{fileName:.+}")
+    @ApiOperation(value = "Télécharger un Contrat par son ID",
+            notes = "Cette méthode permet de télécharger un Contrat par son ID", response = Contrat.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le Contrat a été télécharger")
+    })
     public void downloadContratFile(HttpServletRequest request, HttpServletResponse response,
                                     @PathVariable("fileName") String fileName) throws IOException {
         File file = new File(EXTERNAL_FILE_PATH + fileName);

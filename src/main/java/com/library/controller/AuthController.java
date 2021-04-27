@@ -11,8 +11,12 @@ import com.library.repository.RoleRepository;
 import com.library.repository.UtilisateurRepository;
 import com.library.security.jwt.JwtProvider;
 import com.library.security.services.UserPrinciple;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -50,7 +54,14 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
-    @PostMapping("/signin")
+    @PostMapping(value = "/signin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Authentifier ",
+            notes = "Cette méthode permet d'authentifier un utilisateur", response = LoginForm.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'utilisateur est authentifié avec succès"),
+            @ApiResponse(code = 400, message = "Error d'authentification, veuillez vérifer vos identifiants")
+
+    })
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -74,7 +85,14 @@ public class AuthController {
                 roles));
     }
 
-    @PostMapping("/signup")
+    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Créer un compte ",
+            notes = "Cette méthode permet à un utilisateur de créer son compte", response = SignUpForm.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'utlisateur a été crée"),
+            @ApiResponse(code = 400, message = "Aucun utilisateur n'a été crée")
+
+    })
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity<>(new ResponseMessage("Fail -> Username is already taken!"),
@@ -156,7 +174,15 @@ public class AuthController {
         */
     }
 
-    @GetMapping("/getUserByUsername/{username}")
+    @GetMapping(value = "/getUserByUsername/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Utilisateur par username",
+            notes = "Cette méthode permet de chercher un Utilisateur par son nom d'utilisateur", response = Utilisateur.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'Utilisateur a été trouver avec cet username"),
+            @ApiResponse(code = 404, message = "Aucun Utilisateur n'existe avec cet username pas dans la BD")
+
+    })
     public Optional<Utilisateur> getUserByUsername(@PathVariable("username") String username) {
         return userRepository.findByUsername(username);
     }

@@ -2,8 +2,12 @@ package com.library.controller;
 
 import com.library.entities.Charge;
 import com.library.services.ChargeService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,38 +22,66 @@ public class ChargeController {
     @Autowired
     private ChargeService chargeService;
 
-    @GetMapping("/charges")
+    @GetMapping(value = "/charges", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Charges",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Charge", responseContainer = "List<Charge>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Charge / une liste vide")
+    })
     public List<Charge> getAllCharges() {
         return chargeService.findAllCharges();
     }
 
-    @GetMapping("/charges/{id}")
+    @GetMapping(value = "/charges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Charge par ID",
+            notes = "Cette méthode permet de chercher une Charge par son ID", response = Charge.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Charge a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Charge n'existe avec cette ID pas dans la BD")
+
+    })
     public Optional<Charge> getChargeById(@PathVariable(value = "id") Long id) {
         return chargeService.findChargeById(id);
     }
 
-    @GetMapping("/searchChargeByCodeCharge")
+    @GetMapping(value = "/searchChargeByCodeCharge", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Rechercher un Charge par CODE",
+            notes = "Cette méthode permet de chercher une Charge par son CODE", response = Charge.class
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Charge a été trouver"),
+            @ApiResponse(code = 404, message = "Aucun Charge n'existe avec ce CODE pas dans la BD")
+
+    })
     public Charge getChargeByCodeCharge(@RequestParam(name = "ref") String codeCharge) {
         return chargeService.findChargeByCodeCharge(codeCharge);
     }
 
-    @GetMapping("/searchListChargesByCodeCharge")
+    @GetMapping(value = "/searchListChargesByCodeCharge")
     public List<Charge> getAllChargesByReference(@RequestParam(name = "ref") String codeCharge) {
         return chargeService.findListChargeByCodeCharge("%" + codeCharge + "%");
     }
 
-    @GetMapping("/searchChargeByNature")
+    @GetMapping(value = "/searchChargeByNature")
     public Charge getChargeByNature(@RequestParam(name = "nat") String nature) {
         return chargeService.findChargeByNature(nature);
     }
 
-    @GetMapping("/searchListChargesByNature")
+    @GetMapping(value = "/searchListChargesByNature")
     public List<Charge> getAllChargesByNature(@RequestParam(name = "nat") String nature) {
         return chargeService.findListChargeByNature("%" + nature + "%");
     }
 
 
-    @PostMapping("/charges")
+    @PostMapping(value = "/charges", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Enregistrer une Charge",
+            notes = "Cette méthode permet d'enregistrer un Charge", response = Charge.class )
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "La Charge a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Charge  crée / modifié")
+
+    })
     public ResponseEntity<Charge> createCharge(@RequestBody Charge charge) {
         if (chargeService.findChargeByCodeCharge(charge.getCodeCharge()) != null) {
             return new ResponseEntity<>(charge, HttpStatus.BAD_REQUEST);
@@ -58,14 +90,26 @@ public class ChargeController {
         return new ResponseEntity<>(charge, HttpStatus.CREATED);
     }
 
-    @PutMapping("/charges/{id}")
+    @PutMapping(value = "/charges/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Modifier une Charge par son ID",
+            notes = "Cette méthode permet de modifier une Charge par son ID", response = Charge.class )
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "La Charge a été modifié"),
+            @ApiResponse(code = 400, message = "Aucun Charge modifié")
+
+    })
     public ResponseEntity<Charge> updateCharge(@PathVariable Long id, @RequestBody Charge charge) {
         charge.setId(id);
         return new ResponseEntity<>(chargeService.updateCharge(id, charge), HttpStatus.OK);
 
     }
 
-    @DeleteMapping("/charges/{id}")
+    @DeleteMapping(value = "/charges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Supprimer un Charge par son ID",
+            notes = "Cette méthode permet de supprimer un Charge par son ID", response = Charge.class )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La Charge a été supprimé")
+    })
     public ResponseEntity<?> deleteCharge(@PathVariable(value = "id") Long id) {
         chargeService.deleteCharge(id);
         return ResponseEntity.ok().build();
