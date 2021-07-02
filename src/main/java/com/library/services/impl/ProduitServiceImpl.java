@@ -5,6 +5,8 @@ import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.ProduitRepository;
 import com.library.services.ProduitService;
 import com.library.services.StockService;
+import com.library.utils.ZxingBarcodeHelper;
+import com.library.utils.ZxingQrcodeHelper;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -209,7 +211,71 @@ public class ProduitServiceImpl implements ProduitService {
         return produitRepository.countNumbersOfProductsWhenQStockInfStockInit();
     }
 
+    @Override
+    public Produit saveProductWithBarcode(Produit produit) throws Exception {
+        Produit productResult = new Produit();
+        if (produit.getBarCode() != null && !produit.getBarCode().isEmpty()) {
+            productResult = produitRepository.save(produit);
 
+        } else {
+            String productBarCodeResult = ZxingBarcodeHelper.generatedBarCodeWithProduct(produit);
+            productResult.setBarCode(ZxingBarcodeHelper.generateCodeCommand());
+            productResult.setReference(produit.getReference());
+            productResult.setDesignation(produit.getDesignation());
+            productResult.setQrCode(produit.getQrCode());
+            productResult.setPrixAchat(produit.getPrixAchat());
+            productResult.setPrixVente(produit.getPrixVente());
+            productResult.setPrixVente(produit.getPrixVente());
+            productResult.setQtestock(produit.getQtestock());
+            productResult.setStockInitial(produit.getStockInitial());
+            productResult.setCreationDate(produit.getCreationDate());
+            productResult.setLastUpdateDate(produit.getLastUpdateDate());
+            productResult.setScategorie(produit.getScategorie());
+
+            produitRepository.save(productResult);
+        }
+
+        return productResult;
+    }
+
+    @Override
+    public Produit findProductByBarcode(String barCode) {
+        return Optional.ofNullable(produitRepository.findByBarCode(barCode))
+                .orElse(null);
+    }
+
+    @Override
+    public Produit saveProductWithQrcode(Produit produit) throws Exception {
+        Produit productResult = new Produit();
+        if (produit.getQrCode() != null && !produit.getQrCode().isEmpty()) {
+            productResult = produitRepository.save(produit);
+
+        } else {
+            String productQrCodeResult = ZxingQrcodeHelper.generatedQrCodeWithProduct(produit);
+            productResult.setQrCode(ZxingQrcodeHelper.generateCodeCommand());
+            productResult.setBarCode(produit.getBarCode());
+            productResult.setReference(produit.getReference());
+            productResult.setDesignation(produit.getDesignation());
+            productResult.setPrixAchat(produit.getPrixAchat());
+            productResult.setPrixVente(produit.getPrixVente());
+            productResult.setPrixVente(produit.getPrixVente());
+            productResult.setQtestock(produit.getQtestock());
+            productResult.setStockInitial(produit.getStockInitial());
+            productResult.setCreationDate(produit.getCreationDate());
+            productResult.setLastUpdateDate(produit.getLastUpdateDate());
+            productResult.setScategorie(produit.getScategorie());
+
+            produitRepository.save(productResult);
+        }
+
+        return productResult;
+    }
+
+    @Override
+    public Produit findProductByQrcode(String qrCode) {
+        return Optional.ofNullable(produitRepository.findByQrCode(qrCode))
+                .orElse(null);
+    }
 
 
 }
