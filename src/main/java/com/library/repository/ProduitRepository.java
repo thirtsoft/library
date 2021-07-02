@@ -37,5 +37,9 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     @Query("select p from Produit p where p.designation like :des")
     List<Produit> findListProduitByDesignation(@Param("des") String designation);
 
+    Produit findByBarCode(String barCode);
+
+    Produit findByQrCode(String qrCode);
+
 
 }

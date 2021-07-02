@@ -36,6 +36,10 @@ public class Produit extends AbstractEntity {
 
     private String photo;
 
+    private String barCode;
+
+    private String qrCode;
+
     @ManyToOne
     @JoinColumn(name = "scat_id")
     private Scategorie scategorie;
@@ -147,6 +151,22 @@ public class Produit extends AbstractEntity {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public String getBarCode() {
+        return barCode;
+    }
+
+    public void setBarCode(String barCode) {
+        this.barCode = barCode;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
     }
 
     public Scategorie getScategorie() {

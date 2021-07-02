@@ -42,5 +42,13 @@ public interface ProduitService {
 
     Integer countNumbersOfProductsWhenQStockInfStockInit();
 
+    Produit saveProductWithBarcode(Produit produit) throws Exception;
+
+    Produit findProductByBarcode(String barCode);
+
+    Produit saveProductWithQrcode(Produit produit) throws Exception;
+
+    Produit findProductByQrcode(String qrCode);
+
 
 }
