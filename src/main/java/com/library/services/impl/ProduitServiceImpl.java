@@ -239,9 +239,10 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public Produit findProductByBarcode(String barCode) {
-        return Optional.ofNullable(produitRepository.findByBarCode(barCode))
-                .orElse(null);
+    public Produit findProductByBarcode(String barCode) throws Exception {
+        return produitRepository.findByBarCode(barCode);
+     /*   return Optional.ofNullable(produitRepository.findByBarCode(barCode))
+                .orElse(null);*/
     }
 
     @Override
@@ -272,7 +273,8 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public Produit findProductByQrcode(String qrCode) {
+    public Produit findProductByQrcode(String qrCode) throws Exception {
+    //    return produitRepository.findByQrCode(qrCode);
         return Optional.ofNullable(produitRepository.findByQrCode(qrCode))
                 .orElse(null);
     }

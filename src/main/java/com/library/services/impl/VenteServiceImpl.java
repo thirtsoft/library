@@ -47,6 +47,7 @@ public class VenteServiceImpl implements VenteService {
         return venteRepository.findById(venteId);
     }
 
+    @Override
     public Vente saveVente(Vente vente) {
         System.out.println("Initial Numero Vente " + vente.getNumeroVente());
 
@@ -105,6 +106,60 @@ public class VenteServiceImpl implements VenteService {
 
     }
 
+    @Override
+    public Vente saveVenteWithBarcode(Vente vente) {
+
+        System.out.println("Initial Numero Vente " + vente.getNumeroVente());
+
+        List<LigneVente> ligneVente = vente.getLigneVentes();
+
+        for (LigneVente ligneV : ligneVente) {
+            Produit produitInitial = produitService.findProduitById(ligneV.getProduit().getId()).get();
+            if (ligneV.getQuantite() > produitInitial.getQtestock()) {
+                throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
+            }
+        }
+
+        venteRepository.save(vente);
+
+        System.out.println("Milieu Numero Vente " + vente.getNumeroVente());
+
+        List<LigneVente> ligneVentes = vente.getLigneVentes();
+
+        double total = 0;
+
+        for (LigneVente lvente : ligneVentes) {
+            lvente.setVente(vente);
+            lvente.setNumero(vente.getNumeroVente());
+
+            ligneVenteService.saveLigneVente(lvente);
+
+            Produit produit = produitService.findProduitById(lvente.getProduit().getId()).get();
+
+            if (produit != null) {
+                produit.setQtestock(produit.getQtestock() - lvente.getQuantite());
+                produitService.updateProduit(produit.getId(), produit);
+            }
+
+            lvente.setPrixVente(produit.getPrixDetail());
+
+            System.out.println(produit.getPrixDetail());
+            System.out.println(lvente.getQuantite());
+            System.out.println(lvente.getQuantite() * produit.getPrixDetail());
+
+            total += (lvente.getQuantite() * produit.getPrixDetail());
+
+        }
+
+        vente.setTotalVente(total);
+        vente.setStatus("valider");
+        vente.setDateVente(new Date());
+        vente.setUtilisateur(vente.getUtilisateur());
+
+        System.out.println("Fin Numero Vente " + vente.getNumeroVente());
+
+        return venteRepository.save(vente);
+    }
     @Override
     public Vente updateVente(Long venteId, Vente vente) {
         if (!venteRepository.existsById(venteId)) {

@@ -1,19 +1,11 @@
 package com.library.jasper;
 
-import java.sql.SQLException;
-import javax.sql.DataSource;
-
-import com.library.utils.Constants;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperRunManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.sql.*;
-import java.util.*;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 
 @Service(value = "reportService")
@@ -27,6 +19,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public StringResult createReport(Report report) throws SQLException {
+        /*
         try {
             Resource resource = resourceLoader.getResource("classpath:/reports/"+report.getName()+".jasper");
             InputStream reportputStream = resource.getInputStream();
@@ -49,5 +42,10 @@ public class ReportServiceImpl implements ReportService {
         }
         return null;
 
+         */
+
+        return null;
+
     }
+
 }

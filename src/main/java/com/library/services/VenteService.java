@@ -16,6 +16,8 @@ public interface VenteService {
 
     Vente saveVente(Vente vente);
 
+    Vente saveVenteWithBarcode(Vente vente);
+
     Vente updateVente(Long venteId, Vente vente);
 
     ResponseEntity<Object> deleteVenteClient(Long id);

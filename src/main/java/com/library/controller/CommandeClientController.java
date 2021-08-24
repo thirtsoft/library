@@ -10,7 +10,6 @@ import com.library.services.ReportService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -18,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -144,7 +142,7 @@ public class CommandeClientController {
      */
     @PostMapping(value = "/comms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Ajouter une commande",
-            notes = "Cette méthode permet d'ajouter une commande", response = CommandeClient.class )
+            notes = "Cette méthode permet d'ajouter une commande", response = CommandeClient.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La commande a été ajouté"),
             @ApiResponse(code = 400, message = "Aucun commande a été ajouté")
@@ -174,7 +172,7 @@ public class CommandeClientController {
 
     @PostMapping(value = "/commandesClientes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une commande",
-            notes = "Cette méthode permet d'enregistrer et modifié une commande", response = CommandeClient.class )
+            notes = "Cette méthode permet d'enregistrer et modifié une commande", response = CommandeClient.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "La commande a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun commande a été crée / modifié")
@@ -187,7 +185,7 @@ public class CommandeClientController {
 
     @PutMapping(value = "/commandes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une commande",
-            notes = "Cette méthode permet de modifier une commande", response = CommandeClient.class )
+            notes = "Cette méthode permet de modifier une commande", response = CommandeClient.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La commande a été modifié"),
             @ApiResponse(code = 400, message = "Aucun commande a été modifié")
@@ -201,7 +199,7 @@ public class CommandeClientController {
 
     @DeleteMapping(value = "/commandes/{id}")
     @ApiOperation(value = "Supprimer une CommandeClient par son ID",
-            notes = "Cette méthode permet de supprimer une CommandeClient par son ID", response = CommandeClient.class )
+            notes = "Cette méthode permet de supprimer une CommandeClient par son ID", response = CommandeClient.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La Commande a été supprimé")
     })
@@ -227,10 +225,12 @@ public class CommandeClientController {
         return commandeClientService.createOrder(CcmmandeClient);
     }
 
+    /*
     @GetMapping("/report/pdf/{id}")
     public String generateReport(@PathVariable Long id) throws FileNotFoundException, JRException {
         return reportCommande.exportReport(id);
     }
+    */
 
     @GetMapping("/generateCodeCommand")
     public long generateCodeCommand() {

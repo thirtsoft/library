@@ -89,7 +89,6 @@ public class VenteController {
         return venteService.countNumberOfVenteByDay();
     }
 
-
     @GetMapping(value = "/SumsOfVentes")
     @ApiOperation(value = "Additionner le montant total de Vente",
             notes = "Cette méthode permet de rechercher et retourner le montant total Vente"
@@ -147,7 +146,6 @@ public class VenteController {
         return venteService.findByStatus(status);
     }
 
-
     @PostMapping(value = "/ventes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Vente",
             notes = "Cette méthode permet d'enregistrer une Vente", response = Vente.class)
@@ -164,6 +162,22 @@ public class VenteController {
 
         vente.setUtilisateur(userInfo);
         venteService.saveVente(vente);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/ventes/venteWithbarCode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Enregistrer une Vente avec lecteur code-barres",
+            notes = "Cette méthode permet d'enregistrer une Vente en utilisant un lecteur code-barres", response = Vente.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "La Vente a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Vente  crée / modifié")
+
+    })
+    public ResponseEntity<Vente> saveVenteWithBarcode(@RequestBody Vente vente, @RequestParam Long id) {
+        Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
+        vente.setUtilisateur(userInfo);
+        venteService.saveVenteWithBarcode(vente);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -191,7 +205,6 @@ public class VenteController {
     public ResponseEntity<?> deleteVente(@PathVariable(value = "id") Long id) {
         venteService.deleteVente(id);
         return ResponseEntity.ok().build();
-        //return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/searchVenteWithParticularDayAndMonth", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -313,7 +313,7 @@ public class ProduitController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Produit a été trouvé")
     })
-    public ResponseEntity<Produit> getProduitByBarCode(@PathVariable("barCode") String barcode) {
+    public ResponseEntity<Produit> getProduitByBarCode(@PathVariable("barCode") String barcode) throws Exception {
         Produit produit = produitService.findProductByBarcode(barcode);
         if (produit == null) {
             throw new ResourceNotFoundException("not exist");
@@ -341,7 +341,7 @@ public class ProduitController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Produit a été trouvé avec le qrcode indiqué")
     })
-    public ResponseEntity<Produit> getProduitByQrCode(@PathVariable("qrCode") String qrCode) {
+    public ResponseEntity<Produit> getProduitByQrCode(@PathVariable("qrCode") String qrCode) throws Exception {
         Produit produit = produitService.findProductByQrcode(qrCode);
         if (produit == null) {
             throw new ResourceNotFoundException("not exist");
