@@ -70,10 +70,10 @@ public class LibraryApplication implements CommandLineRunner {
         Scategorie sc3 = scategorieRepository.save(new Scategorie(3L,"scat3","scat3",c2));
         Scategorie sc4 = scategorieRepository.save(new Scategorie(4L,"scat4","scat4",c3));
 
-        Produit p1= produitRepository.save(new Produit(1L,"prod1","prod1", 1500.0,1700.0,1800.0,2.0, 4, 4,true,"photo",sc1));
-        Produit p2= produitRepository.save(new Produit(2L,"prod2","prod2", 150.0,170.0,180.0,1.0, 2, 4,true,"photo",sc3));
-        Produit p3= produitRepository.save(new Produit(3L,"prod3","prod3", 15000.0,17000.0,18000.0,3.0, 6, 4,true,"photo",sc4));
-        Produit p4= produitRepository.save(new Produit(4L,"prod4","prod4", 150000.0,170000.0,180000.0,4.0, 8, 4,true,"photo",sc2));
+        Produit p1= produitRepository.save(new Produit(1L,"prod1","prod1", 1500.0,1700.0,1800.0, 4, 4,true,sc1));
+        Produit p2= produitRepository.save(new Produit(2L,"prod2","prod2", 150.0,170.0,180.0, 2, 4,true,sc3));
+        Produit p3= produitRepository.save(new Produit(3L,"prod3","prod3", 15000.0,17000.0,18000.0, 6, 4,true,sc4));
+        Produit p4= produitRepository.save(new Produit(4L,"prod4","prod4", 150000.0,170000.0,180000.0, 8, 4,true,sc2));
 
 
         Client cl1 = clientRepository.save(new Client(1L, "1234", "cl1","cl1","cl1","cl1","cl1"));
@@ -94,8 +94,8 @@ public class LibraryApplication implements CommandLineRunner {
         accountService.addRoleToUtilisateur("user", "USER");
 */
 
-
-       /* Role useRole = new Role(RoleName.ROLE_USER);
+/*
+        Role useRole = new Role(RoleName.ROLE_USER);
         Role vendorRole = new Role(RoleName.ROLE_VENDEUR);
         Role adminRole = new Role(RoleName.ROLE_ADMIN);
         roleRepository.save(useRole);

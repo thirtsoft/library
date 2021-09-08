@@ -8,12 +8,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface LigneVenteRepository extends JpaRepository<LigneVente, Long> {
 
     //  List<LigneVente> findAllByNumero(long numero);
     List<LigneVente> findAllByNumero(Long numero);
+
+    Optional<LigneVente> findByCode(String code);
+
+    List<LigneVente> findAllByCode(String code);
 
     @Modifying
     @Query("delete from LigneVente where numero = :numero")

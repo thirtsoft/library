@@ -74,4 +74,5 @@ public class ZxingBarcodeHelper {
         final String FORMAT = "yyyyMddHHmmss";
         return (DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
     }
+
 }

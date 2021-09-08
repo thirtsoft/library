@@ -12,6 +12,8 @@ public interface LigneVenteService {
 
     Optional<LigneVente> findLigneVenteById(Long lventeId);
 
+    Optional<LigneVente> findLigneVenteByCode(String code);
+
     LigneVente saveLigneVente(LigneVente ligneVente);
 
     LigneVente updateLigneVente(Long lventeId, LigneVente ligneVente);
@@ -21,8 +23,9 @@ public interface LigneVenteService {
     // void deleteLventeByNumero(long numero);
     void deleteLventeByNumero(Long numero);
 
-    // List<LigneVente> findAllLventeByNumero(long numero);
     List<LigneVente> findAllLventeByNumero(Long numero);
+
+    List<LigneVente> findAllLventeByCodeCode(String code);
 
     List<LigneVente> findLigneVenteByProduitId(Long prodId);
 

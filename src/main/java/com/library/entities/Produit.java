@@ -4,7 +4,17 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "produit")
+@Table(name = "produit", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "reference"
+        }),
+        @UniqueConstraint(columnNames = {
+                "barCode"
+        }),
+        @UniqueConstraint(columnNames = {
+                "qrCode"
+        })
+})
 public class Produit extends AbstractEntity {
     /**
      *
@@ -26,18 +36,16 @@ public class Produit extends AbstractEntity {
 
     private Double prixDetail;
 
-    private Double tva;
-
     private int qtestock;
 
     private int stockInitial;
 
     private boolean promo;
 
-    private String photo;
-
+    @Column(name = "barcode")
     private String barCode;
 
+    @Column(name = "qrcode", unique = true)
     private String qrCode;
 
     @ManyToOne
@@ -49,21 +57,23 @@ public class Produit extends AbstractEntity {
     }
 
 
-    public Produit(Long id, String reference, String designation, Double prixAchat, Double prixVente, Double prixDetail, Double tva, int qtestock, int stockInitial, boolean promo, String photo, Scategorie scategorie) {
+    public Produit(Long id, String reference, String designation,
+                   Double prixAchat, Double prixVente, Double prixDetail,
+                   int qtestock, int stockInitial, boolean promo, Scategorie scategorie) {
         this.id = id;
         this.reference = reference;
         this.designation = designation;
         this.prixAchat = prixAchat;
         this.prixVente = prixVente;
         this.prixDetail = prixDetail;
-        this.tva = tva;
         this.qtestock = qtestock;
         this.stockInitial = stockInitial;
         this.promo = promo;
-        this.photo = photo;
         this.scategorie = scategorie;
 
     }
+
+
 
     public Long getId() {
         return id;
@@ -113,14 +123,6 @@ public class Produit extends AbstractEntity {
         this.prixDetail = prixDetail;
     }
 
-    public Double getTva() {
-        return tva;
-    }
-
-    public void setTva(Double tva) {
-        this.tva = tva;
-    }
-
     public int getQtestock() {
         return qtestock;
     }
@@ -143,14 +145,6 @@ public class Produit extends AbstractEntity {
 
     public void setPromo(boolean promo) {
         this.promo = promo;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
     }
 
     public String getBarCode() {

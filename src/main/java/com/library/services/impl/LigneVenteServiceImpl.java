@@ -33,6 +33,14 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     }
 
     @Override
+    public Optional<LigneVente> findLigneVenteByCode(String code) {
+        if (ligneVenteRepository.findByCode(code) == null) {
+            throw new ResourceNotFoundException("Ligne Vente Not found");
+        }
+        return ligneVenteRepository.findByCode(code);
+    }
+
+    @Override
     public LigneVente saveLigneVente(LigneVente ligneVente) {
         return ligneVenteRepository.save(ligneVente);
     }
@@ -76,6 +84,11 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     @Override
     public List<LigneVente> findAllLventeByNumero(Long numero) {
         return ligneVenteRepository.findAllByNumero(numero);
+    }
+
+    @Override
+    public List<LigneVente> findAllLventeByCodeCode(String code) {
+        return ligneVenteRepository.findAllByCode(code);
     }
 
     @Override

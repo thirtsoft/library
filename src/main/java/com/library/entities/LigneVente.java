@@ -18,6 +18,8 @@ public class LigneVente extends AbstractEntity implements Serializable {
 
     private Long numero;
 
+    private String code;
+
     private int quantite;
 
     private double prixVente;
@@ -35,9 +37,10 @@ public class LigneVente extends AbstractEntity implements Serializable {
     public LigneVente() {
     }
 
-    public LigneVente(Long id, Long numero, int quantite, double prixVente, Vente vente, Produit produit) {
+    public LigneVente(Long id, Long numero, String code, int quantite, double prixVente, Vente vente, Produit produit) {
         this.id = id;
         this.numero = numero;
+        this.code = code;
         this.quantite = quantite;
         this.prixVente = prixVente;
         this.vente = vente;
@@ -59,6 +62,10 @@ public class LigneVente extends AbstractEntity implements Serializable {
     public void setNumero(Long numero) {
         this.numero = numero;
     }
+
+    public String getCode() { return code; }
+
+    public void setCode(String code) { this.code = code; }
 
     public int getQuantite() {
         return quantite;

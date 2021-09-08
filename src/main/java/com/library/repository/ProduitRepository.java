@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
@@ -37,9 +38,9 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
     @Query("select p from Produit p where p.designation like :des")
     List<Produit> findListProduitByDesignation(@Param("des") String designation);
 
-    Produit findByBarCode(String barCode);
+    Optional<Produit> findByBarCode(String barCode);
 
-    Produit findByQrCode(String qrCode);
+    Optional<Produit> findByQrCode(String qrCode);
 
 
 }

@@ -109,16 +109,22 @@ public class VenteServiceImpl implements VenteService {
     @Override
     public Vente saveVenteWithBarcode(Vente vente) {
 
+        System.out.println("Initial Vente " + vente);
+
         System.out.println("Initial Numero Vente " + vente.getNumeroVente());
 
         List<LigneVente> ligneVente = vente.getLigneVentes();
 
-        for (LigneVente ligneV : ligneVente) {
+        if (ligneVente == null || ligneVente.size() == 0) {
+            throw new IllegalArgumentException("Vous devez au moins ajouter un produit");
+        }
+
+       /* for (LigneVente ligneV : ligneVente) {
             Produit produitInitial = produitService.findProduitById(ligneV.getProduit().getId()).get();
             if (ligneV.getQuantite() > produitInitial.getQtestock()) {
                 throw new IllegalArgumentException("La Quantité de stock du produit est insuffusante");
             }
-        }
+        }*/
 
         venteRepository.save(vente);
 
@@ -159,7 +165,9 @@ public class VenteServiceImpl implements VenteService {
         System.out.println("Fin Numero Vente " + vente.getNumeroVente());
 
         return venteRepository.save(vente);
+
     }
+
     @Override
     public Vente updateVente(Long venteId, Vente vente) {
         if (!venteRepository.existsById(venteId)) {

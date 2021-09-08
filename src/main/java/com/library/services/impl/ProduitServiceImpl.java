@@ -95,14 +95,14 @@ public class ProduitServiceImpl implements ProduitService {
         Produit product = prod.get();
 
         product.setReference(produit.getReference());
+        product.setBarCode(produit.getBarCode());
         product.setDesignation(produit.getDesignation());
         product.setPrixAchat(produit.getPrixAchat());
         product.setPrixVente(produit.getPrixVente());
+        product.setPrixDetail(produit.getPrixDetail());
         product.setQtestock(produit.getQtestock());
         product.setStockInitial(produit.getStockInitial());
-        product.setTva(produit.getTva());
         product.setPromo(produit.isPromo());
-        product.setPhoto(produit.getPhoto());
         product.setScategorie(produit.getScategorie());
 
         return produitRepository.save(product);
@@ -214,7 +214,7 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public Produit saveProductWithBarcode(Produit produit) throws Exception {
         Produit productResult = new Produit();
-        if (produit.getBarCode() != null && !produit.getBarCode().isEmpty()) {
+        if (produit.getBarCode() != null) {
             productResult = produitRepository.save(produit);
 
         } else {
@@ -238,11 +238,11 @@ public class ProduitServiceImpl implements ProduitService {
         return productResult;
     }
 
+
     @Override
-    public Produit findProductByBarcode(String barCode) throws Exception {
-        return produitRepository.findByBarCode(barCode);
-     /*   return Optional.ofNullable(produitRepository.findByBarCode(barCode))
-                .orElse(null);*/
+    public Optional<Produit> findProductByBarcode(String barCode) {
+        return Optional.ofNullable(produitRepository.findByBarCode(barCode))
+                .orElse(null);
     }
 
     @Override
@@ -273,8 +273,7 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public Produit findProductByQrcode(String qrCode) throws Exception {
-    //    return produitRepository.findByQrCode(qrCode);
+    public Optional<Produit> findProductByQrcode(String qrCode){
         return Optional.ofNullable(produitRepository.findByQrCode(qrCode))
                 .orElse(null);
     }

@@ -30,7 +30,7 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/prodApi")
 public class ProduitController {
 
@@ -191,9 +191,9 @@ public class ProduitController {
             @ApiResponse(code = 400, message = "Aucun Produit n'a été modifié")
 
     })
-    public ResponseEntity<Produit> updateProduit(@PathVariable Long prodId, @RequestBody Produit produit) {
+    public ResponseEntity<Produit> updateProduit(@PathVariable(value = "prodId") Long prodId, @RequestBody Produit produit) {
         produit.setId(prodId);
-        return new ResponseEntity<>(produitService.updateProduit(prodId, produit), HttpStatus.OK);
+        return new ResponseEntity<>(produitService.updateProduit(prodId, produit), HttpStatus.OK) ;
     }
 
     @DeleteMapping(value = "/produits/{id}")
@@ -307,18 +307,20 @@ public class ProduitController {
 
     }
 
-    @GetMapping(value = "/produits/searchProduitByBarCode/{barCode}")
+    @GetMapping(value = "/produits/searchProduitByBarCode/{barcode}")
     @ApiOperation(value = "chercher un produit par son code-barre",
             notes = "Cette méthode permet de chercher et renvoyer un Produit par son code-barre")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Produit a été trouvé")
     })
-    public ResponseEntity<Produit> getProduitByBarCode(@PathVariable("barCode") String barcode) throws Exception {
-        Produit produit = produitService.findProductByBarcode(barcode);
-        if (produit == null) {
-            throw new ResourceNotFoundException("not exist");
-        }
-        return ResponseEntity.ok(produit);
+    public ResponseEntity<Produit> getProduitByBarCode(@PathVariable(value = "barcode") String barcode) {
+
+        Produit produitInfo = produitService
+                .findProductByBarcode(barcode)
+                .orElseThrow(()->
+                        new  ResourceNotFoundException(barcode+" NOT Found!"));
+
+            return ResponseEntity.ok().body(produitInfo);
     }
 
     @PostMapping(value = "/produits/createProduitWithQrcode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -341,12 +343,13 @@ public class ProduitController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Produit a été trouvé avec le qrcode indiqué")
     })
-    public ResponseEntity<Produit> getProduitByQrCode(@PathVariable("qrCode") String qrCode) throws Exception {
-        Produit produit = produitService.findProductByQrcode(qrCode);
-        if (produit == null) {
-            throw new ResourceNotFoundException("not exist");
-        }
-        return ResponseEntity.ok(produit);
+    public ResponseEntity<Produit> getProduitByQrCode(@PathVariable("qrCode") String qrCode){
+        Produit produitInfo = produitService
+                .findProductByQrcode(qrCode)
+                .orElseThrow(()->
+                        new  ResourceNotFoundException(qrCode+" NOT Found!"));
+
+        return ResponseEntity.ok().body(produitInfo);
     }
 
 

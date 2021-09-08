@@ -44,11 +44,11 @@ public interface ProduitService {
 
     Produit saveProductWithBarcode(Produit produit) throws Exception;
 
-    Produit findProductByBarcode(String barCode) throws Exception;
+    Optional<Produit> findProductByBarcode(String barCode);
 
     Produit saveProductWithQrcode(Produit produit) throws Exception;
 
-    Produit findProductByQrcode(String qrCode) throws Exception;
+    Optional<Produit> findProductByQrcode(String qrCode);
 
 
 }
