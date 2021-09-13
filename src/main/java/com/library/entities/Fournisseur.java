@@ -38,6 +38,9 @@ public class Fournisseur extends AbstractEntity {
 
     private String telephone;
 
+    @Column(name = "mobile")
+    private String mobile;
+
     private String fax;
 
     @Column(length = 100, unique = true)
@@ -47,7 +50,11 @@ public class Fournisseur extends AbstractEntity {
 
     private String message;
 
-    public Fournisseur(Long id, String code, String raisonSociale, String prenom, String nom, String nomBank, String numeroCompte, String adresse, String telephone, String fax, String email) {
+    public Fournisseur(Long id, String code, String raisonSociale,
+                       String prenom, String nom, String nomBank,
+                       String numeroCompte, String adresse,
+                       String telephone, String mobile,
+                       String fax, String email) {
         this.id = id;
         this.code = code;
         this.raisonSociale = raisonSociale;
@@ -57,6 +64,7 @@ public class Fournisseur extends AbstractEntity {
         this.numeroCompte = numeroCompte;
         this.adresse = adresse;
         this.telephone = telephone;
+        this.mobile = mobile;
         this.fax = fax;
         this.email = email;
     }

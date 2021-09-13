@@ -1,10 +1,6 @@
 package com.library.entities;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import jdk.nashorn.internal.objects.annotations.Property;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -36,7 +32,7 @@ public class Vente extends AbstractEntity implements Serializable {
     private double montantReglement;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "GMT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
     private Date dateVente;
 
     @OneToMany(mappedBy = "vente", fetch = FetchType.LAZY)

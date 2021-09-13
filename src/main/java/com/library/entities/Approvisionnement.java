@@ -26,7 +26,7 @@ public class Approvisionnement extends AbstractEntity {
 
     private double totalAppro;
     
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
     private Date dateApprovisionnement;
 
     private String status;

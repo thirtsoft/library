@@ -38,7 +38,7 @@ public class Versement extends AbstractEntity {
 
     private String fileVersement;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
     private Date dateVersement;
 
     @ManyToOne

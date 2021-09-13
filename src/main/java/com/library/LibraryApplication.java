@@ -1,7 +1,9 @@
 package com.library;
 
-import com.library.entities.*;
-import com.library.enumeration.RoleName;
+import com.library.entities.Category;
+import com.library.entities.Client;
+import com.library.entities.Produit;
+import com.library.entities.Scategorie;
 import com.library.repository.*;
 import com.library.services.AccountService;
 import org.slf4j.Logger;
@@ -15,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
 
 @SpringBootApplication
 public class LibraryApplication implements CommandLineRunner {
@@ -61,25 +62,25 @@ public class LibraryApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        Category c1 = categoryRepository.save(new Category(1L,"cat1", "cat1"));
-        Category c2 = categoryRepository.save(new Category(2L,"cat2", "cat2"));
-        Category c3 = categoryRepository.save(new Category(3L,"cat3", "cat3"));
+        Category c1 = categoryRepository.save(new Category(1L, "cat1", "cat1"));
+        Category c2 = categoryRepository.save(new Category(2L, "cat2", "cat2"));
+        Category c3 = categoryRepository.save(new Category(3L, "cat3", "cat3"));
 
-        Scategorie sc1 = scategorieRepository.save(new Scategorie(1L,"scat1","scat1",c1));
-        Scategorie sc2 = scategorieRepository.save(new Scategorie(2L,"scat2","scat2",c1));
-        Scategorie sc3 = scategorieRepository.save(new Scategorie(3L,"scat3","scat3",c2));
-        Scategorie sc4 = scategorieRepository.save(new Scategorie(4L,"scat4","scat4",c3));
+        Scategorie sc1 = scategorieRepository.save(new Scategorie(1L, "scat1", "scat1", c1));
+        Scategorie sc2 = scategorieRepository.save(new Scategorie(2L, "scat2", "scat2", c1));
+        Scategorie sc3 = scategorieRepository.save(new Scategorie(3L, "scat3", "scat3", c2));
+        Scategorie sc4 = scategorieRepository.save(new Scategorie(4L, "scat4", "scat4", c3));
 
-        Produit p1= produitRepository.save(new Produit(1L,"prod1","prod1", 1500.0,1700.0,1800.0, 4, 4,true,sc1));
-        Produit p2= produitRepository.save(new Produit(2L,"prod2","prod2", 150.0,170.0,180.0, 2, 4,true,sc3));
-        Produit p3= produitRepository.save(new Produit(3L,"prod3","prod3", 15000.0,17000.0,18000.0, 6, 4,true,sc4));
-        Produit p4= produitRepository.save(new Produit(4L,"prod4","prod4", 150000.0,170000.0,180000.0, 8, 4,true,sc2));
+        Produit p1 = produitRepository.save(new Produit(1L, "prod1", "prod1", 1500.0, 1700.0, 1800.0, 4, 4, true, sc1));
+        Produit p2 = produitRepository.save(new Produit(2L, "prod2", "prod2", 150.0, 170.0, 180.0, 2, 4, true, sc3));
+        Produit p3 = produitRepository.save(new Produit(3L, "prod3", "prod3", 15000.0, 17000.0, 18000.0, 6, 4, true, sc4));
+        Produit p4 = produitRepository.save(new Produit(4L, "prod4", "prod4", 150000.0, 170000.0, 180000.0, 8, 4, true, sc2));
 
 
-        Client cl1 = clientRepository.save(new Client(1L, "1234", "cl1","cl1","cl1","cl1","cl1"));
-        Client cl2 = clientRepository.save(new Client(2L, "1235","cl2","cl2","cl2","cl2","cl2"));
-        Client cl3 = clientRepository.save(new Client(3L, "1237", "cl3","cl3","cl3","cl3","cl3"));
-        Client cl4 = clientRepository.save(new Client(4L, "1238","cl4","cl4","cl4","cl4","cl4"));
+        Client cl1 = clientRepository.save(new Client(1L, "1234", "cl1", "cl1", "cl1", "cl1", "cl1", "cl1"));
+        Client cl2 = clientRepository.save(new Client(2L, "1235", "cl2", "cl2", "cl2", "cl2", "cl2", "cl2"));
+        Client cl3 = clientRepository.save(new Client(3L, "1237", "cl3", "cl3", "cl3", "cl3", "cl3", "cl3"));
+        Client cl4 = clientRepository.save(new Client(4L, "1238", "cl4", "cl4", "cl4", "cl4", "cl4", "cl4"));
 
 /*
         accountService.saveUtilisateur(new Utilisateur(null, "admin", "1234", true, null));
@@ -101,7 +102,6 @@ public class LibraryApplication implements CommandLineRunner {
         roleRepository.save(useRole);
         roleRepository.save(vendorRole);
         roleRepository.save(adminRole);*/
-
 
 
     }
