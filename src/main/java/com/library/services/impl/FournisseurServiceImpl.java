@@ -59,6 +59,7 @@ public class FournisseurServiceImpl implements FournisseurService {
         fournisseurResult.setNumeroCompte(fournisseur.getNumeroCompte());
         fournisseurResult.setAdresse(fournisseur.getAdresse());
         fournisseurResult.setTelephone(fournisseur.getTelephone());
+        fournisseurResult.setMobile(fournisseur.getMobile());
         fournisseurResult.setFax(fournisseur.getFax());
         fournisseurResult.setEmail(fournisseur.getEmail());
 

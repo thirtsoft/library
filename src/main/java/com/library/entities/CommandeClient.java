@@ -39,19 +39,28 @@ public class CommandeClient extends AbstractEntity {
 
     private double totalCommande;
 
+    private String typeReglement;
+
+    private double montantReglement;
+
     private String status;
 
     public CommandeClient() {
         super();
     }
 
-    public CommandeClient(Long id, Long numeroCommande, Date dateCommande, Client client, @Valid List<LigneCmdClient> lcomms, double totalCommande, String status) {
+    public CommandeClient(Long id, Long numeroCommande, Date dateCommande,
+                          Client client, @Valid List<LigneCmdClient> lcomms,
+                          double totalCommande, String typeReglement,
+                          double montantReglement, String status) {
         this.id = id;
         this.numeroCommande = numeroCommande;
         this.dateCommande = dateCommande;
         this.client = client;
         this.lcomms = lcomms;
         this.totalCommande = totalCommande;
+        this.typeReglement = typeReglement;
+        this.montantReglement = montantReglement;
         this.status = status;
     }
 
@@ -102,6 +111,22 @@ public class CommandeClient extends AbstractEntity {
 
     public void setTotalCommande(double totalCommande) {
         this.totalCommande = totalCommande;
+    }
+
+    public String getTypeReglement() {
+        return typeReglement;
+    }
+
+    public void setTypeReglement(String typeReglement) {
+        this.typeReglement = typeReglement;
+    }
+
+    public double getMontantReglement() {
+        return montantReglement;
+    }
+
+    public void setMontantReglement(double montantReglement) {
+        this.montantReglement = montantReglement;
     }
 
     public String getStatus() {

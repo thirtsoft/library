@@ -106,6 +106,7 @@ public class ClientServiceImpl implements ClientService {
         clientResult.setChefService(client.getChefService());
         clientResult.setAdresse(client.getAdresse());
         clientResult.setTelephone(client.getTelephone());
+        clientResult.setMobile(client.getMobile());
         clientResult.setEmail(client.getEmail());
 
         return clientRepository.save(clientResult);

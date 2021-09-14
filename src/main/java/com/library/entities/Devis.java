@@ -35,20 +35,22 @@ public class Devis extends AbstractEntity {
 
     private double totalDevis;
 
-    private String status;
+    private String observation;
 
     public Devis() {
 
     }
 
-    public Devis(Long id, Long numeroDevis, Date dateDevis, Client client, @Valid List<LigneDevis> ldevis, double totalDevis, String status) {
+    public Devis(Long id, Long numeroDevis, Date dateDevis,
+                 Client client, @Valid List<LigneDevis> ldevis,
+                 double totalDevis, String observation) {
         this.id = id;
         this.numeroDevis = numeroDevis;
         this.dateDevis = dateDevis;
         this.client = client;
         this.ldevis = ldevis;
         this.totalDevis = totalDevis;
-        this.status = status;
+        this.observation = observation;
     }
 
     public Long getId() {
@@ -99,12 +101,12 @@ public class Devis extends AbstractEntity {
         this.totalDevis = totalDevis;
     }
 
-    public String getStatus() {
-        return status;
+    public String getObservation() {
+        return observation;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setObservation(String observation) {
+        this.observation = observation;
     }
 
     @Override
@@ -115,7 +117,7 @@ public class Devis extends AbstractEntity {
                 ", client=" + client +
                 ", ldevis=" + ldevis +
                 ", totalDevis=" + totalDevis +
-                ", status='" + status + '\'' +
+                ", observation='" + observation + '\'' +
                 '}';
     }
 
