@@ -30,6 +30,10 @@ public class CommandeClient extends AbstractEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private Utilisateur utilisateur;
+
     //@JsonManagedReference
     //@JsonIgnore
 //	@JsonIgnoreProperties(value = {"commande"})
@@ -94,6 +98,14 @@ public class CommandeClient extends AbstractEntity {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     @JsonGetter

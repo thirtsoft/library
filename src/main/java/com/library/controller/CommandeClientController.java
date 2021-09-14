@@ -2,14 +2,13 @@ package com.library.controller;
 
 import com.library.entities.CommandeClient;
 import com.library.entities.LigneCmdClient;
+import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
-import com.library.services.ClientService;
-import com.library.services.CommandeClientService;
-import com.library.services.LigneCmdClientService;
-import com.library.services.ReportService;
+import com.library.services.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -34,6 +33,9 @@ public class CommandeClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @Autowired
     private ReportService reportCommande;
@@ -148,7 +150,11 @@ public class CommandeClientController {
             @ApiResponse(code = 400, message = "Aucun commande a été ajouté")
 
     })
-    public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient) {
+    public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
+
+        Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
+        commandeClient.setUtilisateur(userInfo);
+
         commandeClientService.createCommande(commandeClient);
 
         List<LigneCmdClient> lcomms = commandeClient.getLcomms();
@@ -163,7 +169,11 @@ public class CommandeClientController {
     }
 
     @PostMapping(value = "/commandes")
-    public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient) {
+    public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
+
+        Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
+
+        commandeClient.setUtilisateur(utilisateur);
 
         commandeClientService.createCommande(commandeClient);
 
@@ -178,7 +188,10 @@ public class CommandeClientController {
             @ApiResponse(code = 400, message = "Aucun commande a été crée / modifié")
 
     })
-    public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient) {
+    public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
+
+        Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
+        commandeClient.setUtilisateur(utilisateur);
 
         return new ResponseEntity<CommandeClient>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.CREATED);
     }

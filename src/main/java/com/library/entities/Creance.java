@@ -46,6 +46,10 @@ public class Creance extends AbstractEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private Utilisateur utilisateur;
+
     @OneToMany(mappedBy = "creance", fetch = FetchType.LAZY)
     @Valid
     private List<LigneCreance> lcreances = new ArrayList<>();
@@ -155,6 +159,14 @@ public class Creance extends AbstractEntity {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     public List<LigneCreance> getLcreances() {

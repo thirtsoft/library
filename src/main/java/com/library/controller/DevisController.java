@@ -1,8 +1,10 @@
 package com.library.controller;
 
 import com.library.entities.Devis;
+import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.DevisService;
+import com.library.services.UtilisateurService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -22,10 +24,11 @@ import java.util.List;
 @RequestMapping("/alAmine")
 public class DevisController {
 
+    private final Double total = 0.0;
     @Autowired
     private DevisService devisService;
-
-    private Double total = 0.0;
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @GetMapping(value = "/devis", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Devis",
@@ -100,7 +103,7 @@ public class DevisController {
         return devisService.findDevisByDate(dateCommande);
     }
 
-    @PostMapping(value = "/devis", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/devis/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Devis",
             notes = "Cette méthode permet d'enregistrer un Devis", response = Devis.class)
     @ApiResponses(value = {
@@ -108,9 +111,13 @@ public class DevisController {
             @ApiResponse(code = 400, message = "Aucun Devis  crée / modifié")
 
     })
-    public ResponseEntity<Devis> createDevis(@RequestBody Devis Devis) {
+    public ResponseEntity<Devis> createDevis(@RequestBody Devis devis, @RequestParam Long id) {
 
-        return new ResponseEntity<>(devisService.saveDevis(Devis), HttpStatus.CREATED);
+        Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
+
+        devis.setUtilisateur(utilisateur);
+
+        return new ResponseEntity<>(devisService.saveDevis(devis), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/devis/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

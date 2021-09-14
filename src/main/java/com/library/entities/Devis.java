@@ -29,11 +29,17 @@ public class Devis extends AbstractEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private Utilisateur utilisateur;
+
     @OneToMany(mappedBy = "devis", fetch = FetchType.LAZY)
     @Valid
     private List<LigneDevis> ldevis = new ArrayList<>();
 
     private double totalDevis;
+
+    private String status;
 
     private String observation;
 
@@ -85,6 +91,14 @@ public class Devis extends AbstractEntity {
         this.client = client;
     }
 
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
     public List<LigneDevis> getLdevis() {
         return ldevis;
     }
@@ -99,6 +113,14 @@ public class Devis extends AbstractEntity {
 
     public void setTotalDevis(double totalDevis) {
         this.totalDevis = totalDevis;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getObservation() {

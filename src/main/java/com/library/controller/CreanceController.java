@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.library.entities.Creance;
+import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.CreanceService;
 import com.library.services.LigneCreanceService;
+import com.library.services.UtilisateurService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -30,6 +32,9 @@ public class CreanceController {
 
     @Autowired
     private LigneCreanceService ligneCreanceService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @GetMapping(value = "/creances", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Creance",
@@ -171,7 +176,7 @@ public class CreanceController {
         return creanceService.sumTotalOfCreancesByMonth();
     }
 
-    @PostMapping(value = "/creances", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/creances/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Creance",
             notes = "Cette méthode permet d'enregistrer et modifier une Creance", response = Creance.class)
     @ApiResponses(value = {
@@ -179,7 +184,9 @@ public class CreanceController {
             @ApiResponse(code = 400, message = "Aucun Creance n'a été crée / modifié")
 
     })
-    public ResponseEntity<Creance> createCreance(@RequestBody Creance creance) {
+    public ResponseEntity<Creance> createCreance(@RequestBody Creance creance, @RequestParam Long id) {
+        Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
+        creance.setUtilisateur(utilisateur);
         return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.CREATED);
     }
 
