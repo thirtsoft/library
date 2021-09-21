@@ -29,9 +29,9 @@ public class Fournisseur extends AbstractEntity {
 
     private String nom;
 
-    @Column(length = 100, unique = true)
     private String nomBank;
 
+    @Column(length = 100, unique = true)
     private String numeroCompte;
 
     private String adresse;

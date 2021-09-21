@@ -68,6 +68,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/alAmine/uploadPdfFile/{id}").permitAll()
                 .antMatchers("/alAmine/downloadVersementFile/**").permitAll()
                 .antMatchers("/alAmine/roles").permitAll()
+                .antMatchers("/api/categories").permitAll()
+                .antMatchers("/prodApi/scategories").permitAll()
+                .antMatchers("/prodApi/produits").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
@@ -82,12 +85,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("*")
+                      //  .allowedOrigins("**")
+                     //   .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins("http://localhost:8080/E-Librairie")
+                     //   .allowedMethods("*")
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .maxAge(3600L)
                         .allowedHeaders("*")
                         .exposedHeaders("Authorization")
                         .allowCredentials(true);
+
+
+
             }
         };
     }

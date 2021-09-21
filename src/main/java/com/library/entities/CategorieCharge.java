@@ -26,6 +26,7 @@ public class CategorieCharge extends AbstractEntity {
     @Column(length = 100, unique = true)
     private String codeCategorieCharge;
 
+    @Column(length = 100, unique = true)
     private String nomCategorieCharge;
 
 }

@@ -140,7 +140,12 @@ public class EmployeController {
 
     })
     public ResponseEntity<Employe> createEmploye(@RequestBody Employe employe) {
+
         if (employeService.findByEmail(employe.getEmail()) != null) {
+            return new ResponseEntity<>(employe, HttpStatus.BAD_REQUEST);
+        }
+
+        if (employeService.findByTelephone(employe.getTelephone()) != null) {
             return new ResponseEntity<>(employe, HttpStatus.BAD_REQUEST);
         }
 

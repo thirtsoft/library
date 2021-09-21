@@ -1,5 +1,6 @@
 package com.library.services;
 
+import com.library.entities.Client;
 import com.library.entities.Fournisseur;
 
 import java.util.List;

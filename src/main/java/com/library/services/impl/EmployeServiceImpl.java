@@ -35,14 +35,10 @@ public class EmployeServiceImpl implements EmployeService {
 
     @Override
     public Employe saveEmploye(Employe employe) {
-        if (employeRepository.findByEmail(employe.getEmail()) != null) {
-            throw new IllegalArgumentException("Cet Employe existe");
-        }
 
-        if ((employeRepository.findByEmail(employe.getEmail())) != null) {
-            throw new IllegalArgumentException("Cet Employe existe");
+        if ((employeRepository.findByEmail(employe.getEmail()) != null)) {
+            throw new IllegalArgumentException("Ce Employe exist");
         }
-
         return employeRepository.save(employe);
     }
 
