@@ -53,6 +53,11 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
+    public List<?> sumTotalOfChargeByMonth() {
+        return chargeRepository.sumTotalOfChargeByMonth();
+    }
+
+    @Override
     public Charge saveCharge(Charge charge) {
         if (chargeRepository.findByCodeCharge(charge.getCodeCharge()) != null) {
             throw new IllegalArgumentException("Charge exist");

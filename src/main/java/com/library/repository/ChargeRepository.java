@@ -22,5 +22,8 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
     @Query("select p from Charge p where p.nature like :nat")
     List<Charge> findListNature(@Param("nat") String nature);
 
+    @Query("select EXTRACT(month from(v.date)), sum(v.montantCharge) from Charge v group by EXTRACT(month from(v.date))")
+    List<?> sumTotalOfChargeByMonth();
+
 
 }

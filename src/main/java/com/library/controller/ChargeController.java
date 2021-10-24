@@ -22,6 +22,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/alAmine")
@@ -82,9 +84,19 @@ public class ChargeController {
         return chargeService.findChargeByNature(nature);
     }
 
-    @GetMapping(value = "/searchListChargesByNature")
+    @GetMapping(value = APP_ROOT + "/charges/searchListChargesByNature")
     public List<Charge> getAllChargesByNature(@RequestParam(name = "nat") String nature) {
         return chargeService.findListChargeByNature("%" + nature + "%");
+    }
+
+    @GetMapping(value = APP_ROOT + "/charges/sumMontantTotalChargeByMonth")
+    @ApiOperation(value = "Renvoi le montant total des Charges par month",
+            notes = "Cette méthode permet de chercher et le montant total des Charges par month", responseContainer = "List<Charge>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le montant total des Charges par month / une liste vide")
+    })
+    public List<?> sumTotalOfChargeByMonth() {
+        return chargeService.sumTotalOfChargeByMonth();
     }
 
     @PostMapping(value = "/charges", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -145,7 +157,6 @@ public class ChargeController {
         historiqueCharge.setAction("MODIFICATION");
 
         historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
-
 
         return new ResponseEntity<>(chargeResultat, HttpStatus.OK);
 

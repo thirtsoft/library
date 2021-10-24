@@ -19,6 +19,8 @@ public interface ChargeService {
 
     List<Charge> findListChargeByNature(String nature);
 
+    List<?> sumTotalOfChargeByMonth();
+
     Charge saveCharge(Charge charge);
 
     Charge updateCharge(Long id, Charge charge);
