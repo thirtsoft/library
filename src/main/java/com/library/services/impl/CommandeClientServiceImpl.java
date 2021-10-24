@@ -47,6 +47,11 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
+    public List<CommandeClient> findAllCommandeClientsOrderDesc() {
+        return commandeClientRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<CommandeClient> findCommandeClientById(Long comId) {
         if (!commandeClientRepository.existsById(comId)) {
             throw new ResourceNotFoundException("CommandeClient not found");

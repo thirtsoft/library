@@ -26,6 +26,11 @@ public class LigneCreanceServiceImpl implements LigneCreanceService {
     }
 
     @Override
+    public List<LigneCreance> findAllLigneCreancesOrderDesc() {
+        return ligneCreanceRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<LigneCreance> findLigneCreanceById(Long lCreanceId) {
         if (!ligneCreanceRepository.existsById(lCreanceId)) {
             throw new ResourceNotFoundException("Ligne Comande N° " + lCreanceId + "not found");

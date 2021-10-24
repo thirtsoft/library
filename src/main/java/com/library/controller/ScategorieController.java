@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Produit;
 import com.library.entities.Scategorie;
 import com.library.message.response.ResponseMessage;
 import com.library.services.ExcelService;
@@ -26,6 +27,8 @@ import java.io.*;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -55,6 +58,18 @@ public class ScategorieController {
     })
     public List<Scategorie> getAllScategories() {
         return scategorieService.findAllScategories();
+    }
+
+    @GetMapping(value = APP_ROOT + "/scategories/allScategorieOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Scategorie",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Scategorie",
+            responseContainer = "List<Scategorie>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Scategorie / une liste vide")
+    })
+    ResponseEntity<List<Scategorie>> getAllScategorieOrderDesc() {
+        List<Scategorie> scategorieList = scategorieService.findAllScategoriesOrderDesc();
+        return new ResponseEntity<>(scategorieList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/scategories/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

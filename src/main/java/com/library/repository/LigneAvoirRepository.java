@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.LigneApprovisionnement;
 import com.library.entities.LigneAvoir;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,5 +26,7 @@ public interface LigneAvoirRepository extends JpaRepository<LigneAvoir, Long> {
 
     @Query("select p from LigneAvoir p where p.avoir.id =:num")
     List<LigneAvoir> ListLigneAvoirByAvoirId(@Param("num") Long avoirId);
+
+    List<LigneAvoir> findByOrderByIdDesc();
 
 }

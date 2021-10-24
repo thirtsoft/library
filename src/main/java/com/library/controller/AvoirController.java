@@ -1,6 +1,6 @@
 package com.library.controller;
 
-import com.library.entities.Approvisionnement;
+import com.library.entities.Avoir;
 import com.library.entities.Avoir;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AvoirService;
@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -31,6 +33,18 @@ public class AvoirController {
     })
     public List<Avoir> getAllAvoirs() {
         return avoirService.findAllAvoirs();
+    }
+
+    @GetMapping(value = APP_ROOT + "/avoirs/allAvoirOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Avoir",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Avoir",
+            responseContainer = "List<Avoir>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Avoirs / une liste vide")
+    })
+    ResponseEntity<List<Avoir>> getAllAvoirOrderDesc() {
+        List<Avoir> avoirList = avoirService.findAllAvoirsOrderDesc();
+        return new ResponseEntity<>(avoirList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/avoirs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -128,9 +142,9 @@ public class AvoirController {
 
     @DeleteMapping(value = "/avoirs/{id}")
     @ApiOperation(value = "Supprimer un avoir par son ID",
-            notes = "Cette méthode permet de supprimer un avoir par son ID", response = Approvisionnement.class )
+            notes = "Cette méthode permet de supprimer un avoir par son ID", response = Avoir.class )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "L'approvisionnement a été supprimé")
+            @ApiResponse(code = 200, message = "L'Avoir a été supprimé")
     })
     public ResponseEntity<Object> deleteAvoir(@PathVariable(value = "id") Long id) {
         avoirService.deleteAvoir(id);

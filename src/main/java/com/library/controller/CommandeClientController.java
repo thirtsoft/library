@@ -1,9 +1,6 @@
 package com.library.controller;
 
-import com.library.entities.CommandeClient;
-import com.library.entities.HistoriqueCommande;
-import com.library.entities.LigneCmdClient;
-import com.library.entities.Utilisateur;
+import com.library.entities.*;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.security.services.UserPrinciple;
 import com.library.services.*;
@@ -23,6 +20,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -55,7 +54,18 @@ public class CommandeClientController {
     })
     public List<CommandeClient> getAllCommandeClients() {
         return commandeClientService.findAllCommandeClient();
+    }
 
+    @GetMapping(value = APP_ROOT + "/commandes/allCommandeClientOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des CommandeClient",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des CommandeClient",
+            responseContainer = "List<CommandeClient>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des CommandeClient / une liste vide")
+    })
+    ResponseEntity<List<CommandeClient>> getAllCommandeClientOrderDesc() {
+        List<CommandeClient> commandeClientList = commandeClientService.findAllCommandeClientsOrderDesc();
+        return new ResponseEntity<>(commandeClientList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/commandes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

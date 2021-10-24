@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Employe;
 import com.library.entities.Fournisseur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.FournisseurService;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -30,6 +33,18 @@ public class FournisseurController {
     })
     public List<Fournisseur> getAllFournisseurs() {
         return fournisseurService.findAllFournisseurs();
+    }
+
+    @GetMapping(value = APP_ROOT + "/fournisseurs/allFournisseurOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Fournisseur",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Fournisseur",
+            responseContainer = "List<Fournisseur>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Fournisseur / une liste vide")
+    })
+    ResponseEntity<List<Fournisseur>> getAllFournisseurOrderDesc() {
+        List<Fournisseur> fournisseurList = fournisseurService.findAllFournisseursOrderDesc();
+        return new ResponseEntity<>(fournisseurList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/fournisseurs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

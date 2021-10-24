@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Devis;
 import com.library.entities.Employe;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.EmployeService;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -30,6 +33,18 @@ public class EmployeController {
     })
     public List<Employe> getAllEmployes() {
         return employeService.findAllEmploye();
+    }
+
+    @GetMapping(value = APP_ROOT + "/employes/allEmployeOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Employe",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Employe",
+            responseContainer = "List<Employe>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Employe / une liste vide")
+    })
+    ResponseEntity<List<Employe>> getAllEmployeOrderDesc() {
+        List<Employe> employeList = employeService.findAllEmployesOrderDesc();
+        return new ResponseEntity<>(employeList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/employes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

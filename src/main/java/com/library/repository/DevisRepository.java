@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Creance;
 import com.library.entities.Devis;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,5 +37,7 @@ public interface DevisRepository extends JpaRepository<Devis, Long> {
 
     @Query("select p from Devis p where p.client.id =:cl")
     List<Devis> ListDevisByClientId(@Param("cl") Long clientId);
+
+    List<Devis> findByOrderByIdDesc();
 
 }

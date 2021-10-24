@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Produit;
 import com.library.entities.Scategorie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +25,7 @@ public interface ScategorieRepository extends JpaRepository<Scategorie, Long> {
 
     @Query("select p from Scategorie p where p.categorie.id =:cat")
     List<Scategorie> findScategorieByCateoryId(@Param("cat") Long catId);
+
+    List<Scategorie> findByOrderByIdDesc();
 
 }

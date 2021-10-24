@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.CategorieCharge;
+import com.library.entities.CategorieCharge;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,8 @@ import java.util.Optional;
 public interface CategorieChargeService {
 
     List<CategorieCharge> findAllCategorieCharges();
+
+    List<CategorieCharge> findAllCategorieChargesOrderDesc();
 
     CategorieCharge saveCategorieCharge(CategorieCharge categorieCharge);
 

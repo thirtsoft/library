@@ -24,6 +24,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public List<Client> findAllClientsOrderDesc() {
+        return clientRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Client> findClientById(Long id) {
         if (!clientRepository.existsById(id)) {
             throw new ResourceNotFoundException("Client N° " + id + "not found");

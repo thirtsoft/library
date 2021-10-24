@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Versement;
+import com.library.entities.Versement;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,8 @@ import java.util.Optional;
 public interface VersementService {
 
     List<Versement> findAllVersements();
+
+    List<Versement> findAllVersementsOrderDesc();
 
     Optional<Versement> findVersementById(Long id);
 

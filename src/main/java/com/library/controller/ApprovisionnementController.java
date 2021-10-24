@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/alAmine")
@@ -48,6 +50,18 @@ public class ApprovisionnementController {
     public List<Approvisionnement> getAllApprovisionnements() {
         return approvisionnementService.findAllApprovisionnements();
 
+    }
+
+    @GetMapping(value = APP_ROOT + "/approvisionnements/allApprovisionnementOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des approvisonnement",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des approvisonnement",
+            responseContainer = "List<Approvisionnement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Approvisionnements / une liste vide")
+    })
+    ResponseEntity<List<Approvisionnement>> getAllApprovisionnementOrderDesc() {
+        List<Approvisionnement> approvisionnementList = approvisionnementService.findAllApprovisionnementsOrderDesc();
+        return new ResponseEntity<>(approvisionnementList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/approvisionnement/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

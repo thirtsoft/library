@@ -35,6 +35,11 @@ public class ContratServiceImpl implements ContratService {
         return contrats;
     }
 
+    @Override
+    public List<Contrat> findAllContratsOrderDesc() {
+        return contratRepository.findByOrderByIdDesc();
+    }
+
 	/*public List<Contrat> findAllContrats() {
 		List<Contrat> contrats = contratRepository.findAll();
 		contrats.stream().map(Contrat::getContent).forEach(FileHelper::decompressBytes);

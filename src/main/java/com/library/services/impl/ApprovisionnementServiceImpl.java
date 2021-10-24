@@ -38,6 +38,11 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     }
 
     @Override
+    public List<Approvisionnement> findAllApprovisionnementsOrderDesc() {
+        return approvisionnementRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Approvisionnement> findApprovisionnementById(Long approId) {
         if (!approvisionnementRepository.existsById(approId)) {
             throw new ResourceNotFoundException("Approvisionnement Not found");

@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Category;
 import com.library.entities.Charge;
 import com.library.entities.HistoriqueCharge;
 import com.library.entities.Utilisateur;
@@ -46,6 +47,18 @@ public class ChargeController {
     })
     public List<Charge> getAllCharges() {
         return chargeService.findAllCharges();
+    }
+
+    @GetMapping(value = APP_ROOT + "/charges/allChargeOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Charge",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Charge",
+            responseContainer = "List<Charge>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Charge / une liste vide")
+    })
+    ResponseEntity<List<Charge>> getAllChargeOrderDesc() {
+        List<Charge> chargeList = chargeService.findAllChargesOrderDesc();
+        return new ResponseEntity<>(chargeList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/charges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

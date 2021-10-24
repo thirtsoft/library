@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.LigneCmdClient;
+import com.library.entities.LigneCmdClient;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Optional;
 public interface LigneCmdClientService {
 
     List<LigneCmdClient> findAllLigneCmdClient();
+
+    List<LigneCmdClient> findAllLigneCmdClientsOrderDesc();
 
     Optional<LigneCmdClient> findLigneCmdClientById(Long lCmdId);
 

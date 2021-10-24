@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.LigneAvoir;
 import com.library.entities.LigneCmdClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,6 +26,8 @@ public interface LigneCmdClientRepository extends JpaRepository<LigneCmdClient, 
 
     @Query("select p from LigneCmdClient p where p.commande.id =:num")
     List<LigneCmdClient> ListLigneCmdClientByCommandeClientId(@Param("num") Long comId);
+
+    List<LigneCmdClient> findByOrderByIdDesc();
 
 
 }

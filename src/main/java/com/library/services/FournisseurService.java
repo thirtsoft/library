@@ -2,6 +2,7 @@ package com.library.services;
 
 import com.library.entities.Client;
 import com.library.entities.Fournisseur;
+import com.library.entities.Fournisseur;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,8 @@ public interface FournisseurService {
     Integer countNumberOfFournisseurs();
 
     List<Fournisseur> findAllFournisseurs();
+
+    List<Fournisseur> findAllFournisseursOrderDesc();
 
     List<Fournisseur> findListFournisseurByCode(String code);
 

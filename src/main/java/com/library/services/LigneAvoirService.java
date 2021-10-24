@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.LigneAvoir;
+import com.library.entities.LigneAvoir;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface LigneAvoirService {
 
     List<LigneAvoir> findAllLigneAvoirs();
+
+    List<LigneAvoir> findAllLigneAvoirsOrderDesc();
 
     Optional<LigneAvoir> findLigneAvoirById(Long lAvoirId);
 

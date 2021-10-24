@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.LigneCmdClient;
 import com.library.entities.LigneCreance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,5 +26,7 @@ public interface LigneCreanceRepository extends JpaRepository<LigneCreance, Long
 
     @Query("select p from LigneCreance p where p.creance.id =:num")
     List<LigneCreance> ListLigneCreanceByCreanceId(@Param("num") Long creanceId);
+
+    List<LigneCreance> findByOrderByIdDesc();
 
 }

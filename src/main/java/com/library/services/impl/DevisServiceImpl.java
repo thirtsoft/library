@@ -42,6 +42,11 @@ public class DevisServiceImpl implements DevisService {
     }
 
     @Override
+    public List<Devis> findAllDevissOrderDesc() {
+        return devisRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Devis> findDevisById(Long devId) {
         if (!devisRepository.existsById(devId)) {
             throw new ResourceNotFoundException("Devis that not found");

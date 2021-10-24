@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.CommandeClient;
 import com.library.entities.Contrat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,6 +25,8 @@ public interface ContratRepository extends JpaRepository<Contrat, Long> {
 
     @Query("select p from Contrat p where p.client.id =:client")
     List<Contrat> findLitContratByClientId(@Param("client") Long clientId);
+
+    List<Contrat> findByOrderByIdDesc();
 
 
 }

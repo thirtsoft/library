@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Category;
+import com.library.entities.Category;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,8 @@ import java.util.Optional;
 public interface CategoryService {
 
     List<Category> findAllCategory();
+
+    List<Category> findAllCategorysOrderDesc();
 
     Category saveCategory(Category category);
 

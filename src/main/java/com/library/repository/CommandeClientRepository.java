@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Client;
 import com.library.entities.CommandeClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -47,6 +48,8 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
 
     @Query("select p from CommandeClient p where p.client.id =:cl")
     List<CommandeClient> ListCommandeClientByClientId(@Param("cl") Long clientId);
+
+    List<CommandeClient> findByOrderByIdDesc();
 
 
 }

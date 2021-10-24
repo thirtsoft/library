@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Utilisateur;
+import com.library.entities.Utilisateur;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface UtilisateurService {
 
     List<Utilisateur> findAllUtilisateurs();
+
+    List<Utilisateur> findAllUtilisateursOrderDesc();
 
     Optional<Utilisateur> findUtilisateurById(Long idUser);
 

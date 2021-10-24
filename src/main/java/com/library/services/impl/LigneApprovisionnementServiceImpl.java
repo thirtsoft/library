@@ -25,6 +25,11 @@ public class LigneApprovisionnementServiceImpl implements LigneApprovisionnement
     }
 
     @Override
+    public List<LigneApprovisionnement> findAllLigneApprovisionnementsOrderDesc() {
+        return ligneApprovisionnementRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<LigneApprovisionnement> findLigneApprovisionnementById(Long lApproId) {
         if (!ligneApprovisionnementRepository.existsById(lApproId)) {
             throw new ResourceNotFoundException("Ligne Approvisionement Not found");

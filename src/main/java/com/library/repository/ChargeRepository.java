@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Category;
 import com.library.entities.Charge;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,6 +25,8 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
 
     @Query("select EXTRACT(month from(v.date)), sum(v.montantCharge) from Charge v group by EXTRACT(month from(v.date))")
     List<?> sumTotalOfChargeByMonth();
+
+    List<Charge> findByOrderByIdDesc();
 
 
 }

@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Client;
+import com.library.entities.Client;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface ClientService {
 
     List<Client> findAllClient();
+
+    List<Client> findAllClientsOrderDesc();
 
     Client saveClient(Client client);
 

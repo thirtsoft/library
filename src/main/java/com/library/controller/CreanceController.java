@@ -3,6 +3,7 @@ package com.library.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.library.entities.Contrat;
 import com.library.entities.Creance;
 import com.library.entities.HistoriqueCreance;
 import com.library.entities.Utilisateur;
@@ -27,6 +28,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -53,7 +56,18 @@ public class CreanceController {
     })
     public List<Creance> getAllCreances() {
         return creanceService.findAllCreances();
+    }
 
+    @GetMapping(value = APP_ROOT + "/creances/allCreanceOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Contrat",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Creance",
+            responseContainer = "List<Creance>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Creance / une liste vide")
+    })
+    ResponseEntity<List<Creance>> getAllCreanceOrderDesc() {
+        List<Creance> creanceList = creanceService.findAllCreancesOrderDesc();
+        return new ResponseEntity<>(creanceList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/creances/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

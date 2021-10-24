@@ -24,6 +24,11 @@ public class LigneDevisServiceImpl implements LigneDevisService {
     }
 
     @Override
+    public List<LigneDevis> findAllLigneDevissOrderDesc() {
+        return ligneDevisRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<LigneDevis> findLigneDevisById(Long ldevId) {
         if (!ligneDevisRepository.existsById(ldevId)) {
             throw new ResourceNotFoundException("Ligne Devis Not found");

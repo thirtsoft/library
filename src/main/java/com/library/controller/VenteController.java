@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/apiSeller")
@@ -46,6 +48,18 @@ public class VenteController {
     })
     public List<Vente> getAllVentes() {
         return venteService.findAllVentes();
+    }
+
+    @GetMapping(value = APP_ROOT + "/ventes/allVenteOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Vente",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Vente",
+            responseContainer = "List<Vente>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Vente / une liste vide")
+    })
+    ResponseEntity<List<Vente>> getAllVenteOrderDesc() {
+        List<Vente> venteList = venteService.findAllVentesOrderDesc();
+        return new ResponseEntity<>(venteList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/ventes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Avoir;
 import com.library.entities.CategorieCharge;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +22,7 @@ public interface CategorieChargeRepository extends JpaRepository<CategorieCharge
 
     @Query("select c from CategorieCharge c where c.nomCategorieCharge like :des")
     List<CategorieCharge> ListCategoryByNomCategorieCharge(@Param("des") String nomCategorieCharge);
+
+    List<CategorieCharge> findByOrderByIdDesc();
 
 }

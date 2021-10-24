@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Employe;
+import com.library.entities.Employe;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface EmployeService {
 
     List<Employe> findAllEmploye();
+
+    List<Employe> findAllEmployesOrderDesc();
 
     Employe saveEmploye(Employe employe);
 

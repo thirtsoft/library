@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.LigneDevis;
 import com.library.entities.LigneVente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -30,6 +31,8 @@ public interface LigneVenteRepository extends JpaRepository<LigneVente, Long> {
 
     @Query("select p from LigneVente p where p.vente.id =:num")
     List<LigneVente> ListLigneVenteByVenteId(@Param("num") Long venteId);
+
+    List<LigneVente> findByOrderByIdDesc();
 
 
 }

@@ -2,6 +2,7 @@ package com.library.services;
 
 
 import com.library.entities.Devis;
+import com.library.entities.Devis;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,6 +12,8 @@ import java.util.Optional;
 public interface DevisService {
 
     List<Devis> findAllDevis();
+
+    List<Devis> findAllDevissOrderDesc();
 
     Optional<Devis> findDevisById(Long devId);
 

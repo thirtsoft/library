@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Creance;
 import com.library.entities.Devis;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -38,6 +41,18 @@ public class DevisController {
     })
     public List<Devis> getAllDevis() {
         return devisService.findAllDevis();
+    }
+
+    @GetMapping(value = APP_ROOT + "/devis/allDevisOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Devis",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Devis",
+            responseContainer = "List<Devis>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Devis / une liste vide")
+    })
+    ResponseEntity<List<Devis>> getAllDevisOrderDesc() {
+        List<Devis> devisList = devisService.findAllDevissOrderDesc();
+        return new ResponseEntity<>(devisList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/devis/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

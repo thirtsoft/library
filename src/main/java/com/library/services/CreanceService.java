@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Creance;
+import com.library.entities.Creance;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Optional;
 public interface CreanceService {
 
     List<Creance> findAllCreances();
+
+    List<Creance> findAllCreancesOrderDesc();
 
     Optional<Creance> findCreanceById(Long creanceId);
 

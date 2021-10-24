@@ -25,6 +25,11 @@ public class LigneVenteServiceImpl implements LigneVenteService {
     }
 
     @Override
+    public List<LigneVente> findAllLigneVentesOrderDesc() {
+        return ligneVenteRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<LigneVente> findLigneVenteById(Long lventeId) {
         if (!ligneVenteRepository.existsById(lventeId)) {
             throw new ResourceNotFoundException("Ligne Vente Not found");

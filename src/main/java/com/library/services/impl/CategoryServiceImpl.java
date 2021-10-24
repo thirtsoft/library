@@ -32,6 +32,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<Category> findAllCategorysOrderDesc() {
+        return categoryRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Category> findCategoryById(Long catId) {
 
         if (!categoryRepository.existsById(catId)) {

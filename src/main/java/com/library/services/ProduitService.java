@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Produit;
+import com.library.entities.Produit;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,8 @@ public interface ProduitService {
     Produit findByPrixAchat(Double prixAchat);
 
     List<Produit> findAllProduits();
+
+    List<Produit> findAllProduitsOrderDesc();
 
     List<Produit> findListProduitByDesignation(String designation);
 

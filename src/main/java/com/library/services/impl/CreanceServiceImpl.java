@@ -44,6 +44,11 @@ public class CreanceServiceImpl implements CreanceService {
     }
 
     @Override
+    public List<Creance> findAllCreancesOrderDesc() {
+        return creanceRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Creance> findCreanceById(Long creanceId) {
         if (!creanceRepository.existsById(creanceId)) {
             throw new ResourceNotFoundException("Creance that id is" + creanceId + "not found");

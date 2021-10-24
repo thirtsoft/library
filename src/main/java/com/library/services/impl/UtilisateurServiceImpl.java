@@ -36,6 +36,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
+    public List<Utilisateur> findAllUtilisateursOrderDesc() {
+        return utilisateurRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Utilisateur> findUtilisateurById(Long idUser) {
         if (!utilisateurRepository.existsById(idUser)) {
             throw new ResourceNotFoundException("User N ° " + idUser + "not found");

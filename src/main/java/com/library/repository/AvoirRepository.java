@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Approvisionnement;
 import com.library.entities.Avoir;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,5 +32,7 @@ public interface AvoirRepository extends JpaRepository<Avoir, Long> {
 
     @Query("select c from Avoir c where c.status like :status")
     List<Avoir> ListAvoirByStatus(@Param("status") String status);
+
+    List<Avoir> findByOrderByIdDesc();
 
 }

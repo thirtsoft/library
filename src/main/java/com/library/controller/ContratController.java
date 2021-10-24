@@ -1,6 +1,7 @@
 package com.library.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.library.entities.CommandeClient;
 import com.library.entities.Contrat;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.ContratService;
@@ -28,6 +29,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 
 @RestController
 @CrossOrigin
@@ -42,14 +45,12 @@ public class ContratController {
 
     private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Contrat/";
 
-
     @Autowired
     private ContratService contratService;
     @Autowired
     private ExcelService excelService;
 
     private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
-
 
     @GetMapping(value = "/contrats", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Contrat",
@@ -59,6 +60,18 @@ public class ContratController {
     })
     public List<Contrat> getAllContrats() {
         return contratService.findAllContrats();
+    }
+
+    @GetMapping(value = APP_ROOT + "/contrats/allContratOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Contrat",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Contrat",
+            responseContainer = "List<Contrat>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Contrat / une liste vide")
+    })
+    ResponseEntity<List<Contrat>> getAllContratOrderDesc() {
+        List<Contrat> contratList = contratService.findAllContratsOrderDesc();
+        return new ResponseEntity<>(contratList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/contrats/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

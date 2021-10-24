@@ -1,6 +1,7 @@
 package com.library.repository;
 
 import com.library.entities.Client;
+import com.library.entities.Employe;
 import com.library.entities.Fournisseur;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,5 +38,7 @@ public interface FournisseurRepository extends JpaRepository<Fournisseur, Long> 
 
     @Query("select c from Fournisseur c where c.nom like :nom")
     List<Fournisseur> ListFournisseurByNom(@Param("nom") String nom);
+
+    List<Fournisseur> findByOrderByIdDesc();
 
 }

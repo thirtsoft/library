@@ -24,6 +24,11 @@ public class EmployeServiceImpl implements EmployeService {
     }
 
     @Override
+    public List<Employe> findAllEmployesOrderDesc() {
+        return employeRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Employe> findEmployeById(Long empId) {
         if (!employeRepository.existsById(empId)) {
             throw new ResourceNotFoundException("Employee N° " + empId + "not found");

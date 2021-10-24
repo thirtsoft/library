@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.LigneCreance;
 import com.library.entities.LigneDevis;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -25,5 +26,7 @@ public interface LigneDevisRepository extends JpaRepository<LigneDevis, Long> {
 
     @Query("select p from LigneDevis p where p.devis.id =:num")
     List<LigneDevis> ListLigneDevisByDevisId(@Param("num") Long devId);
+
+    List<LigneDevis> findByOrderByIdDesc();
 
 }

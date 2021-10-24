@@ -24,6 +24,11 @@ public class LigneAvoirServiceImpl implements LigneAvoirService {
     }
 
     @Override
+    public List<LigneAvoir> findAllLigneAvoirsOrderDesc() {
+        return ligneAvoirRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<LigneAvoir> findLigneAvoirById(Long lAvoirId) {
         if (!ligneAvoirRepository.existsById(lAvoirId)) {
             throw new ResourceNotFoundException("This LigneAvoir is not found");

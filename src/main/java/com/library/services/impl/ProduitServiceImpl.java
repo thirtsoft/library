@@ -37,6 +37,11 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
+    public List<Produit> findAllProduitsOrderDesc() {
+        return produitRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Produit> findProduitById(Long prodId) {
         if (!produitRepository.existsById(prodId)) {
             throw new ResourceNotFoundException("Produit that id is" + prodId + "is not found");

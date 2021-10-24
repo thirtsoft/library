@@ -19,4 +19,6 @@ public interface ApprovisionnementRepository extends JpaRepository<Approvisionne
     @Query("select p from Approvisionnement p where p.fournisseur.id =:cl")
     List<Approvisionnement> findListApprovisionnementByFournisseurId(@Param("cl") Long fourId);
 
+    List<Approvisionnement> findByOrderByIdDesc();
+
 }

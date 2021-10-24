@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.LigneVente;
+import com.library.entities.LigneVente;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Optional;
 public interface LigneVenteService {
 
     List<LigneVente> findAllLigneVentes();
+
+    List<LigneVente> findAllLigneVentesOrderDesc();
 
     Optional<LigneVente> findLigneVenteById(Long lventeId);
 

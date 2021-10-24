@@ -25,6 +25,11 @@ public class CategorieChargeServiceImpl implements CategorieChargeService {
     }
 
     @Override
+    public List<CategorieCharge> findAllCategorieChargesOrderDesc() {
+        return catChargeRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<CategorieCharge> findCategorieChargeById(Long catId) {
         if (!catChargeRepository.existsById(catId)) {
             throw new ResourceNotFoundException("This CategoryCharge is not found");

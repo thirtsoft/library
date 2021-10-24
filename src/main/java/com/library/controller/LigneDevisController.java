@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.LigneCreance;
 import com.library.entities.LigneDevis;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneDevisService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -31,6 +34,19 @@ public class LigneDevisController {
     })
     public List<LigneDevis> getAllLigneDeviss() {
         return ligneDevisService.findAllLigneDevis();
+    }
+
+
+    @GetMapping(value = APP_ROOT + "/ligneDevis/allLigneDevisOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des LigneDevis",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des LigneDevis",
+            responseContainer = "List<LigneDevis>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des LigneDevis / une liste vide")
+    })
+    ResponseEntity<List<LigneDevis>> getAllLigneDevisOrderDesc() {
+        List<LigneDevis> ligneDevisList = ligneDevisService.findAllLigneDevissOrderDesc();
+        return new ResponseEntity<>(ligneDevisList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/ligneDevis/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

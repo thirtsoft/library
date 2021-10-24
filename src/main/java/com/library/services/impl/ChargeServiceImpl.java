@@ -25,6 +25,11 @@ public class ChargeServiceImpl implements ChargeService {
     }
 
     @Override
+    public List<Charge> findAllChargesOrderDesc() {
+        return chargeRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Charge> findChargeById(Long id) {
         if (!chargeRepository.existsById(id)) {
             throw new ResourceNotFoundException("Charge N° " + id + "not found");

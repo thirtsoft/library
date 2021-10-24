@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Charge;
 import com.library.entities.Client;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.ClientService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import sun.nio.cs.ext.MacDingbat;
 
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -32,7 +35,18 @@ public class ClientController {
     })
     public List<Client> getAllClients() {
         return clientService.findAllClient();
+    }
 
+    @GetMapping(value = APP_ROOT + "/clients/allClientOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Client",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Client",
+            responseContainer = "List<Charge>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Client / une liste vide")
+    })
+    ResponseEntity<List<Client>> getAllClientOrderDesc() {
+        List<Client> clientList = clientService.findAllClientsOrderDesc();
+        return new ResponseEntity<>(clientList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/clients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

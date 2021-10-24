@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Charge;
 import com.library.entities.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +32,8 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     @Query("select c.raisonSocial, count(c) as countClient from Client c group by c.raisonSocial")
     List<Object[]> ListClientGroupByRaisonSocial();
+
+    List<Client> findByOrderByIdDesc();
 
 
 }

@@ -10,6 +10,8 @@ public interface ApprovisionnementService {
 
     List<Approvisionnement> findAllApprovisionnements();
 
+    List<Approvisionnement> findAllApprovisionnementsOrderDesc();
+
     Optional<Approvisionnement> findApprovisionnementById(Long approId);
 
     Approvisionnement saveApprovisionnement(Approvisionnement approvisionnement);

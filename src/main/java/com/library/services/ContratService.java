@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Contrat;
+import com.library.entities.Contrat;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +12,8 @@ import java.util.Optional;
 public interface ContratService {
 
     List<Contrat> findAllContrats();
+
+    List<Contrat> findAllContratsOrderDesc();
 
     Optional<Contrat> findContratById(Long id);
 

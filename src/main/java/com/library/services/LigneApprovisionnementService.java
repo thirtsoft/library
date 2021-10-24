@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.LigneApprovisionnement;
+import com.library.entities.LigneApprovisionnement;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface LigneApprovisionnementService {
 
     List<LigneApprovisionnement> findAllLigneApprovisionnements();
+
+    List<LigneApprovisionnement> findAllLigneApprovisionnementsOrderDesc();
 
     Optional<LigneApprovisionnement> findLigneApprovisionnementById(Long lApproId);
 

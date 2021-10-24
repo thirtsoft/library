@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Devis;
 import com.library.entities.Employe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -38,6 +39,8 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
 
     @Query("select c from Employe c where c.telephone like :tel")
     List<Employe> ListEmployeByTelephone(@Param("tel") String telephone);
+
+    List<Employe> findByOrderByIdDesc();
 
 
 }

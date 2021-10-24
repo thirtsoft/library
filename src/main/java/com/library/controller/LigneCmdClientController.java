@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.LigneAvoir;
 import com.library.entities.LigneCmdClient;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneCmdClientService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -31,7 +34,18 @@ public class LigneCmdClientController {
     })
     public List<LigneCmdClient> getAllLigneCmdClients() {
         return ligneCmdClientService.findAllLigneCmdClient();
+    }
 
+    @GetMapping(value = APP_ROOT + "/ligneCmdClient/allLigneCmdClientOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des LigneCmdClient",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCmdClient",
+            responseContainer = "List<LigneCmdClient>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des LigneCmdClient / une liste vide")
+    })
+    ResponseEntity<List<LigneCmdClient>> getAllLigneCmdClientOrderDesc() {
+        List<LigneCmdClient> ligneCmdClientList = ligneCmdClientService.findAllLigneCmdClientsOrderDesc();
+        return new ResponseEntity<>(ligneCmdClientList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/ligneCommandes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

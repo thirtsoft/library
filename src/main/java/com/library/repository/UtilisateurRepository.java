@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Scategorie;
 import com.library.entities.Utilisateur;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,8 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     Boolean existsByEmail(String email);
 
     Optional<Utilisateur> findByEmail(String email);
+
+    List<Utilisateur> findByOrderByIdDesc();
 
 
 }

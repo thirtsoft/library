@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Scategorie;
+import com.library.entities.Scategorie;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import java.util.Optional;
 public interface ScategorieService {
 
     List<Scategorie> findAllScategories();
+
+    List<Scategorie> findAllScategoriesOrderDesc();
 
     Optional<Scategorie> findScategorieById(Long sCatId);
 

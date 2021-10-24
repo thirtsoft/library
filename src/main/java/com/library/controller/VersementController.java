@@ -24,6 +24,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 
 @RestController
 @CrossOrigin
@@ -31,7 +33,7 @@ import java.util.Optional;
 public class VersementController {
 
     private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Versement/";
-    private String versementsDir = "C://Users//Folio9470m//AlAmine//Versement//";
+    private final String versementsDir = "C://Users//Folio9470m//AlAmine//Versement//";
     @Autowired
     private VersementService versementService;
 
@@ -43,6 +45,18 @@ public class VersementController {
     })
     public List<Versement> getAllVersements() {
         return versementService.findAllVersements();
+    }
+
+    @GetMapping(value = APP_ROOT + "/versements/allVersementderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Versement",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Vente",
+            responseContainer = "List<Versement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Versement / une liste vide")
+    })
+    ResponseEntity<List<Versement>> getAllVersementOrderDesc() {
+        List<Versement> versementList = versementService.findAllVersementsOrderDesc();
+        return new ResponseEntity<>(versementList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/versements/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

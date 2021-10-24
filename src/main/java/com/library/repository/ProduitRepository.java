@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.LigneVente;
 import com.library.entities.Produit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -37,6 +38,8 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
     @Query("select p from Produit p where p.designation like :des")
     List<Produit> findListProduitByDesignation(@Param("des") String designation);
+
+    List<Produit> findByOrderByIdDesc();
 
     Optional<Produit> findByBarCode(String barCode);
 

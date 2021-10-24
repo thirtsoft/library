@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.library.domaine.Response;
+import com.library.entities.Scategorie;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AccountService;
@@ -37,6 +38,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static com.library.utils.Constants.APP_ROOT;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @RestController
@@ -61,7 +63,18 @@ public class UtilisateurController {
     })
     public List<Utilisateur> getListUtulisateurs() {
         return utilisateurService.findAllUtilisateurs();
+    }
 
+    @GetMapping(value = APP_ROOT + "/utilisateurs/allUtilisateurOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Utilisateur",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Utilisateur",
+            responseContainer = "List<Utilisateur>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Utilisateur / une liste vide")
+    })
+    ResponseEntity<List<Utilisateur>> getAllUtilisateurOrderDesc() {
+        List<Utilisateur> utilisateurList = utilisateurService.findAllUtilisateursOrderDesc();
+        return new ResponseEntity<>(utilisateurList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/utilisateurs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

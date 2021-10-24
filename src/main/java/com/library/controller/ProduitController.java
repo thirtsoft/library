@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.LigneVente;
 import com.library.entities.Produit;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.message.response.ResponseMessage;
@@ -27,6 +28,8 @@ import java.io.*;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 
 @RestController
@@ -60,6 +63,18 @@ public class ProduitController {
     })
     public List<Produit> getAllProduits() {
         return produitService.findAllProduits();
+    }
+
+    @GetMapping(value = APP_ROOT + "/produits/allProduitOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Produit",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Produit",
+            responseContainer = "List<Produit>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Produit / une liste vide")
+    })
+    ResponseEntity<List<Produit>> getAllProduitOrderDesc() {
+        List<Produit> produitList = produitService.findAllProduitsOrderDesc();
+        return new ResponseEntity<>(produitList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/produits/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

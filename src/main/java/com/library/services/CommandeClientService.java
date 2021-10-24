@@ -1,5 +1,6 @@
 package com.library.services;
 
+import com.library.entities.Client;
 import com.library.entities.CommandeClient;
 import org.springframework.http.ResponseEntity;
 
@@ -11,6 +12,8 @@ import java.util.Optional;
 public interface CommandeClientService {
 
     List<CommandeClient> findAllCommandeClient();
+
+    List<CommandeClient> findAllCommandeClientsOrderDesc();
 
     Optional<CommandeClient> findCommandeClientById(Long comId);
 

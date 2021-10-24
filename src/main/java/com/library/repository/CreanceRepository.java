@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Contrat;
 import com.library.entities.Creance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -47,5 +48,7 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
 
     @Query("select p from Creance p where p.client.id =:cl")
     List<Creance> ListCreanceClientByClientId(@Param("cl") Long clientId);
+
+    List<Creance> findByOrderByIdDesc();
 
 }

@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Vente;
 import com.library.entities.Versement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,5 +27,7 @@ public interface VersementRepository extends JpaRepository<Versement, Long> {
 
     @Query("select v from Versement v where v.employe.id =:emp")
     List<Versement> findVersementByEmployeId(@Param("emp") Long empId);
+
+    List<Versement> findByOrderByIdDesc();
 
 }

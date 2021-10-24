@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.LigneDevis;
 import com.library.entities.LigneVente;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneVenteService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -31,8 +34,20 @@ public class LigneVenteController {
     })
     public List<LigneVente> getAllLigneVentes() {
         return ligneVenteService.findAllLigneVentes();
-
     }
+
+    @GetMapping(value = APP_ROOT + "/ligneVentes/allLigneVenteOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des LigneVente",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des LigneVente",
+            responseContainer = "List<LigneVente>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des LigneVente / une liste vide")
+    })
+    ResponseEntity<List<LigneVente>> getAllLigneVenteOrderDesc() {
+        List<LigneVente> ligneVenteList = ligneVenteService.findAllLigneVentesOrderDesc();
+        return new ResponseEntity<>(ligneVenteList, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = "/ligneVentes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un LigneVente par ID",

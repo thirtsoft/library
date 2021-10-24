@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Avoir;
 import com.library.entities.CategorieCharge;
 import com.library.services.CategorieChargeService;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin("*")
@@ -31,6 +34,18 @@ public class CategorieChargeController {
     })
     public List<CategorieCharge> getAllCategorieCharges() {
         return catChargeService.findAllCategorieCharges();
+    }
+
+    @GetMapping(value = APP_ROOT + "/categorieCharges/allCategorieChargeOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des CategorieCharge",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des CategorieCharge",
+            responseContainer = "List<CategorieCharge>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des CategorieCharge / une liste vide")
+    })
+    ResponseEntity<List<CategorieCharge>> getAllCategorieChargeOrderDesc() {
+        List<CategorieCharge> categorieChargeList = catChargeService.findAllCategorieChargesOrderDesc();
+        return new ResponseEntity<>(categorieChargeList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/categorieCharges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

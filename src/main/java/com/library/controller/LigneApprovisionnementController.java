@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.Fournisseur;
 import com.library.entities.LigneApprovisionnement;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneApprovisionnementService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -31,7 +34,18 @@ public class LigneApprovisionnementController {
     })
     public List<LigneApprovisionnement> getAllLigneApprovisionnements() {
         return ligneApprovisionnementService.findAllLigneApprovisionnements();
+    }
 
+    @GetMapping(value = APP_ROOT + "/ligneApprovisionnements/allLigneApprovisionnementOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des LigneApprovisionnement",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des LigneApprovisionnement",
+            responseContainer = "List<LigneApprovisionnement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des LigneApprovisionnement / une liste vide")
+    })
+    ResponseEntity<List<LigneApprovisionnement>> getAllLigneApprovisionnementOrderDesc() {
+        List<LigneApprovisionnement> ligneApprovisionnementList = ligneApprovisionnementService.findAllLigneApprovisionnementsOrderDesc();
+        return new ResponseEntity<>(ligneApprovisionnementList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/ligneApprovisionnements/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

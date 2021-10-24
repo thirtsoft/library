@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.LigneDevis;
+import com.library.entities.LigneDevis;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.Optional;
 public interface LigneDevisService {
 
     List<LigneDevis> findAllLigneDevis();
+
+    List<LigneDevis> findAllLigneDevissOrderDesc();
 
     Optional<LigneDevis> findLigneDevisById(Long ldevId);
 

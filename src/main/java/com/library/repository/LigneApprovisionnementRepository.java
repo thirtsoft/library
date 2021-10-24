@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Fournisseur;
 import com.library.entities.LigneApprovisionnement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +26,8 @@ public interface LigneApprovisionnementRepository extends JpaRepository<LigneApp
 
     @Query("select p from LigneApprovisionnement p where p.approvisionnement.id =:num")
     List<LigneApprovisionnement> findListLigneApprovisionnementByApprovisionnementId(@Param("num") Long approId);
+
+    List<LigneApprovisionnement> findByOrderByIdDesc();
 
     @Query("select p from LigneApprovisionnement p where p.approvisionnement.id =:id")
     Page<LigneApprovisionnement> findLigneApprovisionnementByApprovisionnementPageable(@Param("id") Long approId, Pageable pageable);

@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.LigneCreance;
+import com.library.entities.LigneCreance;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.Optional;
 public interface LigneCreanceService {
 
     List<LigneCreance> findAllLigneCreances();
+
+    List<LigneCreance> findAllLigneCreancesOrderDesc();
 
     Optional<LigneCreance> findLigneCreanceById(Long lCreanceId);
 

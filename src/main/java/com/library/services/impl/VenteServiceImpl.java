@@ -39,6 +39,11 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    public List<Vente> findAllVentesOrderDesc() {
+        return venteRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Vente> findVenteById(Long venteId) {
         if (!venteRepository.existsById(venteId)) {
             throw new ResourceNotFoundException("Vente Not found");

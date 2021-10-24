@@ -2,6 +2,7 @@ package com.library.controller;
 
 import com.library.assembler.CategoryRestAssembler;
 import com.library.controller.model.CategoryModel;
+import com.library.entities.CategorieCharge;
 import com.library.entities.Category;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.message.response.ResponseMessage;
@@ -28,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.List;
 import java.util.Locale;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin("*")
@@ -61,6 +64,18 @@ public class CategoryController {
     })
     public List<CategoryModel> getAllCategory() {
         return categoryRestAssembler.assembledEntityToModel(categoryService.findAllCategory());
+    }
+
+    @GetMapping(value = APP_ROOT + "/categories/allCategoryOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Category",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des CategoryModel",
+            responseContainer = "List<CategoryModel>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des CategoryModel / une liste vide")
+    })
+    ResponseEntity<List<Category>> getAllCategoryOrderDesc() {
+        List<Category> categoryList = categoryService.findAllCategorysOrderDesc();
+        return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/categories/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

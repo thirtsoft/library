@@ -24,6 +24,11 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
+    public List<Fournisseur> findAllFournisseursOrderDesc() {
+        return fournisseurRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Fournisseur> findProduitById(Long id) {
 
         if (!fournisseurRepository.existsById(id)) {

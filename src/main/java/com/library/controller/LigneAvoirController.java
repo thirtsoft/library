@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.LigneApprovisionnement;
 import com.library.entities.LigneAvoir;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneAvoirService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -31,7 +34,18 @@ public class LigneAvoirController {
     })
     public List<LigneAvoir> getAllLigneAvoirs() {
         return ligneAvoirService.findAllLigneAvoirs();
+    }
 
+    @GetMapping(value = APP_ROOT + "/ligneAvoirs/allLigneAvoirOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des LigneAvoir",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des LigneAvoir",
+            responseContainer = "List<LigneAvoir>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des LigneAvoir / une liste vide")
+    })
+    ResponseEntity<List<LigneAvoir>> getAllLigneAvoirOrderDesc() {
+        List<LigneAvoir> ligneAvoirList = ligneAvoirService.findAllLigneAvoirsOrderDesc();
+        return new ResponseEntity<>(ligneAvoirList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/ligneAvoirs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

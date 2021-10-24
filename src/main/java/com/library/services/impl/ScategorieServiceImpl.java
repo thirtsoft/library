@@ -30,6 +30,11 @@ public class ScategorieServiceImpl implements ScategorieService {
     }
 
     @Override
+    public List<Scategorie> findAllScategoriesOrderDesc() {
+        return scategorieRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Scategorie> findScategorieById(Long sCatId) {
         if (!scategorieRepository.existsById(sCatId)) {
             throw new ResourceNotFoundException("Scategorie Not found");

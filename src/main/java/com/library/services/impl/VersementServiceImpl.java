@@ -25,6 +25,11 @@ public class VersementServiceImpl implements VersementService {
     }
 
     @Override
+    public List<Versement> findAllVersementsOrderDesc() {
+        return versementRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Versement> findVersementById(Long id) {
         if (!versementRepository.existsById(id)) {
             throw new ResourceNotFoundException("Versement Not found");

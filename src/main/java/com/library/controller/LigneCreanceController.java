@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.LigneCmdClient;
 import com.library.entities.LigneCreance;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneCreanceService;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
@@ -31,7 +34,18 @@ public class LigneCreanceController {
     })
     public List<LigneCreance> getAllLigneCreances() {
         return ligneCreanceService.findAllLigneCreances();
+    }
 
+    @GetMapping(value = APP_ROOT + "/ligneCreances/allLigneCreanceOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des LigneCreance",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCreance",
+            responseContainer = "List<LigneCreance>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des LigneCmdClient / une liste vide")
+    })
+    ResponseEntity<List<LigneCreance>> getAllLigneCreanceOrderDesc() {
+        List<LigneCreance> ligneCreanceList = ligneCreanceService.findAllLigneCreancesOrderDesc();
+        return new ResponseEntity<>(ligneCreanceList, HttpStatus.OK);
     }
 
     @GetMapping(value = "/ligneCreances/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

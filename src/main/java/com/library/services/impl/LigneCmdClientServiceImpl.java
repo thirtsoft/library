@@ -25,6 +25,11 @@ public class LigneCmdClientServiceImpl implements LigneCmdClientService {
     }
 
     @Override
+    public List<LigneCmdClient> findAllLigneCmdClientsOrderDesc() {
+        return ligneCmdClientRepository.findByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<LigneCmdClient> findLigneCmdClientById(Long lCmdId) {
         if (!ligneCmdClientRepository.existsById(lCmdId)) {
             throw new ResourceNotFoundException("Ligne Comande N° " + lCmdId + "not found");

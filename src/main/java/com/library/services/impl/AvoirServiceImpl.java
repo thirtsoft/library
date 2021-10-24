@@ -26,7 +26,6 @@ public class AvoirServiceImpl implements AvoirService {
 
     Logger logger = LoggerFactory.getLogger(CommandeClientServiceImpl.class);
 
-
     @Autowired
     private AvoirRepository avoirRepository;
 
@@ -39,6 +38,11 @@ public class AvoirServiceImpl implements AvoirService {
     @Override
     public List<Avoir> findAllAvoirs() {
         return avoirRepository.findAll();
+    }
+
+    @Override
+    public List<Avoir> findAllAvoirsOrderDesc() {
+        return avoirRepository.findByOrderByIdDesc();
     }
 
     @Override
