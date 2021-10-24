@@ -1,24 +1,28 @@
 package com.library.controller;
 
 import com.library.entities.CommandeClient;
+import com.library.entities.HistoriqueCommande;
 import com.library.entities.LigneCmdClient;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.security.services.UserPrinciple;
 import com.library.services.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -36,6 +40,9 @@ public class CommandeClientController {
 
     @Autowired
     private UtilisateurService utilisateurService;
+
+    @Autowired
+    private HistoriqueCommandeService historiqueCommandeService;
 
     @Autowired
     private ReportService reportCommande;
@@ -152,10 +159,21 @@ public class CommandeClientController {
     })
     public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
 
+        CommandeClient commandeClientResultat = new CommandeClient();
+
         Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
         commandeClient.setUtilisateur(userInfo);
 
-        commandeClientService.createCommande(commandeClient);
+        commandeClientResultat = commandeClientService.createCommande(commandeClient);
+
+        HistoriqueCommande historiqueCommande = new HistoriqueCommande();
+
+        historiqueCommande.setUtilisateur(userInfo);
+        historiqueCommande.setCommandeClient(commandeClientResultat);
+        historiqueCommande.setAction("AJOUT");
+        historiqueCommande.setCreatedDate(new Date());
+
+        historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
 
         List<LigneCmdClient> lcomms = commandeClient.getLcomms();
         for (LigneCmdClient lc : lcomms) {
@@ -164,20 +182,31 @@ public class CommandeClientController {
 
         }
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(commandeClientResultat, HttpStatus.CREATED);
 
     }
 
     @PostMapping(value = "/commandes")
     public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
 
+        CommandeClient commandeClientResultat = new CommandeClient();
+
+        HistoriqueCommande historiqueCommande = new HistoriqueCommande();
+
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
 
         commandeClient.setUtilisateur(utilisateur);
 
-        commandeClientService.createCommande(commandeClient);
+        commandeClientResultat = commandeClientService.createCommande(commandeClient);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        historiqueCommande.setUtilisateur(utilisateur);
+        historiqueCommande.setCommandeClient(commandeClientResultat);
+        historiqueCommande.setAction("AJOUT");
+        historiqueCommande.setCreatedDate(new Date());
+
+        historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
+
+        return new ResponseEntity<>(commandeClientResultat, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/commandesClientes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -190,10 +219,23 @@ public class CommandeClientController {
     })
     public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
 
+        CommandeClient commandeClientResultat = new CommandeClient();
+
+        HistoriqueCommande historiqueCommande = new HistoriqueCommande();
+
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
         commandeClient.setUtilisateur(utilisateur);
 
-        return new ResponseEntity<CommandeClient>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.CREATED);
+        commandeClientResultat = commandeClientService.saveCommandeClient(commandeClient);
+
+        historiqueCommande.setUtilisateur(utilisateur);
+        historiqueCommande.setCommandeClient(commandeClientResultat);
+        historiqueCommande.setAction("AJOUT");
+        historiqueCommande.setCreatedDate(new Date());
+
+        historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
+
+        return new ResponseEntity<CommandeClient>(commandeClientResultat, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/commandes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -205,8 +247,29 @@ public class CommandeClientController {
 
     })
     public ResponseEntity<CommandeClient> updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) throws Exception {
+
+        CommandeClient commandeClientResultat = new CommandeClient();
+
+        HistoriqueCommande historiqueCommande = new HistoriqueCommande();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
         commandeClient.setId(id);
-        return new ResponseEntity<>(commandeClientService.saveCommandeClient(commandeClient), HttpStatus.OK);
+
+        commandeClientResultat = commandeClientService.saveCommandeClient(commandeClient);
+
+        historiqueCommande.setUtilisateur(utilisateur);
+        historiqueCommande.setCommandeClient(commandeClientResultat);
+        historiqueCommande.setAction("MODIFICATION");
+        historiqueCommande.setCreatedDate(new Date());
+
+        historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
+
+        return new ResponseEntity<>(commandeClientResultat, HttpStatus.OK);
 
     }
 
@@ -217,7 +280,27 @@ public class CommandeClientController {
             @ApiResponse(code = 200, message = "La Commande a été supprimé")
     })
     public ResponseEntity<?> deleteCommande(@PathVariable(value = "id") Long id) {
+
+        CommandeClient commandeClientResultat = new CommandeClient();
+
+        HistoriqueCommande historiqueCommande = new HistoriqueCommande();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        commandeClientResultat = commandeClientService.findCommandeClientById(id).get();
+
+        historiqueCommande.setUtilisateur(utilisateur);
+        historiqueCommande.setCommandeClient(commandeClientResultat);
+        historiqueCommande.setAction("SUPPRESSSION");
+        historiqueCommande.setCreatedDate(new Date());
+        historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
+
         commandeClientService.deleteCommande(id);
+
         return ResponseEntity.ok().build();
 
     }

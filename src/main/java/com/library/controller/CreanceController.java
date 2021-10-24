@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.library.entities.Creance;
+import com.library.entities.HistoriqueCreance;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.security.services.UserPrinciple;
 import com.library.services.CreanceService;
+import com.library.services.HistoriqueCreanceService;
 import com.library.services.LigneCreanceService;
 import com.library.services.UtilisateurService;
 import io.swagger.annotations.ApiOperation;
@@ -16,9 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +41,9 @@ public class CreanceController {
 
     @Autowired
     private UtilisateurService utilisateurService;
+
+    @Autowired
+    private HistoriqueCreanceService historiqueCreanceService;
 
     @GetMapping(value = "/creances", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Creance",
@@ -61,7 +70,6 @@ public class CreanceController {
         Creance creance = creanceService.findCreanceById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Commande not found"));
         return ResponseEntity.ok().body(creance);
-
     }
 
     @GetMapping(value = "/searchCreanceByReference", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -147,7 +155,6 @@ public class CreanceController {
         return creanceService.countNumbersOfCreances();
     }
 
-
     @GetMapping(value = "/searchCreanceByStatus")
     public Creance getCreanceByStatus(@RequestParam("status") String status) {
         return creanceService.findByStatus(status);
@@ -185,9 +192,24 @@ public class CreanceController {
 
     })
     public ResponseEntity<Creance> createCreance(@RequestBody Creance creance, @RequestParam Long id) {
+
+        Creance creanceResultat = new Creance();
+
+        HistoriqueCreance historiqueCreance = new HistoriqueCreance();
+
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
         creance.setUtilisateur(utilisateur);
-        return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.CREATED);
+
+        creanceResultat = creanceService.saveCreance(creance);
+
+        historiqueCreance.setUtilisateur(utilisateur);
+        historiqueCreance.setCreance(creanceResultat);
+        historiqueCreance.setAction("AJOUT");
+        historiqueCreance.setCreatedDate(new Date());
+
+        historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
+
+        return new ResponseEntity<>(creanceResultat, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/creances/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -199,8 +221,29 @@ public class CreanceController {
 
     })
     public ResponseEntity<Creance> updateCreance(@PathVariable(value = "id") Long id, @RequestBody Creance creance) throws Exception {
+
+        Creance creanceResultat = new Creance();
+
+        HistoriqueCreance historiqueCreance = new HistoriqueCreance();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
         creance.setId(id);
-        return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.OK);
+
+        creanceResultat = creanceService.saveCreance(creance);
+
+        historiqueCreance.setUtilisateur(utilisateur);
+        historiqueCreance.setCreance(creanceResultat);
+        historiqueCreance.setAction("MODIFICATION");
+        historiqueCreance.setCreatedDate(new Date());
+
+        historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
+
+        return new ResponseEntity<>(creanceResultat, HttpStatus.OK);
 
     }
 
@@ -219,7 +262,23 @@ public class CreanceController {
 
     })
     public ResponseEntity<?> setCreanceOnlyStatus(@RequestParam("status") String status, @PathVariable("id") String id) {
+
+        HistoriqueCreance historiqueCreance = new HistoriqueCreance();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
         Creance newCreance = creanceService.setCreanceOnlyStatus(status, id);
+
+        historiqueCreance.setUtilisateur(utilisateur);
+        historiqueCreance.setCreance(newCreance);
+        historiqueCreance.setAction("MODIFICATION STATUS CREANCE");
+        historiqueCreance.setCreatedDate(new Date());
+        historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
+
         return new ResponseEntity<>(newCreance, HttpStatus.OK);
     }
 
@@ -232,7 +291,24 @@ public class CreanceController {
 
     })
     public ResponseEntity<?> setCreanceOnlyAvanceCreance(@RequestParam("avanceCreance") double avanceCreance, @PathVariable("id") String id) {
+
+        HistoriqueCreance historiqueCreance = new HistoriqueCreance();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
         Creance newCreance = creanceService.setCreanceOnlyAvanceCreance(avanceCreance, id);
+
+        historiqueCreance.setUtilisateur(utilisateur);
+        historiqueCreance.setCreance(newCreance);
+        historiqueCreance.setAction("MODIFICATION MONTANT CREANCE");
+        historiqueCreance.setCreatedDate(new Date());
+
+        historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
+
         return new ResponseEntity<>(newCreance, HttpStatus.OK);
     }
 
@@ -243,6 +319,23 @@ public class CreanceController {
             @ApiResponse(code = 200, message = "La Creance a été supprimé")
     })
     public ResponseEntity<?> deleteCreance(@PathVariable(value = "id") Long id) {
+
+        HistoriqueCreance historiqueCreance = new HistoriqueCreance();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        Creance newCreance = creanceService.findCreanceById(id).get();
+
+        historiqueCreance.setUtilisateur(utilisateur);
+        historiqueCreance.setCreance(newCreance);
+        historiqueCreance.setAction("SUPPRESSION");
+        historiqueCreance.setCreatedDate(new Date());
+
+        historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
 
         creanceService.deleteCreance(id);
 

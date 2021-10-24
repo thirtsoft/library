@@ -1,5 +1,6 @@
 package com.library.controller;
 
+import com.library.entities.HistoriqueLogin;
 import com.library.entities.Role;
 import com.library.entities.Utilisateur;
 import com.library.enumeration.RoleName;
@@ -11,6 +12,7 @@ import com.library.repository.RoleRepository;
 import com.library.repository.UtilisateurRepository;
 import com.library.security.jwt.JwtProvider;
 import com.library.security.services.UserPrinciple;
+import com.library.services.HistoriqueLoginService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -26,10 +28,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -47,6 +46,9 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    private HistoriqueLoginService historiqueLoginService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -77,6 +79,14 @@ public class AuthController {
                 .stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
+
+        Optional<Utilisateur> optionalUtilisateur = userRepository.findById(userDetails.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+        HistoriqueLogin historiqueLogin = new HistoriqueLogin();
+        historiqueLogin.setUtilisateur(utilisateur);
+        historiqueLogin.setAction("SE CONNECTER");
+        historiqueLogin.setCreatedDate(new Date());
+        historiqueLoginService.saveHistoriqueLogin(historiqueLogin);
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),

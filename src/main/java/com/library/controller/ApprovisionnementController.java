@@ -1,9 +1,13 @@
 package com.library.controller;
 
 import com.library.entities.Approvisionnement;
+import com.library.entities.HistoriqueApprovisionnement;
+import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.security.services.UserPrinciple;
 import com.library.services.ApprovisionnementService;
-import io.swagger.annotations.Api;
+import com.library.services.HistoriqueApprovisionnementService;
+import com.library.services.UtilisateurService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -11,9 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -23,6 +31,12 @@ public class ApprovisionnementController {
 
     @Autowired
     private ApprovisionnementService approvisionnementService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
+
+    @Autowired
+    private HistoriqueApprovisionnementService historiqueApprovisionnementService;
 
 
     @GetMapping(value = "/approvisionnements", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -55,7 +69,7 @@ public class ApprovisionnementController {
 
     @GetMapping(value = "/searchApprovisionnementByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un approvisonnement par CODE",
-            notes = "Cette méthode permet de chercher un approvisionnement par son CODE", response = Approvisionnement.class )
+            notes = "Cette méthode permet de chercher un approvisionnement par son CODE", response = Approvisionnement.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'approvisionnement a été trouver"),
             @ApiResponse(code = 404, message = "Aucun approvisionnement  n'existe pas dans la BD")
@@ -72,44 +86,97 @@ public class ApprovisionnementController {
 
     @PostMapping(value = "/approvisionnements", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un approvisonnement",
-            notes = "Cette méthode permet d'enregistrer ou modifier un approvisionnement", response = Approvisionnement.class )
+            notes = "Cette méthode permet d'enregistrer ou modifier un approvisionnement", response = Approvisionnement.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "L'approvisionnement a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun approvisionnement  crée / modifié")
 
     })
     public ResponseEntity<Approvisionnement> createApprovisionnement(@RequestBody Approvisionnement approvisionnement) {
+
         Approvisionnement approvisionnementResultat = approvisionnementService.saveApprovisionnement(approvisionnement);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueApprovisionnement historiqueApprovisionnement = new HistoriqueApprovisionnement();
+
+        historiqueApprovisionnement.setUtilisateur(utilisateur);
+        historiqueApprovisionnement.setApprovisionnement(approvisionnementResultat);
+        historiqueApprovisionnement.setAction("AJOUT");
+        historiqueApprovisionnement.setCreatedDate(new Date());
+
+        historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
+
         return new ResponseEntity<>(approvisionnementResultat, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/approvisionnements/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un approvisonnement par son ID",
-            notes = "Cette méthode permet de modifier un approvisionnement par son ID", response = Approvisionnement.class )
+            notes = "Cette méthode permet de modifier un approvisionnement par son ID", response = Approvisionnement.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'approvisionnement a été modifié"),
             @ApiResponse(code = 400, message = "Aucun approvisionnement modifié")
 
     })
     public ResponseEntity<Approvisionnement> updateApprovisionnement(@PathVariable(value = "id") Long ApproId, @RequestBody Approvisionnement approvisionnement) throws Exception {
+
         approvisionnement.setId(ApproId);
-        return new ResponseEntity<>(approvisionnementService.saveApprovisionnement(approvisionnement), HttpStatus.OK);
+
+        Approvisionnement approvisionnementResultat = approvisionnementService.saveApprovisionnement(approvisionnement);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueApprovisionnement historiqueApprovisionnement = new HistoriqueApprovisionnement();
+
+        historiqueApprovisionnement.setUtilisateur(utilisateur);
+        historiqueApprovisionnement.setApprovisionnement(approvisionnementResultat);
+        historiqueApprovisionnement.setAction("MODIFICATION");
+        historiqueApprovisionnement.setCreatedDate(new Date());
+
+        historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
+
+        return new ResponseEntity<>(approvisionnementResultat, HttpStatus.OK);
 
     }
 
     @DeleteMapping(value = "/approvisionnements/{id}")
     @ApiOperation(value = "Supprimer un approvisonnement par son ID",
-            notes = "Cette méthode permet de supprimer un approvisionnement par son ID", response = Approvisionnement.class )
+            notes = "Cette méthode permet de supprimer un approvisionnement par son ID", response = Approvisionnement.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'approvisionnement a été supprimé")
     })
-    public ResponseEntity<Object> deleteAppro(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> deleteAppro(@PathVariable(value = "id") Long id) {
+
+        Optional<Approvisionnement> optionalApprovisionnement = approvisionnementService.findApprovisionnementById(id);
+        Approvisionnement approvisionnement = optionalApprovisionnement.get();
 
         approvisionnementService.deleteAppro(id);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueApprovisionnement historiqueApprovisionnement = new HistoriqueApprovisionnement();
+
+        historiqueApprovisionnement.setUtilisateur(utilisateur);
+        historiqueApprovisionnement.setApprovisionnement(approvisionnement);
+        historiqueApprovisionnement.setAction("SUPPRESSION");
+        historiqueApprovisionnement.setCreatedDate(new Date());
+
+        historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
+
         return ResponseEntity.ok().build();
 
-        //return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = "/generateCodeAppro")
@@ -121,7 +188,7 @@ public class ApprovisionnementController {
 
     @PatchMapping("/updateStatusApproById/{id}")
     @ApiOperation(value = "Modifier un approvisonnement par son Status",
-            notes = "Cette méthode permet de modifier un approvisionnement par son Status", response = Approvisionnement.class )
+            notes = "Cette méthode permet de modifier un approvisionnement par son Status", response = Approvisionnement.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le status de l'approvisionnement a été modifié")
     })
@@ -132,7 +199,7 @@ public class ApprovisionnementController {
 
     @PatchMapping("/updateMontantAvanceApproById/{id}")
     @ApiOperation(value = "Modifier un approvisonnement par son ID",
-            notes = "Cette méthode permet de modifier un approvisionnement par son ID", response = Approvisionnement.class )
+            notes = "Cette méthode permet de modifier un approvisionnement par son ID", response = Approvisionnement.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'approvisionnement a été modifié")
     })

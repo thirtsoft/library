@@ -1,8 +1,11 @@
 package com.library.controller;
 
+import com.library.entities.HistoriqueVente;
 import com.library.entities.Utilisateur;
 import com.library.entities.Vente;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.security.services.UserPrinciple;
+import com.library.services.HistoriqueVenteService;
 import com.library.services.UtilisateurService;
 import com.library.services.VenteService;
 import io.swagger.annotations.ApiOperation;
@@ -12,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -28,6 +34,9 @@ public class VenteController {
 
     @Autowired
     private UtilisateurService utilisateurService;
+
+    @Autowired
+    private HistoriqueVenteService historiqueVenteService;
 
     @GetMapping(value = "/ventes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Vente",
@@ -161,10 +170,23 @@ public class VenteController {
         UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();*/
         Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
 
-        vente.setUtilisateur(userInfo);
-        venteService.saveVente(vente);
+        Vente venteResultat = new Vente();
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        vente.setUtilisateur(userInfo);
+        //    venteService.saveVente(vente);
+
+        venteResultat = venteService.saveVente(vente);
+
+        HistoriqueVente historiqueVente = new HistoriqueVente();
+
+        historiqueVente.setUtilisateur(userInfo);
+        historiqueVente.setVente(venteResultat);
+        historiqueVente.setAction("AJOUT");
+        historiqueVente.setCreatedDate(new Date());
+
+        historiqueVenteService.saveHistoriqueVente(historiqueVente);
+
+        return new ResponseEntity<>(venteResultat, HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/ventes/venteWithbarCode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -176,11 +198,27 @@ public class VenteController {
 
     })
     public ResponseEntity<Vente> saveVenteWithBarcode(@RequestBody Vente vente, @RequestParam Long id) {
-        Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
-        vente.setUtilisateur(userInfo);
-        venteService.saveVenteWithBarcode(vente);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Vente venteResultat = new Vente();
+
+        Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
+
+        vente.setUtilisateur(userInfo);
+
+        venteResultat = venteService.saveVenteWithBarcode(vente);
+
+        //    venteService.saveVenteWithBarcode(vente);
+
+        HistoriqueVente historiqueVente = new HistoriqueVente();
+
+        historiqueVente.setUtilisateur(userInfo);
+        historiqueVente.setVente(venteResultat);
+        historiqueVente.setAction("AJOUT");
+        historiqueVente.setCreatedDate(new Date());
+
+        historiqueVenteService.saveHistoriqueVente(historiqueVente);
+
+        return new ResponseEntity<>(venteResultat, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/ventes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -192,8 +230,28 @@ public class VenteController {
 
     })
     public ResponseEntity<Vente> updateVente(@PathVariable(value = "id") Long id, @RequestBody Vente vente) throws Exception {
+
+        Vente venteResultat = new Vente();
+
         vente.setId(id);
-        return new ResponseEntity<>(venteService.saveVente(vente), HttpStatus.OK);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        venteResultat = venteService.saveVente(vente);
+
+        HistoriqueVente historiqueVente = new HistoriqueVente();
+        historiqueVente.setUtilisateur(utilisateur);
+        historiqueVente.setVente(venteResultat);
+        historiqueVente.setCreatedDate(new Date());
+        historiqueVente.setAction("MODIFICATION");
+
+        historiqueVenteService.saveHistoriqueVente(historiqueVente);
+
+        return new ResponseEntity<>(venteResultat, HttpStatus.OK);
 
     }
 
@@ -204,7 +262,26 @@ public class VenteController {
             @ApiResponse(code = 200, message = "La Vente été supprimé")
     })
     public ResponseEntity<?> deleteVente(@PathVariable(value = "id") Long id) {
+
+        Optional<Vente> optionalVente = venteService.findVenteById(id);
+        Vente venteResultat = optionalVente.get();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueVente historiqueVente = new HistoriqueVente();
+        historiqueVente.setUtilisateur(utilisateur);
+        historiqueVente.setVente(venteResultat);
+        historiqueVente.setCreatedDate(new Date());
+        historiqueVente.setAction("SUPPRESSION");
+
+        historiqueVenteService.saveHistoriqueVente(historiqueVente);
+
         venteService.deleteVente(id);
+
         return ResponseEntity.ok().build();
     }
 
@@ -247,7 +324,6 @@ public class VenteController {
     public List<?> getSumTotalOfVenteByYears() {
         return venteService.sumTotalOfVenteByYears();
     }
-
 
     @GetMapping(value = "/searchSumsOfVenteByDay")
     @ApiOperation(value = "Compter la somme des Ventes par jours",

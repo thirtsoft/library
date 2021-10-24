@@ -1,9 +1,7 @@
 package com.library;
 
-import com.library.entities.Category;
-import com.library.entities.Client;
-import com.library.entities.Produit;
-import com.library.entities.Scategorie;
+import com.library.entities.*;
+import com.library.enumeration.RoleName;
 import com.library.repository.*;
 import com.library.services.AccountService;
 import org.slf4j.Logger;
@@ -95,13 +93,13 @@ public class LibraryApplication implements CommandLineRunner {
         accountService.addRoleToUtilisateur("user", "USER");
 */
 
-/*
+
         Role useRole = new Role(RoleName.ROLE_USER);
         Role vendorRole = new Role(RoleName.ROLE_VENDEUR);
         Role adminRole = new Role(RoleName.ROLE_ADMIN);
         roleRepository.save(useRole);
         roleRepository.save(vendorRole);
-        roleRepository.save(adminRole);*/
+        roleRepository.save(adminRole);
 
 
     }

@@ -1,6 +1,8 @@
 package com.library.controller;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,6 +23,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import javax.servlet.ServletContext;
 import java.io.File;
@@ -89,6 +96,25 @@ public class UtilisateurController {
 
     }
 
+    @PutMapping("/photo")
+    public void editPhotoUser (@RequestParam("image") MultipartFile file, @RequestParam("id") String id)
+            throws JsonParseException, JsonMappingException, Exception {
+
+        String filename = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(filename)+"."+FilenameUtils.getExtension(filename);
+        File serverFile = new File (context.getRealPath("/Images/"+File.separator+newFileName));
+        try
+        {
+            System.out.println("Image");
+            FileUtils.writeByteArrayToFile(serverFile,file.getBytes());
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     @GetMapping(value = "/searchUtilisateurByUsername", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une utilisateur par son username",
             notes = "Cette méthode permet de chercher un utilisateur par son nom d'utilisateur", response = Utilisateur.class
@@ -111,30 +137,6 @@ public class UtilisateurController {
     public List<Utilisateur> getListUtilisateurByUsername(@RequestParam(value = "username") String username) {
 
         return utilisateurService.findListUtilisateurByUsername("%" + username + "%");
-
-    }
-
-    @PutMapping(value = "/photo")
-    @ApiOperation(value = "Modifier une photo par ID",
-            notes = "Cette méthode permet de modifier la photo d'un utilisateur par son ID"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "La photo a été modifié avec cet ID")
-
-    })
-    public void editPhoto(@RequestParam("image") MultipartFile file, @RequestParam("id") String id)
-            throws Exception {
-
-        String filename = file.getOriginalFilename();
-        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
-        File serverFile = new File(context.getRealPath("/Images/" + File.separator + newFileName));
-        try {
-            System.out.println("Image");
-            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 

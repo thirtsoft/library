@@ -1,7 +1,12 @@
 package com.library.controller;
 
 import com.library.entities.Charge;
+import com.library.entities.HistoriqueCharge;
+import com.library.entities.Utilisateur;
+import com.library.security.services.UserPrinciple;
 import com.library.services.ChargeService;
+import com.library.services.HistoriqueChargeService;
+import com.library.services.UtilisateurService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -9,8 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +29,12 @@ public class ChargeController {
 
     @Autowired
     private ChargeService chargeService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
+
+    @Autowired
+    private HistoriqueChargeService historiqueChargeService;
 
     @GetMapping(value = "/charges", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Charges",
@@ -73,26 +87,42 @@ public class ChargeController {
         return chargeService.findListChargeByNature("%" + nature + "%");
     }
 
-
     @PostMapping(value = "/charges", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Charge",
-            notes = "Cette méthode permet d'enregistrer un Charge", response = Charge.class )
+            notes = "Cette méthode permet d'enregistrer un Charge", response = Charge.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "La Charge a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun Charge  crée / modifié")
-
     })
     public ResponseEntity<Charge> createCharge(@RequestBody Charge charge) {
         if (chargeService.findChargeByCodeCharge(charge.getCodeCharge()) != null) {
             return new ResponseEntity<>(charge, HttpStatus.BAD_REQUEST);
         }
-        chargeService.saveCharge(charge);
-        return new ResponseEntity<>(charge, HttpStatus.CREATED);
+        Charge chargeResultat = new Charge();
+        chargeResultat = chargeService.saveCharge(charge);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueCharge historiqueCharge = new HistoriqueCharge();
+        historiqueCharge.setUtilisateur(utilisateur);
+        historiqueCharge.setCharge(chargeResultat);
+        historiqueCharge.setCreatedDate(new Date());
+        historiqueCharge.setAction("AJOUT");
+
+        historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
+
+        //    chargeService.saveCharge(charge);
+
+        return new ResponseEntity<>(chargeResultat, HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/charges/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une Charge par son ID",
-            notes = "Cette méthode permet de modifier une Charge par son ID", response = Charge.class )
+            notes = "Cette méthode permet de modifier une Charge par son ID", response = Charge.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "La Charge a été modifié"),
             @ApiResponse(code = 400, message = "Aucun Charge modifié")
@@ -100,18 +130,53 @@ public class ChargeController {
     })
     public ResponseEntity<Charge> updateCharge(@PathVariable Long id, @RequestBody Charge charge) {
         charge.setId(id);
-        return new ResponseEntity<>(chargeService.updateCharge(id, charge), HttpStatus.OK);
+        Charge chargeResultat = chargeService.updateCharge(id, charge);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueCharge historiqueCharge = new HistoriqueCharge();
+        historiqueCharge.setUtilisateur(utilisateur);
+        historiqueCharge.setCharge(chargeResultat);
+        historiqueCharge.setCreatedDate(new Date());
+        historiqueCharge.setAction("MODIFICATION");
+
+        historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
+
+
+        return new ResponseEntity<>(chargeResultat, HttpStatus.OK);
 
     }
 
     @DeleteMapping(value = "/charges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Supprimer un Charge par son ID",
-            notes = "Cette méthode permet de supprimer un Charge par son ID", response = Charge.class )
+            notes = "Cette méthode permet de supprimer un Charge par son ID", response = Charge.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La Charge a été supprimé")
     })
     public ResponseEntity<?> deleteCharge(@PathVariable(value = "id") Long id) {
+
+        Charge chargeResultat = chargeService.findChargeById(id).get();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueCharge historiqueCharge = new HistoriqueCharge();
+        historiqueCharge.setUtilisateur(utilisateur);
+        historiqueCharge.setCharge(chargeResultat);
+        historiqueCharge.setCreatedDate(new Date());
+        historiqueCharge.setAction("SUPPRESSION");
+
+        historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
+
         chargeService.deleteCharge(id);
+
         return ResponseEntity.ok().build();
     }
 
