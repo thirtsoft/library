@@ -30,10 +30,10 @@ public class HistoriqueLoginController {
 
     @PostMapping(value = APP_ROOT + "/historiqueLogins/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregister historique Appro",
-            notes = "Cette méthode permet d'Enregister une historique d'approvisionnement",
+            notes = "Cette méthode permet d'Enregister une historique de login",
             responseContainer = "List<HistoriqueLogin>")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "La liste des approvisionnements / une liste vide")
+            @ApiResponse(code = 201, message = "La liste des approvisionnements / une liste vide")
     })
     ResponseEntity<HistoriqueLogin> saveHistoriqueLogin(@RequestBody HistoriqueLogin historiqueLogin) {
 

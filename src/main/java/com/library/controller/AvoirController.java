@@ -1,9 +1,13 @@
 package com.library.controller;
 
 import com.library.entities.Avoir;
-import com.library.entities.Avoir;
+import com.library.entities.HistoriqueAvoir;
+import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
+import com.library.security.services.UserPrinciple;
 import com.library.services.AvoirService;
+import com.library.services.HistoriqueAvoirService;
+import com.library.services.UtilisateurService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -11,9 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static com.library.utils.Constants.APP_ROOT;
 
@@ -24,6 +32,12 @@ public class AvoirController {
 
     @Autowired
     private AvoirService avoirService;
+
+    @Autowired
+    private HistoriqueAvoirService historiqueAvoirService;
+
+    @Autowired
+    private UtilisateurService utilisateurService;
 
     @GetMapping(value = APP_ROOT + "/avoirs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des avoirs",
@@ -64,7 +78,7 @@ public class AvoirController {
 
     }
 
-    @GetMapping(value = APP_ROOT +  "/avoirs/searchAvoirByReference", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/avoirs/searchAvoirByReference", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un avoir par Reference",
             notes = "Cette méthode permet de chercher un avoir par son Reference", response = Avoir.class
     )
@@ -114,7 +128,7 @@ public class AvoirController {
 
     @PostMapping(value = APP_ROOT + "/avoirs/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un avoir",
-            notes = "Cette méthode permet d'enregistrer un avoir", response = Avoir.class )
+            notes = "Cette méthode permet d'enregistrer un avoir", response = Avoir.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "L'avoir a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun avoir  crée / modifié")
@@ -124,30 +138,87 @@ public class AvoirController {
 
         Avoir avoirResultat = avoirService.saveAvoir(avoir);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueAvoir historiqueAvoir = new HistoriqueAvoir();
+
+        historiqueAvoir.setUtilisateur(utilisateur);
+        historiqueAvoir.setAvoir(avoirResultat);
+        historiqueAvoir.setAction("AJOUT");
+        historiqueAvoir.setCreatedDate(new Date());
+
+        historiqueAvoirService.saveHistoriqueAvoir(historiqueAvoir);
+
         return new ResponseEntity<>(avoirResultat, HttpStatus.CREATED);
 
     }
 
     @PutMapping(value = APP_ROOT + "/avoirs/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un avoir par son ID",
-            notes = "Cette méthode permet de modifier un avoir par son ID", response = Avoir.class )
+            notes = "Cette méthode permet de modifier un avoir par son ID", response = Avoir.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'avoir a été modifié"),
             @ApiResponse(code = 400, message = "Aucun avoir modifié")
     })
     public ResponseEntity<Avoir> updateAvoir(@PathVariable Long id, @RequestBody Avoir avoir) {
+
+        Avoir avoirResultat = new Avoir();
+
         avoir.setId(id);
-        return new ResponseEntity<>(avoirService.saveAvoir(avoir), HttpStatus.OK);
+
+        avoirResultat = avoirService.saveAvoir(avoir);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueAvoir historiqueAvoir = new HistoriqueAvoir();
+
+        historiqueAvoir.setUtilisateur(utilisateur);
+        historiqueAvoir.setAvoir(avoirResultat);
+        historiqueAvoir.setAction("MODIFICATION");
+        historiqueAvoir.setCreatedDate(new Date());
+
+        historiqueAvoirService.saveHistoriqueAvoir(historiqueAvoir);
+
+        return new ResponseEntity<>(avoirResultat, HttpStatus.OK);
     }
 
     @DeleteMapping(value = APP_ROOT + "/avoirs/delete/{id}")
     @ApiOperation(value = "Supprimer un avoir par son ID",
-            notes = "Cette méthode permet de supprimer un avoir par son ID", response = Avoir.class )
+            notes = "Cette méthode permet de supprimer un avoir par son ID", response = Avoir.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "L'Avoir a été supprimé")
     })
     public ResponseEntity<Object> deleteAvoir(@PathVariable(value = "id") Long id) {
+
+        Avoir avoirResultat = new Avoir();
+
+        avoirResultat = avoirService.findAvoirById(id).get();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueAvoir historiqueAvoir = new HistoriqueAvoir();
+
+        historiqueAvoir.setUtilisateur(utilisateur);
+        historiqueAvoir.setAvoir(avoirResultat);
+        historiqueAvoir.setAction("SUPPRESSION");
+        historiqueAvoir.setCreatedDate(new Date());
+
+        historiqueAvoirService.saveHistoriqueAvoir(historiqueAvoir);
+
         avoirService.deleteAvoir(id);
+
         return ResponseEntity.ok().build();
     }
 
