@@ -10,15 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 @CrossOrigin
 @RestController
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class EmailController {
 
     @Autowired
     private EmailService emailService;
 
-    @PostMapping("/sendEmail")
+    @PostMapping(value = APP_ROOT + "/sendEmail")
     public ResponseEntity<Email> sendEmail(@RequestBody Email email) {
         try {
             emailService.sendEmail(email);
@@ -26,11 +28,9 @@ public class EmailController {
         } catch (MailException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
-    @PostMapping("/sendMail")
+    @PostMapping(value = APP_ROOT + "/sendMail")
     public ResponseEntity<Fournisseur> sendMail(@RequestBody Fournisseur fournisseur) {
         try {
             emailService.sendMail(fournisseur);
@@ -38,11 +38,9 @@ public class EmailController {
         } catch (MailException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
-    @PostMapping("/sendMailToCustomer")
+    @PostMapping(value = APP_ROOT + "/sendMailToCustomer")
     public ResponseEntity<Client> sendMailToCustomer(@RequestBody Client client) {
         try {
             emailService.sendMailToClient(client);
@@ -50,8 +48,6 @@ public class EmailController {
         } catch (MailException e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
-
 
 }

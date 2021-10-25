@@ -19,13 +19,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class EmployeController {
 
     @Autowired
     private EmployeService employeService;
 
-    @GetMapping(value = "/employes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/employes/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Employes",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Employes", responseContainer = "List<Employe>")
     @ApiResponses(value = {
@@ -47,7 +47,7 @@ public class EmployeController {
         return new ResponseEntity<>(employeList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/employes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/employes/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Employe par ID",
             notes = "Cette méthode permet de chercher un Employe par son ID", response = Employe.class
     )
@@ -64,7 +64,7 @@ public class EmployeController {
 
     }
 
-    @GetMapping(value = "/serachEmployeByEmail", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/employes/serachEmployeByEmail", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Employe par EMAIL",
             notes = "Cette méthode permet de chercher un Employe par son EMAIL", response = Employe.class
     )
@@ -77,7 +77,7 @@ public class EmployeController {
         return employeService.findByEmail(email);
     }
 
-    @GetMapping(value = "/searchEmployeByCni", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/employes/searchEmployeByCni", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Employe par CNI",
             notes = "Cette méthode permet de chercher un Employe par son CNI", response = Employe.class
     )
@@ -90,7 +90,7 @@ public class EmployeController {
         return employeService.findByCni(cni);
     }
 
-    @GetMapping(value = "/searchListEmployeByCni", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/employes/searchListEmployeByCni", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Employes par CNI",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Employes par son par CNI", responseContainer = "List<Employe>")
     @ApiResponses(value = {
@@ -100,7 +100,7 @@ public class EmployeController {
         return employeService.ListEmployeByCni("%" + cni + "%");
     }
 
-    @GetMapping(value = "/searchEmployeByNom", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/employes/searchEmployeByNom", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Employe par nom",
             notes = "Cette méthode permet de chercher un Employe par son nom", response = Employe.class
     )
@@ -114,39 +114,39 @@ public class EmployeController {
 
     }
 
-    @GetMapping(value = "/searchListEmployeByNom")
+    @GetMapping(value = APP_ROOT + "/employes/searchListEmployeByNom")
     public List<Employe> getEmployesByNom(@RequestParam(value = "name") String nom) {
         return employeService.ListEmployeByNom("%" + nom + "%");
     }
 
-    @GetMapping(value = "/searchEmployeByPrenom")
+    @GetMapping(value = APP_ROOT + "/employes/searchEmployeByPrenom")
     public Employe getEmployeByPrenom(@RequestParam(value = "pren") String prenom) {
         return employeService.findByPrenom(prenom);
 
     }
 
-    @GetMapping(value = "/searchListEmployeByPrenom")
+    @GetMapping(value = APP_ROOT + "/employes/searchListEmployeByPrenom")
     public List<Employe> getEmployesByPrenom(@RequestParam(value = "pren") String prenom) {
         return employeService.ListEmployeByPrenom("%" + prenom + "%");
     }
 
-    @GetMapping(value = "/searchEmployeByTelephone")
+    @GetMapping(value = APP_ROOT + "/employes/searchEmployeByTelephone")
     public Employe getEmployeByTelephone(@RequestParam(value = "tel") String telephone) {
         return employeService.findByTelephone(telephone);
 
     }
 
-    @GetMapping(value = "/searchListEmployeByTelephone")
+    @GetMapping(value = APP_ROOT + "/employes/searchListEmployeByTelephone")
     public List<Employe> getEmployesByTelephone(@RequestParam(value = "tel") String telephone) {
         return employeService.ListEmployeByTelephone("%" + telephone + "%");
     }
 
-    @GetMapping(value = "/searchListEmployeByEmail")
+    @GetMapping(value = APP_ROOT + "/employes/searchListEmployeByEmail")
     public List<Employe> getEmployesByEmail(@RequestParam(value = "mail") String email) {
         return employeService.ListEmployeByEmail("%" + email + "%");
     }
 
-    @PostMapping(value = "/employes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/employes/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Employe",
             notes = "Cette méthode permet d'enregistrer et modifier un Employe", response = Employe.class)
     @ApiResponses(value = {
@@ -168,7 +168,7 @@ public class EmployeController {
         return new ResponseEntity<>(employe, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/employes/{empId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/employes/update/{empId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Employe par son ID",
             notes = "Cette méthode permet de modifier un Employe par son ID", response = Employe.class)
     @ApiResponses(value = {
@@ -182,7 +182,7 @@ public class EmployeController {
 
     }
 
-    @DeleteMapping(value = "/employes/{id}")
+    @DeleteMapping(value = APP_ROOT + "/employes/delete/{id}")
     @ApiOperation(value = "Supprimer un Employe par son ID",
             notes = "Cette méthode permet de supprimer un Employe par son ID", response = Employe.class)
     @ApiResponses(value = {
@@ -191,7 +191,6 @@ public class EmployeController {
     public ResponseEntity<?> deleteEmploye(@PathVariable(value = "id") Long id) {
         employeService.deleteEmploye(id);
         return ResponseEntity.ok().build();
-
     }
 
 }

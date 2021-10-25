@@ -20,13 +20,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/apiSeller")
+//@RequestMapping("/apiSeller")
 public class LigneVenteController {
 
     @Autowired
     private LigneVenteService ligneVenteService;
 
-    @GetMapping(value = "/ligneVentes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneVentes/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneVente",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneVente", responseContainer = "List<LigneVente>")
     @ApiResponses(value = {
@@ -48,8 +48,7 @@ public class LigneVenteController {
         return new ResponseEntity<>(ligneVenteList, HttpStatus.OK);
     }
 
-
-    @GetMapping(value = "/ligneVentes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneVentes/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un LigneVente par ID",
             notes = "Cette méthode permet de chercher une LigneVente par son ID", response = LigneVente.class
     )
@@ -66,7 +65,7 @@ public class LigneVenteController {
 
     }
 
-    @GetMapping(value = "/lventes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneVentes/findByNumero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneVente par numero",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneVente par numero", responseContainer = "List<LigneVente>")
     @ApiResponses(value = {
@@ -81,7 +80,7 @@ public class LigneVenteController {
         return Lventes;
     }
 
-    @GetMapping(value = "/searchListLigneVentestByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneVentes/searchListLigneVentestByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneVente par produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneVente par produit", responseContainer = "List<LigneVente>")
     @ApiResponses(value = {
@@ -91,7 +90,7 @@ public class LigneVenteController {
         return ligneVenteService.findLigneVenteByProduitId(prodId);
     }
 
-    @GetMapping(value = "/searchListLigneVentesByVenteId/{venteId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneVentes/searchListLigneVentesByVenteId/{venteId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneVente par vente",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneVente par vente", responseContainer = "List<LigneVente>")
     @ApiResponses(value = {
@@ -101,7 +100,7 @@ public class LigneVenteController {
         return ligneVenteService.findLigneVenteByVenteId(venteId);
     }
 
-    @PostMapping(value = "/ligneVentes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ligneVentes/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une LigneVente",
             notes = "Cette méthode permet d'enregistrer et modifier une LigneVente", response = LigneVente.class)
     @ApiResponses(value = {
@@ -114,7 +113,7 @@ public class LigneVenteController {
         return new ResponseEntity<>(ligneVenteService.saveLigneVente(ligneVente), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/ligneVentes/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/ligneVentes/update/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une LigneVente par son ID",
             notes = "Cette méthode permet de modifier une LigneVente par son ID", response = LigneVente.class)
     @ApiResponses(value = {
@@ -128,7 +127,7 @@ public class LigneVenteController {
 
     }
 
-    @DeleteMapping(value = "/ligneVentes/{id}")
+    @DeleteMapping(value = APP_ROOT + "/ligneVentes/delete/{id}")
     @ApiOperation(value = "Supprimer une LigneVente par son ID",
             notes = "Cette méthode permet de supprimer une LigneVente par son ID", response = LigneVente.class)
     @ApiResponses(value = {

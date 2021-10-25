@@ -20,13 +20,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class CategorieChargeController {
 
     @Autowired
     private CategorieChargeService catChargeService;
 
-    @GetMapping(value = "/categorieCharges", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/categorieCharges/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des category de charge ",
             notes = "Cette méthode permet de chercher et renvoyer la liste des category de charge", responseContainer = "List<CategorieCharge>")
     @ApiResponses(value = {
@@ -48,7 +48,7 @@ public class CategorieChargeController {
         return new ResponseEntity<>(categorieChargeList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/categorieCharges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/categorieCharges/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un CategorieCharge par ID",
             notes = "Cette méthode permet de chercher un CategorieCharge par son ID", response = CategorieCharge.class
     )
@@ -66,12 +66,12 @@ public class CategorieChargeController {
 
     }
 
-    @GetMapping(value = "/searchCategorieChargesByCode")
+    @GetMapping(value = APP_ROOT + "/categorieCharges/searchCategorieChargesByCode")
     public CategorieCharge getCategorieChargeByCode(@RequestParam(value = "code") String code) {
         return catChargeService.findByCodeCategorieCharge(code);
     }
 
-    @GetMapping(value = "/searchListCategorieChargesByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/categorieCharges/searchListCategorieChargesByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des category de charge par CODE",
             notes = "Cette méthode permet de chercher et renvoyer la liste des category de charge par CODE", responseContainer = "List<CategorieCharge>")
     @ApiResponses(value = {
@@ -81,7 +81,7 @@ public class CategorieChargeController {
         return catChargeService.ListCategoryByCodeCategorieCharge(code);
     }
 
-    @GetMapping(value = "/searchCategorieChargeByDesignation")
+    @GetMapping(value = APP_ROOT + "/categorieCharges/searchCategorieChargeByDesignation")
     public CategorieCharge getCategoryByDesignation(@RequestParam(value = "des") String designation) {
         return catChargeService.findByNomCategorieCharge(designation);
     }
@@ -91,7 +91,7 @@ public class CategorieChargeController {
         return catChargeService.ListCategoryByNomCategorieCharge(designation);
     }
 
-    @PostMapping(value = "/categorieCharges", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/categorieCharges/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un CategorieCharge",
             notes = "Cette méthode permet d'enregistrer un CategorieCharge", response = CategorieCharge.class )
     @ApiResponses(value = {
@@ -108,7 +108,7 @@ public class CategorieChargeController {
 
     }
 
-    @PutMapping(value = "/categorieCharges/{catId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/categorieCharges/update/{catId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un CategorieCharge par son ID",
             notes = "Cette méthode permet de modifier un CategorieCharge par son ID", response = CategorieCharge.class )
     @ApiResponses(value = {
@@ -121,13 +121,13 @@ public class CategorieChargeController {
         return new ResponseEntity<>(catChargeService.updateCategorieCharge(catId, catCharge), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/categorieCharges/{id}")
+    @DeleteMapping(value = APP_ROOT + "/categorieCharges/delete/{id}")
     @ApiOperation(value = "Supprimer un CategorieCharge par son ID",
             notes = "Cette méthode permet de supprimer un CategorieCharge par son ID", response = CategorieCharge.class )
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "CategorieCharge a été supprimé")
     })
-    public ResponseEntity<Object> deleteCategorieCharge(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<?> deleteCategorieCharge(@PathVariable(value = "id") Long id) {
         catChargeService.deleteCategorieCharge(id);
         return ResponseEntity.ok().build();
     }

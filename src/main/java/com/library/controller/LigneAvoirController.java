@@ -20,13 +20,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class LigneAvoirController {
 
     @Autowired
     private LigneAvoirService ligneAvoirService;
 
-    @GetMapping(value = "/ligneAvoirs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneAvoirs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneAvoir",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneAvoir", responseContainer = "List<LigneAvoir>")
     @ApiResponses(value = {
@@ -48,7 +48,7 @@ public class LigneAvoirController {
         return new ResponseEntity<>(ligneAvoirList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ligneAvoirs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneAvoirs/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un LigneAvoir par ID",
             notes = "Cette méthode permet de chercher une LigneAvoir par son ID", response = LigneAvoir.class
     )
@@ -65,7 +65,7 @@ public class LigneAvoirController {
 
     }
 
-    @GetMapping(value = "/lavoirs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/lavoirs/findByNumero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneAvoir par numero",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneAvoir par numero", responseContainer = "List<LigneAvoir>")
     @ApiResponses(value = {
@@ -80,7 +80,7 @@ public class LigneAvoirController {
         return Lavoirs;
     }
 
-    @GetMapping(value = "/searchListLigneAvoirByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneAvoirs/searchListLigneAvoirByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneAvoir par Produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneAvoir par Produit", responseContainer = "List<LigneAvoir>")
     @ApiResponses(value = {
@@ -90,7 +90,7 @@ public class LigneAvoirController {
         return ligneAvoirService.findLigneAvoirByProduitId(prodId);
     }
 
-    @GetMapping(value = "/searchListLigneAvoirByAvoirId/{avoirId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneAvoirs/searchListLigneAvoirByAvoirId/{avoirId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneAvoir par Avoir",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneAvoir par Avoir", responseContainer = "List<LigneAvoir>")
     @ApiResponses(value = {
@@ -100,7 +100,7 @@ public class LigneAvoirController {
         return ligneAvoirService.findLigneAvoirByAvoirId(avoirId);
     }
 
-    @PostMapping(value = "/ligneAvoirs", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ligneAvoirs/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une LigneAvoir",
             notes = "Cette méthode permet d'enregistrer une LigneAvoir", response = LigneAvoir.class)
     @ApiResponses(value = {
@@ -113,7 +113,7 @@ public class LigneAvoirController {
         return new ResponseEntity<>(ligneAvoirService.saveLigneAvoir(ligneAvoir), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/ligneAvoirs/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/ligneAvoirs/update/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une LigneAvoir par son ID",
             notes = "Cette méthode permet d'enregistrer une LigneAvoir par son ID", response = LigneAvoir.class)
     @ApiResponses(value = {
@@ -127,7 +127,7 @@ public class LigneAvoirController {
 
     }
 
-    @DeleteMapping(value = "/ligneAvoirs/{id}")
+    @DeleteMapping(value = APP_ROOT + "/ligneAvoirs/delete/{id}")
     @ApiOperation(value = "Supprimer un LigneAvoir par son numero",
             notes = "Cette méthode permet de supprimer un LigneAvoir par son numero")
     @ApiResponses(value = {

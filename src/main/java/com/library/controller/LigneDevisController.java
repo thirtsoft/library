@@ -20,13 +20,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class LigneDevisController {
 
     @Autowired
     private LigneDevisService ligneDevisService;
 
-    @GetMapping(value = "/ligneDevis", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneDevis/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneDevis",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneDevis", responseContainer = "List<LigneDevis>")
     @ApiResponses(value = {
@@ -49,7 +49,7 @@ public class LigneDevisController {
         return new ResponseEntity<>(ligneDevisList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ligneDevis/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneDevis/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une LigneDevis par ID",
             notes = "Cette méthode permet de chercher une LigneDevis par son ID", response = LigneDevis.class
     )
@@ -66,7 +66,7 @@ public class LigneDevisController {
 
     }
 
-    @GetMapping(value = "/ldeviss/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneDevis/findByNumero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneDevis par numero",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneDevis par numero", responseContainer = "List<LigneDevis>")
     @ApiResponses(value = {
@@ -81,7 +81,7 @@ public class LigneDevisController {
         return Ldevis;
     }
 
-    @GetMapping(value = "/searchListLigneDevisByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneDevis/searchListLigneDevisByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneDevis par Produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneDevis par Produit", responseContainer = "List<LigneDevis>")
     @ApiResponses(value = {
@@ -91,7 +91,7 @@ public class LigneDevisController {
         return ligneDevisService.findLigneDevisByProduitId(prodId);
     }
 
-    @GetMapping(value = "/searchListLigneDevisByDevisId/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT +  "/ligneDevis/searchListLigneDevisByDevisId/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneDevis par Devis",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneDevis par Devis", responseContainer = "List<LigneDevis>")
     @ApiResponses(value = {
@@ -101,7 +101,7 @@ public class LigneDevisController {
         return ligneDevisService.findLigneDevisByDevId(comId);
     }
 
-    @PostMapping(value = "/ligneDevis", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ligneDevis/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un LigneDevis",
             notes = "Cette méthode permet d'enregistrer et modifier un LigneDevis", response = LigneDevis.class)
     @ApiResponses(value = {
@@ -114,7 +114,7 @@ public class LigneDevisController {
         return new ResponseEntity<>(ligneDevisService.saveLigneDevis(LigneDevis), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/ligneDevis/{lcId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/ligneDevis/update/{lcId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un LigneDevis par son ID",
             notes = "Cette méthode permet de modifier un LigneDevis par son ID", response = LigneDevis.class)
     @ApiResponses(value = {
@@ -128,7 +128,7 @@ public class LigneDevisController {
 
     }
 
-    @DeleteMapping(value = "/ligneDevis/{id}")
+    @DeleteMapping(value = APP_ROOT + "/ligneDevis/delete/{id}")
     @ApiOperation(value = "Supprimer une LigneDevis par son ID",
             notes = "Cette méthode permet de supprimer une LigneDevis par son ID", response = LigneDevis.class)
     @ApiResponses(value = {

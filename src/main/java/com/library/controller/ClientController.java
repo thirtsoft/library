@@ -21,13 +21,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/prodApi")
+//@RequestMapping("/prodApi")
 public class ClientController {
 
     @Autowired
     private ClientService clientService;
 
-    @GetMapping(value = "/clients", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/clients/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Clients",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Clients", responseContainer = "List<Client>")
     @ApiResponses(value = {
@@ -49,7 +49,7 @@ public class ClientController {
         return new ResponseEntity<>(clientList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/clients/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT +"/clients/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Client par ID",
             notes = "Cette méthode permet de chercher un Client par son ID", response = Client.class
     )
@@ -66,7 +66,7 @@ public class ClientController {
 
     }
 
-    @GetMapping(value = "/NumberOfClients")
+    @GetMapping(value = APP_ROOT + "/clients/NumberOfClients")
     @ApiOperation(value = "Compter le nombre de Client", notes = "Cette méthode permet de retourner le nombre total un Client")
     public Long getNumberOfClient() {
         return clientService.countNumberOfClient();
@@ -85,13 +85,13 @@ public class ClientController {
         return clientService.findByEmail(email);
     }
 
-    @GetMapping(value = "/searchClientByRaisonSocial")
+    @GetMapping(value = APP_ROOT + "/clients/searchClientByRaisonSocial")
     public Client getClientByRaisonSocial(@RequestParam(value = "raisonSocial") String raisonSocial) {
         return clientService.findByRaisonSocial(raisonSocial);
 
     }
 
-    @GetMapping(value = "/searchListClientByRaisonSocial", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/clients/searchListClientByRaisonSocial", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Clients par son CODE",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Clients par son CODE", responseContainer = "List<Client>")
     @ApiResponses(value = {
@@ -103,22 +103,22 @@ public class ClientController {
 
     }
 
-    @GetMapping(value = "/ListClientGroupByRaisonSocial")
+    @GetMapping(value = APP_ROOT + "/clients/ListClientGroupByRaisonSocial")
     public List<Object[]> getListClientGroupByRaisonSocial() {
         return clientService.ListClientGroupByRaisonSocial();
     }
 
-    @GetMapping(value = "/searchClientByChefService")
+    @GetMapping(value = APP_ROOT + "/clients/searchClientByChefService")
     public Client getClientByChefService(@RequestParam(value = "chefService") String chefService) {
         return clientService.findByChefService(chefService);
     }
 
-    @GetMapping(value = "/searchListClientByChefService")
+    @GetMapping(value = APP_ROOT + "/clients/searchListClientByChefService")
     public List<Client> getListClientByChefService(@RequestParam(value = "chefService") String chefService) {
         return clientService.ListClientByChefService("%" + chefService + "%");
     }
 
-    @PostMapping(value = "/clients", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/clients/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Client",
             notes = "Cette méthode permet d'enregistrer un Client", response = Client.class )
     @ApiResponses(value = {
@@ -140,7 +140,7 @@ public class ClientController {
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/clients/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/clients/update/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Client par son ID",
             notes = "Cette méthode permet de modifier un Client par son ID", response = Client.class )
     @ApiResponses(value = {
@@ -153,7 +153,7 @@ public class ClientController {
         return new ResponseEntity<>(clientService.updateClient(clientId, client), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/udapteClientByEmail/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = APP_ROOT +"/clients/udapteClientByEmail/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Client par son EMAIL",
             notes = "Cette méthode permet de modifier un Client par son EMAIL", response = Client.class )
     @ApiResponses(value = {
@@ -166,7 +166,7 @@ public class ClientController {
         return new ResponseEntity<>(newClient, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/clients/{id}")
+    @DeleteMapping(value = APP_ROOT + "/clients/delete/{id}")
     @ApiOperation(value = "Supprimer un Client par son ID",
             notes = "Cette méthode permet de supprimer un Client par son ID", response = Client.class )
     @ApiResponses(value = {

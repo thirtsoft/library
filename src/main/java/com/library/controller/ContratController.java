@@ -34,7 +34,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class ContratController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContratController.class);
@@ -52,7 +52,7 @@ public class ContratController {
 
     private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
 
-    @GetMapping(value = "/contrats", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/contrats/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Contrat",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Contrats", responseContainer = "List<Contrat>")
     @ApiResponses(value = {
@@ -74,7 +74,7 @@ public class ContratController {
         return new ResponseEntity<>(contratList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/contrats/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/contrats/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Contrat par ID",
             notes = "Cette méthode permet de chercher un Contrat par son ID", response = Contrat.class
     )
@@ -87,7 +87,7 @@ public class ContratController {
         return contratService.findContratById(id);
     }
 
-    @GetMapping(value = "/searchContratByReference", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/contrats/searchContratByReference", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Contrat par son REFERENCE",
             notes = "Cette méthode permet de chercher un Contrat par son REFERENCE", response = Contrat.class
     )
@@ -100,7 +100,7 @@ public class ContratController {
         return contratService.findByReference(reference);
     }
 
-    @GetMapping(value = "/searchListContratsByReference")
+    @GetMapping(value = APP_ROOT + "/contrats/searchListContratsByReference")
     @ApiOperation(value = "Renvoi la liste des Contrat par REFERENCE",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Contrats par REFERENCE", responseContainer = "List<Contrat>")
     @ApiResponses(value = {
@@ -110,22 +110,22 @@ public class ContratController {
         return contratService.findListContratByReference("%" + reference + "%");
     }
 
-    @GetMapping(value = "/searchContratByNature")
+    @GetMapping(value = APP_ROOT + "/contrats/searchContratByNature")
     public Contrat getContratByNature(@RequestParam(name = "nat") String nature) {
         return contratService.findByNature(nature);
     }
 
-    @GetMapping(value = "/searchListContratsByNature")
+    @GetMapping(value = APP_ROOT + "/contrats/searchListContratsByNature")
     public List<Contrat> getAllContratsByNature(@RequestParam(name = "nat") String nature) {
         return contratService.findListContratByNature("%" + nature + "%");
     }
 
-    @GetMapping(value = "/searchListContratsByClientId")
+    @GetMapping(value = APP_ROOT + "/contrats/searchListContratsByClientId")
     public List<Contrat> getAllContratsByClientId(@RequestParam("client") Long clientId) {
         return contratService.findContratByClientId(clientId);
     }
 
-    @PostMapping(value = "/createContrats", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/contrats/createContrats", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Contrat",
             notes = "Cette méthode permet d'enregistrer et modifier un Contrat", response = Contrat.class)
     @ApiResponses(value = {
@@ -146,7 +146,7 @@ public class ContratController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Contrat is created");
     }
 
-    @PostMapping(path = "/uploadFilePdf/{id}")
+    @PostMapping(value = APP_ROOT + "/contrats/uploadFilePdf/{id}")
     @ApiOperation(value = "importer un Contrat",
             notes = "Cette méthode permet d'importer un contrat pdf depuis le disque vers la BD")
     @ApiResponses(value = {
@@ -161,7 +161,7 @@ public class ContratController {
         contratService.saveContrat(contrat);
     }
 
-    @PutMapping(value = "/contrats/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/contrats/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Contrat",
             notes = "Cette méthode permet de modifier un Contrat", response = Contrat.class)
     @ApiResponses(value = {
@@ -174,7 +174,7 @@ public class ContratController {
         return new ResponseEntity<>(contratService.updateContrat(id, contrat), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/contrats/{id}")
+    @DeleteMapping(value = APP_ROOT + "/contrats/delete/{id}")
     @ApiOperation(value = "Supprimer un Contrat par son ID",
             notes = "Cette méthode permet de supprimer un Contrat par son ID", response = Contrat.class)
     @ApiResponses(value = {
@@ -185,7 +185,7 @@ public class ContratController {
         return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "/downloadContratFile/{fileName:.+}")
+    @RequestMapping(value = APP_ROOT + "/contrats/downloadContratFile/{fileName:.+}")
     @ApiOperation(value = "Télécharger un Contrat par son ID",
             notes = "Cette méthode permet de télécharger un Contrat par son ID", response = Contrat.class)
     @ApiResponses(value = {

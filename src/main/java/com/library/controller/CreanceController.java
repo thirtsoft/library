@@ -33,7 +33,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class CreanceController {
 
     @Autowired
@@ -48,7 +48,7 @@ public class CreanceController {
     @Autowired
     private HistoriqueCreanceService historiqueCreanceService;
 
-    @GetMapping(value = "/creances", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/creances/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Creance",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Creance", responseContainer = "List<Creance>")
     @ApiResponses(value = {
@@ -70,7 +70,7 @@ public class CreanceController {
         return new ResponseEntity<>(creanceList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/creances/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/creances/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une Creance par ID",
             notes = "Cette méthode permet de chercher une Creance par son ID", response = Creance.class
     )
@@ -86,7 +86,7 @@ public class CreanceController {
         return ResponseEntity.ok().body(creance);
     }
 
-    @GetMapping(value = "/searchCreanceByReference", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/creances/searchCreanceByReference", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une Creance par REFERENCE",
             notes = "Cette méthode permet de chercher une Creance par son REFERENCE", response = Creance.class
     )
@@ -99,7 +99,7 @@ public class CreanceController {
         return creanceService.findByReference(reference);
     }
 
-    @PostMapping(path = "/updateStatus")
+    @PostMapping(value = APP_ROOT + "/creances/updateStatus")
     public ResponseEntity<Boolean> updateStatus(@RequestBody ObjectNode json) {
         Long reference;
         String ref;
@@ -123,7 +123,7 @@ public class CreanceController {
 
     }
 
-    @PostMapping(path = "/updateStatusCreance", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/creances/updateStatusCreance", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une Creance par status",
             notes = "Cette méthode permet de modifier une Creance par son status", response = Creance.class
     )
@@ -153,7 +153,7 @@ public class CreanceController {
 
     }
 
-    @GetMapping(value = "/NumberOfCreances")
+    @GetMapping(value = APP_ROOT + "/creances/NumberOfCreances")
     @ApiOperation(value = "Compter le nombre de Creance",
             notes = "Cette méthode permet de compter le nombre total de Creance"
     )
@@ -161,7 +161,7 @@ public class CreanceController {
         return creanceService.getNumberOfCreances();
     }
 
-    @GetMapping(value = "/SumNumbersOfCreances")
+    @GetMapping(value = APP_ROOT + "/creances/SumNumbersOfCreances")
     @ApiOperation(value = "Additionner le total de Creance",
             notes = "Cette méthode permet de faire la somme total de Creance"
     )
@@ -169,17 +169,17 @@ public class CreanceController {
         return creanceService.countNumbersOfCreances();
     }
 
-    @GetMapping(value = "/searchCreanceByStatus")
+    @GetMapping(value = APP_ROOT + "/creances/searchCreanceByStatus")
     public Creance getCreanceByStatus(@RequestParam("status") String status) {
         return creanceService.findByStatus(status);
     }
 
-    @GetMapping(value = "/searchListCreanceByStatus")
+    @GetMapping(value = APP_ROOT + "/creances/searchListCreanceByStatus")
     public List<Creance> getAllCreanceByStatus(@RequestParam("status") String status) {
         return creanceService.findListCreanceByStatus(status);
     }
 
-    @GetMapping(value = "/searchListCreanceByClientId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/creances/searchListCreanceByClientId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Charges par Client",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Creance d'un Client", responseContainer = "List<Creance>")
     @ApiResponses(value = {
@@ -189,7 +189,7 @@ public class CreanceController {
         return creanceService.findCreanceByClientId(clientId);
     }
 
-    @GetMapping(value = "/sumTotalOfCreanceByMonth")
+    @GetMapping(value = APP_ROOT + "/creances/sumTotalOfCreanceByMonth")
     @ApiOperation(value = "Additionner la somme des Creance par mois",
             notes = "Cette méthode permet de faire la somme total des Creance par mois"
     )
@@ -197,7 +197,7 @@ public class CreanceController {
         return creanceService.sumTotalOfCreancesByMonth();
     }
 
-    @PostMapping(value = "/creances/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/creances/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Creance",
             notes = "Cette méthode permet d'enregistrer et modifier une Creance", response = Creance.class)
     @ApiResponses(value = {
@@ -226,7 +226,7 @@ public class CreanceController {
         return new ResponseEntity<>(creanceResultat, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/creances/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/creances/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une Creance par son ID",
             notes = "Cette méthode permet de modifier une Creance par son ID", response = Creance.class)
     @ApiResponses(value = {
@@ -261,13 +261,13 @@ public class CreanceController {
 
     }
 
-    @PatchMapping(value = "/setCreanceStatusById/{id}")
+    @PatchMapping(value = APP_ROOT + "/creances/setCreanceStatusById/{id}")
     public ResponseEntity<Creance> setCreanceStatusById(@PathVariable("id") Long id, @RequestBody Creance creance) {
         creance.setId(id);
         return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/setCreanceOnlyStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = APP_ROOT + "/creances/setCreanceOnlyStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier le status d'une Creance par son ID",
             notes = "Cette méthode permet de modifier le status d'une Creance par son ID", response = Creance.class)
     @ApiResponses(value = {
@@ -296,7 +296,7 @@ public class CreanceController {
         return new ResponseEntity<>(newCreance, HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/setCreanceOnlyAvanceCreance/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = APP_ROOT + "/creances/setCreanceOnlyAvanceCreance/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier l'avance d'une Creance par son ID",
             notes = "Cette méthode permet de modifier la somme de creance avancée par son ID", response = Creance.class)
     @ApiResponses(value = {
@@ -326,7 +326,7 @@ public class CreanceController {
         return new ResponseEntity<>(newCreance, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/creances/{id}")
+    @DeleteMapping(value = APP_ROOT + "/creances/delete/{id}")
     @ApiOperation(value = "Supprimer une Creance par son ID",
             notes = "Cette méthode permet de supprimer une Creance par son ID", response = Creance.class)
     @ApiResponses(value = {

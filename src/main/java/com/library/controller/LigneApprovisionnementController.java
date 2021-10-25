@@ -20,13 +20,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class LigneApprovisionnementController {
 
     @Autowired
     private LigneApprovisionnementService ligneApprovisionnementService;
 
-    @GetMapping(value = "/ligneApprovisionnements", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneApprovisionnements/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneApprovisionnement",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneApprovisionnement", responseContainer = "List<LigneApprovisionnement>")
     @ApiResponses(value = {
@@ -48,7 +48,7 @@ public class LigneApprovisionnementController {
         return new ResponseEntity<>(ligneApprovisionnementList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ligneApprovisionnements/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneApprovisionnements/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un LigneApprovisionnement par ID",
             notes = "Cette méthode permet de chercher une Charge par son ID", response = LigneApprovisionnement.class
     )
@@ -65,7 +65,7 @@ public class LigneApprovisionnementController {
 
     }
 
-    @GetMapping(value = "/lappros/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/lappros/findByNumero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneApprovisionnement par numero",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneApprovisionnements par numero", responseContainer = "List<LigneApprovisionnement>")
     @ApiResponses(value = {
@@ -81,7 +81,7 @@ public class LigneApprovisionnementController {
     }
 
 
-    @GetMapping(value = "/searchListLigneApprovisionnementByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneApprovisionnements/searchListLigneApprovisionnementByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneApprovisionnement par Produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneApprovisionnements par Produit", responseContainer = "List<LigneApprovisionnement>")
     @ApiResponses(value = {
@@ -91,7 +91,7 @@ public class LigneApprovisionnementController {
         return ligneApprovisionnementService.findListLigneApprovisionnementByProduitId(prodId);
     }
 
-    @GetMapping(value = "/searchListLigneApproByApprovisionnementId/{approId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneApprovisionnements/searchListLigneApproByApprovisionnementId/{approId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneApprovisionnement par Approvisionement",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneApprovisionnements par Approvisionement", responseContainer = "List<LigneApprovisionnement>")
     @ApiResponses(value = {
@@ -101,7 +101,7 @@ public class LigneApprovisionnementController {
         return ligneApprovisionnementService.findListLigneApprovisionnementByApprovisionnementId(approId);
     }
 
-    @PostMapping(value = "/ligneApprovisionnements", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ligneApprovisionnements/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un LigneApprovisionnement",
             notes = "Cette méthode permet d'enregistrer une LigneApprovisionnement", response = LigneApprovisionnement.class)
     @ApiResponses(value = {
@@ -114,7 +114,7 @@ public class LigneApprovisionnementController {
         return new ResponseEntity<>(ligneApprovisionnementService.saveLigneApprovisionnement(ligneApprovisionnement), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/ligneApprovisionnements/{lApproId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/ligneApprovisionnements/update/{lApproId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une LigneApprovisionnement par son ID",
             notes = "Cette méthode permet de modifier une LigneApprovisionnement par son ID", response = LigneApprovisionnement.class)
     @ApiResponses(value = {

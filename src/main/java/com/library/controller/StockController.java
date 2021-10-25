@@ -14,15 +14,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class StockController {
 
     @Autowired
     private StockService stockService;
 
-    @GetMapping(value = "/stocks", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/stocks/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Stock",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Stock", responseContainer = "List<Stock>")
     @ApiResponses(value = {
@@ -32,7 +34,7 @@ public class StockController {
         return stockService.findListStocks();
     }
 
-    @GetMapping(value = "/stocks/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/stocks/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Stock par id",
             notes = "Cette méthode permet de chercher une Stock par id", response = Stock.class
     )
@@ -45,7 +47,7 @@ public class StockController {
         return stockService.findStockById(id);
     }
 
-    @GetMapping(value = "/searchStockByQuantite", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/stocks/searchStockByQuantite", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Stock par quantite",
             notes = "Cette méthode permet de chercher une Stock par quantite", response = Stock.class
     )
@@ -58,7 +60,7 @@ public class StockController {
         return stockService.findStockByQuantite(quantite);
     }
 
-    @GetMapping(value = "/searchStockByProduct", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/stocks/searchStockByProduct", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Stock par produit",
             notes = "Cette méthode permet de chercher une Stock par son produit", response = Stock.class
     )
@@ -71,7 +73,7 @@ public class StockController {
         return stockService.findStockByProductId(prodId);
     }
 
-    @GetMapping(value = "/searchListStocksByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/stocks/searchListStocksByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Stock par produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Stock par produit", responseContainer = "List<Stock>")
     @ApiResponses(value = {
@@ -82,7 +84,7 @@ public class StockController {
     }
 
 
-    @PostMapping(value = "/stocks", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/stocks/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Stock",
             notes = "Cette méthode permet d'enregistrer un Stock", response = Stock.class)
     @ApiResponses(value = {
@@ -94,7 +96,7 @@ public class StockController {
         return new ResponseEntity<>(stockService.saveStock(stock), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/stocks/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/stocks/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Stock par son ID",
             notes = "Cette méthode permet de modifier un Stock par son ID", response = Stock.class)
     @ApiResponses(value = {
@@ -108,7 +110,7 @@ public class StockController {
 
     }
 
-    @DeleteMapping(value = "/stocks/{id}")
+    @DeleteMapping(value = APP_ROOT + "/stocks/delete/{id}")
     @ApiOperation(value = "Supprimer un Stock par son ID",
             notes = "Cette méthode permet de supprimer un Stock par son ID", response = Stock.class)
     @ApiResponses(value = {

@@ -24,7 +24,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class DevisController {
 
     private final Double total = 0.0;
@@ -33,7 +33,7 @@ public class DevisController {
     @Autowired
     private UtilisateurService utilisateurService;
 
-    @GetMapping(value = "/devis", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/devis/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Devis",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Devis", responseContainer = "List<Devis>")
     @ApiResponses(value = {
@@ -55,7 +55,7 @@ public class DevisController {
         return new ResponseEntity<>(devisList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/devis/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/devis/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Devis par ID",
             notes = "Cette méthode permet de chercher un Devis par son ID", response = Devis.class
     )
@@ -72,7 +72,7 @@ public class DevisController {
 
     }
 
-    @GetMapping(value = "/searchDevisByNumeroDevis", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/devis/searchDevisByNumeroDevis", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Devis par numeroDevis",
             notes = "Cette méthode permet de chercher un Devis par le numeroDevis", response = Devis.class
     )
@@ -85,7 +85,7 @@ public class DevisController {
         return devisService.findByNumeroDevis(numeroDevis);
     }
 
-    @GetMapping(value = "/NumberOfDevis")
+    @GetMapping(value = APP_ROOT + "/devis/NumberOfDevis")
     public int getNumberOfdevis() {
         return devisService.getNumberOfDevis();
     }
@@ -102,7 +102,7 @@ public class DevisController {
     }
 
 
-    @GetMapping(value = "/searchListDevisByClientId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/devis/searchListDevisByClientId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Devis par CLIENT",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Devis par CLIENT", responseContainer = "List<Devis>")
     @ApiResponses(value = {
@@ -112,13 +112,13 @@ public class DevisController {
         return devisService.findDevisByClientId(clientId);
     }
 
-    @GetMapping(value = "/getAllDeviswithdate")
+    @GetMapping(value = APP_ROOT + "/devis/getAllDeviswithdate")
     public List<Devis> getAlldevisWithDatet(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateCommande) {
 
         return devisService.findDevisByDate(dateCommande);
     }
 
-    @PostMapping(value = "/devis/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/devis/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Devis",
             notes = "Cette méthode permet d'enregistrer un Devis", response = Devis.class)
     @ApiResponses(value = {
@@ -135,7 +135,7 @@ public class DevisController {
         return new ResponseEntity<>(devisService.saveDevis(devis), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/devis/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/devis/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Devis par son ID",
             notes = "Cette méthode permet de modifier un Devis par son ID", response = Devis.class)
     @ApiResponses(value = {
@@ -149,7 +149,7 @@ public class DevisController {
 
     }
 
-    @DeleteMapping(value = "/devis/{id}")
+    @DeleteMapping(value = APP_ROOT + "/devis/delete/{id}")
     @ApiOperation(value = "Supprimer un Devis par son ID",
             notes = "Cette méthode permet de supprimer un Devis par son ID", response = Devis.class)
     @ApiResponses(value = {
@@ -160,7 +160,7 @@ public class DevisController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/searchNumberOfDevisByMonth")
+    @GetMapping(value = APP_ROOT + "/devis/searchNumberOfDevisByMonth")
     @ApiOperation(value = "Renvoi le nombre de devis par mois",
             notes = "Cette méthode permet de compter et renvoyer le nombre de Devis par mois")
     @ApiResponses(value = {
@@ -170,7 +170,7 @@ public class DevisController {
         return devisService.countNumberTotalOfDevisByMonth();
     }
 
-    @GetMapping(value = "/searchSumDevisByMonth")
+    @GetMapping(value = APP_ROOT + "/devis/searchSumDevisByMonth")
     @ApiOperation(value = "Renvoi le montant de devis par mois",
             notes = "Cette méthode permet de renvoyer le montant total de Devis par mois")
     @ApiResponses(value = {
@@ -180,7 +180,7 @@ public class DevisController {
         return devisService.sumTotalOfDevisByMonth();
     }
 
-    @GetMapping(value = "/generateNumeroDevis")
+    @GetMapping(value = APP_ROOT + "/devis/generateNumeroDevis")
     @ApiOperation(value = "Générer le numero de devis",
             notes = "Cette méthode permet de générer de façon automatique le numero de Devis par mois")
     @ApiResponses(value = {

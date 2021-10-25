@@ -43,7 +43,7 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class UtilisateurController {
 
     @Autowired
@@ -55,7 +55,7 @@ public class UtilisateurController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping(value = "/utilisateurs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/utilisateurs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Utilisateur",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Utilisateur", responseContainer = "List<Utilisateur>")
     @ApiResponses(value = {
@@ -77,7 +77,7 @@ public class UtilisateurController {
         return new ResponseEntity<>(utilisateurList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/utilisateurs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/utilisateurs/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Utilisateur par ID",
             notes = "Cette méthode permet de chercher une Utilisateur par son ID", response = Utilisateur.class
     )
@@ -93,7 +93,7 @@ public class UtilisateurController {
         return ResponseEntity.ok().body(utilisateur);
     }
 
-    @GetMapping(value = "/avatar/{id}")
+    @GetMapping(value = APP_ROOT + "/avatar/{id}")
     @ApiOperation(value = "Afficher une photo",
             notes = "Cette méthode permet de chercher et d'afficher la photo d'un Utilisateur par son ID"
     )
@@ -109,7 +109,7 @@ public class UtilisateurController {
 
     }
 
-    @PutMapping("/photo")
+    @PutMapping(value = APP_ROOT + "/photo")
     public void editPhotoUser (@RequestParam("image") MultipartFile file, @RequestParam("id") String id)
             throws JsonParseException, JsonMappingException, Exception {
 
@@ -128,7 +128,7 @@ public class UtilisateurController {
     }
 
 
-    @GetMapping(value = "/searchUtilisateurByUsername", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/utilisateurs/searchUtilisateurByUsername", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une utilisateur par son username",
             notes = "Cette méthode permet de chercher un utilisateur par son nom d'utilisateur", response = Utilisateur.class
     )
@@ -141,7 +141,7 @@ public class UtilisateurController {
         return utilisateurService.findUtilisateurByUsername(username);
     }
 
-    @GetMapping(value = "/searchListUtilisateurByUsername", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/utilisateurs/searchListUtilisateurByUsername", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Utilisateur par username",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Utilisateur par le nom d'utilisateur", responseContainer = "List<Utilisateur>")
     @ApiResponses(value = {
@@ -153,7 +153,7 @@ public class UtilisateurController {
 
     }
 
-    @PutMapping(value = "/user")
+    @PutMapping(value = APP_ROOT + "/utilisateurs/user")
     public ResponseEntity<Response> editUser(@RequestParam("image") MultipartFile file, @RequestParam("user") String user)
             throws Exception {
 
@@ -186,7 +186,7 @@ public class UtilisateurController {
         }
     }
 
-    @GetMapping(path = "/photoUser/{id}", produces = IMAGE_PNG_VALUE)
+    @GetMapping(value = APP_ROOT + "/utilisateurs/photoUser/{id}", produces = IMAGE_PNG_VALUE)
     @ApiOperation(value = "Recupérer une photo par ID",
             notes = "Cette méthode permet de récupérer la photo d'un utilisateur par son ID")
     @ApiResponses(value = {
@@ -199,7 +199,7 @@ public class UtilisateurController {
         return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/users/photos/" + utilisateur.getPhoto()));
     }
 
-    @PostMapping(path = "/uploadUserPhoto/{id}", produces = IMAGE_PNG_VALUE)
+    @PostMapping(value = APP_ROOT + "/utilisateurs/uploadUserPhoto/{id}", produces = IMAGE_PNG_VALUE)
     @ApiOperation(value = "Enregistrer une photo dans un dossier",
             notes = "Cette méthode permet d'enregistrer la photo d'un utilisateur dans un dossier externe utilisateur")
     @ApiResponses(value = {
@@ -215,7 +215,7 @@ public class UtilisateurController {
     }
 
 
-    @PostMapping(path = "uploadUserPhoto/{id}/uploadUserPhoto", produces = IMAGE_PNG_VALUE)
+    @PostMapping(value = APP_ROOT + "/utlisateurs/uploadUserPhoto/{id}/uploadUserPhoto", produces = IMAGE_PNG_VALUE)
     @ApiOperation(value = "Enregistrer une photo en BD",
             notes = "Cette méthode permet d'enregistrer la photo d'un utilisateur dans la base de données")
     @ApiResponses(value = {
@@ -231,7 +231,7 @@ public class UtilisateurController {
         utilisateurService.saveUtilisateur(utilisateur);
     }
 
-    @PutMapping(value = "/utilisateurs/{idUser}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/utilisateurs/update/{idUser}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un utilisateur par son ID",
             notes = "Cette méthode permet de modifier un utilisateur par son ID", response = Utilisateur.class)
     @ApiResponses(value = {
@@ -250,7 +250,7 @@ public class UtilisateurController {
 
     }
 
-    @DeleteMapping(value = "/utilisateurs/{id}")
+    @DeleteMapping(value = APP_ROOT + "/utilisateurs/delete/{id}")
     @ApiOperation(value = "Supprimer un Utilisateur par son ID",
             notes = "Cette méthode permet de supprimer un Utilisateur par son ID", response = Utilisateur.class)
     @ApiResponses(value = {
@@ -262,7 +262,7 @@ public class UtilisateurController {
 
     }
 
-    @PatchMapping(value = "/updateUsername")
+    @PatchMapping(value = APP_ROOT + "/utilisateurs/updateUsername")
     @ApiOperation(value = "Modifier le username",
             notes = "Cette méthode permet de modifier le nom d'utilisateur d'un utilisateur", response = Utilisateur.class)
     @ApiResponses(value = {
@@ -288,7 +288,7 @@ public class UtilisateurController {
         return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @PatchMapping(value = "/updatePassword")
+    @PatchMapping(value = APP_ROOT + "/utilisateurs/updatePassword")
     @ApiOperation(value = "Modifier le mot de passe ",
             notes = "Cette méthode permet de modifier le mot de passe d'un", response = Utilisateur.class)
     @ApiResponses(value = {
@@ -318,7 +318,7 @@ public class UtilisateurController {
     }
 
 
-    @GetMapping(value = "/utilisateurs/authorities")
+    @GetMapping(value = APP_ROOT + "/utilisateurs/authorities")
     @ApiOperation(value = "Renvoi la liste de string des roles",
             notes = "Cette méthode permet de chercher et renvoyer la liste de string des roles", responseContainer = "List<String>")
     @ApiResponses(value = {

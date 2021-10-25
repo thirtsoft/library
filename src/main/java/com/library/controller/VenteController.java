@@ -40,7 +40,7 @@ public class VenteController {
     @Autowired
     private HistoriqueVenteService historiqueVenteService;
 
-    @GetMapping(value = "/ventes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ventes/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Vente",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Vente", responseContainer = "List<Vente>")
     @ApiResponses(value = {
@@ -62,7 +62,7 @@ public class VenteController {
         return new ResponseEntity<>(venteList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ventes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ventes/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Vente par ID",
             notes = "Cette méthode permet de chercher une Vente par son ID", response = Vente.class
     )
@@ -78,7 +78,7 @@ public class VenteController {
 
     }
 
-    @GetMapping(value = "/searchVenteByNumeroVente", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ventes/searchVenteByNumeroVente", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Vente par numero",
             notes = "Cette méthode permet de chercher une Vente par son numero", response = Vente.class
     )
@@ -91,7 +91,7 @@ public class VenteController {
         return venteService.findVenteByNumeroVente(numeroVente);
     }
 
-    @GetMapping(value = "/NumberOfVente")
+    @GetMapping(value = APP_ROOT + "/ventes/NumberOfVente")
     @ApiOperation(value = "Compter le nombre de Vente",
             notes = "Cette méthode permet de rechercher et retourner le nombre total Vente"
     )
@@ -102,7 +102,7 @@ public class VenteController {
         return venteService.getNumberOfVente();
     }
 
-    @GetMapping(value = "/NumberOfVenteByDay")
+    @GetMapping(value = APP_ROOT + "/ventes/NumberOfVenteByDay")
     @ApiOperation(value = "Compter le nombre de Vente par jour",
             notes = "Cette méthode permet de rechercher et retourner le nombre total Vente par jour"
     )
@@ -113,7 +113,7 @@ public class VenteController {
         return venteService.countNumberOfVenteByDay();
     }
 
-    @GetMapping(value = "/SumsOfVentes")
+    @GetMapping(value = APP_ROOT + "/ventes/SumsOfVentes")
     @ApiOperation(value = "Additionner le montant total de Vente",
             notes = "Cette méthode permet de rechercher et retourner le montant total Vente"
     )
@@ -124,7 +124,7 @@ public class VenteController {
         return venteService.countSumsOfVentess();
     }
 
-    @GetMapping(value = "/SumsOfVentesByMonth")
+    @GetMapping(value = APP_ROOT + "/ventes/SumsOfVentesByMonth")
     @ApiOperation(value = "Renvoi le montant total de Vente par mois",
             notes = "Cette méthode permet de rechercher et retourner le montant total de Vente par mois"
     )
@@ -135,7 +135,7 @@ public class VenteController {
         return venteService.sumTotalOfVentesByMonth();
     }
 
-    @GetMapping(value = "/SumsOfVentesByYear")
+    @GetMapping(value = APP_ROOT + "/ventes/SumsOfVentesByYear")
     @ApiOperation(value = "Renvoi le montant total de Vente par années",
             notes = "Cette méthode permet de rechercher et retourner le montant total de Vente par années"
     )
@@ -146,7 +146,7 @@ public class VenteController {
         return venteService.sumTotalOfVentesByYear();
     }
 
-    @GetMapping(value = "/generateNumeroVente")
+    @GetMapping(value = APP_ROOT + "/ventes/generateNumeroVente")
     @ApiOperation(value = "Générer le numéro de Vente",
             notes = "Cette méthode permet de générer automatiquement le numero de Vente"
     )
@@ -157,7 +157,7 @@ public class VenteController {
         return venteService.generateNumeroVente();
     }
 
-    @GetMapping(value = "/searchVenteByStatus", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ventes/searchVenteByStatus", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une Vente par Status",
             notes = "Cette méthode permet de chercher une Vente par son status", response = Vente.class
     )
@@ -170,7 +170,7 @@ public class VenteController {
         return venteService.findByStatus(status);
     }
 
-    @PostMapping(value = "/ventes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ventes/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Vente",
             notes = "Cette méthode permet d'enregistrer une Vente", response = Vente.class)
     @ApiResponses(value = {
@@ -203,7 +203,7 @@ public class VenteController {
         return new ResponseEntity<>(venteResultat, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/ventes/venteWithbarCode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ventes/venteWithbarCode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Vente avec lecteur code-barres",
             notes = "Cette méthode permet d'enregistrer une Vente en utilisant un lecteur code-barres", response = Vente.class)
     @ApiResponses(value = {
@@ -235,7 +235,7 @@ public class VenteController {
         return new ResponseEntity<>(venteResultat, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/ventes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/ventes/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une Vente par son ID",
             notes = "Cette méthode permet de modifier une Vente par son ID", response = Vente.class)
     @ApiResponses(value = {
@@ -269,7 +269,7 @@ public class VenteController {
 
     }
 
-    @DeleteMapping(value = "/ventes/{id}")
+    @DeleteMapping(value = APP_ROOT + "/ventes/delete/{id}")
     @ApiOperation(value = "Supprimer un Vente par son ID",
             notes = "Cette méthode permet de supprimer un Vente par son ID", response = Vente.class)
     @ApiResponses(value = {
@@ -299,7 +299,7 @@ public class VenteController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/searchVenteWithParticularDayAndMonth", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ventes/searchVenteWithParticularDayAndMonth", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Vente par jour et mois",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Vente par jour et mois", responseContainer = "List<Vente>")
     @ApiResponses(value = {
@@ -309,7 +309,7 @@ public class VenteController {
         return venteService.findVenteWithParticularDayAndMonth();
     }
 
-    @GetMapping(value = "/searchNumberOfVenteByMonth")
+    @GetMapping(value = APP_ROOT + "/ventes/searchNumberOfVenteByMonth")
     @ApiOperation(value = "Compter le nombre de Vente par mois",
             notes = "Cette méthode permet de chercher et renvoyer le nombre de Vente par mois")
     @ApiResponses(value = {
@@ -319,7 +319,7 @@ public class VenteController {
         return venteService.countNumberTotalOfVenteByMonth();
     }
 
-    @GetMapping(value = "/searchSumVenteByMonth")
+    @GetMapping(value = APP_ROOT + "/ventes/searchSumVenteByMonth")
     @ApiOperation(value = "Compter la somme des Ventes par mois",
             notes = "Cette méthode permet de chercher et renvoyer la montant total des Ventes par mois")
     @ApiResponses(value = {
@@ -329,7 +329,7 @@ public class VenteController {
         return venteService.sumTotalOfVenteByMonth();
     }
 
-    @GetMapping(value = "/searchSumVenteByYears")
+    @GetMapping(value = APP_ROOT + "/ventes/searchSumVenteByYears")
     @ApiOperation(value = "Compter la somme des Ventes par années",
             notes = "Cette méthode permet de chercher et renvoyer la montant total des Ventes par années")
     @ApiResponses(value = {
@@ -339,7 +339,7 @@ public class VenteController {
         return venteService.sumTotalOfVenteByYears();
     }
 
-    @GetMapping(value = "/searchSumsOfVenteByDay")
+    @GetMapping(value = APP_ROOT + "/ventes/searchSumsOfVenteByDay")
     @ApiOperation(value = "Compter la somme des Ventes par jours",
             notes = "Cette méthode permet de chercher et renvoyer la montant total des Ventes par jours")
     @ApiResponses(value = {
@@ -349,7 +349,7 @@ public class VenteController {
         return venteService.sumTotalOfVenteByDay();
     }
 
-    @GetMapping(value = "/searchListVenteByEmpId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ventes/searchListVenteByEmpId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Vente par Client",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Vente par client", responseContainer = "List<Vente>")
     @ApiResponses(value = {

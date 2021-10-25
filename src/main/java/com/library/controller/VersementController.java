@@ -29,7 +29,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class VersementController {
 
     private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Versement/";
@@ -37,7 +37,7 @@ public class VersementController {
     @Autowired
     private VersementService versementService;
 
-    @GetMapping(value = "/versements", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/versements/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Versement",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Versement", responseContainer = "List<Versement>")
     @ApiResponses(value = {
@@ -59,7 +59,7 @@ public class VersementController {
         return new ResponseEntity<>(versementList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/versements/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/versements/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Versement par ID",
             notes = "Cette méthode permet de chercher un Versement par son ID", response = Versement.class
     )
@@ -72,7 +72,7 @@ public class VersementController {
         return versementService.findVersementById(id);
     }
 
-    @GetMapping(value = "/searchVersementByNumVersement", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/versements/searchVersementByNumVersement", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Versement par numVersement",
             notes = "Cette méthode permet de chercher une Versement par sa numVersement", response = Versement.class
     )
@@ -85,7 +85,7 @@ public class VersementController {
         return versementService.findByNumVersement(numVersement);
     }
 
-    @GetMapping(value = "/searchListVersementsByNumVersement", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/versements/searchListVersementsByNumVersement", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Versement par numVersement",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par numVersement", responseContainer = "List<Versement>")
     @ApiResponses(value = {
@@ -95,7 +95,7 @@ public class VersementController {
         return versementService.findListVersementByNumVersement("%" + numVersement + "%");
     }
 
-    @GetMapping(value = "/searchVersementByNature", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/versements/searchVersementByNature", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Versement par nature",
             notes = "Cette méthode permet de chercher une Versement par sa nature", response = Versement.class
     )
@@ -108,7 +108,7 @@ public class VersementController {
         return versementService.findByNature(nature);
     }
 
-    @GetMapping(value = "/searchListVersementsByNature", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/versements/searchListVersementsByNature", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Versement par nature",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par nature", responseContainer = "List<Versement>")
     @ApiResponses(value = {
@@ -118,7 +118,7 @@ public class VersementController {
         return versementService.findListVersementByNature("%" + nature + "%");
     }
 
-    @GetMapping(value = "/searchListVersementsByEmployeId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/versements/searchListVersementsByEmployeId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Versement par Employe",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par employe", responseContainer = "List<Versement>")
     @ApiResponses(value = {
@@ -132,7 +132,7 @@ public class VersementController {
     }
 
 
-    @PostMapping(value = "/versements", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/versements/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Versement",
             notes = "Cette méthode permet d'enregistrer un Versement", response = Versement.class)
     @ApiResponses(value = {
@@ -148,7 +148,7 @@ public class VersementController {
         return new ResponseEntity<>(versement, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/versements/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/versements/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Versement",
             notes = "Cette méthode permet de modifier un Versement", response = Versement.class)
     @ApiResponses(value = {
@@ -161,7 +161,7 @@ public class VersementController {
         return new ResponseEntity<>(versementService.updateVersement(id, versement), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/createVersement")
+    @PostMapping(value = APP_ROOT + "/versements/createVersement")
     public ResponseEntity<?> createVersement(@RequestPart(name = "versement") String vers,
                                              @RequestParam(name = "file") MultipartFile file) throws IOException {
         Versement versement = new ObjectMapper().readValue(vers, Versement.class);
@@ -175,7 +175,7 @@ public class VersementController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Versement is created");
     }
 
-    @PostMapping(path = "/uploadPdfFile/{id}")
+    @PostMapping(value = APP_ROOT + "/versements/uploadPdfFile/{id}")
     @ApiOperation(value = "Importer un PDF",
             notes = "Cette méthode permet d'importer un fichier PDf d'un dossier externe vers la BD")
     @ApiResponses(value = {
@@ -190,7 +190,7 @@ public class VersementController {
         versementService.saveVersement(versement);
     }
 
-    @RequestMapping(value = "/downloadVersementFile/{fileName:.+}")
+    @RequestMapping(value = APP_ROOT + "/versements/downloadVersementFile/{fileName:.+}")
     @ApiOperation(value = "Télécharger un PDF",
             notes = "Cette méthode permet de télécharger un le reçu d'un  Versement")
     @ApiResponses(value = {
@@ -215,7 +215,7 @@ public class VersementController {
     }
 
 
-    @DeleteMapping(value = "/versements/{id}")
+    @DeleteMapping(value = APP_ROOT + "/versements/delete/{id}")
     @ApiOperation(value = "Supprimer un Versement par son ID",
             notes = "Cette méthode permet de supprimer un Versement par son ID", response = Versement.class)
     @ApiResponses(value = {

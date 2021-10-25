@@ -20,13 +20,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/prodApi")
+//@RequestMapping("/prodApi")
 public class LigneCmdClientController {
 
     @Autowired
     private LigneCmdClientService ligneCmdClientService;
 
-    @GetMapping(value = "/ligneCommandes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCommandes/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCmdClient",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCmdClient", responseContainer = "List<LigneCmdClient>")
     @ApiResponses(value = {
@@ -36,7 +36,7 @@ public class LigneCmdClientController {
         return ligneCmdClientService.findAllLigneCmdClient();
     }
 
-    @GetMapping(value = APP_ROOT + "/ligneCmdClient/allLigneCmdClientOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCommandes/allLigneCmdClientOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCmdClient",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCmdClient",
             responseContainer = "List<LigneCmdClient>")
@@ -48,7 +48,7 @@ public class LigneCmdClientController {
         return new ResponseEntity<>(ligneCmdClientList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ligneCommandes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCommandes/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un LigneCmdClient par ID",
             notes = "Cette méthode permet de chercher une LigneCmdClient par son ID", response = LigneCmdClient.class
     )
@@ -65,7 +65,7 @@ public class LigneCmdClientController {
 
     }
 
-    @GetMapping(value = "/lcomms/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/lcomms/findByNumero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCmdClient par numero",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCmdClient par numero", responseContainer = "List<LigneCmdClient>")
     @ApiResponses(value = {
@@ -80,7 +80,7 @@ public class LigneCmdClientController {
         return Lcomms;
     }
 
-    @GetMapping(value = "/searchListLigneCmdClientByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCommandes/searchListLigneCmdClientByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCmdClient par Produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCmdClient par Produit", responseContainer = "List<LigneCmdClient>")
     @ApiResponses(value = {
@@ -90,7 +90,7 @@ public class LigneCmdClientController {
         return ligneCmdClientService.findLigneCmdClientByProduitId(prodId);
     }
 
-    @GetMapping(value = "/searchListLigneCmdClientByCommandeId/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCommandes/searchListLigneCmdClientByCommandeId/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCmdClient par Commande",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCmdClient par Commande", responseContainer = "List<LigneCmdClient>")
     @ApiResponses(value = {
@@ -100,7 +100,7 @@ public class LigneCmdClientController {
         return ligneCmdClientService.findLigneCmdClientByCommandeClientId(comId);
     }
 
-    @PostMapping(value = "/ligneCommandes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ligneCommandes/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une LigneCmdClient",
             notes = "Cette méthode permet d'enregistrer et modifier une LigneCmdClient", response = LigneCmdClient.class)
     @ApiResponses(value = {
@@ -113,7 +113,7 @@ public class LigneCmdClientController {
         return new ResponseEntity<>(ligneCmdClientService.saveLigneCmdClient(ligneCmdClient), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/ligneCommandes/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/ligneCommandes/update/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une LigneCmdClient par son ID",
             notes = "Cette méthode permet de modifier une LigneCmdClient par son ID", response = LigneCmdClient.class)
     @ApiResponses(value = {
@@ -127,7 +127,7 @@ public class LigneCmdClientController {
 
     }
 
-    @DeleteMapping(value = "/ligneCommandes/{id}")
+    @DeleteMapping(value = APP_ROOT + "/ligneCommandes/delete/{id}")
     @ApiOperation(value = "Supprimer une LigneCmdClient par son ID",
             notes = "Cette méthode permet de supprimer une LigneCmdClient par son ID", response = LigneCmdClient.class)
     @ApiResponses(value = {

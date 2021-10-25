@@ -32,7 +32,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/prodApi")
+//@RequestMapping("/prodApi")
 public class ScategorieController {
 
     @Autowired
@@ -50,7 +50,7 @@ public class ScategorieController {
     @Autowired
     private ServletContext context;
 
-    @GetMapping(value = "/scategories", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/scategories/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Scategorie",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Scategorie", responseContainer = "List<Scategorie>")
     @ApiResponses(value = {
@@ -72,7 +72,7 @@ public class ScategorieController {
         return new ResponseEntity<>(scategorieList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/scategories/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/scategories/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une Scategorie par ID",
             notes = "Cette méthode permet de chercher une Scategorie par son ID", response = Scategorie.class
     )
@@ -85,7 +85,7 @@ public class ScategorieController {
         return scategorieService.findScategorieById(scatId);
     }
 
-    @GetMapping(value = "/searchScategorieByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/scategories/searchScategorieByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une Scategorie par CODE",
             notes = "Cette méthode permet de chercher une Scategorie par son CODE", response = Scategorie.class
     )
@@ -98,7 +98,7 @@ public class ScategorieController {
         return scategorieService.findByCode(code);
     }
 
-    @GetMapping(value = "/searchListScategoriesByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT +  "/scategories/searchListScategoriesByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Scategorie par code",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Scategories par code", responseContainer = "List<Scategorie>")
     @ApiResponses(value = {
@@ -108,7 +108,7 @@ public class ScategorieController {
         return scategorieService.findListScategorieByCode("%" + code + "%");
     }
 
-    @GetMapping(value = "/searchProduitByLibelle", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/scategories/searchProduitByLibelle", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une Scategorie par libelle",
             notes = "Cette méthode permet de chercher une Scategorie par son libelle", response = Scategorie.class
     )
@@ -121,7 +121,7 @@ public class ScategorieController {
         return scategorieService.findByLibelle(libelle);
     }
 
-    @GetMapping(value = "/searchListScategoriesByLibelle", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/scategories/searchListScategoriesByLibelle", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Scategorie par libelle",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Scategories par libelle", responseContainer = "List<Scategorie>")
     @ApiResponses(value = {
@@ -131,7 +131,7 @@ public class ScategorieController {
         return scategorieService.findListScategorieByLibelle("%" + libelle + "%");
     }
 
-    @GetMapping(value = "/searchListScategoriesByCategoryId/{catId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/scategories/searchListScategoriesByCategoryId/{catId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Scategorie par categorie",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Scategories par categorie", responseContainer = "List<Scategorie>")
     @ApiResponses(value = {
@@ -141,19 +141,18 @@ public class ScategorieController {
         return scategorieService.findScategorieByCateoryId(catId);
     }
 
-    @GetMapping("/searchListScategoriesByCategoryId")
+    @GetMapping(value = APP_ROOT + "/scategories/searchListScategoriesByCategoryId")
     public List<Scategorie> getListScategoriesByCategory(@RequestParam(name = "catId") Long catId) {
         return scategorieService.findScategorieByCateoryId(catId);
     }
 
 
-    @PostMapping(value = "/scategories", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/scategories/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Scategorie",
             notes = "Cette méthode permet d'enregistrer et modifier une Scategorie", response = Scategorie.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "La Scategorie a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun Scategorie  crée / modifié")
-
     })
     public ResponseEntity<Scategorie> saveScategorie(@RequestBody Scategorie scategorie) {
         if (scategorieService.findByCode(scategorie.getCode()) != null) {
@@ -163,7 +162,7 @@ public class ScategorieController {
         return new ResponseEntity<>(scategorie, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/scategories/{ScatId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/scategories/update/{ScatId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Scategorie par son ID",
             notes = "Cette méthode permet de modifier un Scategorie par son ID", response = Scategorie.class)
     @ApiResponses(value = {
@@ -176,7 +175,7 @@ public class ScategorieController {
         return scategorieService.updateScategorie(ScatId, sCategorie);
     }
 
-    @DeleteMapping(value = "/scategories/{id}")
+    @DeleteMapping(value = APP_ROOT + "/scategories/delete/{id}")
     @ApiOperation(value = "Supprimer une Scategorie par son ID",
             notes = "Cette méthode permet de supprimer une Scategorie par son ID", response = Scategorie.class)
     @ApiResponses(value = {
@@ -187,7 +186,7 @@ public class ScategorieController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/createScategoriePdf")
+    @GetMapping(value = APP_ROOT + "/scategories/createScategoriePdf")
     @ApiOperation(value = "Générer un PDF",
             notes = "Cette méthode permet de générer la liste des scategories sous format pdf")
     @ApiResponses(value = {
@@ -229,7 +228,7 @@ public class ScategorieController {
 
     }
 
-    @PostMapping(value = "/uploadScategorie")
+    @PostMapping(value = APP_ROOT + "/scategories/uploadScategorie")
     @ApiOperation(value = "Importer un fichier excel",
             notes = "Cette méthode permet d'importer le contenu d'un fichier Excel vers la BD")
     @ApiResponses(value = {
@@ -251,7 +250,7 @@ public class ScategorieController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
     }
 
-    @GetMapping(value = "/download/scategories.xlsx")
+    @GetMapping(value = APP_ROOT + "/scategories/download/scategories.xlsx")
     @ApiOperation(value = "Exporter un fichier excel",
             notes = "Cette méthode permet d'exporter le contenu d'une BD vers un fichier Excel")
     @ApiResponses(value = {

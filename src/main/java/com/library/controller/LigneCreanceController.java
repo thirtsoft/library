@@ -20,13 +20,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class LigneCreanceController {
 
     @Autowired
     private LigneCreanceService ligneCreanceService;
 
-    @GetMapping(value = "/ligneCreances", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCreances/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCreance",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCreance", responseContainer = "List<LigneCreance>")
     @ApiResponses(value = {
@@ -48,7 +48,7 @@ public class LigneCreanceController {
         return new ResponseEntity<>(ligneCreanceList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ligneCreances/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCreances/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une LigneCreance par ID",
             notes = "Cette méthode permet de chercher une LigneCreance par son ID", response = LigneCreance.class
     )
@@ -65,7 +65,7 @@ public class LigneCreanceController {
 
     }
 
-    @GetMapping(value = "/lcreances/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCreances/findByNumero/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCreance par numero",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCreance par numero", responseContainer = "List<LigneCreance>")
     @ApiResponses(value = {
@@ -80,7 +80,7 @@ public class LigneCreanceController {
         return Lcreances;
     }
 
-    @GetMapping(value = "/searchListLigneCreanceByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCreances/searchListLigneCreanceByProduitId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCreance par Produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCreance par Produit", responseContainer = "List<LigneCreance>")
     @ApiResponses(value = {
@@ -90,7 +90,7 @@ public class LigneCreanceController {
         return ligneCreanceService.findLigneCreanceByProduitId(prodId);
     }
 
-    @GetMapping(value = "/searchListLigneCreanceByCreanceId/{creanceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneCreances/searchListLigneCreanceByCreanceId/{creanceId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneCreance par Creance",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneCreance par Creance", responseContainer = "List<LigneCreance>")
     @ApiResponses(value = {
@@ -100,7 +100,7 @@ public class LigneCreanceController {
         return ligneCreanceService.findLigneCreanceByCreanceId(creanceId);
     }
 
-    @PostMapping(value = "/ligneCreances", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/ligneCreances/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une LigneCreance",
             notes = "Cette méthode permet d'enregistrer et modifier une LigneCreance", response = LigneCreance.class)
     @ApiResponses(value = {
@@ -113,11 +113,11 @@ public class LigneCreanceController {
         return new ResponseEntity<>(ligneCreanceService.saveLigneCreance(ligneCreance), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/ligneCreance/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/ligneCreance/update/{lcId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une LigneCreance par son ID",
             notes = "Cette méthode permet de modifier une LigneCreance par son ID", response = LigneCreance.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "La LigneCreance avec l'id  ID a été crée / modifié"),
+            @ApiResponse(code = 200, message = "La LigneCreance avec l'id  ID a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun LigneCreance a été modifié avec cet ID")
 
     })
@@ -127,7 +127,7 @@ public class LigneCreanceController {
 
     }
 
-    @DeleteMapping(value = "/ligneCreance/{id}")
+    @DeleteMapping(value = APP_ROOT + "/ligneCreance/delete/{id}")
     @ApiOperation(value = "Supprimer une LigneCreance par son ID",
             notes = "Cette méthode permet de supprimer une LigneCreance par son ID", response = LigneCreance.class)
     @ApiResponses(value = {

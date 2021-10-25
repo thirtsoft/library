@@ -19,13 +19,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class AvoirController {
 
     @Autowired
     private AvoirService avoirService;
 
-    @GetMapping(value = "/avoirs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/avoirs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des avoirs",
             notes = "Cette méthode permet de chercher et renvoyer la liste des avoirs", responseContainer = "List<Avoir>")
     @ApiResponses(value = {
@@ -47,7 +47,7 @@ public class AvoirController {
         return new ResponseEntity<>(avoirList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/avoirs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/avoirs/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un avoir par ID",
             notes = "Cette méthode permet de chercher un avoir par son ID", response = Avoir.class
     )
@@ -64,7 +64,7 @@ public class AvoirController {
 
     }
 
-    @GetMapping(value = "/searchAvoirByReference", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT +  "/avoirs/searchAvoirByReference", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un avoir par Reference",
             notes = "Cette méthode permet de chercher un avoir par son Reference", response = Avoir.class
     )
@@ -77,7 +77,7 @@ public class AvoirController {
         return avoirService.findAvoirByReference(reference);
     }
 
-    @GetMapping(value = "/searchListAvoirsByReference", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/avoirs/searchListAvoirsByReference", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoie la liste des avoirs par Reference",
             notes = "Cette méthode permet de chercher et renvoyer une liste d'avoir par son Reference", responseContainer = "List<Avoir>")
     @ApiResponses(value = {
@@ -87,22 +87,22 @@ public class AvoirController {
         return avoirService.findListAvoirByReference(reference);
     }
 
-    @GetMapping("/searchAvoirByLibelle")
+    @GetMapping(value = APP_ROOT + "/avoirs/searchAvoirByLibelle")
     public Avoir getAvoirByLibelle(@RequestParam(name = "lib") String libelle) {
         return avoirService.findAvoirByLibelle(libelle);
     }
 
-    @GetMapping("/searchListAvoirsByLibelle")
+    @GetMapping(value = APP_ROOT + "/avois/searchListAvoirsByLibelle")
     public List<Avoir> getAllAvoirsByLibelle(@RequestParam(name = "lib") String libelle) {
         return avoirService.findListAvoirByLibelle("%" + libelle + "%");
     }
 
-    @GetMapping("/searchListAvoirsByFournisseurId")
+    @GetMapping(value = APP_ROOT + "/avois/searchListAvoirsByFournisseurId")
     public List<Avoir> getAllAvoirsByFournisseurId(@RequestParam("client") Long fourId) {
         return avoirService.findListAvoirByFournisseurId(fourId);
     }
 
-    @GetMapping("/searchAvoirByStatus")
+    @GetMapping(value = APP_ROOT + "/avois/searchAvoirByStatus")
     public Avoir getAvoirByStatus(@RequestParam("status") String status) {
         return avoirService.findByStatus(status);
     }
@@ -112,7 +112,7 @@ public class AvoirController {
         return avoirService.findListAvoirByStatus(status);
     }
 
-    @PostMapping(value = "/avoirs", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/avoirs/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un avoir",
             notes = "Cette méthode permet d'enregistrer un avoir", response = Avoir.class )
     @ApiResponses(value = {
@@ -128,7 +128,7 @@ public class AvoirController {
 
     }
 
-    @PutMapping(value = "/avoirs/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/avoirs/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un avoir par son ID",
             notes = "Cette méthode permet de modifier un avoir par son ID", response = Avoir.class )
     @ApiResponses(value = {
@@ -140,7 +140,7 @@ public class AvoirController {
         return new ResponseEntity<>(avoirService.saveAvoir(avoir), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/avoirs/{id}")
+    @DeleteMapping(value = APP_ROOT + "/avoirs/delete/{id}")
     @ApiOperation(value = "Supprimer un avoir par son ID",
             notes = "Cette méthode permet de supprimer un avoir par son ID", response = Avoir.class )
     @ApiResponses(value = {
@@ -151,7 +151,7 @@ public class AvoirController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/generateReferneceAvoir")
+    @GetMapping(value = APP_ROOT + "/avoirs/generateReferneceAvoir")
     public long generateReferneceAvoir() {
         return avoirService.generateReferenceAvoir();
     }

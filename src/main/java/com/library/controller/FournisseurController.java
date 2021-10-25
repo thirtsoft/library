@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Employe;
 import com.library.entities.Fournisseur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.FournisseurService;
@@ -19,13 +18,13 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class FournisseurController {
 
     @Autowired
     private FournisseurService fournisseurService;
 
-    @GetMapping(value = "/fournisseurs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/fournisseurs/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Fournisseur",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Fournisseur", responseContainer = "List<Fournisseur>")
     @ApiResponses(value = {
@@ -47,7 +46,7 @@ public class FournisseurController {
         return new ResponseEntity<>(fournisseurList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/fournisseurs/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/fournisseurs/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Fournisseur par ID",
             notes = "Cette méthode permet de chercher une Fournisseur par son ID", response = Fournisseur.class
     )
@@ -64,7 +63,7 @@ public class FournisseurController {
 
     }
 
-    @GetMapping(value = "/serachFournisseurByEmail", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/fournisseurs/serachFournisseurByEmail", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Fournisseur par EMAIL",
             notes = "Cette méthode permet de chercher une Fournisseur par son EMAIL", response = Fournisseur.class
     )
@@ -77,7 +76,7 @@ public class FournisseurController {
         return fournisseurService.findByEmail(email);
     }
 
-    @GetMapping(value = "/searchFournisseurByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/fournisseurs/searchFournisseurByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Fournisseur par CODE",
             notes = "Cette méthode permet de chercher une Fournisseur par son CODE", response = Fournisseur.class
     )
@@ -90,7 +89,7 @@ public class FournisseurController {
         return fournisseurService.findByCode(code);
     }
 
-    @GetMapping(value = "/countFournisseurs")
+    @GetMapping(value = APP_ROOT + "/fournisseurs/countFournisseurs")
     @ApiOperation(value = "Compter le nombre de Fournisseur",
             notes = "Cette méthode permet de compter le nombre total de Fournisseur")
     @ApiResponses(value = {
@@ -100,7 +99,7 @@ public class FournisseurController {
         return fournisseurService.countNumberOfFournisseurs();
     }
 
-    @GetMapping(value = "/searchListFournisseurByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/fournisseurs/searchListFournisseurByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste de Fournisseur par CODE",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Fournisseurs par CODE")
     @ApiResponses(value = {
@@ -110,29 +109,29 @@ public class FournisseurController {
         return fournisseurService.findListFournisseurByCode("%" + code + "%");
     }
 
-    @GetMapping(value = "/searchFournisseurByNom")
+    @GetMapping(value = APP_ROOT + "/fournisseurs/searchFournisseurByNom")
     public Fournisseur getFournisseurByNom(@RequestParam(value = "name") String nom) {
         return fournisseurService.findByNom(nom);
     }
 
-    @GetMapping(value = "/searchListFournisseurByNom")
+    @GetMapping(value = APP_ROOT + "/fournisseurs/searchListFournisseurByNom")
     public List<Fournisseur> getAllFournisseurByNom(@RequestParam(value = "name") String nom) {
         return fournisseurService.findListFournisseurByNom("%" + nom + "%");
     }
 
-    @GetMapping(value = "/searchFournisseurByRaisonSocial")
+    @GetMapping(value = APP_ROOT + "/fournisseurs/searchFournisseurByRaisonSocial")
     public Fournisseur getFournisseurByRaisonSocial(@RequestParam(value = "raison") String raisonSocial) {
         return fournisseurService.findByRaisonSociale(raisonSocial);
 
     }
 
-    @GetMapping(value = "/searchListFournisseurByRaisonSocial")
+    @GetMapping(value = APP_ROOT + "/fournisseurs/searchListFournisseurByRaisonSocial")
     public List<Fournisseur> getAllFournisseurByRaisonSocial(@RequestParam(value = "raison") String raisonSocial) {
         return fournisseurService.findListFournisseurByRaisonSociale("%" + raisonSocial + "%");
     }
 
 
-    @PostMapping(value = "/fournisseurs", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/fournisseurs/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Fournisseur",
             notes = "Cette méthode permet d'enregistrer et modifier un Fournisseur", response = Fournisseur.class)
     @ApiResponses(value = {
@@ -153,7 +152,7 @@ public class FournisseurController {
         return new ResponseEntity<>(fournisseur, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/fournisseurs/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/fournisseurs/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Fournisseur par son ID",
             notes = "Cette méthode permet de modifier un Fournisseur par son ID", response = Fournisseur.class)
     @ApiResponses(value = {
@@ -167,7 +166,7 @@ public class FournisseurController {
 
     }
 
-    @DeleteMapping(value = "/fournisseurs/{id}")
+    @DeleteMapping(value = APP_ROOT + "/fournisseurs/delete/{id}")
     @ApiOperation(value = "Supprimer un Fournisseur par son ID",
             notes = "Cette méthode permet de supprimer un Fournisseur par son ID", response = Fournisseur.class)
     @ApiResponses(value = {

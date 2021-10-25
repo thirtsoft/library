@@ -27,7 +27,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 //@Api(APP_ROOT)
 public class ApprovisionnementController {
 
@@ -41,7 +41,7 @@ public class ApprovisionnementController {
     private HistoriqueApprovisionnementService historiqueApprovisionnementService;
 
 
-    @GetMapping(value = "/approvisionnements", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/approvisionnements/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des approvisonnement",
             notes = "Cette méthode permet de chercher et renvoyer la liste des approvisionnements", responseContainer = "List<Approvisionnement>")
     @ApiResponses(value = {
@@ -64,7 +64,7 @@ public class ApprovisionnementController {
         return new ResponseEntity<>(approvisionnementList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/approvisionnement/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/approvisionnements/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un approvisonnement par ID",
             notes = "Cette méthode permet de chercher un approvisionnement par son ID", response = Approvisionnement.class
     )
@@ -78,10 +78,9 @@ public class ApprovisionnementController {
         Approvisionnement approvisionnement = approvisionnementService.findApprovisionnementById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Approvisionnement that id is" + id + "not found"));
         return ResponseEntity.ok().body(approvisionnement);
-
     }
 
-    @GetMapping(value = "/searchApprovisionnementByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/approvisionnements/searchApprovisionnementByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un approvisonnement par CODE",
             notes = "Cette méthode permet de chercher un approvisionnement par son CODE", response = Approvisionnement.class)
     @ApiResponses(value = {
@@ -93,12 +92,12 @@ public class ApprovisionnementController {
         return approvisionnementService.findApprovisionnementByCode(code);
     }
 
-    @GetMapping("/searchListApprovisionnementByFournisseurId")
+    @GetMapping(value = APP_ROOT + "/approvisionnements/searchListApprovisionnementByFournisseurId")
     public List<Approvisionnement> getListApprovisionnementByFournisseurId(@RequestParam("fourId") Long fourId) {
         return approvisionnementService.findListApprovisionnementByFournisseurId(fourId);
     }
 
-    @PostMapping(value = "/approvisionnements", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/approvisionnements/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un approvisonnement",
             notes = "Cette méthode permet d'enregistrer ou modifier un approvisionnement", response = Approvisionnement.class)
     @ApiResponses(value = {
@@ -128,7 +127,7 @@ public class ApprovisionnementController {
         return new ResponseEntity<>(approvisionnementResultat, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/approvisionnements/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/approvisionnements/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un approvisonnement par son ID",
             notes = "Cette méthode permet de modifier un approvisionnement par son ID", response = Approvisionnement.class)
     @ApiResponses(value = {
@@ -161,7 +160,7 @@ public class ApprovisionnementController {
 
     }
 
-    @DeleteMapping(value = "/approvisionnements/{id}")
+    @DeleteMapping(value = APP_ROOT + "/approvisionnements/delete/{id}")
     @ApiOperation(value = "Supprimer un approvisonnement par son ID",
             notes = "Cette méthode permet de supprimer un approvisionnement par son ID", response = Approvisionnement.class)
     @ApiResponses(value = {
@@ -193,14 +192,14 @@ public class ApprovisionnementController {
 
     }
 
-    @GetMapping(value = "/generateCodeAppro")
+    @GetMapping(value = APP_ROOT + "/approvisionnemenrs/generateCodeAppro")
     @ApiOperation(value = "Générer le code d'un approvisonnement",
             notes = "Cette méthode permet de générer automatiquement le code d'un approvisionnement")
     public long generateCodeApprovisionnement() {
         return approvisionnementService.generateCodeApprovisionnement();
     }
 
-    @PatchMapping("/updateStatusApproById/{id}")
+    @PatchMapping(value = APP_ROOT + "/approvisionnemenrs/updateStatusApproById/{id}")
     @ApiOperation(value = "Modifier un approvisonnement par son Status",
             notes = "Cette méthode permet de modifier un approvisionnement par son Status", response = Approvisionnement.class)
     @ApiResponses(value = {
@@ -211,7 +210,7 @@ public class ApprovisionnementController {
         return new ResponseEntity<>(newApprovisionnement, HttpStatus.OK);
     }
 
-    @PatchMapping("/updateMontantAvanceApproById/{id}")
+    @PatchMapping(value = APP_ROOT + "/approvisionnemenrs/updateMontantAvanceApproById/{id}")
     @ApiOperation(value = "Modifier un approvisonnement par son ID",
             notes = "Cette méthode permet de modifier un approvisionnement par son ID", response = Approvisionnement.class)
     @ApiResponses(value = {

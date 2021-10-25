@@ -56,7 +56,7 @@ public class CategoryController {
     @Autowired
     private ServletContext context;
 
-    @GetMapping(value = "/categories", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/categories/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des categories",
             notes = "Cette méthode permet de chercher et renvoyer la liste des categories", responseContainer = "List<CategoryModel>")
     @ApiResponses(value = {
@@ -78,7 +78,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/categories/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/categories/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher une category par ID",
             notes = "Cette méthode permet de chercher un category par son ID", response = CategoryModel.class
     )
@@ -95,7 +95,7 @@ public class CategoryController {
 
     }
 
-    @PostMapping(value = "/categories", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/categories/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une category",
             notes = "Cette méthode permet d'enregistrer une category", response = CategoryModel.class )
     @ApiResponses(value = {
@@ -108,7 +108,7 @@ public class CategoryController {
 
     }
 
-    @PutMapping(value = "/categories/{catId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/categories/update/{catId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une category par son ID",
             notes = "Cette méthode permet de modifier un category par son ID", response = CategoryModel.class )
     @ApiResponses(value = {
@@ -120,7 +120,7 @@ public class CategoryController {
         return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.updateCategory(catId, category)), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/categories/{id}")
+    @DeleteMapping(value = APP_ROOT +"/categories/delete/{id}")
     @ApiOperation(value = "Supprimer une Category par son ID",
             notes = "Cette méthode permet de supprimer un Category par son ID", response = Category.class )
     @ApiResponses(value = {
@@ -131,7 +131,7 @@ public class CategoryController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/categories/createCategoriePdf")
+    @GetMapping(value = APP_ROOT + "/categories/createCategoriePdf")
     @ApiOperation(value = "Générer un pdf",
             notes = "Cette méthode permet de générer un pdf contenant la liste de Category")
     @ApiResponses(value = {
@@ -173,7 +173,7 @@ public class CategoryController {
 
     }
 
-    @PostMapping(value = "/categories/uploadCategorie")
+    @PostMapping(value = APP_ROOT + "/categories/uploadCategorie")
     @ApiOperation(value = "Upload file",
             notes = "Cette méthode permet d'importer le contenu d'un file excel et d'envoyer les données vers la BD")
     @ApiResponses(value = {
@@ -195,7 +195,7 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
     }
 
-    @GetMapping(value = "/categories/download/categories.xlsx")
+    @GetMapping(value = APP_ROOT + "/categories/download/categories.xlsx")
     @ApiOperation(value = "Download file",
             notes = "Cette méthode permet d'exporter les données de la BD vers un fichier Excel")
     @ApiResponses(value = {

@@ -15,15 +15,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.library.utils.Constants.APP_ROOT;
+
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
+//@RequestMapping("/alAmine")
 public class RoleController {
 
     @Autowired
     private RoleService roleService;
 
-    @GetMapping(value = "/roles", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/roles/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Role",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Role", responseContainer = "List<Role>")
     @ApiResponses(value = {
@@ -34,7 +36,7 @@ public class RoleController {
 
     }
 
-    @GetMapping(value = "/roles/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/roles/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Role par ID",
             notes = "Cette méthode permet de chercher un Role par son ID", response = Role.class
     )
@@ -51,20 +53,20 @@ public class RoleController {
 
     }
 
-    @PostMapping(value = "/roles")
+    @PostMapping(value = APP_ROOT + "/roles/create")
     public ResponseEntity<Role> createRole(@RequestBody Role role) {
 
         return new ResponseEntity<>(roleService.saveRole(role), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/roles/{idRole}")
+    @PutMapping(value = APP_ROOT + "/roles/update/{idRole}")
     public ResponseEntity<Role> updateRole(@PathVariable(value = "idRole") Long idRole, @RequestBody Role role) {
         role.setId(idRole);
         return new ResponseEntity<>(roleService.saveRole(role), HttpStatus.OK);
 
     }
 
-    @DeleteMapping(value = "/roles/{idRole}")
+    @DeleteMapping(value = APP_ROOT + "/roles/delete/{idRole}")
     @ApiOperation(value = "Supprimer un Role par son ID",
             notes = "Cette méthode permet de supprimer un Role par son ID", response = Role.class )
     @ApiResponses(value = {

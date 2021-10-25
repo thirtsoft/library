@@ -34,7 +34,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/prodApi")
+//@RequestMapping("/prodApi")
 public class ProduitController {
 
     @Autowired
@@ -55,7 +55,7 @@ public class ProduitController {
     @Autowired
     private ServletContext context;
 
-    @GetMapping(value = "/produits", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/produits/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Produit",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Produit", responseContainer = "List<Produit>")
     @ApiResponses(value = {
@@ -77,7 +77,7 @@ public class ProduitController {
         return new ResponseEntity<>(produitList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/produits/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/produits/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Produit par ID",
             notes = "Cette méthode permet de chercher une Produit par son ID", response = Produit.class
     )
@@ -90,7 +90,7 @@ public class ProduitController {
         return produitService.findProduitById(prodId);
     }
 
-    @GetMapping(value = "/searchProduitByReference", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/produits/searchProduitByReference", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Produit par reference",
             notes = "Cette méthode permet de chercher une Produit par reference", response = Produit.class
     )
@@ -103,7 +103,7 @@ public class ProduitController {
         return produitService.findByReference(reference);
     }
 
-    @GetMapping(value = "/searchProduitByDesignation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/produits/searchProduitByDesignation", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Produit par designation",
             notes = "Cette méthode permet de chercher une Produit par designation", response = Produit.class
     )
@@ -116,12 +116,12 @@ public class ProduitController {
         return produitService.findByDesignation(designation);
     }
 
-    @GetMapping(value = "/searchProduitByPrixAchat")
+    @GetMapping(value = APP_ROOT + "/produits/searchProduitByPrixAchat")
     public Produit getProduitByPrixAchat(@RequestParam(name = "price") Double prixAchat) {
         return produitService.findByPrixAchat(prixAchat);
     }
 
-    @GetMapping(value = "/searchListProduitsByDesignation", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/produits/searchListProduitsByDesignation", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Produit par designation",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Produit par designation", responseContainer = "List<Produit>")
     @ApiResponses(value = {
@@ -131,7 +131,7 @@ public class ProduitController {
         return produitService.findListProduitByDesignation("%" + designation + "%");
     }
 
-    @GetMapping(value = "/searchListProduitsByScategoryId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/produits/searchListProduitsByScategoryId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Produit par scategorie",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Produit par scategorie", responseContainer = "List<Produit>")
     @ApiResponses(value = {
@@ -141,7 +141,7 @@ public class ProduitController {
         return produitService.findProductByScateoryId(scatId);
     }
 
-    @GetMapping(value = "/searchCountProduitsByStock")
+    @GetMapping(value = APP_ROOT + "/produits/searchCountProduitsByStock")
     @ApiOperation(value = "Compter le nombre de Produit",
             notes = "Cette méthode permet de compter le nombre de Produit dont la quantity de stock est positif")
     @ApiResponses(value = {
@@ -151,14 +151,14 @@ public class ProduitController {
         return produitService.countNumberOfProduitWithStoc();
     }
 
-    @GetMapping("/countProduitsByStock")
+    @GetMapping(value = APP_ROOT + "/produits/countProduitsByStock")
     public Integer countNumbersOfProductsByStock() {
         int prod = produitService.countNumbersOfProductsByStock();
         System.out.println(prod);
         return prod;
     }
 
-    @GetMapping(value = "/countProduitsWhenQStockEqualStockInit")
+    @GetMapping(value = APP_ROOT + "/produits/countProduitsWhenQStockEqualStockInit")
     @ApiOperation(value = "Compter le nombre de Produit par quantity",
             notes = "Cette méthode permet de compter le nombre de Produit dont la quantity de stock est égale à la quantity initial  ")
     @ApiResponses(value = {
@@ -170,7 +170,7 @@ public class ProduitController {
         return prodQtstockEqualStockInit;
     }
 
-    @GetMapping(value = "/countProduitsWhenQStockInfStockInit")
+    @GetMapping(value = APP_ROOT + "/produits/countProduitsWhenQStockInfStockInit")
     @ApiOperation(value = "Compter le nombre de Produit négatif",
             notes = "Cette méthode permet de compter le nombre de Produit dont la quantity de stock est négatif")
     @ApiResponses(value = {
@@ -182,7 +182,7 @@ public class ProduitController {
         return prodQtstockInfStockInit;
     }
 
-    @PostMapping(value = "/produits", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/produits/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Produit",
             notes = "Cette méthode permet d'enregistrer et modifier un Produit", response = Produit.class)
     @ApiResponses(value = {
@@ -198,7 +198,7 @@ public class ProduitController {
         return new ResponseEntity<>(produit, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/produits/{prodId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/produits/update/{prodId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Produit par son ID",
             notes = "Cette méthode permet de modifier un Produit par son ID", response = Produit.class)
     @ApiResponses(value = {
@@ -211,7 +211,7 @@ public class ProduitController {
         return new ResponseEntity<>(produitService.updateProduit(prodId, produit), HttpStatus.OK) ;
     }
 
-    @DeleteMapping(value = "/produits/{id}")
+    @DeleteMapping(value = APP_ROOT + "/produits/delete/{id}")
     @ApiOperation(value = "Supprimer un Produit par son ID",
             notes = "Cette méthode permet de supprimer un Produit par son ID", response = Produit.class)
     @ApiResponses(value = {
@@ -223,7 +223,7 @@ public class ProduitController {
 
     }
 
-    @GetMapping(value = "/createPdf")
+    @GetMapping(value = APP_ROOT + "/produits/createPdf")
     @ApiOperation(value = "Générer un PDf",
             notes = "Cette méthode permet de générer la liste des Produits sous format Pdf")
     @ApiResponses(value = {
@@ -240,7 +240,7 @@ public class ProduitController {
         }
     }
 
-    @PostMapping(value = "/upload")
+    @PostMapping(value = APP_ROOT + "/produits/upload")
     @ApiOperation(value = "Importer un Excel",
             notes = "Cette méthode permet d'importer la liste de produits contenu dans un fichier Excel vers la BD")
     @ApiResponses(value = {
@@ -288,7 +288,7 @@ public class ProduitController {
 
     }
 
-    @GetMapping(value = "/download/articles.xlsx")
+    @GetMapping(value = APP_ROOT + "/produits/download/articles.xlsx")
     @ApiOperation(value = "Exporter la liste de produit",
             notes = "Cette méthode permet d'exporter la liste de produits de la BD vers un fichier Excel")
     @ApiResponses(value = {
@@ -308,7 +308,7 @@ public class ProduitController {
                 .body(new InputStreamResource(in));
     }
 
-    @PostMapping(value = "/produits/createProduitWithBarcode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/produits/createProduitWithBarcode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Produit avec code-barre",
             notes = "Cette méthode permet d'enregistrer et modifier un Produit", response = Produit.class)
     @ApiResponses(value = {
@@ -322,7 +322,7 @@ public class ProduitController {
 
     }
 
-    @GetMapping(value = "/produits/searchProduitByBarCode/{barcode}")
+    @GetMapping(value = APP_ROOT + "/produits/searchProduitByBarCode/{barcode}")
     @ApiOperation(value = "chercher un produit par son code-barre",
             notes = "Cette méthode permet de chercher et renvoyer un Produit par son code-barre")
     @ApiResponses(value = {
@@ -338,7 +338,7 @@ public class ProduitController {
             return ResponseEntity.ok().body(produitInfo);
     }
 
-    @PostMapping(value = "/produits/createProduitWithQrcode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/produits/createProduitWithQrcode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Produit avec qrCode",
             notes = "Cette méthode permet d'enregistrer et modifier un Produit avec qrCode", response = Produit.class)
     @ApiResponses(value = {
@@ -352,7 +352,7 @@ public class ProduitController {
 
     }
 
-    @GetMapping(value = "/produits/searchProduitByQrCode/{qrCode}")
+    @GetMapping(value = APP_ROOT + "/produits/searchProduitByQrCode/{qrCode}")
     @ApiOperation(value = "chercher un produit par son qrcode",
             notes = "Cette méthode permet de chercher et renvoyer un Produit par son qrcode")
     @ApiResponses(value = {

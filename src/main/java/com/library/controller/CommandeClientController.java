@@ -25,7 +25,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/prodApi")
+//@RequestMapping("/prodApi")
 public class CommandeClientController {
 
     @Autowired
@@ -46,7 +46,7 @@ public class CommandeClientController {
     @Autowired
     private ReportService reportCommande;
 
-    @GetMapping(value = "/commandes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/commandes/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des CommandeClient",
             notes = "Cette méthode permet de chercher et renvoyer la liste des CommandeClient", responseContainer = "List<CommandeClient>")
     @ApiResponses(value = {
@@ -68,7 +68,7 @@ public class CommandeClientController {
         return new ResponseEntity<>(commandeClientList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/commandes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/commandes/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un CommandeClient par ID",
             notes = "Cette méthode permet de chercher une CommandeClient par son ID", response = CommandeClient.class
     )
@@ -85,7 +85,7 @@ public class CommandeClientController {
 
     }
 
-    @GetMapping(value = "/searchCommandeByNumeroCommande", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/commandes/searchCommandeByNumeroCommande", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un CommandeClient par son Numero",
             notes = "Cette méthode permet de chercher une CommandeClient par son Numero", response = CommandeClient.class
     )
@@ -98,7 +98,7 @@ public class CommandeClientController {
         return commandeClientService.findByNumeroCommande(numeroCommande);
     }
 
-    @GetMapping(value = "/NumberOfCommande")
+    @GetMapping(value = APP_ROOT + "/commandes/NumberOfCommande")
     public int getNumberOfCommandes() {
         return commandeClientService.getNumberOfCommande();
     }
@@ -113,7 +113,7 @@ public class CommandeClientController {
         return commandeClientService.countNumbersOfCommandes();
     }
 
-    @GetMapping(value = "/SumsOfCommandesByMonth")
+    @GetMapping(value = APP_ROOT + "/commandes/SumsOfCommandesByMonth")
     @ApiOperation(value = "Additionner les commandes par mois",
             notes = "Cette méthode permet d'additionner le total des commandes par mois")
     @ApiResponses(value = {
@@ -123,7 +123,7 @@ public class CommandeClientController {
         return commandeClientService.sumTotalOfCommandesByMonth();
     }
 
-    @GetMapping(value = "/SumsOfCommandesByYear")
+    @GetMapping(value = APP_ROOT + "/commandes/SumsOfCommandesByYear")
     @ApiOperation(value = "Additionner les commandes par annnées",
             notes = "Cette méthode permet d'additionner le total des commandes par annnées")
     @ApiResponses(value = {
@@ -133,7 +133,7 @@ public class CommandeClientController {
         return commandeClientService.sumTotalOfCommandesByYear();
     }
 
-    @GetMapping(value = "/searchCommandeClientByStatus")
+    @GetMapping(value = APP_ROOT + "/commandes/searchCommandeClientByStatus")
     public CommandeClient getCommandeClientByStatus(@RequestParam("status") String status) {
         return commandeClientService.findByStatus(status);
     }
@@ -143,7 +143,7 @@ public class CommandeClientController {
         return commandeClientService.findListCommandeClientByStatus(status);
     }
 
-    @GetMapping(value = "/searchListCommandeClientByClientId")
+    @GetMapping(value = APP_ROOT + "/commandes/searchListCommandeClientByClientId")
     public List<CommandeClient> getAllCommandeClientByClientId(@RequestParam("clientId") Long clientId) {
         return commandeClientService.findCommandeClientByClientId(clientId);
     }
@@ -159,7 +159,7 @@ public class CommandeClientController {
      * @param commandeClient
      * @return Methode qui marche ce 06/09/2020
      */
-    @PostMapping(value = "/comms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/comms", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Ajouter une commande",
             notes = "Cette méthode permet d'ajouter une commande", response = CommandeClient.class)
     @ApiResponses(value = {
@@ -196,7 +196,7 @@ public class CommandeClientController {
 
     }
 
-    @PostMapping(value = "/commandes")
+    @PostMapping(value = APP_ROOT + "/commandes")
     public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
 
         CommandeClient commandeClientResultat = new CommandeClient();
@@ -219,7 +219,7 @@ public class CommandeClientController {
         return new ResponseEntity<>(commandeClientResultat, HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/commandesClientes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/commandes/commandesClientes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une commande",
             notes = "Cette méthode permet d'enregistrer et modifié une commande", response = CommandeClient.class)
     @ApiResponses(value = {
@@ -248,7 +248,7 @@ public class CommandeClientController {
         return new ResponseEntity<CommandeClient>(commandeClientResultat, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/commandes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/commandes/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une commande",
             notes = "Cette méthode permet de modifier une commande", response = CommandeClient.class)
     @ApiResponses(value = {
@@ -283,7 +283,7 @@ public class CommandeClientController {
 
     }
 
-    @DeleteMapping(value = "/commandes/{id}")
+    @DeleteMapping(value = APP_ROOT + "/commandes/delete/{id}")
     @ApiOperation(value = "Supprimer une CommandeClient par son ID",
             notes = "Cette méthode permet de supprimer une CommandeClient par son ID", response = CommandeClient.class)
     @ApiResponses(value = {
@@ -315,12 +315,12 @@ public class CommandeClientController {
 
     }
 
-    @GetMapping("/searchNumberOfCommandeByMonth")
+    @GetMapping(value = APP_ROOT + "/commandes/searchNumberOfCommandeByMonth")
     public List<?> getNumberTotalOfCommandeByMonth() {
         return commandeClientService.countNumberTotalOfCommandeByMonth();
     }
 
-    @GetMapping("/searchSumCommandeByMonth")
+    @GetMapping(value = APP_ROOT + "/commandes/searchSumCommandeByMonth")
     public List<?> getSumTotalOfCommandeByMonth() {
         return commandeClientService.sumTotalOfCommandeByMonth();
     }
@@ -331,14 +331,8 @@ public class CommandeClientController {
         return commandeClientService.createOrder(CcmmandeClient);
     }
 
-    /*
-    @GetMapping("/report/pdf/{id}")
-    public String generateReport(@PathVariable Long id) throws FileNotFoundException, JRException {
-        return reportCommande.exportReport(id);
-    }
-    */
 
-    @GetMapping("/generateCodeCommand")
+    @GetMapping(value = APP_ROOT + "/commandes/generateCodeCommand")
     public long generateCodeCommand() {
         return commandeClientService.generateCodeCommand();
     }

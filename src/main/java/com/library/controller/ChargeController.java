@@ -39,7 +39,7 @@ public class ChargeController {
     @Autowired
     private HistoriqueChargeService historiqueChargeService;
 
-    @GetMapping(value = "/charges", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/charges/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Charges",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Charge", responseContainer = "List<Charge>")
     @ApiResponses(value = {
@@ -61,7 +61,7 @@ public class ChargeController {
         return new ResponseEntity<>(chargeList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/charges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT +"/charges/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Charge par ID",
             notes = "Cette méthode permet de chercher une Charge par son ID", response = Charge.class
     )
@@ -74,7 +74,7 @@ public class ChargeController {
         return chargeService.findChargeById(id);
     }
 
-    @GetMapping(value = "/searchChargeByCodeCharge", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/charges/searchChargeByCodeCharge", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Charge par CODE",
             notes = "Cette méthode permet de chercher une Charge par son CODE", response = Charge.class
     )
@@ -87,12 +87,12 @@ public class ChargeController {
         return chargeService.findChargeByCodeCharge(codeCharge);
     }
 
-    @GetMapping(value = "/searchListChargesByCodeCharge")
+    @GetMapping(value = APP_ROOT + "/charges/searchListChargesByCodeCharge")
     public List<Charge> getAllChargesByReference(@RequestParam(name = "ref") String codeCharge) {
         return chargeService.findListChargeByCodeCharge("%" + codeCharge + "%");
     }
 
-    @GetMapping(value = "/searchChargeByNature")
+    @GetMapping(value = APP_ROOT + "/charges/searchChargeByNature")
     public Charge getChargeByNature(@RequestParam(name = "nat") String nature) {
         return chargeService.findChargeByNature(nature);
     }
@@ -112,7 +112,7 @@ public class ChargeController {
         return chargeService.sumTotalOfChargeByMonth();
     }
 
-    @PostMapping(value = "/charges", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/charges/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une Charge",
             notes = "Cette méthode permet d'enregistrer un Charge", response = Charge.class)
     @ApiResponses(value = {
@@ -145,7 +145,7 @@ public class ChargeController {
         return new ResponseEntity<>(chargeResultat, HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "/charges/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = APP_ROOT + "/charges/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une Charge par son ID",
             notes = "Cette méthode permet de modifier une Charge par son ID", response = Charge.class)
     @ApiResponses(value = {
@@ -175,7 +175,7 @@ public class ChargeController {
 
     }
 
-    @DeleteMapping(value = "/charges/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = APP_ROOT + "/charges/delete/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Supprimer un Charge par son ID",
             notes = "Cette méthode permet de supprimer un Charge par son ID", response = Charge.class)
     @ApiResponses(value = {
