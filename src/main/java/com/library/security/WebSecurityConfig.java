@@ -71,6 +71,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/categories").permitAll()
                 .antMatchers("/prodApi/scategories").permitAll()
                 .antMatchers("/prodApi/produits").permitAll()
+                .antMatchers("/**/utilisateurs/avatar/{id}").permitAll()
+        //        .antMatchers("/**/utilisateurs/activatedUser/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.library.domaine.Response;
-import com.library.entities.Scategorie;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.AccountService;
@@ -24,11 +23,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import javax.servlet.ServletContext;
 import java.io.File;
@@ -93,8 +87,8 @@ public class UtilisateurController {
         return ResponseEntity.ok().body(utilisateur);
     }
 
-    @GetMapping(value = APP_ROOT + "/avatar/{id}")
-    @ApiOperation(value = "Afficher une photo",
+    @GetMapping(value = APP_ROOT + "/utilisateurs/avatar/{id}")
+    @ApiOperation(value = "Recupérer une photo par ID",
             notes = "Cette méthode permet de chercher et d'afficher la photo d'un Utilisateur par son ID"
     )
     @ApiResponses(value = {
@@ -102,26 +96,23 @@ public class UtilisateurController {
             @ApiResponse(code = 404, message = "Aucun Photo n'existe avec cette ID pas dans la BD")
 
     })
-    public byte[] getPhoto(@PathVariable("id") Long id) throws Exception {
-
+    byte[] getPhoto(@PathVariable("id") Long id) throws Exception {
         Utilisateur user = utilisateurService.findUtilisateurById(id).get();
         return Files.readAllBytes(Paths.get(context.getRealPath("/Images/") + user.getPhoto()));
-
     }
 
     @PutMapping(value = APP_ROOT + "/photo")
-    public void editPhotoUser (@RequestParam("image") MultipartFile file, @RequestParam("id") String id)
-            throws JsonParseException, JsonMappingException, Exception {
+    public void editPhotoUser(@RequestParam("image") MultipartFile file, @RequestParam("id") String id)
+            throws Exception {
 
         String filename = file.getOriginalFilename();
-        String newFileName = FilenameUtils.getBaseName(filename)+"."+FilenameUtils.getExtension(filename);
-        File serverFile = new File (context.getRealPath("/Images/"+File.separator+newFileName));
-        try
-        {
+        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+        File serverFile = new File(context.getRealPath("/Images/" + File.separator + newFileName));
+        try {
             System.out.println("Image");
-            FileUtils.writeByteArrayToFile(serverFile,file.getBytes());
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -209,10 +200,36 @@ public class UtilisateurController {
     public void uploadUserPhoto(MultipartFile file, @PathVariable("id") Long id) throws IOException {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));
+        String filename = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+        File serverFile = new File(context.getRealPath("/Images/" + File.separator + newFileName));
+        try {
+            System.out.println("Image");
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
+
+            utilisateur.setPhoto(filename);
+
+            utilisateurService.saveUtilisateur(utilisateur);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*@PostMapping(value = APP_ROOT + "/utilisateurs/uploadUserPhoto/{id}", produces = IMAGE_PNG_VALUE)
+    @ApiOperation(value = "Enregistrer une photo dans un dossier",
+            notes = "Cette méthode permet d'enregistrer la photo d'un utilisateur dans un dossier externe utilisateur")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La photo a été enregistré dans le dossier utilisateur")
+
+    })
+    public void uploadUserPhoto(MultipartFile file, @PathVariable("id") Long id) throws IOException {
+        Utilisateur utilisateur = utilisateurService.findUtilisateurById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur that id is" + id + "not found"));
         utilisateur.setPhoto(file.getOriginalFilename());
         Files.write(Paths.get(System.getProperty("user.home") + "/users/photos/" + utilisateur.getPhoto()), file.getBytes());
         utilisateurService.saveUtilisateur(utilisateur);
-    }
+    }*/
 
 
     @PostMapping(value = APP_ROOT + "/utlisateurs/uploadUserPhoto/{id}/uploadUserPhoto", produces = IMAGE_PNG_VALUE)
@@ -249,6 +266,19 @@ public class UtilisateurController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
+
+    @PatchMapping(value = APP_ROOT + "/utilisateurs/activatedUser/{id}")
+    @ApiOperation(value = "Activer un utilisateur",
+            notes = "Cette méthode permet d'activer le compter d'un utilisateur pour se connecter", response = Utilisateur.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le compte utlisateur a été été ectiver"),
+            @ApiResponse(code = 400, message = "Aucun compte utilisateur activer")
+    })
+    ResponseEntity<?> activatedUser(@RequestParam("isActive") String isActive, @PathVariable("id") String id) {
+        Utilisateur activatedUtilisateur = utilisateurService.activatedUser(isActive, id);
+        return new ResponseEntity<>(activatedUtilisateur, HttpStatus.OK);
+    }
+
 
     @DeleteMapping(value = APP_ROOT + "/utilisateurs/delete/{id}")
     @ApiOperation(value = "Supprimer un Utilisateur par son ID",

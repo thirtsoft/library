@@ -66,7 +66,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         userResult.setEmail(utilisateur.getEmail());
         userResult.setName(utilisateur.getName());
         userResult.setPassword(passwordEncoder.encode(utilisateur.getPassword()));
-        userResult.setActive(true);
+        userResult.setActive(utilisateur.isActive());
 
         return utilisateurRepository.save(userResult);
     }
@@ -118,6 +118,14 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             }
         }
         return false;
+    }
+
+    @Override
+    public Utilisateur activatedUser(String isActive, String id) {
+        Optional<Utilisateur> optionalUtilisateur = utilisateurRepository.findById(Long.valueOf(id));
+        Utilisateur utilisateur = optionalUtilisateur.get();
+        utilisateur.setActive(Boolean.valueOf(isActive));
+        return utilisateurRepository.save(utilisateur);
     }
 
     /**
