@@ -82,7 +82,6 @@ public class CommandeClientController {
         CommandeClient commandeClient = commandeClientService.findCommandeClientById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Commande not found"));
         return ResponseEntity.ok().body(commandeClient);
-
     }
 
     @GetMapping(value = APP_ROOT + "/commandes/searchCommandeByNumeroCommande", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -103,7 +102,7 @@ public class CommandeClientController {
         return commandeClientService.getNumberOfCommande();
     }
 
-    @GetMapping(value = "/NumbersOfCommandes")
+    @GetMapping(value = APP_ROOT + "/commandes/NumbersOfCommandes")
     @ApiOperation(value = "Compter le nombre de CommandeClient",
             notes = "Cette méthode permet de compter le nombre total de CommandeClient")
     @ApiResponses(value = {

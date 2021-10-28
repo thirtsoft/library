@@ -67,7 +67,8 @@ public class ClientController {
     }
 
     @GetMapping(value = APP_ROOT + "/clients/NumberOfClients")
-    @ApiOperation(value = "Compter le nombre de Client", notes = "Cette méthode permet de retourner le nombre total un Client")
+    @ApiOperation(value = "Compter le nombre de Client",
+            notes = "Cette méthode permet de retourner le nombre total un Client")
     public Long getNumberOfClient() {
         return clientService.countNumberOfClient();
     }

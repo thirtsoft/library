@@ -93,7 +93,6 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
         }
 
         approvisionnement.setTotalAppro(total);
-        approvisionnement.setStatus("valider");
         // commande.setNumCommande("Cmd " + 15 + (int) (Math.random() * 100));
         approvisionnement.setDateApprovisionnement(new Date());
 

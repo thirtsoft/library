@@ -146,11 +146,9 @@ public class CreanceController {
             System.out.println("Parsing Exception!!");
             e.printStackTrace();
             return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
-
         }
 
         return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
-
     }
 
     @GetMapping(value = APP_ROOT + "/creances/NumberOfCreances")

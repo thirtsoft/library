@@ -28,7 +28,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/apiSeller")
+//@RequestMapping("/apiSeller")
 public class VenteController {
 
     @Autowired
@@ -245,27 +245,27 @@ public class VenteController {
     })
     public ResponseEntity<Vente> updateVente(@PathVariable(value = "id") Long id, @RequestBody Vente vente) throws Exception {
 
-        Vente venteResultat = new Vente();
+        Vente ventedResult;
 
         vente.setId(id);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
 
-        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
-        Utilisateur utilisateur = optionalUtilisateur.get();
+        Optional<Utilisateur> optionalUtilisation = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisation.get();
 
-        venteResultat = venteService.saveVente(vente);
+        ventedResult = venteService.saveVente(vente);
 
         HistoriqueVente historiqueVente = new HistoriqueVente();
         historiqueVente.setUtilisateur(utilisateur);
-        historiqueVente.setVente(venteResultat);
+        historiqueVente.setVente(ventedResult);
         historiqueVente.setCreatedDate(new Date());
         historiqueVente.setAction("MODIFICATION");
 
         historiqueVenteService.saveHistoriqueVente(historiqueVente);
 
-        return new ResponseEntity<>(venteResultat, HttpStatus.OK);
+        return new ResponseEntity<>(ventedResult, HttpStatus.OK);
 
     }
 
@@ -277,18 +277,18 @@ public class VenteController {
     })
     public ResponseEntity<?> deleteVente(@PathVariable(value = "id") Long id) {
 
-        Optional<Vente> optionalVente = venteService.findVenteById(id);
-        Vente venteResultat = optionalVente.get();
+        Optional<Vente> optionalVent = venteService.findVenteById(id);
+        Vente ventedResult = optionalVent.get();
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
 
-        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
-        Utilisateur utilisateur = optionalUtilisateur.get();
+        Optional<Utilisateur> optionalUtilisation = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisation.get();
 
         HistoriqueVente historiqueVente = new HistoriqueVente();
         historiqueVente.setUtilisateur(utilisateur);
-        historiqueVente.setVente(venteResultat);
+        historiqueVente.setVente(ventedResult);
         historiqueVente.setCreatedDate(new Date());
         historiqueVente.setAction("SUPPRESSION");
 

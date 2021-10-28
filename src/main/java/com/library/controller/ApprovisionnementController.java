@@ -192,7 +192,7 @@ public class ApprovisionnementController {
 
     }
 
-    @GetMapping(value = APP_ROOT + "/approvisionnemenrs/generateCodeAppro")
+    @GetMapping(value = APP_ROOT + "/approvisionnements/generateCodeAppro")
     @ApiOperation(value = "Générer le code d'un approvisonnement",
             notes = "Cette méthode permet de générer automatiquement le code d'un approvisionnement")
     public long generateCodeApprovisionnement() {
