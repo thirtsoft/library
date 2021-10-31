@@ -10,6 +10,8 @@ public interface EmailService {
 
     void sendMail(Fournisseur fournisseur);
 
+    void sendMailToAllFournisseurs(Email email);
+
     void sendMailToClient(Client client);
 
 }

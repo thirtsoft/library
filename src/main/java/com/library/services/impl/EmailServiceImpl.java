@@ -12,16 +12,22 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class EmailServiceImpl implements EmailService {
 
     private static final String from = "thirdiallo@gmail.com";
+
     @Autowired
     private EmailRepository emailRepository;
+
     @Autowired
     private FournisseurService fournisseurService;
-    private JavaMailSender javaMailSender;
+
+    private final JavaMailSender javaMailSender;
+
 
     @Autowired
     public EmailServiceImpl(JavaMailSender javaMailSender) {
@@ -113,6 +119,25 @@ public class EmailServiceImpl implements EmailService {
 
         //    fournisseurService.saveFournisseur(fournisseur);
 
+
+    }
+
+    @Override
+    public void sendMailToAllFournisseurs(Email email) {
+
+        List<Fournisseur> furnishesList = fournisseurService.findAllFournisseurs();
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+
+        for (int i = 0; i < furnishesList.size(); i++) {
+            Fournisseur fournisseur = furnishesList.get(i);
+            mail.setTo(fournisseur.getEmail());
+            mail.setSubject(email.getSubject());
+            mail.setText(email.getMessage());
+            mail.setFrom(from);
+        }
+
+        javaMailSender.send(mail);
 
     }
 
