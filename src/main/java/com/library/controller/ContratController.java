@@ -125,7 +125,7 @@ public class ContratController {
         return contratService.findContratByClientId(clientId);
     }
 
-    @PostMapping(value = APP_ROOT + "/contrats/createContrats", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/contrats/createContrats")
     @ApiOperation(value = "Enregistrer un Contrat",
             notes = "Cette méthode permet d'enregistrer et modifier un Contrat", response = Contrat.class)
     @ApiResponses(value = {

@@ -27,7 +27,6 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/alAmine")
 public class ChargeController {
 
     @Autowired

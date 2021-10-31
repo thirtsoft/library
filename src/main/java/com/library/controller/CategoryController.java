@@ -34,8 +34,6 @@ import static com.library.utils.Constants.APP_ROOT;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api")
-//@RequestMapping("/alAmine")
 public class CategoryController {
 
     @Autowired
@@ -68,10 +66,10 @@ public class CategoryController {
 
     @GetMapping(value = APP_ROOT + "/categories/allCategoryOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Category",
-            notes = "Cette méthode permet de chercher et renvoyer la liste des CategoryModel",
-            responseContainer = "List<CategoryModel>")
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Category",
+            responseContainer = "List<Category>")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "La liste des CategoryModel / une liste vide")
+            @ApiResponse(code = 200, message = "La liste des Category / une liste vide")
     })
     ResponseEntity<List<Category>> getAllCategoryOrderDesc() {
         List<Category> categoryList = categoryService.findAllCategorysOrderDesc();
