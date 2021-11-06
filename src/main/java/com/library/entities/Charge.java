@@ -31,8 +31,8 @@ public class Charge extends AbstractEntity {
     private String nature;
 
     private double montantCharge;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT")
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
     private Date date;
 
     @ManyToOne

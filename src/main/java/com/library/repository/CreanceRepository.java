@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.Contrat;
 import com.library.entities.Creance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -50,5 +49,9 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
     List<Creance> ListCreanceClientByClientId(@Param("cl") Long clientId);
 
     List<Creance> findByOrderByIdDesc();
+
+    //  @Query("select v from Creance v where v.dateCreance < (current_date () - interval 3 month")
+    @Query("select s from Creance s WHERE s.dateCreance <= CURDATE() - INTERVAL 3 MONTH")
+    List<Creance> findListCreanceOf3LatestMonth();
 
 }

@@ -1,5 +1,6 @@
 package com.library.repository;
 
+import com.library.entities.Creance;
 import com.library.entities.Utilisateur;
 import com.library.entities.Vente;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,6 +29,10 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
 
     @Query("select v from Vente v where v.dateVente > current_date")
     List<Vente> findVenteWithParticularDayAndMonth();
+
+  //  @Query("select v from Vente v where v.dateVente < (current_date () - interval 3 month")
+    @Query("select s from Vente s WHERE s.dateVente <= CURDATE() - INTERVAL 3 MONTH")
+    List<Vente> findListVenteOf3LatestMonth();
 
     @Query("select sum(v.totalVente) from Vente v where v.dateVente > current_date")
     BigDecimal sumTotalOfVenteByDay();
