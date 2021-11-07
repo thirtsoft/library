@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "approvisionnement")
-public class Approvisionnement extends AbstractEntity {
+public class Approvisionnement extends AbstractEntity implements Serializable {
     /**
      *
      */
@@ -25,7 +26,7 @@ public class Approvisionnement extends AbstractEntity {
     private double montantAvance;
 
     private double totalAppro;
-    
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
     private Date dateApprovisionnement;
 

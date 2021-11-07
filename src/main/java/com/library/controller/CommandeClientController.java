@@ -68,6 +68,30 @@ public class CommandeClientController {
         return new ResponseEntity<>(commandeClientList, HttpStatus.OK);
     }
 
+    @GetMapping(value = APP_ROOT + "/commandes/allCommandeClientOf3LatestMonths", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des CommandeClient des trois derniers mois",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des CommandeClient des trois derniers mois",
+            responseContainer = "List<CommandeClient>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des CommandeClient / une liste vide")
+    })
+    ResponseEntity<List<CommandeClient>> getAllCommandeClientOf3LatestMonths() {
+        List<CommandeClient> commandeClientList = commandeClientService.findListCommandeClientOf3LatestMonth();
+        return new ResponseEntity<>(commandeClientList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = APP_ROOT + "/commandes/findTop500OfCommandeClientOrderByIdDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des 500 derniers CommandeClient",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des 500 derniers CommandeClient",
+            responseContainer = "List<CommandeClient>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des CommandeClient / une liste vide")
+    })
+    ResponseEntity<List<CommandeClient>> getTop500OfCommandeClientOrderByIdDesc() {
+        List<CommandeClient> commandeClientList = commandeClientService.findTop500OfCommandeClientOrderByIdDesc();
+        return new ResponseEntity<>(commandeClientList, HttpStatus.OK);
+    }
+
     @GetMapping(value = APP_ROOT + "/commandes/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un CommandeClient par ID",
             notes = "Cette méthode permet de chercher une CommandeClient par son ID", response = CommandeClient.class

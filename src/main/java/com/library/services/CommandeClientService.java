@@ -1,7 +1,7 @@
 package com.library.services;
 
-import com.library.entities.Client;
 import com.library.entities.CommandeClient;
+import com.library.entities.Creance;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
@@ -15,6 +15,10 @@ public interface CommandeClientService {
 
     List<CommandeClient> findAllCommandeClientsOrderDesc();
 
+    List<CommandeClient> findListCommandeClientOf3LatestMonth();
+
+    List<CommandeClient> findTop500OfCommandeClientOrderByIdDesc();
+
     Optional<CommandeClient> findCommandeClientById(Long comId);
 
     CommandeClient saveCommandeClient(CommandeClient commande);
@@ -22,7 +26,6 @@ public interface CommandeClientService {
     CommandeClient updateCommandeClient(Long comId, CommandeClient commande);
 
     ResponseEntity<Object> deleteCommandeClient(Long id);
-
 
     int getNombreCommandes(Date d1, Date d2);
 

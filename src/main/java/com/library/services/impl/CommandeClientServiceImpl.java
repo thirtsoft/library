@@ -52,6 +52,16 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     }
 
     @Override
+    public List<CommandeClient> findListCommandeClientOf3LatestMonth() {
+        return commandeClientRepository.findListCommandeClientOf3LatestMonth();
+    }
+
+    @Override
+    public List<CommandeClient> findTop500OfCommandeClientOrderByIdDesc() {
+        return commandeClientRepository.findTop500ByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<CommandeClient> findCommandeClientById(Long comId) {
         if (!commandeClientRepository.existsById(comId)) {
             throw new ResourceNotFoundException("CommandeClient not found");
@@ -277,7 +287,7 @@ public class CommandeClientServiceImpl implements CommandeClientService {
     public CommandeClient findByStatus(String status) {
         return commandeClientRepository.findByStatus(status);
     }
-    
+
     @Override
     public List<CommandeClient> findListCommandeClientByStatus(String status) {
         return commandeClientRepository.ListCommandeClientByStatus(status);

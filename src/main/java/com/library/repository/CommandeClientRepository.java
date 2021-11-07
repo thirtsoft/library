@@ -1,7 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.Approvisionnement;
-import com.library.entities.Client;
 import com.library.entities.CommandeClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -42,9 +40,11 @@ public interface CommandeClientRepository extends JpaRepository<CommandeClient, 
     List<CommandeClient> findAllByDateCommande(Date dateCommande);
 
 
-  //  @Query("select v from CommandeClient v where v.dateCommande < (current_date () - interval 3 month")
-    @Query("select s from CommandeClient s WHERE s.dateCommande <= CURDATE() - INTERVAL 3 MONTH")
+    //  @Query("select v from CommandeClient v where v.dateCommande < (current_date () - interval 3 month")
+    @Query("select v from CommandeClient v where (v.dateCommande <= current_date - 90) ORDER BY v.dateCommande DESC ")
     List<CommandeClient> findListCommandeClientOf3LatestMonth();
+
+    List<CommandeClient> findTop500ByOrderByIdDesc();
 
     @Query("select EXTRACT(month from(c.dateCommande)), count(c) from CommandeClient c group by EXTRACT(month from(c.dateCommande))")
     List<?> countNumberOfCommandeByMonth();

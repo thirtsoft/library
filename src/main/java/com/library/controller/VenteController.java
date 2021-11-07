@@ -51,8 +51,8 @@ public class VenteController {
     }
 
     @GetMapping(value = APP_ROOT + "/ventes/allVenteOrderDesc", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Renvoi la liste des Vente",
-            notes = "Cette méthode permet de chercher et renvoyer la liste des Vente",
+    @ApiOperation(value = "Renvoi la liste des Vente par ordre descroissante",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Vente par ordre descroissante",
             responseContainer = "List<Vente>")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La liste des Vente / une liste vide")
@@ -61,6 +61,31 @@ public class VenteController {
         List<Vente> venteList = venteService.findAllVentesOrderDesc();
         return new ResponseEntity<>(venteList, HttpStatus.OK);
     }
+
+    @GetMapping(value = APP_ROOT + "/ventes/allVenteOf3LatestMonths", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Vente des trois derniers mois",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Vente des trois derniers mois",
+            responseContainer = "List<Vente>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Vente / une liste vide")
+    })
+    ResponseEntity<List<Vente>> getAllVenteOf3LatestMonths() {
+        List<Vente> venteList = venteService.findListVenteOf3LatestMonth();
+        return new ResponseEntity<>(venteList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = APP_ROOT + "/ventes/findTop500OfVenteOrderByIdDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des 500 derniers Vente",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des 500 derniers Vente",
+            responseContainer = "List<Vente>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Vente / une liste vide")
+    })
+    ResponseEntity<List<Vente>> getTop500OfVenteOrderByIdDesc() {
+        List<Vente> venteList = venteService.findTop500OfVenteOrderByIdDesc();
+        return new ResponseEntity<>(venteList, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = APP_ROOT + "/ventes/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Vente par ID",

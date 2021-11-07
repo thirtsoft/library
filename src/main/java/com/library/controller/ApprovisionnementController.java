@@ -1,6 +1,7 @@
 package com.library.controller;
 
 import com.library.entities.Approvisionnement;
+import com.library.entities.CommandeClient;
 import com.library.entities.HistoriqueApprovisionnement;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
@@ -61,6 +62,30 @@ public class ApprovisionnementController {
     })
     ResponseEntity<List<Approvisionnement>> getAllApprovisionnementOrderDesc() {
         List<Approvisionnement> approvisionnementList = approvisionnementService.findAllApprovisionnementsOrderDesc();
+        return new ResponseEntity<>(approvisionnementList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = APP_ROOT + "/approvisionnements/allApprovisionnementOfLatest3Months", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des approvisonnement des 3 derniers mois",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des approvisonnement des trois derniers mois",
+            responseContainer = "List<Approvisionnement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Approvisionnements / une liste vide")
+    })
+    ResponseEntity<List<Approvisionnement>> getApprovisionnementsOfLatest3Months() {
+        List<Approvisionnement> approvisionnementList = approvisionnementService.findListApprovisionnementOf3LatestMonth();
+        return new ResponseEntity<>(approvisionnementList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = APP_ROOT + "/approvisionnements/findTop500OfApprovisionnementOrderByIdDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des 500 derniers Approvisionnement",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des 500 derniers Approvisionnement",
+            responseContainer = "List<Approvisionnement>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Approvisionnement / une liste vide")
+    })
+    ResponseEntity<List<Approvisionnement>> getTop500OfApprovisionnementOrderByIdDesc() {
+        List<Approvisionnement> approvisionnementList = approvisionnementService.findTop500OfApprovisionnementOrderByIdDesc();
         return new ResponseEntity<>(approvisionnementList, HttpStatus.OK);
     }
 

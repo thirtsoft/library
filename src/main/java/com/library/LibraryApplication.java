@@ -94,12 +94,10 @@ public class LibraryApplication implements CommandLineRunner {
 */
 
 
-        Role useRole = new Role(RoleName.ROLE_USER);
-        Role vendorRole = new Role(RoleName.ROLE_VENDEUR);
-        Role adminRole = new Role(RoleName.ROLE_ADMIN);
-        roleRepository.save(useRole);
-        roleRepository.save(vendorRole);
-        roleRepository.save(adminRole);
+        Role vendorRole = roleRepository.save(new Role(RoleName.ROLE_VENDEUR));
+        Role gerantRole = roleRepository.save(new Role(RoleName.ROLE_GERANT));
+        Role managerRole = roleRepository.save(new Role(RoleName.ROLE_MANAGER));
+        Role adminRole = roleRepository.save(new Role(RoleName.ROLE_ADMIN));
 
 
     }

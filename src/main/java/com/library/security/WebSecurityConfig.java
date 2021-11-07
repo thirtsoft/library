@@ -69,8 +69,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**/versements/downloadVersementFile/**").permitAll()
                 .antMatchers("/**/categories/all").permitAll()
                 .antMatchers("/**/categories/allCategoryOrderDesc").permitAll()
+                .antMatchers("/**/ventes/allVenteOf3LatestMonths").permitAll()
+                .antMatchers("/**/creances/allCreanceOf3LatestMonths").permitAll()
+                .antMatchers("/**/approvisionnements/allApprovisionnementOfLatest3Months").permitAll()
+                .antMatchers("/**/commandes/allCommandeClientOf3LatestMonths").permitAll()
+
+
                 .antMatchers("/**/utilisateurs/avatar/{id}").permitAll()
-        //        .antMatchers("/**/utilisateurs/activatedUser/*").permitAll()
+                //        .antMatchers("/**/utilisateurs/activatedUser/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
@@ -85,16 +91,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                      //  .allowedOrigins("**")
+                        //  .allowedOrigins("**")
                         .allowedOrigins("http://localhost:4200")
-                     //   .allowedOrigins("http://localhost:8080/E-Librairie")
-                     //   .allowedMethods("*")
+                        //   .allowedOrigins("http://localhost:8080/E-Librairie")
+                        //   .allowedMethods("*")
                         .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
                         .maxAge(3600L)
                         .allowedHeaders("*")
                         .exposedHeaders("Authorization")
                         .allowCredentials(true);
-
 
 
             }

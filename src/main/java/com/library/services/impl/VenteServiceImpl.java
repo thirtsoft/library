@@ -44,6 +44,16 @@ public class VenteServiceImpl implements VenteService {
     }
 
     @Override
+    public List<Vente> findListVenteOf3LatestMonth() {
+        return venteRepository.findListVenteOf3LatestMonth();
+    }
+
+    @Override
+    public List<Vente> findTop500OfVenteOrderByIdDesc() {
+        return venteRepository.findTop500ByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Vente> findVenteById(Long venteId) {
         if (!venteRepository.existsById(venteId)) {
             throw new ResourceNotFoundException("Vente Not found");

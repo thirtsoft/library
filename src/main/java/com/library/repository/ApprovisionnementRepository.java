@@ -1,9 +1,8 @@
 package com.library.repository;
 
 import com.library.entities.Approvisionnement;
+import com.library.entities.Creance;
 import com.library.entities.Vente;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,8 +21,12 @@ public interface ApprovisionnementRepository extends JpaRepository<Approvisionne
 
     List<Approvisionnement> findByOrderByIdDesc();
 
-  //  @Query("select v from Approvisionnement v where v.dateApprovisionnement < (current_date () - interval 3 month")
-    @Query("select s from Approvisionnement s WHERE s.dateApprovisionnement <= CURDATE() - INTERVAL 3 MONTH")
+    //  @Query("select v from Approvisionnement v where v.dateApprovisionnement < (current_date () - interval 3 month")
+
+    @Query("select v from Approvisionnement v where (v.dateApprovisionnement <= current_date - 90) ORDER BY v.dateApprovisionnement DESC ")
     List<Approvisionnement> findListApprovisionnementOf3LatestMonth();
+
+    List<Approvisionnement> findTop500ByOrderByIdDesc();
+
 
 }

@@ -43,6 +43,16 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
     }
 
     @Override
+    public List<Approvisionnement> findListApprovisionnementOf3LatestMonth() {
+        return approvisionnementRepository.findListApprovisionnementOf3LatestMonth();
+    }
+
+    @Override
+    public List<Approvisionnement> findTop500OfApprovisionnementOrderByIdDesc() {
+        return approvisionnementRepository.findTop500ByOrderByIdDesc();
+    }
+
+    @Override
     public Optional<Approvisionnement> findApprovisionnementById(Long approId) {
         if (!approvisionnementRepository.existsById(approId)) {
             throw new ResourceNotFoundException("Approvisionnement Not found");

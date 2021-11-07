@@ -1,8 +1,7 @@
 package com.library.repository;
 
-import com.library.entities.Creance;
-import com.library.entities.Utilisateur;
 import com.library.entities.Vente;
+import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface VenteRepository extends JpaRepository<Vente, Long> {
+
+    LocalDate threeDaysAgoDate = LocalDate.now().minusMonths(3);
 
     @Query("select count(p) from Vente p where p.dateVente between :d1 and :d2")
     Integer countBetween(@Param("d1") Date d1, @Param("d2") Date d2);
@@ -30,9 +31,10 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
     @Query("select v from Vente v where v.dateVente > current_date")
     List<Vente> findVenteWithParticularDayAndMonth();
 
-  //  @Query("select v from Vente v where v.dateVente < (current_date () - interval 3 month")
-    @Query("select s from Vente s WHERE s.dateVente <= CURDATE() - INTERVAL 3 MONTH")
+    @Query("select v from Vente v where (v.dateVente <= current_date - 90) ORDER BY v.dateVente DESC ")
     List<Vente> findListVenteOf3LatestMonth();
+
+    List<Vente> findTop500ByOrderByIdDesc();
 
     @Query("select sum(v.totalVente) from Vente v where v.dateVente > current_date")
     BigDecimal sumTotalOfVenteByDay();
@@ -54,7 +56,6 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
 
     @Query("select p from Vente p where p.numeroVente like :num")
     Vente findByNumeroVente(@Param("num") Long numeroVente);
-    // Vente findByNumeroVente(@Param("num") long numeroVente);
 
     @Query("select p from CommandeClient p where p.status like :status")
     Vente findByStatus(@Param("status") String status);

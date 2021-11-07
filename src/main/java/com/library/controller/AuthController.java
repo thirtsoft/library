@@ -48,15 +48,12 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
-
-    @Autowired
-    private HistoriqueLoginService historiqueLoginService;
-
     @Autowired
     PasswordEncoder encoder;
-
     @Autowired
     JwtProvider jwtProvider;
+    @Autowired
+    private HistoriqueLoginService historiqueLoginService;
 
     @PostMapping(value = "/signin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Authentifier ",
@@ -127,7 +124,7 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (roleArr == null) {
-            roles.add(roleRepository.findByName(RoleName.ROLE_USER).get());
+            roles.add(roleRepository.findByName(RoleName.ROLE_VENDEUR).get());
         }
 
         for (String role : roleArr) {
@@ -136,12 +133,16 @@ public class AuthController {
                     roles.add(roleRepository.findByName(RoleName.ROLE_ADMIN).get());
                     break;
 
-                case "vendeur":
-                    roles.add(roleRepository.findByName(RoleName.ROLE_VENDEUR).get());
+                case "manager":
+                    roles.add(roleRepository.findByName(RoleName.ROLE_MANAGER).get());
                     break;
 
-                case "user":
-                    roles.add(roleRepository.findByName(RoleName.ROLE_USER).get());
+                case "gerant":
+                    roles.add(roleRepository.findByName(RoleName.ROLE_GERANT).get());
+                    break;
+
+                case "vendeur":
+                    roles.add(roleRepository.findByName(RoleName.ROLE_VENDEUR).get());
                     break;
 
                 default:

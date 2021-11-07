@@ -3,7 +3,6 @@ package com.library.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.library.entities.Contrat;
 import com.library.entities.Creance;
 import com.library.entities.HistoriqueCreance;
 import com.library.entities.Utilisateur;
@@ -67,6 +66,30 @@ public class CreanceController {
     })
     ResponseEntity<List<Creance>> getAllCreanceOrderDesc() {
         List<Creance> creanceList = creanceService.findAllCreancesOrderDesc();
+        return new ResponseEntity<>(creanceList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = APP_ROOT + "/creances/allCreanceOf3LatestMonths", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Creances des trois derniers mois",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Creance des trois derniers mois",
+            responseContainer = "List<Creance>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Creance / une liste vide")
+    })
+    ResponseEntity<List<Creance>> getAllCreanceOf3LatestMonths() {
+        List<Creance> creanceList = creanceService.findListCreanceOf3LatestMonth();
+        return new ResponseEntity<>(creanceList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = APP_ROOT + "/creances/findTop500OfCreanceOrderByIdDesc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des 500 derniers Creances",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des 500 derniers Creance",
+            responseContainer = "List<Creance>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Creance / une liste vide")
+    })
+    ResponseEntity<List<Creance>> getTop500OfCreanceOrderByIdDesc() {
+        List<Creance> creanceList = creanceService.findTop500OfCreanceOrderByIdDesc();
         return new ResponseEntity<>(creanceList, HttpStatus.OK);
     }
 
