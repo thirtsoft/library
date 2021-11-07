@@ -376,14 +376,23 @@ public class PdfServiceImpl implements PdfService {
             Font tableHeader = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12, BaseColor.BLACK);
             Font tableBody = FontFactory.getFont("Arial", 12, BaseColor.BLACK);
 
-            PdfPCell reference = new PdfPCell(new Paragraph("Reference", tableHeader));
+            PdfPCell barcode = new PdfPCell(new Paragraph("Barcode", tableHeader));
+            barcode.setBorderColor(BaseColor.BLACK);
+            barcode.setPaddingLeft(10);
+            barcode.setHorizontalAlignment(Element.ALIGN_CENTER);
+            barcode.setVerticalAlignment(Element.ALIGN_CENTER);
+            barcode.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            barcode.setExtraParagraphSpace(5f);
+            table.addCell(barcode);
+
+           /* PdfPCell reference = new PdfPCell(new Paragraph("Reference", tableHeader));
             reference.setBorderColor(BaseColor.BLACK);
             reference.setPaddingLeft(10);
             reference.setHorizontalAlignment(Element.ALIGN_CENTER);
             reference.setVerticalAlignment(Element.ALIGN_CENTER);
             reference.setBackgroundColor(BaseColor.LIGHT_GRAY);
             reference.setExtraParagraphSpace(5f);
-            table.addCell(reference);
+            table.addCell(reference);*/
 
             PdfPCell designation = new PdfPCell(new Paragraph("Designation", tableHeader));
             designation.setBorderColor(BaseColor.BLACK);
@@ -441,14 +450,14 @@ public class PdfServiceImpl implements PdfService {
             table.addCell(stock);
 
             for (Produit prod : produits) {
-                PdfPCell referenceValue = new PdfPCell(new Paragraph(prod.getReference(), tableBody));
-                referenceValue.setBorderColor(BaseColor.BLACK);
-                referenceValue.setPaddingLeft(4);
-                referenceValue.setHorizontalAlignment(Element.ALIGN_CENTER);
-                referenceValue.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                referenceValue.setBackgroundColor(BaseColor.WHITE);
-                referenceValue.setExtraParagraphSpace(5f);
-                table.addCell(referenceValue);
+                PdfPCell barcodeValue = new PdfPCell(new Paragraph(prod.getBarCode(), tableBody));
+                barcodeValue.setBorderColor(BaseColor.BLACK);
+                barcodeValue.setPaddingLeft(4);
+                barcodeValue.setHorizontalAlignment(Element.ALIGN_CENTER);
+                barcodeValue.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                barcodeValue.setBackgroundColor(BaseColor.WHITE);
+                barcodeValue.setExtraParagraphSpace(5f);
+                table.addCell(barcodeValue);
 
                 PdfPCell designationValue = new PdfPCell(new Paragraph(prod.getDesignation(), tableBody));
                 designationValue.setBorderColor(BaseColor.BLACK);

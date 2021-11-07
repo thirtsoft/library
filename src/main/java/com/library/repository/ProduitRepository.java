@@ -43,7 +43,7 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
     Optional<Produit> findByBarCode(String barCode);
 
-    Optional<Produit> findByQrCode(String qrCode);
+  //  Optional<Produit> findByQrCode(String qrCode);
 
 
 }

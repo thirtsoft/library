@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.LigneVente;
 import com.library.entities.Produit;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.message.response.ResponseMessage;
@@ -208,7 +207,7 @@ public class ProduitController {
     })
     public ResponseEntity<Produit> updateProduit(@PathVariable(value = "prodId") Long prodId, @RequestBody Produit produit) {
         produit.setId(prodId);
-        return new ResponseEntity<>(produitService.updateProduit(prodId, produit), HttpStatus.OK) ;
+        return new ResponseEntity<>(produitService.updateProduit(prodId, produit), HttpStatus.OK);
     }
 
     @DeleteMapping(value = APP_ROOT + "/produits/delete/{id}")
@@ -332,13 +331,13 @@ public class ProduitController {
 
         Produit produitInfo = produitService
                 .findProductByBarcode(barcode)
-                .orElseThrow(()->
-                        new  ResourceNotFoundException(barcode+" NOT Found!"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(barcode + " NOT Found!"));
 
-            return ResponseEntity.ok().body(produitInfo);
+        return ResponseEntity.ok().body(produitInfo);
     }
 
-    @PostMapping(value = APP_ROOT + "/produits/createProduitWithQrcode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+ /*   @PostMapping(value = APP_ROOT + "/produits/createProduitWithQrcode", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Produit avec qrCode",
             notes = "Cette méthode permet d'enregistrer et modifier un Produit avec qrCode", response = Produit.class)
     @ApiResponses(value = {
@@ -347,25 +346,23 @@ public class ProduitController {
 
     })
     public ResponseEntity<Produit> saveProduitWithQrCode(@RequestBody Produit produit) throws Exception {
-
         return ResponseEntity.ok(produitService.saveProductWithQrcode(produit));
+    }*/
 
-    }
-
-    @GetMapping(value = APP_ROOT + "/produits/searchProduitByQrCode/{qrCode}")
+ /*   @GetMapping(value = APP_ROOT + "/produits/searchProduitByQrCode/{qrCode}")
     @ApiOperation(value = "chercher un produit par son qrcode",
             notes = "Cette méthode permet de chercher et renvoyer un Produit par son qrcode")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Produit a été trouvé avec le qrcode indiqué")
     })
-    public ResponseEntity<Produit> getProduitByQrCode(@PathVariable("qrCode") String qrCode){
+    public ResponseEntity<Produit> getProduitByQrCode(@PathVariable("qrCode") String qrCode) {
         Produit produitInfo = produitService
                 .findProductByQrcode(qrCode)
-                .orElseThrow(()->
-                        new  ResourceNotFoundException(qrCode+" NOT Found!"));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(qrCode + " NOT Found!"));
 
         return ResponseEntity.ok().body(produitInfo);
-    }
+    }*/
 
 
 }

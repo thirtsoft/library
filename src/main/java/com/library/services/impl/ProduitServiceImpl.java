@@ -107,7 +107,6 @@ public class ProduitServiceImpl implements ProduitService {
         product.setPrixDetail(produit.getPrixDetail());
         product.setQtestock(produit.getQtestock());
         product.setStockInitial(produit.getStockInitial());
-        product.setPromo(produit.isPromo());
         product.setScategorie(produit.getScategorie());
 
         return produitRepository.save(product);
@@ -227,14 +226,14 @@ public class ProduitServiceImpl implements ProduitService {
             productResult.setBarCode(ZxingBarcodeHelper.generateCodeCommand());
             productResult.setReference(produit.getReference());
             productResult.setDesignation(produit.getDesignation());
-            productResult.setQrCode(produit.getQrCode());
+        //    productResult.setQrCode(produit.getQrCode());
             productResult.setPrixAchat(produit.getPrixAchat());
             productResult.setPrixVente(produit.getPrixVente());
             productResult.setPrixVente(produit.getPrixVente());
             productResult.setQtestock(produit.getQtestock());
             productResult.setStockInitial(produit.getStockInitial());
-            productResult.setCreationDate(produit.getCreationDate());
-            productResult.setLastUpdateDate(produit.getLastUpdateDate());
+        //    productResult.setCreationDate(produit.getCreationDate());
+        //    productResult.setLastUpdateDate(produit.getLastUpdateDate());
             productResult.setScategorie(produit.getScategorie());
 
             produitRepository.save(productResult);
@@ -250,7 +249,7 @@ public class ProduitServiceImpl implements ProduitService {
                 .orElse(null);
     }
 
-    @Override
+   /* @Override
     public Produit saveProductWithQrcode(Produit produit) throws Exception {
         Produit productResult = new Produit();
         if (produit.getQrCode() != null && !produit.getQrCode().isEmpty()) {
@@ -276,12 +275,12 @@ public class ProduitServiceImpl implements ProduitService {
 
         return productResult;
     }
-
-    @Override
+*/
+   /* @Override
     public Optional<Produit> findProductByQrcode(String qrCode){
         return Optional.ofNullable(produitRepository.findByQrCode(qrCode))
                 .orElse(null);
-    }
+    }*/
 
 
 }

@@ -31,16 +31,6 @@ public class ExcelServiceImpl implements ExcelService {
     private ExcelUtils utils;
 
     @Override
-    public void store(MultipartFile file) {
-        try {
-            List<Produit> produits = utils.parseExcelFile(file.getInputStream());
-            produits.forEach(p -> produitService.saveProduit(p));
-        } catch (IOException e) {
-            throw new RuntimeException("FAIL! -> message = " + e.getMessage());
-        }
-    }
-
-    @Override
     public void storeCategorieFile(MultipartFile file) {
         try {
             List<Category> categories = ExcelUtils.parseCategorieExcelFile(file.getInputStream());
@@ -62,6 +52,22 @@ public class ExcelServiceImpl implements ExcelService {
             throw new RuntimeException("Fail! -> message " + e.getMessage());
         }
 
+    }
+
+    @Override
+    public void store(MultipartFile file) {
+        try {
+            List<Produit> produits = utils.parseProduitsExcelFile(file.getInputStream());
+            produits.forEach(p -> {
+                try {
+                    produitService.saveProductWithBarcode(p);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            throw new RuntimeException("FAIL! -> message = " + e.getMessage());
+        }
     }
 
 

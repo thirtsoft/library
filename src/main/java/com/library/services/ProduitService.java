@@ -1,7 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Produit;
-import com.library.entities.Produit;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -49,9 +48,9 @@ public interface ProduitService {
 
     Optional<Produit> findProductByBarcode(String barCode);
 
-    Produit saveProductWithQrcode(Produit produit) throws Exception;
+    //   Produit saveProductWithQrcode(Produit produit) throws Exception;
 
-    Optional<Produit> findProductByQrcode(String qrCode);
+ //   Optional<Produit> findProductByQrcode(String qrCode);
 
 
 }

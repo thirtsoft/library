@@ -67,7 +67,7 @@ public class ProduitServiceTest {
 		
 		Scategorie scategory = new Scategorie(null,"Table", "Table Bois", category);
 		
-		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0, 25000.0,26000.0, 100,5, true, scategory);
+		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0, 25000.0,26000.0, 100,5, scategory);
 		
 		when(produitRepository.findByReference(produit.getReference())).thenReturn(produit);
 		
@@ -86,7 +86,7 @@ public class ProduitServiceTest {
 		Scategorie scategory = new Scategorie(null,"Bureau", "Chaise Roulante", category);
 		
 		Produit produit = new Produit(null,"Art3", "Ordi HP", 23000.0, 25000.0,26000.0,
-				 500, 15, true, scategory);
+				 500, 15, scategory);
 		
 		when(produitRepository.findByDesignation(produit.getDesignation())).thenReturn(produit);
 		
@@ -106,8 +106,8 @@ public class ProduitServiceTest {
 		Scategorie scat = new Scategorie(null,"PC","PCMobile", cat);
 		
 		when(produitRepository.findAll()).thenReturn(Stream
-		.of(new Produit(null,"Art3", "Ordi HP", 23000.0, 25000.0,26000.0, 200, 25, true, scat),
-						new Produit(null,"HPHP", "HPElioLite", 3000.0, 5000.0, 5500.0, 500, 20, true, scat)).collect(Collectors.toList()));
+		.of(new Produit(null,"Art3", "Ordi HP", 23000.0, 25000.0,26000.0, 200, 25, scat),
+						new Produit(null,"HPHP", "HPElioLite", 3000.0, 5000.0, 5500.0, 500, 20, scat)).collect(Collectors.toList()));
 		assertEquals(2, produitService.findAllProduits().size());
 	}
 
