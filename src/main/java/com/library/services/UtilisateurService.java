@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Utilisateur;
+import com.library.enumeration.RoleName;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,8 @@ public interface UtilisateurService {
 
     Utilisateur findUtilisateurByUsername(String username);
     //Utilisateur findUtilisateurByEmail(String email);
+
+    void addRoleToUser(String username, RoleName roleName);
 
     List<Utilisateur> findListUtilisateurByUsername(String username);
 

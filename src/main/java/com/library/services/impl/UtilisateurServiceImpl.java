@@ -1,11 +1,14 @@
 package com.library.services.impl;
 
+import com.library.entities.Role;
 import com.library.entities.Utilisateur;
+import com.library.enumeration.RoleName;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.repository.RoleRepository;
 import com.library.repository.UtilisateurRepository;
 import com.library.services.UtilisateurService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 
     @Autowired
     private RoleRepository repository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override
@@ -83,6 +89,13 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     @Override
     public Utilisateur findUtilisateurByUsername(String username) {
         return null;
+    }
+
+    @Override
+    public void addRoleToUser(String username, RoleName roleName) {
+        Role role = roleRepository.findByName(roleName).get();
+        Utilisateur utilisateur = utilisateurRepository.findByUsername(username).get();
+        utilisateur.getRoles().add(role);
     }
 
     @Override
