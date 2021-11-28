@@ -96,7 +96,8 @@ public class LibraryApplication implements CommandLineRunner {
         admin.setUsername("Admin");
         admin.setName("Admin");
         admin.setEmail("admin@gmail.com");
-        admin.setPassword(bCryptPasswordEncoder.encode("Admin"));
+        admin.setActive(true);
+        admin.setPassword(bCryptPasswordEncoder.encode("Admin123456"));
         utilisateurRepository.save(admin);
 
         utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);

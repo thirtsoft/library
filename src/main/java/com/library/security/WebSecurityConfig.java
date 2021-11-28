@@ -67,12 +67,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**/contrats/downloadContratFile/**").permitAll()
                 .antMatchers("/alAmine/uploadPdfFile/{id}").permitAll()
                 .antMatchers("/**/versements/downloadVersementFile/**").permitAll()
-                .antMatchers("/**/categories/all").permitAll()
-                .antMatchers("/**/categories/allCategoryOrderDesc").permitAll()
-                .antMatchers("/**/ventes/allVenteOf3LatestMonths").permitAll()
-                .antMatchers("/**/creances/allCreanceOf3LatestMonths").permitAll()
-                .antMatchers("/**/approvisionnements/allApprovisionnementOfLatest3Months").permitAll()
-                .antMatchers("/**/commandes/allCommandeClientOf3LatestMonths").permitAll()
+           //     .antMatchers("/**/categories/all").permitAll()
+           //     .antMatchers("/**/categories/allCategoryOrderDesc").permitAll()
+          //      .antMatchers("/**/ventes/allVenteOf3LatestMonths").permitAll()
+          //      .antMatchers("/**/creances/allCreanceOf3LatestMonths").permitAll()
+          //      .antMatchers("/**/approvisionnements/allApprovisionnementOfLatest3Months").permitAll()
+          //      .antMatchers("/**/commandes/allCommandeClientOf3LatestMonths").permitAll()
 
 
                 .antMatchers("/**/utilisateurs/avatar/{id}").permitAll()
