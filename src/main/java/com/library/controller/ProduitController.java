@@ -32,7 +32,7 @@ import static com.library.utils.Constants.APP_ROOT;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 //@RequestMapping("/prodApi")
 public class ProduitController {
 

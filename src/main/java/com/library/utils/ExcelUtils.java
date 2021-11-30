@@ -279,7 +279,7 @@ public class ExcelUtils {
                     Cell currentCell = cellsInRow.next();
                     switch (cellIndex) {
                         case 0:
-                            produit.setBarCode(currentCell.getStringCellValue());
+                            produit.setBarCode(String.format("%.0f",currentCell.getNumericCellValue()));
                             break;
                         case 1:
                             produit.setReference(currentCell.getStringCellValue());
