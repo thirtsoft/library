@@ -6,19 +6,20 @@ import com.library.entities.Fournisseur;
 import com.library.repository.EmailRepository;
 import com.library.services.EmailService;
 import com.library.services.FournisseurService;
+import com.library.utils.EmailConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 
 @Service
+@Transactional
 public class EmailServiceImpl implements EmailService {
-
-    private static final String from = "thirdiallo@gmail.com";
 
     @Autowired
     private EmailRepository emailRepository;
@@ -105,10 +106,15 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendMail(Fournisseur fournisseur) throws MailException {
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nom : " + EmailConstants.managerName).append(System.lineSeparator());
+        sb.append("\n Subject : " + fournisseur.getSubject());
+        sb.append("\n Message : " + fournisseur.getMessage());
+
         SimpleMailMessage mail = new SimpleMailMessage();
 
         mail.setTo(fournisseur.getEmail());
-        mail.setFrom(from);
+        mail.setFrom(EmailConstants.from);
         mail.setSubject(fournisseur.getSubject());
         mail.setText(fournisseur.getMessage());
 
@@ -117,13 +123,14 @@ public class EmailServiceImpl implements EmailService {
 
         javaMailSender.send(mail);
 
-        //    fournisseurService.saveFournisseur(fournisseur);
-
 
     }
 
     @Override
     public void sendMailToAllFournisseurs(Email email) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nom : " + EmailConstants.managerName).append(System.lineSeparator());
 
         List<Fournisseur> furnishesList = fournisseurService.findAllFournisseurs();
 
@@ -134,8 +141,10 @@ public class EmailServiceImpl implements EmailService {
             mail.setTo(fournisseur.getEmail());
             mail.setSubject(email.getSubject());
             mail.setText(email.getMessage());
-            mail.setFrom(from);
+            mail.setFrom(EmailConstants.from);
         }
+
+
 
         javaMailSender.send(mail);
 
@@ -144,19 +153,21 @@ public class EmailServiceImpl implements EmailService {
     @Override
     public void sendMailToClient(Client client) throws MailException {
 
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nom : " + EmailConstants.managerName).append(System.lineSeparator());
+        sb.append("\n Subject : " + client.getSubject());
+        sb.append("\n Message : " + client.getMessage());
+
         SimpleMailMessage mail = new SimpleMailMessage();
 
         mail.setTo(client.getEmail());
-        mail.setFrom(from);
+        mail.setFrom(EmailConstants.from);
         mail.setSubject(client.getSubject());
         mail.setText(client.getMessage());
 
 
-        System.out.println(client);
-
         javaMailSender.send(mail);
 
-        //    fournisseurService.saveFournisseur(fournisseur);
 
     }
 
