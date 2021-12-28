@@ -31,9 +31,8 @@ import java.util.Optional;
 import static com.library.utils.Constants.APP_ROOT;
 
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
-//@RequestMapping("/prodApi")
 public class ProduitController {
 
     @Autowired

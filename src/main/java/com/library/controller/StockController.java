@@ -16,9 +16,8 @@ import java.util.Optional;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
 public class StockController {
 
     @Autowired

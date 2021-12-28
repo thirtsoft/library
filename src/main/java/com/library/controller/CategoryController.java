@@ -2,7 +2,6 @@ package com.library.controller;
 
 import com.library.assembler.CategoryRestAssembler;
 import com.library.controller.model.CategoryModel;
-import com.library.entities.CategorieCharge;
 import com.library.entities.Category;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.message.response.ResponseMessage;
@@ -32,8 +31,8 @@ import java.util.Locale;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin("*")
 public class CategoryController {
 
     @Autowired
@@ -95,7 +94,7 @@ public class CategoryController {
 
     @PostMapping(value = APP_ROOT + "/categories/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer une category",
-            notes = "Cette méthode permet d'enregistrer une category", response = CategoryModel.class )
+            notes = "Cette méthode permet d'enregistrer une category", response = CategoryModel.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "La category a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucune category  crée / modifié")
@@ -108,7 +107,7 @@ public class CategoryController {
 
     @PutMapping(value = APP_ROOT + "/categories/update/{catId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier une category par son ID",
-            notes = "Cette méthode permet de modifier un category par son ID", response = CategoryModel.class )
+            notes = "Cette méthode permet de modifier un category par son ID", response = CategoryModel.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La category a été modifié"),
             @ApiResponse(code = 400, message = "Aucun category modifié")
@@ -118,9 +117,9 @@ public class CategoryController {
         return new ResponseEntity<>(categoryRestAssembler.assembledEntityToModel(categoryService.updateCategory(catId, category)), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = APP_ROOT +"/categories/delete/{id}")
+    @DeleteMapping(value = APP_ROOT + "/categories/delete/{id}")
     @ApiOperation(value = "Supprimer une Category par son ID",
-            notes = "Cette méthode permet de supprimer un Category par son ID", response = Category.class )
+            notes = "Cette méthode permet de supprimer un Category par son ID", response = Category.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La Category a été supprimé")
     })

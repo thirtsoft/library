@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.LigneCreance;
 import com.library.entities.LigneDevis;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneDevisService;
@@ -18,9 +17,8 @@ import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
 public class LigneDevisController {
 
     @Autowired
@@ -91,7 +89,7 @@ public class LigneDevisController {
         return ligneDevisService.findLigneDevisByProduitId(prodId);
     }
 
-    @GetMapping(value = APP_ROOT +  "/ligneDevis/searchListLigneDevisByDevisId/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ligneDevis/searchListLigneDevisByDevisId/{comId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des LigneDevis par Devis",
             notes = "Cette méthode permet de chercher et renvoyer la liste des LigneDevis par Devis", responseContainer = "List<LigneDevis>")
     @ApiResponses(value = {

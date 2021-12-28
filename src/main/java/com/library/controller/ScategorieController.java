@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Produit;
 import com.library.entities.Scategorie;
 import com.library.message.response.ResponseMessage;
 import com.library.services.ExcelService;
@@ -30,9 +29,8 @@ import java.util.Optional;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/prodApi")
 public class ScategorieController {
 
     @Autowired
@@ -98,7 +96,7 @@ public class ScategorieController {
         return scategorieService.findByCode(code);
     }
 
-    @GetMapping(value = APP_ROOT +  "/scategories/searchListScategoriesByCode", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/scategories/searchListScategoriesByCode", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Scategorie par code",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Scategories par code", responseContainer = "List<Scategorie>")
     @ApiResponses(value = {

@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.LigneDevis;
 import com.library.entities.LigneVente;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneVenteService;
@@ -18,9 +17,8 @@ import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/apiSeller")
 public class LigneVenteController {
 
     @Autowired
