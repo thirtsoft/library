@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Charge;
 import com.library.entities.Client;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.ClientService;
@@ -10,18 +9,15 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeEditor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.nio.cs.ext.MacDingbat;
 
 import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/prodApi")
 public class ClientController {
 
     @Autowired
@@ -49,7 +45,7 @@ public class ClientController {
         return new ResponseEntity<>(clientList, HttpStatus.OK);
     }
 
-    @GetMapping(value = APP_ROOT +"/clients/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/clients/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Client par ID",
             notes = "Cette méthode permet de chercher un Client par son ID", response = Client.class
     )
@@ -121,7 +117,7 @@ public class ClientController {
 
     @PostMapping(value = APP_ROOT + "/clients/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Client",
-            notes = "Cette méthode permet d'enregistrer un Client", response = Client.class )
+            notes = "Cette méthode permet d'enregistrer un Client", response = Client.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Le Client a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun Client  crée / modifié")
@@ -143,7 +139,7 @@ public class ClientController {
 
     @PutMapping(value = APP_ROOT + "/clients/update/{clientId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Client par son ID",
-            notes = "Cette méthode permet de modifier un Client par son ID", response = Client.class )
+            notes = "Cette méthode permet de modifier un Client par son ID", response = Client.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Client a été modifié"),
             @ApiResponse(code = 400, message = "Aucun Client modifié")
@@ -154,9 +150,9 @@ public class ClientController {
         return new ResponseEntity<>(clientService.updateClient(clientId, client), HttpStatus.OK);
     }
 
-    @PatchMapping(value = APP_ROOT +"/clients/udapteClientByEmail/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = APP_ROOT + "/clients/udapteClientByEmail/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un Client par son EMAIL",
-            notes = "Cette méthode permet de modifier un Client par son EMAIL", response = Client.class )
+            notes = "Cette méthode permet de modifier un Client par son EMAIL", response = Client.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Client avec l'email EMAIL a été modifié"),
             @ApiResponse(code = 400, message = "Aucun Client modifié")
@@ -169,7 +165,7 @@ public class ClientController {
 
     @DeleteMapping(value = APP_ROOT + "/clients/delete/{id}")
     @ApiOperation(value = "Supprimer un Client par son ID",
-            notes = "Cette méthode permet de supprimer un Client par son ID", response = Client.class )
+            notes = "Cette méthode permet de supprimer un Client par son ID", response = Client.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Le Client a été supprimé")
     })

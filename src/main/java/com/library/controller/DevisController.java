@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Creance;
 import com.library.entities.Devis;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
@@ -22,9 +21,8 @@ import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
 public class DevisController {
 
     private final Double total = 0.0;

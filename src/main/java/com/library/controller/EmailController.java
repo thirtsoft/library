@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.library.utils.Constants.APP_ROOT;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-//@RequestMapping("/alAmine")
 public class EmailController {
 
     @Autowired

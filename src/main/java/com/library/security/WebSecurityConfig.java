@@ -60,7 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/**/auth/signIn").permitAll()
+                .antMatchers("/**/auth/signUp").permitAll()
                 .antMatchers("/alAmine/utilisateurs/authorities").permitAll()
                 .antMatchers("/alAmine/photoUser/{id}").permitAll()
                 .antMatchers("/alAmine/uploadFilePdf/{id}").permitAll()

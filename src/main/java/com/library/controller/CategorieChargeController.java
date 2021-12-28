@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Avoir;
 import com.library.entities.CategorieCharge;
 import com.library.services.CategorieChargeService;
 import io.swagger.annotations.ApiOperation;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +16,8 @@ import java.util.Optional;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin("*")
-//@RequestMapping("/alAmine")
 public class CategorieChargeController {
 
     @Autowired
@@ -93,7 +90,7 @@ public class CategorieChargeController {
 
     @PostMapping(value = APP_ROOT + "/categorieCharges/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un CategorieCharge",
-            notes = "Cette méthode permet d'enregistrer un CategorieCharge", response = CategorieCharge.class )
+            notes = "Cette méthode permet d'enregistrer un CategorieCharge", response = CategorieCharge.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "CategorieCharge a été crée / modifié"),
             @ApiResponse(code = 400, message = "Aucun CategorieCharge  crée / modifié")
@@ -110,7 +107,7 @@ public class CategorieChargeController {
 
     @PutMapping(value = APP_ROOT + "/categorieCharges/update/{catId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Modifier un CategorieCharge par son ID",
-            notes = "Cette méthode permet de modifier un CategorieCharge par son ID", response = CategorieCharge.class )
+            notes = "Cette méthode permet de modifier un CategorieCharge par son ID", response = CategorieCharge.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "CategorieCharge a été modifié"),
             @ApiResponse(code = 400, message = "Aucun CategorieCharge modifié")
@@ -123,7 +120,7 @@ public class CategorieChargeController {
 
     @DeleteMapping(value = APP_ROOT + "/categorieCharges/delete/{id}")
     @ApiOperation(value = "Supprimer un CategorieCharge par son ID",
-            notes = "Cette méthode permet de supprimer un CategorieCharge par son ID", response = CategorieCharge.class )
+            notes = "Cette méthode permet de supprimer un CategorieCharge par son ID", response = CategorieCharge.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "CategorieCharge a été supprimé")
     })

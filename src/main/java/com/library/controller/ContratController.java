@@ -1,7 +1,6 @@
 package com.library.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.library.entities.CommandeClient;
 import com.library.entities.Contrat;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.ContratService;
@@ -32,9 +31,8 @@ import java.util.Optional;
 import static com.library.utils.Constants.APP_ROOT;
 
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
 public class ContratController {
 
     private static final Logger logger = LoggerFactory.getLogger(ContratController.class);
@@ -50,7 +48,7 @@ public class ContratController {
     @Autowired
     private ExcelService excelService;
 
-    private String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
+    private final String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
 
     @GetMapping(value = APP_ROOT + "/contrats/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Contrat",

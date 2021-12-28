@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Category;
 import com.library.entities.Charge;
 import com.library.entities.HistoriqueCharge;
 import com.library.entities.Utilisateur;
@@ -25,8 +24,8 @@ import java.util.Optional;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
 public class ChargeController {
 
     @Autowired
@@ -60,7 +59,7 @@ public class ChargeController {
         return new ResponseEntity<>(chargeList, HttpStatus.OK);
     }
 
-    @GetMapping(value = APP_ROOT +"/charges/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/charges/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Charge par ID",
             notes = "Cette méthode permet de chercher une Charge par son ID", response = Charge.class
     )

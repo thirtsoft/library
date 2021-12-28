@@ -34,10 +34,8 @@ import java.util.stream.Collectors;
 import static com.library.utils.Constants.APP_ROOT;
 
 
-//@CrossOrigin(origins = "http://localhost:4200")
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
@@ -55,7 +53,7 @@ public class AuthController {
     @Autowired
     private HistoriqueLoginService historiqueLoginService;
 
-    @PostMapping(value = "/signin", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/auth/signIn", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Authentifier ",
             notes = "Cette méthode permet d'authentifier un utilisateur", response = LoginForm.class)
     @ApiResponses(value = {
@@ -94,7 +92,7 @@ public class AuthController {
                 roles));
     }
 
-    @PostMapping(value = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = APP_ROOT + "/auth/signUp", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Créer un compte ",
             notes = "Cette méthode permet à un utilisateur de créer son compte", response = SignUpForm.class)
     @ApiResponses(value = {

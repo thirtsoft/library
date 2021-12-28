@@ -1,6 +1,9 @@
 package com.library.controller;
 
-import com.library.entities.*;
+import com.library.entities.CommandeClient;
+import com.library.entities.HistoriqueCommande;
+import com.library.entities.LigneCmdClient;
+import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.security.services.UserPrinciple;
 import com.library.services.*;
@@ -23,9 +26,8 @@ import java.util.Optional;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/prodApi")
 public class CommandeClientController {
 
     @Autowired

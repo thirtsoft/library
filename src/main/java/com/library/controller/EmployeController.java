@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Devis;
 import com.library.entities.Employe;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.EmployeService;
@@ -17,9 +16,8 @@ import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
 public class EmployeController {
 
     @Autowired
