@@ -12,7 +12,7 @@
 	<groupId>com.restserver</groupId>
 	<artifactId>Library</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<!--<packaging>war</packaging>-->
 	<name>Library</name>
 	<description> Spring boot Web Application for Send and Stock Data</description>
 
