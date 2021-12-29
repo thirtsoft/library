@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.LigneAvoir;
 import com.library.entities.LigneCmdClient;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.LigneCmdClientService;
@@ -18,9 +17,8 @@ import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/prodApi")
 public class LigneCmdClientController {
 
     @Autowired

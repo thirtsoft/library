@@ -5,13 +5,15 @@ import com.library.entities.Fournisseur;
 import com.library.services.SMSService;
 import com.twilio.rest.api.v2010.account.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import static com.library.utils.Constants.APP_ROOT;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-//@RequestMapping("/alAmine")
 public class SMSController {
 
     @Autowired

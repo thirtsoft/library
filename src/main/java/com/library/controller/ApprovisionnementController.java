@@ -1,7 +1,6 @@
 package com.library.controller;
 
 import com.library.entities.Approvisionnement;
-import com.library.entities.CommandeClient;
 import com.library.entities.HistoriqueApprovisionnement;
 import com.library.entities.Utilisateur;
 import com.library.exceptions.ResourceNotFoundException;
@@ -26,10 +25,8 @@ import java.util.Optional;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
-//@Api(APP_ROOT)
 public class ApprovisionnementController {
 
     @Autowired

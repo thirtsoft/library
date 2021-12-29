@@ -17,8 +17,8 @@ import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
 public class HistoriqueCommandeController {
 
     private final HistoriqueCommandeService historiqueCommandeService;

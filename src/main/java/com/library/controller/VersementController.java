@@ -27,9 +27,8 @@ import java.util.Optional;
 import static com.library.utils.Constants.APP_ROOT;
 
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
 public class VersementController {
 
     private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Versement/";
@@ -131,7 +130,6 @@ public class VersementController {
         return verResult;
     }
 
-
     @PostMapping(value = APP_ROOT + "/versements/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Versement",
             notes = "Cette méthode permet d'enregistrer un Versement", response = Versement.class)
@@ -213,7 +211,6 @@ public class VersementController {
         }
 
     }
-
 
     @DeleteMapping(value = APP_ROOT + "/versements/delete/{id}")
     @ApiOperation(value = "Supprimer un Versement par son ID",

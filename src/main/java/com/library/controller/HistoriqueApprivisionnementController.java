@@ -1,6 +1,5 @@
 package com.library.controller;
 
-import com.library.entities.Approvisionnement;
 import com.library.entities.HistoriqueApprovisionnement;
 import com.library.exceptions.ResourceNotFoundException;
 import com.library.services.HistoriqueApprovisionnementService;
@@ -18,6 +17,7 @@ import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 public class HistoriqueApprivisionnementController {
 
@@ -102,8 +102,6 @@ public class HistoriqueApprivisionnementController {
         historiqueApprovisionnementService.deleteHistoriqueApprovisionnement(id);
         return ResponseEntity.ok().build();
     }
-
-
 
 
 }

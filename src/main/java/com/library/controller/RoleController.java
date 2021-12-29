@@ -10,16 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static com.library.utils.Constants.APP_ROOT;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@CrossOrigin
-//@RequestMapping("/alAmine")
 public class RoleController {
 
     @Autowired
@@ -68,7 +66,7 @@ public class RoleController {
 
     @DeleteMapping(value = APP_ROOT + "/roles/delete/{idRole}")
     @ApiOperation(value = "Supprimer un Role par son ID",
-            notes = "Cette méthode permet de supprimer un Role par son ID", response = Role.class )
+            notes = "Cette méthode permet de supprimer un Role par son ID", response = Role.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Role a été supprimé")
     })
