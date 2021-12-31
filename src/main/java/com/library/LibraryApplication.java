@@ -89,6 +89,7 @@ public class LibraryApplication implements CommandLineRunner {
 
         Role vendorRole = roleRepository.save(new Role(RoleName.ROLE_VENDEUR));
         Role gerantRole = roleRepository.save(new Role(RoleName.ROLE_GERANT));
+        Role associeRole = roleRepository.save(new Role(RoleName.ROLE_ASSOCIE));
         Role managerRole = roleRepository.save(new Role(RoleName.ROLE_MANAGER));
         Role adminRole = roleRepository.save(new Role(RoleName.ROLE_ADMIN));
         Utilisateur admin = new Utilisateur();
@@ -101,6 +102,16 @@ public class LibraryApplication implements CommandLineRunner {
         utilisateurRepository.save(admin);
 
         utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
+
+        Utilisateur manager = new Utilisateur();
+        admin.setId(1L);
+        admin.setUsername("Manager");
+        admin.setName("Manager");
+        admin.setEmail("manager@gmail.com");
+        admin.setActive(true);
+        admin.setPassword(bCryptPasswordEncoder.encode("Manager123456"));
+        utilisateurRepository.save(manager);
+        utilisateurService.addRoleToUser("Manager", RoleName.ROLE_MANAGER);
 
 
     }

@@ -135,6 +135,10 @@ public class AuthController {
                     roles.add(roleRepository.findByName(RoleName.ROLE_MANAGER).get());
                     break;
 
+                case "associe":
+                    roles.add(roleRepository.findByName(RoleName.ROLE_ASSOCIE).get());
+                    break;
+
                 case "gerant":
                     roles.add(roleRepository.findByName(RoleName.ROLE_GERANT).get());
                     break;
@@ -151,7 +155,7 @@ public class AuthController {
 
         user.setRoles(roles);
 
-        user.setActive(true);
+        //    user.setActive(true);
 
         userRepository.save(user);
 
