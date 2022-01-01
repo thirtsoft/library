@@ -6,7 +6,6 @@ import com.library.repository.ProduitRepository;
 import com.library.services.ProduitService;
 import com.library.services.StockService;
 import com.library.utils.ZxingBarcodeHelper;
-import com.library.utils.ZxingQrcodeHelper;
 import org.apache.poi.hssf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -226,14 +225,14 @@ public class ProduitServiceImpl implements ProduitService {
             productResult.setBarCode(ZxingBarcodeHelper.generateCodeCommand());
             productResult.setReference(produit.getReference());
             productResult.setDesignation(produit.getDesignation());
-        //    productResult.setQrCode(produit.getQrCode());
+            //    productResult.setQrCode(produit.getQrCode());
             productResult.setPrixAchat(produit.getPrixAchat());
             productResult.setPrixVente(produit.getPrixVente());
             productResult.setPrixVente(produit.getPrixVente());
             productResult.setQtestock(produit.getQtestock());
             productResult.setStockInitial(produit.getStockInitial());
-        //    productResult.setCreationDate(produit.getCreationDate());
-        //    productResult.setLastUpdateDate(produit.getLastUpdateDate());
+            //    productResult.setCreationDate(produit.getCreationDate());
+            //    productResult.setLastUpdateDate(produit.getLastUpdateDate());
             productResult.setScategorie(produit.getScategorie());
 
             produitRepository.save(productResult);
