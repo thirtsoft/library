@@ -27,7 +27,7 @@ public class ZxingQrcodeHelper {
 
     private static final Map hintMap = new HashMap<>();
 
-    public static String readProductQrCode(String qrCode) throws Exception {
+   /* public static String readProductQrCode(String qrCode) throws Exception {
 
         BufferedImage bf = ImageIO.read(new FileInputStream(BARCODE_PATH));
 
@@ -40,7 +40,7 @@ public class ZxingQrcodeHelper {
         return result.getText();
 
     }
-
+*/
     public static String generateCodeCommand() {
         final String FORMAT = "yyyyMMddHHmmss";
         return (DateTimeFormat.forPattern(FORMAT).print(LocalDateTime.now()));
