@@ -242,8 +242,10 @@ public class VenteController {
         Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
 
         vente.setUtilisateur(userInfo);
+        vente.setNumeroVente(this.generateNumeroVente());
 
         venteResultat = venteService.saveVenteWithBarcode(vente);
+
 
         //    venteService.saveVenteWithBarcode(vente);
 
@@ -251,7 +253,7 @@ public class VenteController {
 
         historiqueVente.setUtilisateur(userInfo);
         historiqueVente.setVente(venteResultat);
-        historiqueVente.setAction("AJOUT");
+        historiqueVente.setAction("AJOUT D\' UNE VENTE");
         historiqueVente.setCreatedDate(new Date());
 
         historiqueVenteService.saveHistoriqueVente(historiqueVente);

@@ -129,6 +129,7 @@ public class DevisController {
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
 
         devis.setUtilisateur(utilisateur);
+        devis.setNumeroDevis(this.generateNumeroDevis());
 
         return new ResponseEntity<>(devisService.saveDevis(devis), HttpStatus.CREATED);
     }

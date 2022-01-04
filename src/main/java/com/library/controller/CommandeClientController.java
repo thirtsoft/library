@@ -198,6 +198,7 @@ public class CommandeClientController {
 
         Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
         commandeClient.setUtilisateur(userInfo);
+        commandeClient.setNumeroCommande(this.generateCodeCommand());
 
         commandeClientResultat = commandeClientService.createCommande(commandeClient);
 
@@ -260,12 +261,13 @@ public class CommandeClientController {
 
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
         commandeClient.setUtilisateur(utilisateur);
+        commandeClient.setNumeroCommande(this.generateCodeCommand());
 
         commandeClientResultat = commandeClientService.saveCommandeClient(commandeClient);
 
         historiqueCommande.setUtilisateur(utilisateur);
         historiqueCommande.setCommandeClient(commandeClientResultat);
-        historiqueCommande.setAction("AJOUT");
+        historiqueCommande.setAction("ENREGISTRER UNE COMMANDE");
         historiqueCommande.setCreatedDate(new Date());
 
         historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
