@@ -103,15 +103,15 @@ public class LibraryApplication implements CommandLineRunner {
 
         utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
 
-        Utilisateur manager = new Utilisateur();
-        admin.setId(1L);
+       /* Utilisateur manager = new Utilisateur();
+        admin.setId(2L);
         admin.setUsername("Manager");
         admin.setName("Manager");
         admin.setEmail("manager@gmail.com");
         admin.setActive(true);
         admin.setPassword(bCryptPasswordEncoder.encode("Manager123456"));
         utilisateurRepository.save(manager);
-        utilisateurService.addRoleToUser("Manager", RoleName.ROLE_MANAGER);
+        utilisateurService.addRoleToUser("Manager", RoleName.ROLE_MANAGER);*/
 
 
     }

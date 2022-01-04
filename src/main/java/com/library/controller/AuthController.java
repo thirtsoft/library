@@ -155,7 +155,7 @@ public class AuthController {
 
         user.setRoles(roles);
 
-        //    user.setActive(true);
+        user.setActive(true);
 
         userRepository.save(user);
 
