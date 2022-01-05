@@ -18,6 +18,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -42,13 +43,14 @@ public class ContratController {
     private final Path rootLocation = Paths.get("C:\\Users\\Folio9470m\\AlAmine\\Contrat\\");
 
     private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Contrat/";
-
+    private final String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
     @Autowired
     private ContratService contratService;
     @Autowired
     private ExcelService excelService;
 
-    private final String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
+    @Autowired
+    ServletContext context;
 
     @GetMapping(value = APP_ROOT + "/contrats/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Contrat",

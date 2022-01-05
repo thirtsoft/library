@@ -144,8 +144,6 @@ public class EmailServiceImpl implements EmailService {
             mail.setFrom(EmailConstants.from);
         }
 
-
-
         javaMailSender.send(mail);
 
     }
