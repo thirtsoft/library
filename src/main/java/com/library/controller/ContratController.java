@@ -8,6 +8,8 @@ import com.library.services.ExcelService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLConnection;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -45,12 +46,11 @@ public class ContratController {
     private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Contrat/";
     private final String contratsDir = "C://Users//Folio9470m//AlAmine//Contrat//";
     @Autowired
+    ServletContext context;
+    @Autowired
     private ContratService contratService;
     @Autowired
     private ExcelService excelService;
-
-    @Autowired
-    ServletContext context;
 
     @GetMapping(value = APP_ROOT + "/contrats/all", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Contrat",
@@ -146,6 +146,36 @@ public class ContratController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Contrat is created");
     }
 
+    @PostMapping(value = APP_ROOT + "/contrats/addContratInPath")
+    @ApiOperation(value = "Enregistrer un Contrat",
+            notes = "Cette méthode permet d'enregistrer et modifier un Contrat", response = Contrat.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Le Contrat a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Contrat crée / modifié")
+
+    })
+    public ResponseEntity<?> addContratInPath(@RequestPart(name = "contrat") String cont,
+                                              @RequestParam(name = "file") MultipartFile file) throws IOException {
+        Contrat contrat = new ObjectMapper().readValue(cont, Contrat.class);
+        String filename = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+        File serverFile = new File(context.getRealPath("/Contrats/" + File.separator + newFileName));
+        try {
+            System.out.println("Image");
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
+
+            contrat.setFileContrat(filename);
+
+            contratService.saveContrat(contrat);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Contrat is created");
+    }
+
+
     @PostMapping(value = APP_ROOT + "/contrats/uploadFilePdf/{id}")
     @ApiOperation(value = "importer un Contrat",
             notes = "Cette méthode permet d'importer un contrat pdf depuis le disque vers la BD")
@@ -155,10 +185,20 @@ public class ContratController {
     public void uploadContratFile(MultipartFile file, @PathVariable("id") Long id) throws IOException {
         Contrat contrat = contratService.findContratById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Contrat not found"));
-        contrat.setFileContrat(file.getOriginalFilename());
-        Files.write(Paths.get(System.getProperty("user.home") + "/AlAmine/Contrat/" + contrat.getFileContrat()), file.getBytes());
+        String filename = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+        File serverFile = new File(context.getRealPath("/Contrats/" + File.separator + newFileName));
+        try {
+            System.out.println("Image");
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
 
-        contratService.saveContrat(contrat);
+            contrat.setFileContrat(filename);
+
+            contratService.saveContrat(contrat);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @PutMapping(value = APP_ROOT + "/contrats/update/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -193,7 +233,8 @@ public class ContratController {
     })
     public void downloadContratFile(HttpServletRequest request, HttpServletResponse response,
                                     @PathVariable("fileName") String fileName) throws IOException {
-        File file = new File(EXTERNAL_FILE_PATH + fileName);
+        //    File file = new File(EXTERNAL_FILE_PATH + fileName);
+        File file = new File(context.getRealPath("/Contrats/" + File.separator + fileName));
         if (file.exists()) {
             String mimeType = URLConnection.guessContentTypeFromName(file.getName());
             if (mimeType == null) {
