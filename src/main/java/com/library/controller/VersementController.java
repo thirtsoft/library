@@ -7,6 +7,8 @@ import com.library.services.VersementService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +17,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -33,6 +36,8 @@ public class VersementController {
 
     private final String EXTERNAL_FILE_PATH = "C:/Users/Folio9470m/AlAmine/Versement/";
     private final String versementsDir = "C://Users//Folio9470m//AlAmine//Versement//";
+    @Autowired
+    ServletContext context;
     @Autowired
     private VersementService versementService;
 
@@ -173,6 +178,35 @@ public class VersementController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Versement is created");
     }
 
+    @PostMapping(value = APP_ROOT + "/versements/createVersementInPath")
+    @ApiOperation(value = "Enregistrer un Versement avec son fichier",
+            notes = "Cette méthode permet d'enregistrer un Versement", response = Versement.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Le Versement a été crée / modifié"),
+            @ApiResponse(code = 400, message = "Aucun Versement n'a pas été  crée / modifié")
+
+    })
+    public ResponseEntity<?> saveVersementInPath(@RequestPart(name = "versement") String vers,
+                                                 @RequestParam(name = "file") MultipartFile file) throws IOException {
+        Versement versement = new ObjectMapper().readValue(vers, Versement.class);
+        String filename = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+        File serverFile = new File(context.getRealPath("/Versements/" + File.separator + newFileName));
+        try {
+            System.out.println("Image");
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
+
+            versement.setFileVersement(filename);
+
+            versementService.saveVersement(versement);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Versement is created");
+    }
+
     @PostMapping(value = APP_ROOT + "/versements/uploadPdfFile/{id}")
     @ApiOperation(value = "Importer un PDF",
             notes = "Cette méthode permet d'importer un fichier PDf d'un dossier externe vers la BD")
@@ -188,6 +222,31 @@ public class VersementController {
         versementService.saveVersement(versement);
     }
 
+    @PostMapping(value = APP_ROOT + "/versements/uploadPdfFileInPath/{id}")
+    @ApiOperation(value = "Importer un PDF",
+            notes = "Cette méthode permet d'importer un fichier PDf d'un dossier externe vers la BD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "L'importation du fichier  s'est passé avec succès")
+    })
+    public void uploadVersementFileInPath(MultipartFile file, @PathVariable("id") Long id) throws IOException {
+        Versement versement = versementService.findVersementById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Versement not found"));
+        String filename = file.getOriginalFilename();
+        String newFileName = FilenameUtils.getBaseName(filename) + "." + FilenameUtils.getExtension(filename);
+        File serverFile = new File(context.getRealPath("/Versements/" + File.separator + newFileName));
+        try {
+            System.out.println("Image");
+            FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
+
+            versement.setFileVersement(filename);
+
+            versementService.saveVersement(versement);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @RequestMapping(value = APP_ROOT + "/versements/downloadVersementFile/{fileName:.+}")
     @ApiOperation(value = "Télécharger un PDF",
             notes = "Cette méthode permet de télécharger un le reçu d'un  Versement")
@@ -196,7 +255,8 @@ public class VersementController {
     })
     public void downloadVersementFile(HttpServletRequest request, HttpServletResponse response,
                                       @PathVariable("fileName") String fileName) throws IOException {
-        File file = new File(EXTERNAL_FILE_PATH + fileName);
+        //    File file = new File(EXTERNAL_FILE_PATH + fileName);
+        File file = new File(context.getRealPath("/Versements/" + File.separator + fileName));
         if (file.exists()) {
             String mimeType = URLConnection.guessContentTypeFromName(file.getName());
             if (mimeType == null) {
