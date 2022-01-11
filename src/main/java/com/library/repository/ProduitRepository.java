@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.LigneVente;
 import com.library.entities.Produit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -43,7 +42,8 @@ public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
     Optional<Produit> findByBarCode(String barCode);
 
-  //  Optional<Produit> findByQrCode(String qrCode);
+    @Query("select p from Produit p order by designation Asc")
+    List<Produit> findListProductByOrderByDesignationAsc();
 
 
 }

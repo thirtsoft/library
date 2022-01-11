@@ -105,16 +105,6 @@ public class ClientController {
         return clientService.ListClientGroupByRaisonSocial();
     }
 
-    @GetMapping(value = APP_ROOT + "/clients/searchClientByChefService")
-    public Client getClientByChefService(@RequestParam(value = "chefService") String chefService) {
-        return clientService.findByChefService(chefService);
-    }
-
-    @GetMapping(value = APP_ROOT + "/clients/searchListClientByChefService")
-    public List<Client> getListClientByChefService(@RequestParam(value = "chefService") String chefService) {
-        return clientService.ListClientByChefService("%" + chefService + "%");
-    }
-
     @PostMapping(value = APP_ROOT + "/clients/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Enregistrer un Client",
             notes = "Cette méthode permet d'enregistrer un Client", response = Client.class)

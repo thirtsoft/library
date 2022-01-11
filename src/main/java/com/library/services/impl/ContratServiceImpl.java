@@ -116,7 +116,6 @@ public class ContratServiceImpl implements ContratService {
 
     @Override
     public Contrat createContrat(String contrat, MultipartFile fileContrant) throws IOException {
-
         Contrat contrat1 = new ObjectMapper().readValue(contrat, Contrat.class);
         System.out.println(contrat1);
 

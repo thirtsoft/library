@@ -48,13 +48,6 @@ public class ClientRepositoryTest {
         assertNull(client);
     }
 
-    @Test
-    public void testFindClientByChefService() {
-        String chefService = "Saliou";
-        Client client = clientRepository.findByChefService(chefService);
-
-        assertNull(client);
-    }
 
     @Test
     @Rollback(false)
@@ -71,10 +64,8 @@ public class ClientRepositoryTest {
         clientRepository.save(client);
 
         Client clientUpdate = clientRepository.findByRaisonSocial(clientRaisonSocial);
-        Client clientUpdate1 = clientRepository.findByChefService(clientChefService);
 
         assertThat(clientUpdate.getRaisonSocial()).isEqualTo(clientRaisonSocial);
-        assertThat(clientUpdate1.getChefService()).isEqualTo(clientChefService);
 
     }
 
@@ -116,21 +107,6 @@ public class ClientRepositoryTest {
         }
         assertThat(clientList.size()).isBetween(1, 4);
         //assertThat(clientList.size()).isGreaterThan(0);
-
-    }
-
-    @Test
-    public void testListFindClientByChefService() {
-        String chefService = "M";
-
-        List<Client> clients = clientRepository.ListClientByChefService("%" + chefService + "%");
-        List<Client> clientList = new ArrayList<Client>();
-
-        for (Client client : clients) {
-            clientList.add(client);
-        }
-        //assertThat(categoriesList.size()).isEqualTo(2);
-        assertThat(clientList.size()).isGreaterThan(0);
 
     }
 

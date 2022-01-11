@@ -129,6 +129,8 @@ public class ApprovisionnementController {
     })
     public ResponseEntity<Approvisionnement> createApprovisionnement(@RequestBody Approvisionnement approvisionnement) {
 
+        approvisionnement.setCode(this.generateCodeApprovisionnement());
+
         Approvisionnement approvisionnementResultat = approvisionnementService.saveApprovisionnement(approvisionnement);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

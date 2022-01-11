@@ -108,16 +108,6 @@ public class FournisseurController {
         return fournisseurService.findListFournisseurByCode("%" + code + "%");
     }
 
-    @GetMapping(value = APP_ROOT + "/fournisseurs/searchFournisseurByNom")
-    public Fournisseur getFournisseurByNom(@RequestParam(value = "name") String nom) {
-        return fournisseurService.findByNom(nom);
-    }
-
-    @GetMapping(value = APP_ROOT + "/fournisseurs/searchListFournisseurByNom")
-    public List<Fournisseur> getAllFournisseurByNom(@RequestParam(value = "name") String nom) {
-        return fournisseurService.findListFournisseurByNom("%" + nom + "%");
-    }
-
     @GetMapping(value = APP_ROOT + "/fournisseurs/searchFournisseurByRaisonSocial")
     public Fournisseur getFournisseurByRaisonSocial(@RequestParam(value = "raison") String raisonSocial) {
         return fournisseurService.findByRaisonSociale(raisonSocial);

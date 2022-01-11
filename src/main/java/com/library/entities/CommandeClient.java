@@ -34,9 +34,6 @@ public class CommandeClient extends AbstractEntity {
     @JoinColumn(name = "userId", nullable = false)
     private Utilisateur utilisateur;
 
-    //@JsonManagedReference
-    //@JsonIgnore
-//	@JsonIgnoreProperties(value = {"commande"})
     @OneToMany(mappedBy = "commande", fetch = FetchType.LAZY)
     @Valid
     private List<LigneCmdClient> lcomms = new ArrayList<>();

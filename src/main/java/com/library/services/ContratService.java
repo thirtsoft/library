@@ -33,8 +33,6 @@ public interface ContratService {
 
     void deleteContrat(Long id);
 
-    //   Contrat createContrat(String contrat, MultipartFile fileContrant) throws JsonParseException, JsonMappingException, IOException;
-
     Contrat createContrat(String contrat, MultipartFile fileContrant) throws IOException;
 
     Resource loadFileAsResource(String fileName) throws Exception;

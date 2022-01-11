@@ -225,7 +225,7 @@ public class CommandeClientController {
     @PostMapping(value = APP_ROOT + "/commandes")
     public ResponseEntity<CommandeClient> createCommande(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
 
-        CommandeClient commandeClientResultat = new CommandeClient();
+        CommandeClient commandeClientResultat;
 
         HistoriqueCommande historiqueCommande = new HistoriqueCommande();
 
@@ -255,7 +255,7 @@ public class CommandeClientController {
     })
     public ResponseEntity<CommandeClient> createCommandeClient(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
 
-        CommandeClient commandeClientResultat = new CommandeClient();
+        CommandeClient commandeClientResultat;
 
         HistoriqueCommande historiqueCommande = new HistoriqueCommande();
 
@@ -285,7 +285,7 @@ public class CommandeClientController {
     })
     public ResponseEntity<CommandeClient> updateLigneCmdClient(@PathVariable(value = "id") Long id, @RequestBody CommandeClient commandeClient) throws Exception {
 
-        CommandeClient commandeClientResultat = new CommandeClient();
+        CommandeClient commandeClientResultat;
 
         HistoriqueCommande historiqueCommande = new HistoriqueCommande();
 
@@ -318,7 +318,7 @@ public class CommandeClientController {
     })
     public ResponseEntity<?> deleteCommande(@PathVariable(value = "id") Long id) {
 
-        CommandeClient commandeClientResultat = new CommandeClient();
+        CommandeClient commandeClientResultat;
 
         HistoriqueCommande historiqueCommande = new HistoriqueCommande();
 

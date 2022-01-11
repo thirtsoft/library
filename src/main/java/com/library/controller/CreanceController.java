@@ -227,12 +227,13 @@ public class CreanceController {
     })
     public ResponseEntity<Creance> createCreance(@RequestBody Creance creance, @RequestParam Long id) {
 
-        Creance creanceResultat = new Creance();
+        Creance creanceResultat;
 
         HistoriqueCreance historiqueCreance = new HistoriqueCreance();
 
         Utilisateur utilisateur = utilisateurService.findUtilisateurById(id).get();
         creance.setUtilisateur(utilisateur);
+        creance.setReference(this.generateReferenceCreance());
 
         creanceResultat = creanceService.saveCreance(creance);
 
@@ -256,7 +257,7 @@ public class CreanceController {
     })
     public ResponseEntity<Creance> updateCreance(@PathVariable(value = "id") Long id, @RequestBody Creance creance) throws Exception {
 
-        Creance creanceResultat = new Creance();
+        Creance creanceResultat;
 
         HistoriqueCreance historiqueCreance = new HistoriqueCreance();
 

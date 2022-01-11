@@ -25,12 +25,8 @@ public class Versement extends AbstractEntity {
     @Column(length = 100, unique = true)
     private String numVersement;
 
-    private String nature;
-
     @Column(length = 100, unique = true)
     private String numeroRecu;
-
-    private String nomBank;
 
     private Double montantVersement;
 
@@ -38,7 +34,7 @@ public class Versement extends AbstractEntity {
 
     private String fileVersement;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
+    @Column(name = "dateVersement")
     private Date dateVersement;
 
     @ManyToOne

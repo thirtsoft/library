@@ -25,12 +25,6 @@ public class Fournisseur extends AbstractEntity {
 
     private String raisonSociale;
 
-    private String prenom;
-
-    private String nom;
-
-    private String nomBank;
-
     @Column(length = 100, unique = true)
     private String numeroCompte;
 
@@ -51,16 +45,12 @@ public class Fournisseur extends AbstractEntity {
     private String message;
 
     public Fournisseur(Long id, String code, String raisonSociale,
-                       String prenom, String nom, String nomBank,
                        String numeroCompte, String adresse,
                        String telephone, String mobile,
                        String fax, String email) {
         this.id = id;
         this.code = code;
         this.raisonSociale = raisonSociale;
-        this.prenom = prenom;
-        this.nom = nom;
-        this.nomBank = nomBank;
         this.numeroCompte = numeroCompte;
         this.adresse = adresse;
         this.telephone = telephone;

@@ -34,17 +34,13 @@ public class Contrat extends AbstractEntity {
 
     private String description;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
+    @Column(name = "dateDebutContrat")
     private Date dateDebutContrat;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
+    @Column(name = "dateFinContrat")
     private Date dateFinContrat;
 
-
     private String fileContrat;
-
-   // @Lob
-   // private byte[] content;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)

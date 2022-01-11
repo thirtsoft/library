@@ -49,18 +49,8 @@ public class VersementServiceImpl implements VersementService {
     }
 
     @Override
-    public Versement findByNature(String nature) {
-        return versementRepository.findByNature(nature);
-    }
-
-    @Override
     public List<Versement> findListVersementByNumVersement(String numVersement) {
         return versementRepository.findListVersementByNumVersement(numVersement);
-    }
-
-    @Override
-    public List<Versement> findListVersementByNature(String nature) {
-        return versementRepository.findListVersementNature(nature);
     }
 
     @Override
@@ -71,7 +61,6 @@ public class VersementServiceImpl implements VersementService {
     @Override
     public Versement saveVersement(Versement versement) {
         versement.setDateVersement(new Date());
-
         return versementRepository.save(versement);
     }
 
@@ -88,9 +77,11 @@ public class VersementServiceImpl implements VersementService {
         Versement versementResult = versment.get();
 
         versementResult.setNumVersement(versement.getNumVersement());
-        versementResult.setNature(versement.getNature());
+        versementResult.setNumeroRecu(versement.getNumeroRecu());
         versementResult.setMontantVersement(versement.getMontantVersement());
+        versementResult.setMotif(versement.getMotif());
         versementResult.setDateVersement(versement.getDateVersement());
+        versementResult.setEmploye(versement.getEmploye());
 
 
         return versementRepository.save(versementResult);

@@ -26,8 +26,6 @@ public class Client extends AbstractEntity {
 
     private String raisonSocial;
 
-    private String chefService;
-
     private String adresse;
 
     @Column(unique = true)
@@ -49,7 +47,6 @@ public class Client extends AbstractEntity {
         this.id = id;
         this.codeClient = codeClient;
         this.raisonSocial = raisonSocial;
-        this.chefService = chefService;
         this.adresse = adresse;
         this.telephone = telephone;
         this.mobile = mobile;

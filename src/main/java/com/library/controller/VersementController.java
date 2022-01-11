@@ -99,29 +99,6 @@ public class VersementController {
         return versementService.findListVersementByNumVersement("%" + numVersement + "%");
     }
 
-    @GetMapping(value = APP_ROOT + "/versements/searchVersementByNature", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Rechercher un Versement par nature",
-            notes = "Cette méthode permet de chercher une Versement par sa nature", response = Versement.class
-    )
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Le Versement avec cette nature a été trouver"),
-            @ApiResponse(code = 404, message = "Aucun Charge n'existe avec cet nature pas dans la BD")
-
-    })
-    public Versement getVersementByNature(@RequestParam(name = "nat") String nature) {
-        return versementService.findByNature(nature);
-    }
-
-    @GetMapping(value = APP_ROOT + "/versements/searchListVersementsByNature", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Renvoi la liste des Versement par nature",
-            notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par nature", responseContainer = "List<Versement>")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "La liste des Versement par nature / une liste vide")
-    })
-    public List<Versement> getListVersementsByNature(@RequestParam(name = "nat") String nature) {
-        return versementService.findListVersementByNature("%" + nature + "%");
-    }
-
     @GetMapping(value = APP_ROOT + "/versements/searchListVersementsByEmployeId", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Versement par Employe",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Versement par employe", responseContainer = "List<Versement>")
@@ -131,7 +108,6 @@ public class VersementController {
     public List<Versement> getAllVersementsByEmployeId(Long empId) {
         List<Versement> verResult = versementService.findVersementByEmployeId(empId);
         System.out.println(verResult);
-        //	return versementService.findVersementByEmployeId(empId);
         return verResult;
     }
 
@@ -147,6 +123,8 @@ public class VersementController {
         if (versementService.findByNumVersement(versement.getNumVersement()) != null) {
             return new ResponseEntity<>(versement, HttpStatus.BAD_REQUEST);
         }
+        String numVer = "VERS_" + Math.random()*10;
+        versement.setNumVersement(numVer);
         versementService.saveVersement(versement);
         return new ResponseEntity<>(versement, HttpStatus.CREATED);
     }
@@ -160,7 +138,9 @@ public class VersementController {
 
     })
     public ResponseEntity<Versement> updateVersement(@PathVariable Long id, @RequestBody Versement versement) {
+        String numVer = "VERS_" + Math.random()*10;
         versement.setId(id);
+        versement.setNumVersement(numVer);
         return new ResponseEntity<>(versementService.updateVersement(id, versement), HttpStatus.OK);
     }
 

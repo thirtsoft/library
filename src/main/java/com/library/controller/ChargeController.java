@@ -121,7 +121,9 @@ public class ChargeController {
         if (chargeService.findChargeByCodeCharge(charge.getCodeCharge()) != null) {
             return new ResponseEntity<>(charge, HttpStatus.BAD_REQUEST);
         }
-        Charge chargeResultat = new Charge();
+        Charge chargeResultat;
+        String ch = "CH_" + Math.random()*10;
+        charge.setCodeCharge(ch);
         chargeResultat = chargeService.saveCharge(charge);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -138,8 +140,6 @@ public class ChargeController {
 
         historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
 
-        //    chargeService.saveCharge(charge);
-
         return new ResponseEntity<>(chargeResultat, HttpStatus.CREATED);
     }
 
@@ -152,6 +152,8 @@ public class ChargeController {
 
     })
     public ResponseEntity<Charge> updateCharge(@PathVariable Long id, @RequestBody Charge charge) {
+        String ch = "CH_" + Math.random()*10;
+        charge.setCodeCharge(ch);
         charge.setId(id);
         Charge chargeResultat = chargeService.updateCharge(id, charge);
 

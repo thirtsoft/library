@@ -1,7 +1,5 @@
 package com.library.services;
 
-import com.library.entities.Client;
-import com.library.entities.Fournisseur;
 import com.library.entities.Fournisseur;
 
 import java.util.List;
@@ -20,11 +18,7 @@ public interface FournisseurService {
 
     Fournisseur findByCode(String code);
 
-    Fournisseur findByNom(String nom);
-
     Fournisseur findByRaisonSociale(String raisonSociale);
-
-    Fournisseur findByNomBank(String nomBank);
 
     Fournisseur findByEmail(String email);
 
@@ -35,8 +29,6 @@ public interface FournisseurService {
     List<Fournisseur> findAllFournisseursOrderDesc();
 
     List<Fournisseur> findListFournisseurByCode(String code);
-
-    List<Fournisseur> findListFournisseurByNom(String nom);
 
     List<Fournisseur> findListFournisseurByRaisonSociale(String raisonSociale);
 

@@ -248,6 +248,11 @@ public class ProduitServiceImpl implements ProduitService {
                 .orElse(null);
     }
 
+    @Override
+    public List<Produit> findListProductByOrderByDesignationAsc() {
+        return produitRepository.findListProductByOrderByDesignationAsc();
+    }
+
    /* @Override
     public Produit saveProductWithQrcode(Produit produit) throws Exception {
         Produit productResult = new Produit();

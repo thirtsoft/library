@@ -42,11 +42,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client findByChefService(String chefService) {
-        return clientRepository.findByChefService(chefService);
-    }
-
-    @Override
     public Client findByEmail(String email) {
         return clientRepository.findByEmail(email);
     }
@@ -64,11 +59,6 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public List<Client> ListClientByRaisonSocial(String raisonSocial) {
         return clientRepository.ListClientByRaisonSocial(raisonSocial);
-    }
-
-    @Override
-    public List<Client> ListClientByChefService(String chefService) {
-        return clientRepository.ListClientByChefService(chefService);
     }
 
     @Override
@@ -108,7 +98,6 @@ public class ClientServiceImpl implements ClientService {
         }
         Client clientResult = clt.get();
         clientResult.setRaisonSocial(client.getRaisonSocial());
-        clientResult.setChefService(client.getChefService());
         clientResult.setAdresse(client.getAdresse());
         clientResult.setTelephone(client.getTelephone());
         clientResult.setMobile(client.getMobile());

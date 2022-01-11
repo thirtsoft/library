@@ -75,6 +75,18 @@ public class ProduitController {
         return new ResponseEntity<>(produitList, HttpStatus.OK);
     }
 
+    @GetMapping(value = APP_ROOT + "/produits/allProduitOrderByDesignationAsc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Produit par ordre alphabetique",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Produits par ordre alphabetique",
+            responseContainer = "List<Produit>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Produit / une liste vide")
+    })
+    ResponseEntity<List<Produit>> getAllProduitOrderByDesignationAsc() {
+        List<Produit> produitList = produitService.findListProductByOrderByDesignationAsc();
+        return new ResponseEntity<>(produitList, HttpStatus.OK);
+    }
+
     @GetMapping(value = APP_ROOT + "/produits/findById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Rechercher un Produit par ID",
             notes = "Cette méthode permet de chercher une Produit par son ID", response = Produit.class

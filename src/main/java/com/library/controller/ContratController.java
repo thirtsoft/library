@@ -164,6 +164,8 @@ public class ContratController {
             System.out.println("Image");
             FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
 
+            String numCont = "REF_" + Math.random()*10;
+            contrat.setReference(numCont);
             contrat.setFileContrat(filename);
 
             contratService.saveContrat(contrat);
@@ -210,6 +212,7 @@ public class ContratController {
 
     })
     public ResponseEntity<Contrat> updateContrat(@PathVariable Long id, @RequestBody Contrat contrat) {
+        contrat.setReference("REF_" + Math.random()*10);
         contrat.setId(id);
         return new ResponseEntity<>(contratService.updateContrat(id, contrat), HttpStatus.OK);
     }

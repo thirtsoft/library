@@ -48,9 +48,7 @@ public interface ProduitService {
 
     Optional<Produit> findProductByBarcode(String barCode);
 
-    //   Produit saveProductWithQrcode(Produit produit) throws Exception;
-
- //   Optional<Produit> findProductByQrcode(String qrCode);
+    List<Produit> findListProductByOrderByDesignationAsc();
 
 
 }

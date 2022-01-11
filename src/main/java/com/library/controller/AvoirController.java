@@ -134,7 +134,7 @@ public class AvoirController {
 
     })
     public ResponseEntity<Avoir> createAvoir(@RequestBody Avoir avoir) {
-
+        avoir.setReference(this.generateReferneceAvoir());
         Avoir avoirResultat = avoirService.saveAvoir(avoir);
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -165,7 +165,7 @@ public class AvoirController {
     })
     public ResponseEntity<Avoir> updateAvoir(@PathVariable Long id, @RequestBody Avoir avoir) {
 
-        Avoir avoirResultat = new Avoir();
+        Avoir avoirResultat;
 
         avoir.setId(id);
 

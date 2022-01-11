@@ -33,7 +33,6 @@ public class FournisseurServiceTest {
     public void testCreateFournisseur() {
         Fournisseur fournisseur = new Fournisseur();
         fournisseur.setCode("FFF");
-        fournisseur.setNom("FFFF");
         fournisseur.setAdresse("FFFF");
 
         Mockito.when(fournisseuRepository.save(fournisseur)).thenReturn(fournisseur);
@@ -44,7 +43,7 @@ public class FournisseurServiceTest {
     @Test
     public void testFindFournisseurByCode() {
 
-        Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "Bank1", "Cmpt1", "Add1", "77459043", "77459043", "D52020", "D@gmail.com");
+        Fournisseur fournisseur = new Fournisseur(1L, "L", "Diop", "ZG", "Cmpt1", "Add1", "77459043", "D52020", "D@gmail.com");
 
         when(fournisseuRepository.findByCode(fournisseur.getCode())).thenReturn(fournisseur);
 
@@ -56,26 +55,11 @@ public class FournisseurServiceTest {
     }
 
     @Test
-    public void testFindFournisseurByNom() {
-
-        Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "Bank1", "Cmpt1", "Add1", "77459043", "77459043", "D52020", "D@gmail.com");
-
-        when(fournisseuRepository.findByNom(fournisseur.getNom())).thenReturn(fournisseur);
-
-        Fournisseur frt = fournisseurService.findByNom(fournisseur.getNom());
-
-        assertNotNull(frt);
-        assertThat(frt.getNom()).isEqualTo(fournisseur.getNom());
-
-    }
-
-
-    @Test
     public void testAllFournisseurs() {
 
         when(fournisseuRepository.findAll()).thenReturn(Stream
-                .of(new Fournisseur(null, "L", "Diop", "D2020", "ZG", "Bank1", "Cmpt1", "Add1", "77459043", "77459043", "D52020", "D@gmail.com"),
-                        new Fournisseur(null, "L", "Diop", "D2020", "ZG", "Bank1", "Cmpt1", "Add1", "77459043", "77459043", "D52020", "D@gmail.com")).collect(Collectors.toList()));
+                .of(new Fournisseur(1L, "L", "Diop", "D2020", "ZG", "Add1", "77459043", "D52020", "D@gmail.com"),
+                        new Fournisseur(2L, "L", "Diop", "D2020", "ZG", "Add1", "77459043", "D52020", "D@gmail.com")).collect(Collectors.toList()));
         assertEquals(2, fournisseurService.findAllFournisseurs().size());
     }
 

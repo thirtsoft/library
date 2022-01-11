@@ -25,7 +25,7 @@ public class FournisseurRepositoryTest {
     @Test
     @Rollback(false)
     public void testCreateFournisseur() {
-        Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "Bank1", "Cmpt1", "Add1", "77459043", "77459043", "D52020", "D@gmail.com");
+        Fournisseur fournisseur = new Fournisseur(null, "L", "Diop", "D2020", "ZG", "Cmpt1", "Add1", "77459043", "77459043", "D52020", "D@gmail.com");
 
         Fournisseur saveFournisseur = fournisseurRepository.save(fournisseur);
 
@@ -51,9 +51,9 @@ public class FournisseurRepositoryTest {
     @Test
     public void testFindFournisseurByNom() {
         String nom = "F1";
-        Fournisseur fournisseur = fournisseurRepository.findByNom(nom);
+        Fournisseur fournisseur = fournisseurRepository.findByCode(nom);
 
-        assertThat(fournisseur.getNom()).isEqualTo(nom);
+        assertThat(fournisseur.getCode()).isEqualTo(nom);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class FournisseurRepositoryTest {
         String fournisseurNom = "Diallo";
         String fournisseurEmail = "diallo@gmail.com";
 
-        Fournisseur fournisseur = new Fournisseur(null, fournisseurCode, fournisseurNom, "D2020", "DK", "Bank1", "Cmpt1", "Add1", "77459043", "77459043", "D52020", fournisseurEmail);
+        Fournisseur fournisseur = new Fournisseur(null, fournisseurCode, "D2020", "DK", "Bank1", "Cmpt1", "Add1", "77459043", "77459043", "D52020", fournisseurEmail);
 
         fournisseur.setId((long) 3);
         fournisseurRepository.save(fournisseur);

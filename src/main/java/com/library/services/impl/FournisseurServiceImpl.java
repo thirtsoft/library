@@ -58,9 +58,6 @@ public class FournisseurServiceImpl implements FournisseurService {
         Fournisseur fournisseurResult = four.get();
         fournisseurResult.setCode(fournisseur.getCode());
         fournisseurResult.setRaisonSociale(fournisseur.getRaisonSociale());
-        fournisseurResult.setPrenom(fournisseur.getPrenom());
-        fournisseurResult.setNom(fournisseur.getNom());
-        fournisseurResult.setNomBank(fournisseur.getNomBank());
         fournisseurResult.setNumeroCompte(fournisseur.getNumeroCompte());
         fournisseurResult.setAdresse(fournisseur.getAdresse());
         fournisseurResult.setTelephone(fournisseur.getTelephone());
@@ -77,18 +74,8 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
-    public Fournisseur findByNom(String nom) {
-        return fournisseurRepository.findByNom(nom);
-    }
-
-    @Override
     public Fournisseur findByRaisonSociale(String raisonSociale) {
         return fournisseurRepository.findByRaisonSociale(raisonSociale);
-    }
-
-    @Override
-    public Fournisseur findByNomBank(String nomBank) {
-        return fournisseurRepository.findByNomBank(nomBank);
     }
 
     @Override
@@ -107,13 +94,8 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
-    public List<Fournisseur> findListFournisseurByNom(String nom) {
-        return fournisseurRepository.ListFournisseurByNom(nom);
-    }
-
-    @Override
     public List<Fournisseur> findListFournisseurByRaisonSociale(String raisonSociale) {
-        return fournisseurRepository.ListFournisseurByNom(raisonSociale);
+        return fournisseurRepository.ListFournisseurByRaisonSociale(raisonSociale);
     }
 
     @Override

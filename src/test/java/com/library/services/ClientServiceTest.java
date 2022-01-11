@@ -33,7 +33,6 @@ public class ClientServiceTest {
     public void testCreateClient() {
         Client client = new Client();
         client.setRaisonSocial("CL22");
-        client.setChefService("PREEEEN");
         client.setAdresse("HHHHH");
 
         Mockito.when(clientRepository.save(client)).thenReturn(client);
@@ -54,21 +53,6 @@ public class ClientServiceTest {
         assertThat(clt.getRaisonSocial()).isEqualTo(client.getRaisonSocial());
 
     }
-
-    @Test
-    public void testFindClientByChefService() {
-
-        Client client = new Client(null, "BIC103", "Dieng", "Sidiya", "Mbao", "775643219", "775643219", "seydou@gmail.com");
-
-        when(clientRepository.findByChefService(client.getChefService())).thenReturn(client);
-
-        Client clt = clientService.findByChefService(client.getChefService());
-
-        assertNotNull(clt);
-        assertThat(clt.getChefService()).isEqualTo(client.getChefService());
-
-    }
-
 
     @Test
     public void testAllClients() {
