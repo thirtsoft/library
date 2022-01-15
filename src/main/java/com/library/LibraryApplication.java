@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -21,9 +23,10 @@ import java.nio.file.Paths;
 public class LibraryApplication implements CommandLineRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(LibraryApplication.class);
-
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    private UtilisateurService utilisateurService;
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
@@ -35,14 +38,17 @@ public class LibraryApplication implements CommandLineRunner {
     @Autowired
     private UtilisateurRepository utilisateurRepository;
     @Autowired
-    private UtilisateurService utilisateurService;
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     public static void main(String[] args) {
         SpringApplication.run(LibraryApplication.class, args);
         createDirectoryIfItDoesntExist();
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
     }
 
     private static void createDirectoryIfItDoesntExist() {
@@ -81,9 +87,9 @@ public class LibraryApplication implements CommandLineRunner {
         Produit p4 = produitRepository.save(new Produit(4L, "456789", "prod4", "prod4", 150000.0, 170000.0, 180000.0, 8, 4, sc2));
 
 
-        Client cl1 = clientRepository.save(new Client(1L, "1234", "cl1", "cl1", "cl1", "cl1", "cl1", "cl1"));
-        Client cl2 = clientRepository.save(new Client(2L, "1235", "cl2", "cl2", "cl2", "cl2", "cl2", "cl2"));
-        Client cl3 = clientRepository.save(new Client(3L, "1237", "cl3", "cl3", "cl3", "cl3", "cl3", "cl3"));
+        Client cl1 = clientRepository.save(new Client(1L, "1234", "cl1", "cl1", "cl1", "779440310", "779440310", "cl1"));
+        Client cl2 = clientRepository.save(new Client(2L, "1235", "cl2", "cl2", "cl2", "774650168", "774650168", "cl2"));
+        Client cl3 = clientRepository.save(new Client(3L, "1237", "cl3", "cl3", "cl3", "760262897", "760262897", "cl3"));
         Client cl4 = clientRepository.save(new Client(4L, "1238", "cl4", "cl4", "cl4", "cl4", "cl4", "cl4"));
 
 
@@ -101,7 +107,7 @@ public class LibraryApplication implements CommandLineRunner {
         admin.setPassword(bCryptPasswordEncoder.encode("Admin123456"));
         utilisateurRepository.save(admin);
 
-        utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
+        //    utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
 
        /* Utilisateur manager = new Utilisateur();
         admin.setId(2L);
