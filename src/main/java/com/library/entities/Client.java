@@ -42,7 +42,7 @@ public class Client extends AbstractEntity {
     private String message;
 
     public Client(Long id, String codeClient, String raisonSocial,
-                  String chefService, String adresse, String telephone,
+                  String adresse, String telephone,
                   String mobile, String email) {
         this.id = id;
         this.codeClient = codeClient;

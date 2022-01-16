@@ -43,7 +43,7 @@ public class ClientServiceTest {
     @Test
     public void testFindClientByRaisonSocial() {
 
-        Client client = new Client(null, "BIC102", "Dieng", "Sidiya", "Mbao", "775643219", "775643219", "seydou@gmail.com");
+        Client client = new Client(1L, "Dieng", "Sidiya", "Mbao", "775643219", "775643219", "seydou@gmail.com");
 
         when(clientRepository.findByRaisonSocial(client.getRaisonSocial())).thenReturn(client);
 
@@ -57,8 +57,8 @@ public class ClientServiceTest {
     @Test
     public void testAllClients() {
         when(clientRepository.findAll()).thenReturn(Stream
-                .of(new Client(null, "BIC103", "CL", "CL", "CL", "CL", "CL", "CL"),
-                        new Client(null, "BIC103", "CL", "CL", "CL", "CL", "CL", "CL")).collect(Collectors.toList()));
+                .of(new Client(1L, "CL", "CL", "CL", "CL", "CL", "CL"),
+                        new Client(2L, "CL", "CL", "CL", "CL", "CL", "CL")).collect(Collectors.toList()));
         assertEquals(2, clientService.findAllClient().size());
     }
 

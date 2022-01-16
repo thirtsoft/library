@@ -87,10 +87,10 @@ public class LibraryApplication implements CommandLineRunner {
         Produit p4 = produitRepository.save(new Produit(4L, "456789", "prod4", "prod4", 150000.0, 170000.0, 180000.0, 8, 4, sc2));
 
 
-        Client cl1 = clientRepository.save(new Client(1L, "1234", "cl1", "cl1", "cl1", "779440310", "779440310", "cl1"));
-        Client cl2 = clientRepository.save(new Client(2L, "1235", "cl2", "cl2", "cl2", "774650168", "774650168", "cl2"));
-        Client cl3 = clientRepository.save(new Client(3L, "1237", "cl3", "cl3", "cl3", "760262897", "760262897", "cl3"));
-        Client cl4 = clientRepository.save(new Client(4L, "1238", "cl4", "cl4", "cl4", "cl4", "cl4", "cl4"));
+        Client cl1 = clientRepository.save(new Client(1L, "1234", "cl1", "cl1", "779440310", "779440310", "cl1"));
+        Client cl2 = clientRepository.save(new Client(2L, "1235", "cl2", "cl2", "774650168", "774650168", "cl2"));
+        Client cl3 = clientRepository.save(new Client(3L, "1237", "cl3", "cl3", "760262897", "760262897", "cl3"));
+        Client cl4 = clientRepository.save(new Client(4L, "1238", "cl4", "cl4", "cl4", "cl4", "cl4"));
 
 
         Role vendorRole = roleRepository.save(new Role(RoleName.ROLE_VENDEUR));
@@ -107,17 +107,7 @@ public class LibraryApplication implements CommandLineRunner {
         admin.setPassword(bCryptPasswordEncoder.encode("Admin123456"));
         utilisateurRepository.save(admin);
 
-        //    utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
-
-       /* Utilisateur manager = new Utilisateur();
-        admin.setId(2L);
-        admin.setUsername("Manager");
-        admin.setName("Manager");
-        admin.setEmail("manager@gmail.com");
-        admin.setActive(true);
-        admin.setPassword(bCryptPasswordEncoder.encode("Manager123456"));
-        utilisateurRepository.save(manager);
-        utilisateurService.addRoleToUser("Manager", RoleName.ROLE_MANAGER);*/
+        utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
 
 
     }
