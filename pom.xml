@@ -12,7 +12,7 @@
     <groupId>com.restserver</groupId>
     <artifactId>Library</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <!--<packaging>war</packaging>-->
+    <packaging>war</packaging>
     <name>Library</name>
     <description>Spring boot Web Application for Send and Stock Data</description>
 
@@ -110,16 +110,16 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>-->
-        <dependency>
+        </dependency>
+        <!--<dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

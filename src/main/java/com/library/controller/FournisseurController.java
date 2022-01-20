@@ -129,14 +129,6 @@ public class FournisseurController {
 
     })
     public ResponseEntity<Fournisseur> createFournisseur(@RequestBody Fournisseur fournisseur) {
-
-        if (fournisseurService.findByCode(fournisseur.getCode()) != null) {
-            return new ResponseEntity<>(fournisseur, HttpStatus.BAD_REQUEST);
-        }
-        if (fournisseurService.findByEmail(fournisseur.getEmail()) != null) {
-            return new ResponseEntity<>(fournisseur, HttpStatus.BAD_REQUEST);
-        }
-
         fournisseurService.saveFournisseur(fournisseur);
         return new ResponseEntity<>(fournisseur, HttpStatus.CREATED);
     }

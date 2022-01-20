@@ -39,9 +39,6 @@ public class FournisseurServiceImpl implements FournisseurService {
 
     @Override
     public Fournisseur saveFournisseur(Fournisseur fournisseur) {
-        if ((fournisseurRepository.findByCode(fournisseur.getCode()) != null)) {
-            throw new IllegalArgumentException("Ce Founisseur exist");
-        }
         return fournisseurRepository.save(fournisseur);
     }
 

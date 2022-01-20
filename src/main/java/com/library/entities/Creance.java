@@ -1,7 +1,5 @@
 package com.library.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class Creance extends AbstractEntity {
 
     private String status;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
+    //  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "GMT")
     private Date dateCreance;
 
     @ManyToOne
