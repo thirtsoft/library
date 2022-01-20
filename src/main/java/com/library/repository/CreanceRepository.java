@@ -40,6 +40,9 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
     @Query("select sum(c.totalCreance) from Creance c")
     BigDecimal countNumbersOfCommandes();
 
+    @Query("select sum((c.totalCreance)-(c.avanceCreance)) from Creance c where year(c.dateCreance) = year(current_date)")
+    BigDecimal sumTotalOfCreanceByYear();
+
     @Query("select EXTRACT(month from(c.dateCreance)), sum(c.totalCreance) from Creance c group by EXTRACT(month from(c.dateCreance))")
     List<?> sumTotalOfCreancesByMonth();
 

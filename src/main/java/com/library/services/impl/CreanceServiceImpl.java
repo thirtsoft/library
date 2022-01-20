@@ -193,6 +193,11 @@ public class CreanceServiceImpl implements CreanceService {
         return creanceRepository.countNumbersOfCommandes();
     }
 
+    @Override
+    public BigDecimal sumTotalOfCreanceByYear() {
+        return creanceRepository.sumTotalOfCreanceByYear();
+    }
+
 
     @Override
     public Optional<Creance> findByReference(Long reference) {

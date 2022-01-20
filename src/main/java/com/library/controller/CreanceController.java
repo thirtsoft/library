@@ -189,6 +189,14 @@ public class CreanceController {
         return creanceService.countNumbersOfCreances();
     }
 
+    @GetMapping(value = APP_ROOT + "/creances/SumTotalOfCreanceByYear")
+    @ApiOperation(value = "La somme total de creance par années",
+            notes = "Cette méthode permet de donner le montant total de creance par années"
+    )
+    public BigDecimal getSumTotalOfCreanceByYear() {
+        return creanceService.sumTotalOfCreanceByYear();
+    }
+
     @GetMapping(value = APP_ROOT + "/creances/searchCreanceByStatus")
     public Creance getCreanceByStatus(@RequestParam("status") String status) {
         return creanceService.findByStatus(status);
