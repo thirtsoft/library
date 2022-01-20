@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
@@ -19,6 +20,9 @@ public interface ChargeRepository extends JpaRepository<Charge, Long> {
 
     @Query("select p from Charge p where p.nature like :nat")
     Charge findByNature(@Param("nat") String nature);
+
+    @Query("select sum(c.montantCharge) from Charge c where year(c.date) = year(current_date)")
+    BigDecimal sumTotalOfChargeByYear();
 
     @Query("select p from Charge p where p.nature like :nat")
     List<Charge> findListNature(@Param("nat") String nature);

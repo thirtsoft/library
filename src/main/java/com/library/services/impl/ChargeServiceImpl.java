@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +41,11 @@ public class ChargeServiceImpl implements ChargeService {
     @Override
     public Charge findChargeByCodeCharge(String codeCharge) {
         return chargeRepository.findByCodeCharge(codeCharge);
+    }
+
+    @Override
+    public BigDecimal sumTotalOfChargeByYear() {
+        return chargeRepository.sumTotalOfChargeByYear();
     }
 
     @Override

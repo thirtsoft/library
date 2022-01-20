@@ -1,8 +1,8 @@
 package com.library.services;
 
 import com.library.entities.Charge;
-import com.library.entities.Charge;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +15,8 @@ public interface ChargeService {
     Optional<Charge> findChargeById(Long id);
 
     Charge findChargeByCodeCharge(String codeCharge);
+
+    BigDecimal sumTotalOfChargeByYear();
 
     List<Charge> findListChargeByCodeCharge(String codeCharge);
 

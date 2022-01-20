@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +99,16 @@ public class ChargeController {
     @GetMapping(value = APP_ROOT + "/charges/searchListChargesByNature")
     public List<Charge> getAllChargesByNature(@RequestParam(name = "nat") String nature) {
         return chargeService.findListChargeByNature("%" + nature + "%");
+    }
+
+    @GetMapping(value = APP_ROOT + "/charges/sumTotalChargeByYear")
+    @ApiOperation(value = "Renvoi le montant total des Charges par années",
+            notes = "Cette méthode permet de chercher et le montant total des Charges par années")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Le montant total des Charges par années")
+    })
+    BigDecimal sumTotalOfChargeByYear() {
+        return chargeService.sumTotalOfChargeByYear();
     }
 
     @GetMapping(value = APP_ROOT + "/charges/sumMontantTotalChargeByMonth")
