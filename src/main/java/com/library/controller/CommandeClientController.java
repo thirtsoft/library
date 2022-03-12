@@ -194,7 +194,7 @@ public class CommandeClientController {
     })
     public ResponseEntity<CommandeClient> enregistrerCommande(@RequestBody CommandeClient commandeClient, @RequestParam Long id) {
 
-        CommandeClient commandeClientResultat = new CommandeClient();
+        CommandeClient commandeClientResultat;
 
         Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
         commandeClient.setUtilisateur(userInfo);
@@ -206,7 +206,7 @@ public class CommandeClientController {
 
         historiqueCommande.setUtilisateur(userInfo);
         historiqueCommande.setCommandeClient(commandeClientResultat);
-        historiqueCommande.setAction("AJOUT");
+        historiqueCommande.setAction("AJOUT COMMANDE");
         historiqueCommande.setCreatedDate(new Date());
 
         historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
@@ -237,7 +237,7 @@ public class CommandeClientController {
 
         historiqueCommande.setUtilisateur(utilisateur);
         historiqueCommande.setCommandeClient(commandeClientResultat);
-        historiqueCommande.setAction("AJOUT");
+        historiqueCommande.setAction("AJOUT COMMANDE");
         historiqueCommande.setCreatedDate(new Date());
 
         historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
@@ -267,7 +267,7 @@ public class CommandeClientController {
 
         historiqueCommande.setUtilisateur(utilisateur);
         historiqueCommande.setCommandeClient(commandeClientResultat);
-        historiqueCommande.setAction("ENREGISTRER UNE COMMANDE");
+        historiqueCommande.setAction("AJOUT COMMANDE");
         historiqueCommande.setCreatedDate(new Date());
 
         historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
@@ -301,7 +301,7 @@ public class CommandeClientController {
 
         historiqueCommande.setUtilisateur(utilisateur);
         historiqueCommande.setCommandeClient(commandeClientResultat);
-        historiqueCommande.setAction("MODIFICATION");
+        historiqueCommande.setAction("MODIFICATION COMMANDE");
         historiqueCommande.setCreatedDate(new Date());
 
         historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
@@ -332,7 +332,7 @@ public class CommandeClientController {
 
         historiqueCommande.setUtilisateur(utilisateur);
         historiqueCommande.setCommandeClient(commandeClientResultat);
-        historiqueCommande.setAction("SUPPRESSSION");
+        historiqueCommande.setAction("SUPPRESSSION COMMANDE");
         historiqueCommande.setCreatedDate(new Date());
         historiqueCommandeService.saveHistoriqueCommande(historiqueCommande);
 

@@ -52,6 +52,9 @@ public interface CreanceRepository extends JpaRepository<Creance, Long> {
     @Query("select p from Creance p where p.client.id =:cl")
     List<Creance> ListCreanceClientByClientId(@Param("cl") Long clientId);
 
+    @Query("select p from Creance p where p.client.id =:cl and p.status!='PAYEE' order by id Desc")
+    List<Creance> ListCreanceClientByClientIdAndStatus(@Param("cl") Long clientId);
+
     List<Creance> findByOrderByIdDesc();
 
     //  @Query("select v from Creance v where v.dateCreance < (current_date () - interval 3 month")

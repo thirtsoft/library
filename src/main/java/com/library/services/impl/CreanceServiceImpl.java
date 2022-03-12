@@ -288,5 +288,10 @@ public class CreanceServiceImpl implements CreanceService {
         return creanceRepository.ListCreanceClientByClientId(clientId);
     }
 
+    @Override
+    public List<Creance> ListCreanceClientByClientIdAndStatus(Long clientId) {
+        return creanceRepository.ListCreanceClientByClientIdAndStatus(clientId);
+    }
+
 
 }

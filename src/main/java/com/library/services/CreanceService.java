@@ -28,6 +28,8 @@ public interface CreanceService {
 
     List<Creance> findCreanceByClientId(Long clientId);
 
+    List<Creance> ListCreanceClientByClientIdAndStatus(Long clientId);
+
     int getNumberOfCreances();
 
     BigDecimal countNumbersOfCreances();

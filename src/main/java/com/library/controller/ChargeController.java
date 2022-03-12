@@ -147,7 +147,7 @@ public class ChargeController {
         historiqueCharge.setUtilisateur(utilisateur);
         historiqueCharge.setCharge(chargeResultat);
         historiqueCharge.setCreatedDate(new Date());
-        historiqueCharge.setAction("AJOUT");
+        historiqueCharge.setAction("AJOUT CHARGE");
 
         historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
 
@@ -178,7 +178,7 @@ public class ChargeController {
         historiqueCharge.setUtilisateur(utilisateur);
         historiqueCharge.setCharge(chargeResultat);
         historiqueCharge.setCreatedDate(new Date());
-        historiqueCharge.setAction("MODIFICATION");
+        historiqueCharge.setAction("MODIFICATION CHARGE");
 
         historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
 
@@ -206,7 +206,7 @@ public class ChargeController {
         historiqueCharge.setUtilisateur(utilisateur);
         historiqueCharge.setCharge(chargeResultat);
         historiqueCharge.setCreatedDate(new Date());
-        historiqueCharge.setAction("SUPPRESSION");
+        historiqueCharge.setAction("SUPPRESSION CHARGE");
 
         historiqueChargeService.saveHistoriqueCharge(historiqueCharge);
 

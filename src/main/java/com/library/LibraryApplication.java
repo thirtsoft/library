@@ -72,6 +72,7 @@ public class LibraryApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+
         /*Category c1 = categoryRepository.save(new Category(1L, "cat1", "cat1"));
         Category c2 = categoryRepository.save(new Category(2L, "cat2", "cat2"));
         Category c3 = categoryRepository.save(new Category(3L, "cat3", "cat3"));

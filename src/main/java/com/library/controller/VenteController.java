@@ -208,10 +208,10 @@ public class VenteController {
         UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();*/
         Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
 
-        Vente venteResultat = new Vente();
+        Vente venteResultat;
 
         vente.setUtilisateur(userInfo);
-        //    venteService.saveVente(vente);
+        vente.setNumeroVente(this.generateNumeroVente());
 
         venteResultat = venteService.saveVente(vente);
 
@@ -219,7 +219,7 @@ public class VenteController {
 
         historiqueVente.setUtilisateur(userInfo);
         historiqueVente.setVente(venteResultat);
-        historiqueVente.setAction("AJOUT");
+        historiqueVente.setAction("AJOUT VENTE");
         historiqueVente.setCreatedDate(new Date());
 
         historiqueVenteService.saveHistoriqueVente(historiqueVente);
@@ -237,7 +237,7 @@ public class VenteController {
     })
     public ResponseEntity<Vente> saveVenteWithBarcode(@RequestBody Vente vente, @RequestParam Long id) {
 
-        Vente venteResultat = new Vente();
+        Vente venteResultat;
 
         Utilisateur userInfo = utilisateurService.findUtilisateurById(id).get();
 
@@ -253,7 +253,7 @@ public class VenteController {
 
         historiqueVente.setUtilisateur(userInfo);
         historiqueVente.setVente(venteResultat);
-        historiqueVente.setAction("AJOUT D\' UNE VENTE");
+        historiqueVente.setAction("AJOUT VENTE");
         historiqueVente.setCreatedDate(new Date());
 
         historiqueVenteService.saveHistoriqueVente(historiqueVente);
@@ -287,7 +287,7 @@ public class VenteController {
         historiqueVente.setUtilisateur(utilisateur);
         historiqueVente.setVente(ventedResult);
         historiqueVente.setCreatedDate(new Date());
-        historiqueVente.setAction("MODIFICATION");
+        historiqueVente.setAction("MODIFICATION VENTE");
 
         historiqueVenteService.saveHistoriqueVente(historiqueVente);
 
@@ -316,7 +316,7 @@ public class VenteController {
         historiqueVente.setUtilisateur(utilisateur);
         historiqueVente.setVente(ventedResult);
         historiqueVente.setCreatedDate(new Date());
-        historiqueVente.setAction("SUPPRESSION");
+        historiqueVente.setAction("SUPPRESSION UNE VENTE");
 
         historiqueVenteService.saveHistoriqueVente(historiqueVente);
 

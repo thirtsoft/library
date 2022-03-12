@@ -176,6 +176,8 @@ public class VersementController {
             System.out.println("Image");
             FileUtils.writeByteArrayToFile(serverFile, file.getBytes());
 
+            String numVer = "VERS_" + Math.random()*10;
+            versement.setNumVersement(numVer);
             versement.setFileVersement(filename);
 
             versementService.saveVersement(versement);

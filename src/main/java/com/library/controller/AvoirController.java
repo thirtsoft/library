@@ -120,7 +120,7 @@ public class AvoirController {
         return avoirService.findByStatus(status);
     }
 
-    @GetMapping("/searchListAvoirByStatus")
+    @GetMapping(value = APP_ROOT + "/avois/searchListAvoirByStatus")
     public List<Avoir> getAllAvoirByStatus(@RequestParam("status") String status) {
         return avoirService.findListAvoirByStatus(status);
     }
@@ -147,7 +147,7 @@ public class AvoirController {
 
         historiqueAvoir.setUtilisateur(utilisateur);
         historiqueAvoir.setAvoir(avoirResultat);
-        historiqueAvoir.setAction("AJOUT");
+        historiqueAvoir.setAction("AJOUT AVOIR");
         historiqueAvoir.setCreatedDate(new Date());
 
         historiqueAvoirService.saveHistoriqueAvoir(historiqueAvoir);
@@ -181,7 +181,7 @@ public class AvoirController {
 
         historiqueAvoir.setUtilisateur(utilisateur);
         historiqueAvoir.setAvoir(avoirResultat);
-        historiqueAvoir.setAction("MODIFICATION");
+        historiqueAvoir.setAction("MODIFICATION AVOIR");
         historiqueAvoir.setCreatedDate(new Date());
 
         historiqueAvoirService.saveHistoriqueAvoir(historiqueAvoir);
@@ -197,7 +197,7 @@ public class AvoirController {
     })
     public ResponseEntity<Object> deleteAvoir(@PathVariable(value = "id") Long id) {
 
-        Avoir avoirResultat = new Avoir();
+        Avoir avoirResultat;
 
         avoirResultat = avoirService.findAvoirById(id).get();
 
@@ -211,7 +211,7 @@ public class AvoirController {
 
         historiqueAvoir.setUtilisateur(utilisateur);
         historiqueAvoir.setAvoir(avoirResultat);
-        historiqueAvoir.setAction("SUPPRESSION");
+        historiqueAvoir.setAction("SUPPRESSION AVOIR");
         historiqueAvoir.setCreatedDate(new Date());
 
         historiqueAvoirService.saveHistoriqueAvoir(historiqueAvoir);

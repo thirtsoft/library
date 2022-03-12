@@ -143,7 +143,7 @@ public class ApprovisionnementController {
 
         historiqueApprovisionnement.setUtilisateur(utilisateur);
         historiqueApprovisionnement.setApprovisionnement(approvisionnementResultat);
-        historiqueApprovisionnement.setAction("AJOUT");
+        historiqueApprovisionnement.setAction("AJOUT ENTREE");
         historiqueApprovisionnement.setCreatedDate(new Date());
 
         historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
@@ -175,7 +175,7 @@ public class ApprovisionnementController {
 
         historiqueApprovisionnement.setUtilisateur(utilisateur);
         historiqueApprovisionnement.setApprovisionnement(approvisionnementResultat);
-        historiqueApprovisionnement.setAction("MODIFICATION");
+        historiqueApprovisionnement.setAction("MODIFICATION ENTREE");
         historiqueApprovisionnement.setCreatedDate(new Date());
 
         historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
@@ -207,7 +207,7 @@ public class ApprovisionnementController {
 
         historiqueApprovisionnement.setUtilisateur(utilisateur);
         historiqueApprovisionnement.setApprovisionnement(approvisionnement);
-        historiqueApprovisionnement.setAction("SUPPRESSION");
+        historiqueApprovisionnement.setAction("SUPPRESSION ENTREE");
         historiqueApprovisionnement.setCreatedDate(new Date());
 
         historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
@@ -231,6 +231,22 @@ public class ApprovisionnementController {
     })
     public ResponseEntity<?> updateStatusAppro(@RequestParam("status") String status, @PathVariable("id") String id) {
         Approvisionnement newApprovisionnement = approvisionnementService.updateStatusAppro(status, id);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueApprovisionnement historiqueApprovisionnement = new HistoriqueApprovisionnement();
+
+        historiqueApprovisionnement.setUtilisateur(utilisateur);
+        historiqueApprovisionnement.setApprovisionnement(newApprovisionnement);
+        historiqueApprovisionnement.setAction("MODIFICATION STATUS ENTREE");
+        historiqueApprovisionnement.setCreatedDate(new Date());
+
+        historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
+
         return new ResponseEntity<>(newApprovisionnement, HttpStatus.OK);
     }
 
@@ -242,6 +258,22 @@ public class ApprovisionnementController {
     })
     public ResponseEntity<?> updateMontantAvanceAppro(@RequestParam("montantAvance") double montantAvance, @PathVariable("id") String id) {
         Approvisionnement newApprovisionnement = approvisionnementService.updateMontantAvanceAppro(montantAvance, id);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
+        HistoriqueApprovisionnement historiqueApprovisionnement = new HistoriqueApprovisionnement();
+
+        historiqueApprovisionnement.setUtilisateur(utilisateur);
+        historiqueApprovisionnement.setApprovisionnement(newApprovisionnement);
+        historiqueApprovisionnement.setAction("MODIFICATION MONTANT AVANCE ENTREE");
+        historiqueApprovisionnement.setCreatedDate(new Date());
+
+        historiqueApprovisionnementService.saveHistoriqueApprovisionnement(historiqueApprovisionnement);
+
         return new ResponseEntity<>(newApprovisionnement, HttpStatus.OK);
     }
 

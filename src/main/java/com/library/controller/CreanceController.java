@@ -208,13 +208,24 @@ public class CreanceController {
     }
 
     @GetMapping(value = APP_ROOT + "/creances/searchListCreanceByClientId", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Renvoi la liste des Charges par Client",
+    @ApiOperation(value = "Renvoi la liste des Creance d'un Client",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Creance d'un Client", responseContainer = "List<Creance>")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La liste des Creance par client / une liste vide")
     })
     public List<Creance> getAllCreanceByClientId(@RequestParam("clientId") Long clientId) {
         return creanceService.findCreanceByClientId(clientId);
+    }
+
+    @GetMapping(value = APP_ROOT + "/creances/searchListCreanceByClientIdAndStatus/{clientId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des Creances encours d'un Client",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Creance encours d'un Client", responseContainer = "List<Creance>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Creance par client / une liste vide")
+    })
+    public ResponseEntity<List<Creance>> getAllCreanceByClientIdAndStatus(@PathVariable(name = "clientId") Long clientId) {
+        List<Creance> creanceList = creanceService.ListCreanceClientByClientIdAndStatus(clientId);
+        return new ResponseEntity<>(creanceList, HttpStatus.OK);
     }
 
     @GetMapping(value = APP_ROOT + "/creances/sumTotalOfCreanceByMonth")
@@ -247,7 +258,7 @@ public class CreanceController {
 
         historiqueCreance.setUtilisateur(utilisateur);
         historiqueCreance.setCreance(creanceResultat);
-        historiqueCreance.setAction("AJOUT");
+        historiqueCreance.setAction("AJOUT CREANCE");
         historiqueCreance.setCreatedDate(new Date());
 
         historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
@@ -281,7 +292,7 @@ public class CreanceController {
 
         historiqueCreance.setUtilisateur(utilisateur);
         historiqueCreance.setCreance(creanceResultat);
-        historiqueCreance.setAction("MODIFICATION");
+        historiqueCreance.setAction("MODIFICATION CREANCE");
         historiqueCreance.setCreatedDate(new Date());
 
         historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
@@ -292,8 +303,29 @@ public class CreanceController {
 
     @PatchMapping(value = APP_ROOT + "/creances/setCreanceStatusById/{id}")
     public ResponseEntity<Creance> setCreanceStatusById(@PathVariable("id") Long id, @RequestBody Creance creance) {
+
+        Creance creanceResultat;
+
+        HistoriqueCreance historiqueCreance = new HistoriqueCreance();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserPrinciple authUser = (UserPrinciple) authentication.getPrincipal();
+
+        Optional<Utilisateur> optionalUtilisateur = utilisateurService.findUtilisateurById(authUser.getId());
+        Utilisateur utilisateur = optionalUtilisateur.get();
+
         creance.setId(id);
-        return new ResponseEntity<>(creanceService.saveCreance(creance), HttpStatus.OK);
+
+        creanceResultat = creanceService.saveCreance(creance);
+
+        historiqueCreance.setUtilisateur(utilisateur);
+        historiqueCreance.setCreance(creanceResultat);
+        historiqueCreance.setAction("MODIFICATION STATUS CREANCE");
+        historiqueCreance.setCreatedDate(new Date());
+
+        historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
+
+        return new ResponseEntity<>(creanceResultat, HttpStatus.OK);
     }
 
     @PatchMapping(value = APP_ROOT + "/creances/setCreanceOnlyStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -347,7 +379,7 @@ public class CreanceController {
 
         historiqueCreance.setUtilisateur(utilisateur);
         historiqueCreance.setCreance(newCreance);
-        historiqueCreance.setAction("MODIFICATION MONTANT CREANCE");
+        historiqueCreance.setAction("MODIFICATION MONTANT AVANCE CREANCE");
         historiqueCreance.setCreatedDate(new Date());
 
         historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
@@ -375,7 +407,7 @@ public class CreanceController {
 
         historiqueCreance.setUtilisateur(utilisateur);
         historiqueCreance.setCreance(newCreance);
-        historiqueCreance.setAction("SUPPRESSION");
+        historiqueCreance.setAction("SUPPRESSION CREANCE");
         historiqueCreance.setCreatedDate(new Date());
 
         historiqueCreanceService.saveHistoriqueCreance(historiqueCreance);
