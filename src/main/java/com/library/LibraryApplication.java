@@ -23,7 +23,7 @@ import java.nio.file.Paths;
 public class LibraryApplication implements CommandLineRunner {
 
     private static final Logger LOG = LoggerFactory.getLogger(LibraryApplication.class);
-    @Autowired
+ /*   @Autowired
     RoleRepository roleRepository;
     @Autowired
     private UtilisateurService utilisateurService;
@@ -38,7 +38,7 @@ public class LibraryApplication implements CommandLineRunner {
     @Autowired
     private UtilisateurRepository utilisateurRepository;
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
 
     public static void main(String[] args) {
@@ -94,32 +94,7 @@ public class LibraryApplication implements CommandLineRunner {
         Client cl4 = clientRepository.save(new Client(4L, "1238", "cl4", "cl4", "cl4", "cl4", "cl4"));
 
 */
-        Role vendorRole = roleRepository.save(new Role(RoleName.ROLE_VENDEUR));
-        Role gerantRole = roleRepository.save(new Role(RoleName.ROLE_GERANT));
-        Role associeRole = roleRepository.save(new Role(RoleName.ROLE_ASSOCIE));
-        Role managerRole = roleRepository.save(new Role(RoleName.ROLE_MANAGER));
-        Role adminRole = roleRepository.save(new Role(RoleName.ROLE_ADMIN));
-        Utilisateur admin = new Utilisateur();
-        admin.setId(1L);
-        admin.setUsername("Admin");
-        admin.setName("Admin");
-        admin.setEmail("admin@gmail.com");
-        admin.setActive(true);
-        admin.setPassword(bCryptPasswordEncoder.encode("Admin123456"));
-        utilisateurRepository.save(admin);
 
-        utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
-
-
-        Utilisateur vendor = new Utilisateur();
-        vendor.setUsername("vendor");
-        vendor.setName("vendor");
-        vendor.setEmail("vendor@gmail.com");
-        vendor.setActive(true);
-        vendor.setPassword(bCryptPasswordEncoder.encode("Vendor123456"));
-        utilisateurRepository.save(vendor);
-
-        utilisateurService.addRoleToUser("vendor", RoleName.ROLE_VENDEUR);
 
 
     }
