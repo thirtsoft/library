@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.Fournisseur;
 import com.library.entities.LigneApprovisionnement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

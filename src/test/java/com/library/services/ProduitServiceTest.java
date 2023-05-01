@@ -1,14 +1,11 @@
 package com.library.services;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
-
-import java.util.Date;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.library.entities.Category;
+import com.library.entities.Produit;
+import com.library.entities.Scategorie;
+import com.library.repository.CategoryRepository;
+import com.library.repository.ProduitRepository;
+import com.library.repository.ScategorieRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -17,12 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.library.entities.Category;
-import com.library.entities.Produit;
-import com.library.entities.Scategorie;
-import com.library.repository.CategoryRepository;
-import com.library.repository.ProduitRepository;
-import com.library.repository.ScategorieRepository;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(SpringRunner.class)

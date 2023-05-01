@@ -375,13 +375,13 @@ public class VenteController {
         return venteService.sumTotalOfVenteByDay();
     }
 
-    @GetMapping(value = APP_ROOT + "/ventes/searchListVenteByEmpId", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = APP_ROOT + "/ventes/searchListVenteByEmpId/{empId}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Renvoi la liste des Vente par Client",
             notes = "Cette méthode permet de chercher et renvoyer la liste des Vente par client", responseContainer = "List<Vente>")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "La liste des Ventes par Client / une liste vide")
     })
-    public List<Vente> findListVenteByEmployeId(Long empId) {
+    public List<Vente> findListVenteByEmployeId(@PathVariable Long empId) {
         return venteService.findListVenteByEmployeId(empId);
     }
 

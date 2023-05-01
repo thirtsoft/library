@@ -1,11 +1,7 @@
 package com.library.message.request;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
-import java.util.Date;
-import java.util.Set;
 
 public class SignUpForm {
 

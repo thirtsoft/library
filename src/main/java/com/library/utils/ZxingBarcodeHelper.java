@@ -12,16 +12,11 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
 
 public class ZxingBarcodeHelper {
 

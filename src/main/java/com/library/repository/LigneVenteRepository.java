@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.LigneDevis;
 import com.library.entities.LigneVente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

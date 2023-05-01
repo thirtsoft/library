@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.Produit;
 import com.library.entities.Scategorie;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

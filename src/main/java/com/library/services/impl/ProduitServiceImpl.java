@@ -216,6 +216,8 @@ public class ProduitServiceImpl implements ProduitService {
 
     @Override
     public Produit saveProductWithBarcode(Produit produit) throws Exception {
+        Produit productResult = produitRepository.save(produit);
+        /*
         Produit productResult = new Produit();
         if (produit.getBarCode() != null) {
             productResult = produitRepository.save(produit);
@@ -236,7 +238,7 @@ public class ProduitServiceImpl implements ProduitService {
             productResult.setScategorie(produit.getScategorie());
 
             produitRepository.save(productResult);
-        }
+        }*/
 
         return productResult;
     }
@@ -251,6 +253,16 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public List<Produit> findListProductByOrderByDesignationAsc() {
         return produitRepository.findListProductByOrderByDesignationAsc();
+    }
+
+    @Override
+    public Double capitalDeDepart() {
+        List<Produit> productList = produitRepository.findAll();
+        double totalCapital = 0;
+        for (Produit product : productList) {
+            totalCapital += (product.getQtestock() * product.getPrixAchat());
+        }
+        return totalCapital;
     }
 
    /* @Override

@@ -50,5 +50,7 @@ public interface ProduitService {
 
     List<Produit> findListProductByOrderByDesignationAsc();
 
+    Double capitalDeDepart();
+
 
 }

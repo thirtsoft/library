@@ -34,7 +34,7 @@ public class Produit extends AbstractEntity {
     @Column(name = "barcode")
     private String barCode;
 
-    @Column(unique = true)
+  //  @Column(unique = true)
     private String reference;
 
     private String designation;
