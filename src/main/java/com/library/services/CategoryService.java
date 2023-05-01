@@ -1,7 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Category;
-import com.library.entities.Category;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

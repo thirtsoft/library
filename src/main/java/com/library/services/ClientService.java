@@ -1,7 +1,6 @@
 package com.library.services;
 
 import com.library.entities.Client;
-import com.library.entities.Client;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.Devis;
 import com.library.entities.Employe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

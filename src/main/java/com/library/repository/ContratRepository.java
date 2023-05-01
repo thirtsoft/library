@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.CommandeClient;
 import com.library.entities.Contrat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

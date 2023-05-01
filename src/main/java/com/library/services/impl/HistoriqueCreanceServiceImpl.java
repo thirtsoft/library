@@ -1,6 +1,5 @@
 package com.library.services.impl;
 
-import com.library.entities.Charge;
 import com.library.entities.Creance;
 import com.library.entities.HistoriqueCreance;
 import com.library.entities.Utilisateur;

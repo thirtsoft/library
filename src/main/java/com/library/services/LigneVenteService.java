@@ -1,7 +1,6 @@
 package com.library.services;
 
 import com.library.entities.LigneVente;
-import com.library.entities.LigneVente;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.LigneAvoir;
 import com.library.entities.LigneCmdClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

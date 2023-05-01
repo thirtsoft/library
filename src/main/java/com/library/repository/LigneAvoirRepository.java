@@ -1,6 +1,5 @@
 package com.library.repository;
 
-import com.library.entities.LigneApprovisionnement;
 import com.library.entities.LigneAvoir;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

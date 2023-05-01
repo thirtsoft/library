@@ -71,9 +71,9 @@ public class LibraryApplication implements CommandLineRunner {
 */
     @Override
     public void run(String... args) throws Exception {
+/*
 
-
-        /*Category c1 = categoryRepository.save(new Category(1L, "cat1", "cat1"));
+        Category c1 = categoryRepository.save(new Category(1L, "cat1", "cat1"));
         Category c2 = categoryRepository.save(new Category(2L, "cat2", "cat2"));
         Category c3 = categoryRepository.save(new Category(3L, "cat3", "cat3"));
 
@@ -93,7 +93,7 @@ public class LibraryApplication implements CommandLineRunner {
         Client cl3 = clientRepository.save(new Client(3L, "1237", "cl3", "cl3", "760262897", "760262897", "cl3"));
         Client cl4 = clientRepository.save(new Client(4L, "1238", "cl4", "cl4", "cl4", "cl4", "cl4"));
 
-
+*/
         Role vendorRole = roleRepository.save(new Role(RoleName.ROLE_VENDEUR));
         Role gerantRole = roleRepository.save(new Role(RoleName.ROLE_GERANT));
         Role associeRole = roleRepository.save(new Role(RoleName.ROLE_ASSOCIE));
@@ -109,7 +109,18 @@ public class LibraryApplication implements CommandLineRunner {
         utilisateurRepository.save(admin);
 
         utilisateurService.addRoleToUser("Admin", RoleName.ROLE_ADMIN);
-*/
+
+
+        Utilisateur vendor = new Utilisateur();
+        vendor.setUsername("vendor");
+        vendor.setName("vendor");
+        vendor.setEmail("vendor@gmail.com");
+        vendor.setActive(true);
+        vendor.setPassword(bCryptPasswordEncoder.encode("Vendor123456"));
+        utilisateurRepository.save(vendor);
+
+        utilisateurService.addRoleToUser("vendor", RoleName.ROLE_VENDEUR);
+
 
     }
 }

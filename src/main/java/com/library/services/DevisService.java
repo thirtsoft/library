@@ -2,7 +2,6 @@ package com.library.services;
 
 
 import com.library.entities.Devis;
-import com.library.entities.Devis;
 
 import java.math.BigDecimal;
 import java.util.Date;
