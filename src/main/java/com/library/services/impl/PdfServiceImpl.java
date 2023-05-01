@@ -42,7 +42,7 @@ public class PdfServiceImpl implements PdfService {
             mainFontEntete.setColor(BaseColor.BLUE);
             mainFontEntete.setStyle(Font.UNDERLINE);
 
-            Paragraph paragraphEntete = new Paragraph("WOKITE SARL", mainFontEntete);
+            Paragraph paragraphEntete = new Paragraph("AL AMINE", mainFontEntete);
             paragraphEntete.setAlignment(Element.ALIGN_CENTER);
             paragraphEntete.setIndentationLeft(90);
             paragraphEntete.setIndentationRight(90);
@@ -51,9 +51,9 @@ public class PdfServiceImpl implements PdfService {
 
             Font mainFontTitle = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
 
-            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Ingénierie Logigiel et Systèmes - Formation - Consultance - Audit\n" +
-                    "Hann-Mariste 2 – Dakar / Sénégal - RC : SN.DKR.2021.A.15470\n" +
-                    "Tél: +221 77 944 03 10 / Email: contact@wokite.net\n", mainFontTitle);
+            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Commerce GeneralRC SN ZGR 2016 C233 / NINEA 00058166762P6\n" +
+                    "N°Compte CNCAS SN 048 03001 000108318801 J/40N° Compte BNDE SN 169 03001 001000519301/30\n" +
+                    "Tél: 77109 18 18 / Email: papeteriealamine@gmail.com\n", mainFontTitle);
 
             paragraphTitle.setAlignment(Element.ALIGN_CENTER);
             paragraphTitle.setIndentationLeft(50);
@@ -207,7 +207,7 @@ public class PdfServiceImpl implements PdfService {
             mainFontEntete.setColor(BaseColor.BLUE);
             mainFontEntete.setStyle(Font.UNDERLINE);
 
-            Paragraph paragraphEntete = new Paragraph("WOKITE SARL", mainFontEntete);
+            Paragraph paragraphEntete = new Paragraph("AL AMINE", mainFontEntete);
             paragraphEntete.setAlignment(Element.ALIGN_CENTER);
             paragraphEntete.setIndentationLeft(90);
             paragraphEntete.setIndentationRight(90);
@@ -216,9 +216,9 @@ public class PdfServiceImpl implements PdfService {
 
             Font mainFontTitle = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
 
-            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Ingénierie Logigiel et Systèmes - Formation - Consultance - Audit\n" +
-                    "Hann-Mariste 2 – Dakar / Sénégal - RC : SN.DKR.2021.A.15470\n" +
-                    "Tél: +221 77 944 03 10 / Email: contact@wokite.net\n", mainFontTitle);
+            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Commerce GeneralRC SN ZGR 2016 C233 / NINEA 00058166762P6\n" +
+                    "N°Compte CNCAS SN 048 03001 000108318801 J/40N° Compte BNDE SN 169 03001 001000519301/30\n" +
+                    "Tél: 77109 18 18 / Email: papeteriealamine@gmail.com\n", mainFontTitle);
 
             paragraphTitle.setAlignment(Element.ALIGN_CENTER);
             paragraphTitle.setIndentationLeft(50);
@@ -338,7 +338,7 @@ public class PdfServiceImpl implements PdfService {
             mainFontEntete.setColor(BaseColor.BLUE);
             mainFontEntete.setStyle(Font.UNDERLINE);
 
-            Paragraph paragraphEntete = new Paragraph("WOKITE SARL", mainFontEntete);
+            Paragraph paragraphEntete = new Paragraph("AL AMINE", mainFontEntete);
             paragraphEntete.setAlignment(Element.ALIGN_CENTER);
             paragraphEntete.setIndentationLeft(90);
             paragraphEntete.setIndentationRight(90);
@@ -347,9 +347,9 @@ public class PdfServiceImpl implements PdfService {
 
             Font mainFontTitle = FontFactory.getFont(FontFactory.COURIER, 14, BaseColor.BLACK);
 
-            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Ingénierie Logigiel et Systèmes - Formation - Consultance - Audit\n" +
-                    "Hann-Mariste 2 – Dakar / Sénégal - RC : SN.DKR.2021.A.15470\n" +
-                    "Tél: +221 77 944 03 10 / Email: contact@wokite.net\n", mainFontTitle);
+            Paragraph paragraphTitle = new Paragraph("Prestation de Service & Commerce GeneralRC SN ZGR 2016 C233 / NINEA 00058166762P6\n" +
+                    "N°Compte CNCAS SN 048 03001 000108318801 J/40N° Compte BNDE SN 169 03001 001000519301/30\n" +
+                    "Tél: 77109 18 18 / Email: papeteriealamine@gmail.com\n", mainFontTitle);
 
             paragraphTitle.setAlignment(Element.ALIGN_CENTER);
             paragraphTitle.setIndentationLeft(50);

@@ -1,42 +1,42 @@
 /* CATEGORY */
-INSERT INTO category(id,code,designation) VALUES(1,'CAT01','Ordinateur pordtable');
-INSERT INTO category(id,code,designation) VALUES(2,'CAT02','Téléphone portable');
-INSERT INTO category(id,code,designation) VALUES(3,'CAT03','Boisson');
-INSERT INTO category(id,code,designation) VALUES(4,'CAT04','Eau minérale');
-INSERT INTO category(id,code,designation) VALUES(5,'CAT05','Nescafé');
+INSERT INTO categorie(id,code,designation) VALUES(1,'CAT01','Ordinateur pordtable');
+INSERT INTO categorie(id,code,designation) VALUES(2,'CAT02','Téléphone portable');
+INSERT INTO categorie(id,code,designation) VALUES(3,'CAT03','Boisson');
+INSERT INTO categorie(id,code,designation) VALUES(4,'CAT04','Eau minérale');
+INSERT INTO categorie(id,code,designation) VALUES(5,'CAT05','Nescafé');
 
 /* SUBCATEGORY */
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(1,'SUBCAT01','Ordinateur pordtable HP',1);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT02','Ordinateur pordtable DELL',1);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT03','Téléphone portable IPhone',2);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(1,'SUBCAT04','Téléphone portable Samsung',2);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT05','Boisson Gazeuse',3);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT06','Bierree',3);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT07','Casamançaise',4);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT08','Kirène',4);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT09','Gold Intenso',5);
-INSERT INTO subcategory(id,code,libelle,cat_id) VALUES(2,'SUBCAT010','Nescafé',5);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(1,'SUBCAT01','Ordinateur pordtable HP',1);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT02','Ordinateur pordtable DELL',1);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT03','Téléphone portable IPhone',2);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(1,'SUBCAT04','Téléphone portable Samsung',2);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT05','Boisson Gazeuse',3);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT06','Bierree',3);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT07','Casamançaise',4);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT08','Kirène',4);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT09','Gold Intenso',5);
+INSERT INTO s_categorie(id,code,libelle,cat_id) VALUES(2,'SUBCAT010','Nescafé',5);
 
 /* PRODUCT */
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'123456789','Product-01','HP elitebook core i7 vPro',760000.0, 790000.0,800000.0, 12,5,1);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'459789','Product-02','HP Probook core i5',320000.0, 500000.0, 510000.0, 12,5,1);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'678912346','Product-03','Dell Promodel core i7',540000.0, 720000.0, 740000.0, 12,5,2);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'810987654','Product-04','HP Iphone 14s',460000.0, 660000.0,690000.0, 10,2,3);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'5789985','Product-05','Iphone 12s',320000.0, 530000.0,560000.0 8,3);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'12345678915','Product-06','Samsung A23',11000.0, 125000.0,135000.0 16,5,4);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'012345678915','Product-07','Samsung A32',130000.0, 145000.0,150000.0, 16,5,4);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'80987654','Product-08','Coca cola',680.0, 800.0,900.0, 30,10,5);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'51789985','Product-09','Fanta',680.0, 800.0,900.0, 30,10,5);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'112345678915','Product-010','Malta',890.0, 1250.0,1250.0, 16,5,6);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'22345678915','Product-011','Malta 001',890.0, 1250.0,1250.0, 16,5,6);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'52789985','Product-012','Casamançaise 1L',360.0,500.0,500.0, 8, 2,7);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'42345678915','Product-013','Casamançaise 5L',760.0, 1100.0,1200.0, 16,5,7);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'62345678915','Product-014','Kirène 1L',390.0, 500.0,500.0, 16,5,8);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'53789985','Product-015','Kirène 5L',890.0, 1250.0,1250.0, 16,5,8);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'72345678915','Product-016','Gold Intenso PM',1800.0, 2500.0,2500.0, 16,5,9);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'82345678915','Product-017','Gold Intenso GM',5500.0, 6000.0,6000.0, 16,5,9);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'92345678915','Product-018','Nescafé PM',680.0, 900.0,900.0, 16,5,10);
-INSERT INTO product(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'102345678915','Product-019','Nescafé GM',1100.0, 1900.0,1900.0, 16,5,10);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'123456789','Product-01','HP elitebook core i7 vPro',760000.0, 790000.0,800000.0, 12,5,1);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'459789','Product-02','HP Probook core i5',320000.0, 500000.0, 510000.0, 12,5,1);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'678912346','Product-03','Dell Promodel core i7',540000.0, 720000.0, 740000.0, 12,5,2);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'810987654','Product-04','HP Iphone 14s',460000.0, 660000.0,690000.0, 10,2,3);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'5789985','Product-05','Iphone 12s',320000.0, 530000.0,560000.0 8,3);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'12345678915','Product-06','Samsung A23',11000.0, 125000.0,135000.0 16,5,4);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'012345678915','Product-07','Samsung A32',130000.0, 145000.0,150000.0, 16,5,4);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'80987654','Product-08','Coca cola',680.0, 800.0,900.0, 30,10,5);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'51789985','Product-09','Fanta',680.0, 800.0,900.0, 30,10,5);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'112345678915','Product-010','Malta',890.0, 1250.0,1250.0, 16,5,6);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'22345678915','Product-011','Malta 001',890.0, 1250.0,1250.0, 16,5,6);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'52789985','Product-012','Casamançaise 1L',360.0,500.0,500.0, 8, 2,7);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'42345678915','Product-013','Casamançaise 5L',760.0, 1100.0,1200.0, 16,5,7);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'62345678915','Product-014','Kirène 1L',390.0, 500.0,500.0, 16,5,8);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'53789985','Product-015','Kirène 5L',890.0, 1250.0,1250.0, 16,5,8);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'72345678915','Product-016','Gold Intenso PM',1800.0, 2500.0,2500.0, 16,5,9);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'82345678915','Product-017','Gold Intenso GM',5500.0, 6000.0,6000.0, 16,5,9);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'92345678915','Product-018','Nescafé PM',680.0, 900.0,900.0, 16,5,10);
+INSERT INTO produit(id,barcode,reference,designation,prix_achat,prix_vente,prix_detail,qtestock,stock_initial,subcat_id) VALUES(1,'102345678915','Product-019','Nescafé GM',1100.0, 1900.0,1900.0, 16,5,10);
 
 /* FOURNISSEUR */
 INSERT INTO fournisseur(id,address,code,email,fax,message,mobile,numero_compte,raison_social,subject,telephone) VALUES(1,'','','contact@wokite.net','','','779440310','12345678-BOA','Wokite','','');
