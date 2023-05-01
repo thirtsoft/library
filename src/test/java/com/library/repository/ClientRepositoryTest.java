@@ -95,20 +95,4 @@ public class ClientRepositoryTest {
         assertThat(clients).size().isGreaterThan(0);
     }
 
-    @Test
-    public void testListFindClientByRaisonSocial() {
-        String raisonSocial = "CL";
-
-        List<Client> clients = clientRepository.ListClientByRaisonSocial("%" + raisonSocial + "%");
-        List<Client> clientList = new ArrayList<Client>();
-
-        for (Client client : clients) {
-            clientList.add(client);
-        }
-        assertThat(clientList.size()).isBetween(1, 4);
-        //assertThat(clientList.size()).isGreaterThan(0);
-
-    }
-
-
 }

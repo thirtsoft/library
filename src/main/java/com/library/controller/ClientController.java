@@ -88,18 +88,6 @@ public class ClientController {
 
     }
 
-    @GetMapping(value = APP_ROOT + "/clients/searchListClientByRaisonSocial", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value = "Renvoi la liste des Clients par son CODE",
-            notes = "Cette méthode permet de chercher et renvoyer la liste des Clients par son CODE", responseContainer = "List<Client>")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "La liste des Client / une liste vide")
-    })
-    public List<Client> getListClientByRaisonSocial(@RequestParam(value = "raisonSocial") String raisonSocial) {
-
-        return clientService.ListClientByRaisonSocial("%" + raisonSocial + "%");
-
-    }
-
     @GetMapping(value = APP_ROOT + "/clients/ListClientGroupByRaisonSocial")
     public List<Object[]> getListClientGroupByRaisonSocial() {
         return clientService.ListClientGroupByRaisonSocial();

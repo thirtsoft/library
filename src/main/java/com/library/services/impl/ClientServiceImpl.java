@@ -57,11 +57,6 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public List<Client> ListClientByRaisonSocial(String raisonSocial) {
-        return clientRepository.ListClientByRaisonSocial(raisonSocial);
-    }
-
-    @Override
     public List<Object[]> ListClientGroupByRaisonSocial() {
         return clientRepository.ListClientGroupByRaisonSocial();
     }

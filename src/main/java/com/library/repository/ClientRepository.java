@@ -20,9 +20,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
     @Query("select c from Client c where c.raisonSocial like :raisonSocial")
     Client findByRaisonSocial(@Param("raisonSocial") String raisonSocial);
 
-    @Query("select c from Client c where c.raisonSocial like :raisonSocial")
-    List<Client> ListClientByRaisonSocial(@Param("raisonSocial") String raisonSocial);
-
     @Query("select c.raisonSocial, count(c) as countClient from Client c group by c.raisonSocial")
     List<Object[]> ListClientGroupByRaisonSocial();
 

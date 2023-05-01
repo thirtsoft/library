@@ -27,8 +27,6 @@ public interface ClientService {
 
     Client findByCodeClient(String codeClient);
 
-    List<Client> ListClientByRaisonSocial(String raisonSocial);
-
     List<Object[]> ListClientGroupByRaisonSocial();
 
     Long countNumberOfClient();
