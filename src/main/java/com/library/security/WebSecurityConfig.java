@@ -95,7 +95,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         //  .allowedOrigins("**")
-                          .allowedOrigins("http://localhost:4200")
+                        //  .allowedOrigins("http://localhost:4200")
+                         .allowedOrigins("https://alamine.herokuapp.com")
                       //  .allowedOrigins("http://localhost:8080/MyStock")
                        // .allowedOrigins("https://alamine.herokuapp.com")
                        // .allowedOrigins("https://librairiealamine.com")
