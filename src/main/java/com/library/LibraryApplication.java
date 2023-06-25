@@ -120,7 +120,6 @@ public class LibraryApplication implements CommandLineRunner {
         utilisateurRepository.save(vendor);
 
         utilisateurService.addRoleToUser("vendor", RoleName.ROLE_VENDEUR);
-
 */
     }
 }

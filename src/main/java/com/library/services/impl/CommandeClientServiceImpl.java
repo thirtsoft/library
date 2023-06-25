@@ -89,6 +89,9 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
 
         commandeClient.setTotalCommande(total);
+        if (commandeClient.getMontantReglement() < commandeClient.getTotalCommande()) {
+            throw new IllegalArgumentException("Le montant du réglement doit etre supérieur ou égal au montant total");
+        }
         commandeClient.setLcomms(lcmdClient);
         return commandeClientRepository.save(commandeClient);
     }
@@ -146,6 +149,10 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
 
         commande.setTotalCommande(total);
+
+        if (commande.getMontantReglement() < commande.getTotalCommande()) {
+            throw new IllegalArgumentException("Le montant du réglement doit etre supérieur ou égal au montant total");
+        }
         commande.setStatus("valider");
         commande.setDateCommande(new Date());
 
@@ -180,6 +187,9 @@ public class CommandeClientServiceImpl implements CommandeClientService {
             newCom.setNumeroCommande(commandeClient.getNumeroCommande());
             newCom.setClient(commandeClient.getClient());
             newCom.setTotalCommande(commandeClient.getTotalCommande());
+            if (newCom.getMontantReglement() < newCom.getTotalCommande()) {
+                throw new IllegalArgumentException("Le montant du réglement doit etre supérieur ou égal au montant total");
+            }
             newCom.setStatus(commandeClient.getStatus());
             newCom.setDateCommande(new Date());
 
