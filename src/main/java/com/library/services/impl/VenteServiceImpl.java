@@ -111,6 +111,11 @@ public class VenteServiceImpl implements VenteService {
         }
 
         vente.setTotalVente(total);
+
+        if(vente.getMontantReglement() < vente.getTotalVente()) {
+            throw new IllegalArgumentException("Le montant du réglement doit etre supérieur au montan total");
+        }
+
         vente.setStatus("valider");
         vente.setDateVente(new Date());
         vente.setUtilisateur(vente.getUtilisateur());
@@ -173,6 +178,11 @@ public class VenteServiceImpl implements VenteService {
         }
 
         vente.setTotalVente(total);
+
+        if(vente.getMontantReglement() < vente.getTotalVente()) {
+            throw new IllegalArgumentException("Le montant du réglement doit etre supérieur au montan total");
+        }
+
         vente.setStatus("valider");
         vente.setDateVente(new Date());
         vente.setUtilisateur(vente.getUtilisateur());

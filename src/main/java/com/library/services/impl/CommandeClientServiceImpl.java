@@ -89,6 +89,11 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
 
         commandeClient.setTotalCommande(total);
+
+        if(commandeClient.getMontantReglement() < commandeClient.getTotalCommande()) {
+            throw new IllegalArgumentException("Le montant du réglement doit etre supérieur au montan total");
+        }
+
         commandeClient.setLcomms(lcmdClient);
         return commandeClientRepository.save(commandeClient);
     }
@@ -146,6 +151,10 @@ public class CommandeClientServiceImpl implements CommandeClientService {
         }
 
         commande.setTotalCommande(total);
+
+        if(commande.getMontantReglement() < commande.getTotalCommande()) {
+            throw new IllegalArgumentException("Le montant du réglement doit etre supérieur au montan total");
+        }
         commande.setStatus("valider");
         commande.setDateCommande(new Date());
 
