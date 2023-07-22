@@ -106,5 +106,10 @@ public class LigneVenteServiceImpl implements LigneVenteService {
         return ligneVenteRepository.ListLigneVenteByVenteId(venteId);
     }
 
+    @Override
+    public List<LigneVente> findTop100ByOrderByIdDesc() {
+        return ligneVenteRepository.findTop100ByOrderByIdDesc();
+    }
+
 
 }

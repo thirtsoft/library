@@ -1,6 +1,7 @@
 package com.library.repository;
 
 import com.library.entities.LigneVente;
+import com.library.entities.Vente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,5 +34,6 @@ public interface LigneVenteRepository extends JpaRepository<LigneVente, Long> {
 
     List<LigneVente> findByOrderByIdDesc();
 
+    List<LigneVente> findTop100ByOrderByIdDesc();
 
 }

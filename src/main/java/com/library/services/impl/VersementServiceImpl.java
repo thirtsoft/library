@@ -73,17 +73,13 @@ public class VersementServiceImpl implements VersementService {
         if (!versment.isPresent()) {
             throw new ResourceNotFoundException("Versment Not found");
         }
-
         Versement versementResult = versment.get();
-
         versementResult.setNumVersement(versement.getNumVersement());
         versementResult.setNumeroRecu(versement.getNumeroRecu());
         versementResult.setMontantVersement(versement.getMontantVersement());
         versementResult.setMotif(versement.getMotif());
         versementResult.setDateVersement(versement.getDateVersement());
         versementResult.setEmploye(versement.getEmploye());
-
-
         return versementRepository.save(versementResult);
     }
 
@@ -95,6 +91,4 @@ public class VersementServiceImpl implements VersementService {
 
         versementRepository.deleteById(id);
     }
-
-
 }

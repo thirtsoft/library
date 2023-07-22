@@ -385,4 +385,15 @@ public class VenteController {
         return venteService.findListVenteByEmployeId(empId);
     }
 
+    @GetMapping(value = APP_ROOT + "/ventes/top-100-orders-order-desc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des 100 dernieères Vente par jour et mois",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des Vente par jour et mois", responseContainer = "List<Vente>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des Ventes par jour et mois / une liste vide")
+    })
+    public List<Vente> getTop100VentesOrderDesc() {
+        return venteService.findVenteWithParticularDayAndMonth();
+    }
+
+
 }

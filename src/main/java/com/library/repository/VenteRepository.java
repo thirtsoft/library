@@ -1,6 +1,7 @@
 package com.library.repository;
 
 import com.library.entities.Vente;
+import com.library.entities.Versement;
 import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -70,4 +71,5 @@ public interface VenteRepository extends JpaRepository<Vente, Long> {
 
     List<Vente> findByOrderByIdDesc();
 
+    List<Vente> findTop100ByOrderByIdDesc();
 }

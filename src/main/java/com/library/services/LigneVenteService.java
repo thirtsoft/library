@@ -33,5 +33,5 @@ public interface LigneVenteService {
 
     List<LigneVente> findLigneVenteByVenteId(Long venteId);
 
-
+    List<LigneVente> findTop100ByOrderByIdDesc();
 }

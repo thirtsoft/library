@@ -1,6 +1,7 @@
 package com.library.services;
 
 import com.library.entities.Vente;
+import com.library.entities.Versement;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
@@ -60,5 +61,7 @@ public interface VenteService {
     List<?> sumTotalOfVenteByYears();
 
     List<Vente> findListVenteByEmployeId(Long empId);
+
+    List<Vente> findTop100VenteOrderByIdDesc();
 
 }

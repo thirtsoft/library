@@ -27,6 +27,4 @@ public interface VersementService {
     Versement updateVersement(Long id, Versement versement);
 
     void deleteVersement(Long id);
-
-
 }

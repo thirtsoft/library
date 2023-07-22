@@ -68,6 +68,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**/contrats/downloadContratFile/**").permitAll()
                 .antMatchers("/alAmine/uploadPdfFile/{id}").permitAll()
                 .antMatchers("/**/versements/downloadVersementFile/**").permitAll()
+
+                /**/
+                .antMatchers("/**/produits/allProduitOrderByDesignationAsc").permitAll()
+                .antMatchers("/**/ventes/top-100-orders-order-desc").permitAll()
+                .antMatchers("/**/ventes/searchSumsOfVenteByDay").permitAll()
+                .antMatchers("/**/ventes/generateNumeroVente").permitAll()
+                .antMatchers("/**/ventes/create").permitAll()
+                .antMatchers("/**/ligneVentes/searchListLigneVentesByVenteId/{id}").permitAll()
+                .antMatchers("/**/ligneVentes/findByNumero/{id}").permitAll()
+                .antMatchers("/**/ligneVentes/top-100-ligne-ventes-order-desc").permitAll()
+
+
                 //.antMatchers("/**/categories/all").permitAll()
                 //  .antMatchers("/**/scategories/all").permitAll()
                 //    .antMatchers("/**/produits/all").permitAll()
@@ -95,8 +107,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         //  .allowedOrigins("**")
-                    //      .allowedOrigins("http://localhost:4200")
-                        .allowedOrigins("https://g-stock.wokite.net")
+                          .allowedOrigins("http://localhost:4200")
+                    //    .allowedOrigins("https://g-stock.wokite.net")
                       //  .allowedOrigins("http://localhost:8080/MyStock")
                        // .allowedOrigins("https://alamine.herokuapp.com")
                        // .allowedOrigins("https://librairiealamine.com")

@@ -134,6 +134,17 @@ public class LigneVenteController {
     public ResponseEntity<?> deleteLigneVente(@PathVariable(value = "id") Long id) {
         ligneVenteService.deleteLigneVente(id);
         return ResponseEntity.ok().build();
+    }
 
+    @GetMapping(value = APP_ROOT + "/ligneVentes/top-100-ligne-ventes-order-desc", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Renvoi la liste des 100 dernière LigneVente",
+            notes = "Cette méthode permet de chercher et renvoyer la liste des LigneVente",
+            responseContainer = "List<LigneVente>")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des LigneVente / une liste vide")
+    })
+    ResponseEntity<List<LigneVente>> getTop100LigneVenteOrderDesc() {
+        List<LigneVente> ligneVenteList = ligneVenteService.findTop100ByOrderByIdDesc();
+        return new ResponseEntity<>(ligneVenteList, HttpStatus.OK);
     }
 }

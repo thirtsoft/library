@@ -43,7 +43,6 @@ public class Vente extends AbstractEntity implements Serializable {
     @JoinColumn(name = "userId", nullable = false)
     private Utilisateur utilisateur;
 
-
     public Vente() {
         super();
     }

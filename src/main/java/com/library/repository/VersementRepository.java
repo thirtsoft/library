@@ -22,5 +22,4 @@ public interface VersementRepository extends JpaRepository<Versement, Long> {
     List<Versement> findVersementByEmployeId(@Param("emp") Long empId);
 
     List<Versement> findByOrderByIdDesc();
-
 }

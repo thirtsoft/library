@@ -292,7 +292,6 @@ public class VenteServiceImpl implements VenteService {
         return venteRepository.countNumberOfVenteByMonth();
     }
 
-
     @Override
     public List<?> sumTotalOfVenteByMonth() {
         return venteRepository.sumTotalOfVenteByMonth();
@@ -308,5 +307,8 @@ public class VenteServiceImpl implements VenteService {
         return venteRepository.findAllVenteByEmployeId(empId);
     }
 
-
+    @Override
+    public List<Vente> findTop100VenteOrderByIdDesc() {
+        return venteRepository.findTop100ByOrderByIdDesc();
+    }
 }
